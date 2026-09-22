@@ -1,0 +1,147 @@
+/* ---- Hero / carrusel ---- */
+.hero-img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  max-width: 480px;
+  background: linear-gradient(90deg,
+      rgba(15, 58, 107, 0.94) 0%,
+      rgba(15, 58, 107, 0.88) 45%,
+      rgba(15, 58, 107, 0.15) 85%,
+      rgba(15, 58, 107, 0) 100%);
+}
+
+.hero-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Paleta de Colores de la Maqueta */
+.text-navy {
+  color: #1b4965 !important;
+}
+
+.bg-navy {
+  background-color: #1b4965 !important;
+}
+
+.bg-blue-dark {
+  background-color: #2b6cb0 !important;
+}
+
+.bg-blue-medium {
+  background-color: #4895ef !important;
+}
+
+.bg-blue-light {
+  background-color: #dbe9f6 !important;
+}
+
+/* Ajustes de PrimeNG para alinearse a la maqueta */
+:host ::ng-deep {
+  .custom-blue-dropdown .p-dropdown {
+    background-color: #4895ef !important;
+    border-color: #4895ef !important;
+    border-radius: 8px !important;
+  }
+
+  .custom-blue-dropdown .p-dropdown-label {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  .custom-blue-dropdown .p-dropdown-trigger {
+    color: #ffffff !important;
+  }
+
+  .custom-pdf-btn .p-button {
+    background-color: #1b4965 !important;
+    border-color: #1b4965 !important;
+    border-radius: 6px !important;
+    padding: 6px 16px !important;
+  }
+}
+
+/* Tabla - Encabezado personalizado */
+.table thead.bg-navy th {
+  background-color: #1b4965;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+th.cursor-pointer {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+th.cursor-pointer:hover {
+  background-color: #163a58 !important;
+}
+
+/* Contenedor punteado azul para nuevos riesgos */
+.border-dashed-blue {
+  border: 2px dashed #0c4a6e;
+}
+
+/* Efecto hover en tarjetas de nuevos riesgos */
+.card-nuevo-riesgo {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-nuevo-riesgo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(12, 74, 110, 0.25) !important;
+}
+
+/* Estilo para botón redondeado de navegación */
+.btn-navy {
+  background-color: #0c4a6e;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-navy:hover {
+  background-color: #072e45;
+}
+
+.net-link {
+  transition: opacity 0.3s ease, stroke 0.3s ease;
+}
+
+.net-node circle,
+.net-node text {
+  transition: opacity 0.3s ease;
+}
+
+/* Personalización del p-dropdown de PrimeNG */
+::ng-deep .custom-navy-dropdown {
+  background-color: #0c4a6e !important;
+  border: 1px solid #0c4a6e !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .custom-navy-dropdown .p-dropdown-label {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  padding: 0.5rem 1rem !important;
+}
+
+::ng-deep .custom-navy-dropdown .p-dropdown-trigger {
+  color: #ffffff !important;
+}
+
+::ng-deep .custom-navy-dropdown:hover {
+  background-color: #072e45 !important;
+  border-color: #072e45 !important;
+}
+
+/* Enfoque al hacer clic */
+::ng-deep .custom-navy-dropdown.p-focus {
+  box-shadow: 0 0 0 0.25rem rgba(12, 74, 110, 0.25) !important;
+}

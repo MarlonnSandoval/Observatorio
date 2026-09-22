@@ -1,0 +1,142 @@
+:host {
+    --teal-primary: #005f73;
+    --teal-light: #e0f2fe;
+    --teal-subtle: #f0fdfa;
+}
+
+.text-teal {
+    color: var(--teal-primary) !important;
+}
+
+.bg-teal {
+    background-color: var(--teal-primary) !important;
+}
+
+.bg-teal-subtle {
+    background-color: var(--teal-subtle) !important;
+}
+
+.border-teal {
+    border: 2px solid var(--teal-primary) !important;
+}
+
+.tracking-wider {
+    letter-spacing: 0.08em;
+}
+
+/* SIDEBAR FIJA (STICKY) */
+.sticky-sidebar {
+    position: sticky;
+    top: 2rem;
+    z-index: 10;
+}
+
+/* BOTONES NAVEGACIÓN LATERAL */
+.nav-pills .nav-link {
+    color: #495057;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #f8f9fa;
+    color: var(--teal-primary);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--teal-primary) !important;
+    color: #ffffff !important;
+}
+
+.nav-pills .nav-link.active i {
+    color: #ffffff !important;
+}
+
+/* MARGEN AL DESPLAZARSE (SCROLL MARGIN) */
+.section-scroll-margin {
+    scroll-margin-top: 2rem;
+}
+
+/* SEPARADORES */
+.text-divider {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    color: var(--teal-primary);
+}
+
+.text-divider::after {
+    content: '';
+    height: 3px;
+    background-color: var(--teal-primary);
+    flex-grow: 1;
+    border-radius: 10px;
+    opacity: 0.25;
+}
+
+/* QUOTE BOX */
+.quote-box {
+    border: 2px solid var(--teal-primary);
+    background: linear-gradient(90deg, rgba(0, 95, 115, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 0 1rem 1rem 0;
+}
+
+/* PESTAÑAS INTERACTIVAS DE PASOS */
+.step-tab-btn {
+    border: 2px solid #e2e8f0;
+    background-color: #ffffff;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+.step-tab-btn:hover {
+    border-color: var(--teal-primary);
+    color: var(--teal-primary);
+}
+
+.step-tab-btn.active {
+    border-color: var(--teal-primary);
+    background-color: var(--teal-primary);
+    color: #ffffff;
+}
+
+.step-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.step-badge {
+    width: 44px;
+    height: 44px;
+    background-color: var(--teal-light);
+    color: var(--teal-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: 2px solid var(--teal-primary);
+}
+
+/* ANIMACIÓN SUAVE */
+.fade-in {
+    animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

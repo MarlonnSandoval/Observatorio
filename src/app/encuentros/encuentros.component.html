@@ -1,0 +1,209 @@
+<main class="container my-5">
+
+    <div>
+        <h1>Encuentros</h1>
+
+        <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+            data-bs-interval="6000">
+            <div class="carousel-inner">
+                <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index"
+                    [class.active]="i === 0">
+                    <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+                    <div class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column
+                    justify-content-center text-white p-4 p-md-5">
+                        <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+                        <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-indicators hero-indicators">
+                <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+                    [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                    [attr.aria-label]="'Diapositiva ' + (i + 1)">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>Explora nuestros encuentro prospectivos</h2>
+        <p>Podrá consultar.</p>
+    </div>
+    <div class="row g-4">
+
+        <!-- Panel Lateral de Filtros y Destacados -->
+        <div class="col-md-4">
+            <div class="d-flex flex-column gap-4 sticky-top pt-4">
+                <!-- 1. Tarjeta de Filtros (Con toque de color en el header) -->
+                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card-header bg-primary bg-gradient text-white py-3 border-0">
+                        <h5 class="fw-bold mb-0 fs-6 d-flex align-items-center gap-2">
+                            <i class="pi pi-filter"></i> Filtros de búsqueda
+                        </h5>
+                    </div>
+                    <div class="card-body bg-white p-3">
+                        <div class="row g-3 justify-content-center">
+
+                            <!-- Select Institución -->
+                            <div class="col-12">
+                                <label class="form-label text-muted small fw-semibold mb-1">Institución</label>
+                                <select [(ngModel)]="fuenteSelect"
+                                    class="form-select shadow-none border-primary-subtle">
+                                    <option value="">Todas las Instituciones</option>
+                                    <option *ngFor="let docs of getOpcionesUnicas('institucion')" [value]="docs">
+                                        {{docs}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Select Tipo -->
+                            <div class="col-6">
+                                <label class="form-label text-muted small fw-semibold mb-1">Tipo</label>
+                                <select [(ngModel)]="tipoSelect" class="form-select shadow-none border-primary-subtle">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let docs of getOpcionesUnicas('tipo')" [value]="docs">
+                                        {{docs}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Select Año -->
+                            <div class="col-6">
+                                <label class="form-label text-muted small fw-semibold mb-1">Año</label>
+                                <select [(ngModel)]="anioSelect" class="form-select shadow-none border-primary-subtle">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let docs of getOpcionesUnicas('anio')" [value]="docs">
+                                        {{docs}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Botón Limpiar -->
+                            <div class="col-12 mt-3">
+                                <button (click)="Limpiar()"
+                                    class="w-100 d-flex align-items-center justify-content-center gap-2 btn-sm py-2">
+                                    <i class="pi pi-refresh"></i> Limpiar Filtros
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Tarjeta "Publicaciones Recientes" (Sin afectar por filtros) -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center">
+                             Publicaciones recientes
+                        </h5>
+                    </div>
+                    <div class="card-body bg-white">
+                        <div class="d-flex flex-column gap-2">
+
+                            <!-- Usamos 'publicacionesRecientes' obtenidas desde el .ts -->
+                            <div *ngFor="let item of publicacionesRecientes"
+                                class="recent-post-item d-flex gap-3 align-items-center p-2 rounded-2 hover-bg-light transition-all">
+
+                                <img [src]="item.img" [alt]="item.titulo" class="rounded object-fit-cover flex-shrink-0"
+                                    style="width: 65px; height: 65px;">
+
+                                <div class="overflow-hidden">
+                                    <!-- <span class="badge bg-primary-subtle text-primary border border-primary-subtle mb-1"
+                                        style="font-size: 0.7rem;">
+                                        {{ item.tipo }} 
+                                    </span> -->
+                                    <h6 class="mb-1 text-truncate-2 small fw-bold">
+                                        <a [href]="item.url" target="_blank"
+                                            class="text-dark text-decoration-none hover-primary">
+                                            {{ item.titulo }}
+                                        </a>
+                                    </h6>
+                                    <!-- <small class="text-muted d-block" style="font-size: 0.75rem;">
+                                        <i class="pi pi-calendar me-1"></i>{{ item.anio }}
+                                    </small> -->
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Resultados y Buscador -->
+        <div class="col-md-8">
+            <!-- Buscador principal -->
+            <div class="sticky-top pt-4" style="background-color: #ffff;">
+                <div class="p-input-icon-left w-100 mb-4 ">
+                    <i class="pi pi-search text-muted"></i>
+                    <input type="text" placeholder="Buscar nota de actualidad por título..." pInputText
+                        [(ngModel)]="textoBusqueda" class="w-100 p-inputtext-lg shadow-sm" />
+                </div>
+                <div>
+                    <span>Hay un total de {{ getcount() }} resultados encontrados</span>
+                </div>
+            </div>
+
+
+            <!-- Contenedor de Resultados -->
+            <div class="d-flex flex-column gap-3">
+
+                <!-- Tarjetas de contenido -->
+                <div *ngFor="let docs of actualidadFiltro" class="card border-0 shadow-sm hover-shadow transition-all">
+                    <div
+                        class="card-body p-3 p-md-4 d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center">
+
+                        <div class="flex-shrink-0 mx-auto mx-md-0" style="width: 130px; height: 150px;;">
+                            <img [src]="docs.img" [alt]="docs.titulo" class="img-fluid rounded w-100 h-100">
+                        </div>
+
+                        <!-- Contenido Principal -->
+                        <div class="flex-grow-1 w-100">
+
+                            <!-- Header: Badge y Año -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary-subtle text-primary fw-semibold px-2.5 py-1.5">
+                                    {{ docs.tipo }}
+                                </span>
+                                <span class="text-muted small fw-bold">
+                                    {{ docs.anio }}
+                                </span>
+                            </div>
+
+                            <!-- Título y Observaciones -->
+                            <h5 class="card-title mb-2">
+                                <a [href]="docs.url" target="_blank"
+                                    class="text-decoration-none text-dark hover-primary fw-bold">
+                                    {{ docs.titulo }}
+                                </a>
+                            </h5>
+
+                            <p class="card-text text-secondary mb-2 small">
+                                {{ docs.observaciones }}
+                            </p>
+
+                            <!-- Footer / Metadata -->
+                            <div class="d-flex align-items-center text-muted small gap-3 mt-3 pt-2 border-top">
+                                <span *ngIf="docs.institucion">
+                                    <i class="pi pi-building me-1"></i>{{ docs.institucion }}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estado Vacío (Sin resultados) -->
+                <!-- <div *ngIf="actualidadFiltro?.length === 0"
+                    class="text-center py-5 text-muted bg-light rounded-3 border border-dashed">
+                    <i class="pi pi-inbox fs-1 mb-2 d-block"></i>
+                    <p class="mb-0">No se encontraron resultados, seleccione el botón <strong>"Limpiar"</strong> para
+                        ver más información.</p>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</main>

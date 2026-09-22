@@ -1,0 +1,700 @@
+/* ================================================= */
+/* VARIABLES DE PERSONALIZACIÓN Y UTILIDADES         */
+/* ================================================= */
+:host {
+    --card-border-color: #005f73;
+    --card-border-hover: #005f73;
+    --card-accent-start: #005f73;
+    --card-accent-end: #0a9396;
+    --card-accent-height: 4px;
+    --card-shadow-color: rgba(27, 42, 80, 0.34);
+    --card-radius: 1rem;
+}
+
+.text-teal {
+    color: #005f73 !important;
+}
+
+.bg-teal {
+    background-color: #005f73 !important;
+}
+
+.border-teal {
+    border-color: #005f73 !important;
+}
+
+.bg-purple {
+    background-color: #6a040f !important;
+}
+
+.tracking-wider {
+    letter-spacing: 0.08em;
+}
+
+.extra-small {
+    font-size: 0.78rem;
+}
+
+.header-line {
+    display: inline-block;
+    width: 28px;
+    height: 3px;
+    background-color: #005f73;
+    border-radius: 2px;
+}
+
+/* ANIMACIÓN DE TRANSICIÓN */
+.fade-in {
+    animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TABS ESTILO MODERNO */
+.custom-tabs {
+    border-bottom: 2px solid #e9ecef;
+}
+
+.custom-tabs .nav-link {
+    color: #6c757d;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #005f73;
+    background-color: #f8f9fa;
+}
+
+.custom-tabs .nav-link.active {
+    color: #005f73;
+    background-color: transparent;
+    border-bottom: 3px solid #005f73;
+}
+
+/* ESTILOS DE PASOS / TIMELINE */
+.step-badge {
+    width: 52px;
+    height: 52px;
+    background-color: #e0f2fe;
+    color: #005f73;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    border: 2px solid #005f73;
+}
+
+.btn-outline-teal {
+    color: #005f73;
+    border-color: #005f73;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-teal:hover {
+    background-color: #005f73;
+    color: #ffffff;
+}
+
+/* CONTENEDOR DE BÚSQUEDA Y FILTROS */
+.search-panel {
+    background-color: var(---active-phase-color);
+    border: 1px solid #e2e8f0 !important;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: #94a3b8;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.modern-input {
+    padding-left: 2.75rem !important;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    height: 44px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.modern-input:focus {
+    background-color: #ffffff;
+    border-color: #005f73;
+    box-shadow: 0 0 0 3px rgba(0, 95, 115, 0.12);
+}
+
+.modern-select {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    height: 44px;
+    font-size: 0.9rem;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+.modern-select:focus {
+    border-color: #005f73;
+    box-shadow: 0 0 0 3px rgba(0, 95, 115, 0.12);
+}
+
+.btn-light-reset {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    height: 44px;
+    transition: all 0.2s ease;
+}
+
+.btn-light-reset:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+/* CHIPS ABECEDARIO GLOSARIO */
+.alphabet-chip {
+    flex: 1 0 auto;
+    min-width: 32px;
+    height: 34px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.alphabet-chip:hover {
+    background-color: #e2e8f0;
+    color: #005f73;
+}
+
+.alphabet-chip.active-letter {
+    background-color: #005f73;
+    color: #ffffff;
+    border-color: #005f73;
+    box-shadow: 0 3px 6px rgba(0, 95, 115, 0.25);
+}
+
+/* TARJETAS CON HOVER ELEVADO (RESULTADOS / MÉTODOS) */
+.hover-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--card-border-color) !important;
+    border-radius: var(--card-radius) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hover-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--card-accent-height);
+    /* background: linear-gradient(90deg, var(--card-accent-start), var(--card-accent-end)); */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-card:hover::before {
+    transform: scaleX(1);
+}
+
+.hover-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-border-hover) !important;
+    box-shadow: 0 14px 28px -10px var(--card-shadow-color) !important;
+}
+
+/* ENLACES E IMÁGENES DE TARJETAS DE MÉTODOS */
+.ver-ficha-link {
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.ver-ficha-link:hover {
+    color: #004959 !important;
+    text-decoration: underline !important;
+}
+
+.badge {
+    font-size: 0.72rem;
+    border: 1px solid transparent;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background-color: #f1f5f9;
+}
+
+.custom-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hover-card:hover .custom-card-img {
+    transform: scale(1.05);
+}
+
+/* ======================================================= */
+/* SECCIÓN DE FASES DEL PLANEAMIENTO (SELECTOR)            */
+/* ======================================================= */
+
+.phase-section {
+    width: 100%;
+    margin-bottom: 2rem;
+    font-family: inherit;
+}
+
+.phase-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.phase-section-head span {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.phase-section-head h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+}
+
+.phase-section-head a {
+    color: #005f73;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.phase-section-head a:hover {
+    color: #004959;
+    text-decoration: underline;
+}
+
+/* GRID DE TARJETAS DE FASES */
+.phase-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ESTRUCTURA BASE TARJETA FASE (V3) */
+.phase-card-v3 {
+    background-color: #ffffff;
+    border-radius: 0.85rem;
+    border: 1px solid #cbd5e1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.phase-card-v3:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* CABECERA BOTÓN PRINCIPAL */
+.phase-main {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-top: 5px solid var(--phase-color);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.phase-index {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--phase-color);
+    transition: color 0.25s ease;
+}
+
+.phase-main strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+    transition: color 0.25s ease;
+}
+
+.phase-main small {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+    transition: color 0.25s ease;
+}
+
+.phase-main p {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.825rem;
+    color: #475569;
+    line-height: 1.45;
+    transition: color 0.25s ease;
+}
+
+/* ESTADO ACTIVO DE FASE */
+.phase-card-v3.active {
+    border-color: var(--phase-color) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.phase-card-v3.active .phase-main {
+    background-color: var(--phase-color);
+}
+
+.phase-card-v3.active .phase-index,
+.phase-card-v3.active .phase-main strong,
+.phase-card-v3.active .phase-main small,
+.phase-card-v3.active .phase-main p {
+    color: #ffffff !important;
+}
+
+/* ÁREA INFERIOR DE SUBETAPAS Y SUS BOTONES */
+.stage-links {
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border-top: 1px solid #f1f5f9;
+    flex-grow: 1;
+    transition: background-color 0.25s ease;
+}
+
+.phase-card-v3.active .stage-links {
+    background-color: var(--phase-bg-light, #f8fafc);
+}
+
+.stage-link {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    color: #334155;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.stage-link i {
+    color: var(--phase-color);
+    font-size: 0.85rem;
+    transition: transform 0.15s ease;
+}
+
+.stage-link:hover {
+    border-color: var(--phase-color);
+    color: var(--phase-color);
+}
+
+.stage-link:hover i {
+    transform: translateX(3px);
+}
+
+/* ESTADO DE SUBETAPA ACTIVA */
+.stage-link.active-stage {
+    background-color: var(--phase-color) !important;
+    color: #ffffff !important;
+    border-color: var(--phase-color) !important;
+}
+
+.stage-link.active-stage i {
+    color: #ffffff !important;
+}
+
+/* BANNER DE DESCRIPCIÓN INFERIOR DE FASE */
+.phase-description {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    border-left: 5px solid var(--phase-color);
+}
+
+.badge-phase-banner {
+    background-color: var(--phase-color);
+    color: #ffffff;
+    font-weight: 800;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.35rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* ================================================= */
+/* ESTILOS DE TEORÍA Y PRINCIPIOS                   */
+/* ================================================= */
+
+.quote-box {
+    border-left: 5px solid var(--card-accent-start);
+    background: linear-gradient(90deg, rgba(0, 95, 115, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 0 1rem 1rem 0;
+}
+
+.icon-circle {
+    width: 64px;
+    height: 64px;
+    background-color: #e0f2fe;
+    color: #005f73;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin: 0 auto;
+}
+
+.hover-card:hover .icon-circle {
+    background-color: #005f73;
+    color: #ffffff;
+    transform: rotateY(180deg) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 95, 115, 0.2);
+}
+
+.principle-card {
+    transition: all 0.25s ease;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.principle-card:hover {
+    border-color: #005f73;
+    box-shadow: 0 8px 24px rgba(0, 95, 115, 0.08);
+}
+
+.equation-icon {
+    width: 45px;
+    height: 45px;
+    background: #ffffff;
+    border: 3px solid #005f73;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #005f73;
+    font-weight: bold;
+    font-size: 1.2rem;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.equation-card {
+    border-top: 4px solid #005f73;
+    transition: all 0.3s ease;
+}
+
+.equation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ======================================================= */
+/* ESTILOS DE TABS VERTICALES (PRIMENG TABVIEW OVERRIDES)   */
+/* ======================================================= */
+
+.vertical-tab-container {
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background-color: #f8fafc;
+}
+
+/* Contenedor Flex en fila */
+::ng-deep .vertical-tab-container .tabview-vertical {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    min-height: 480px;
+}
+
+/* Menú Lateral Oscuro */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 310px !important;
+    min-width: 310px !important;
+    border: solid 3px #005f73 !important;
+    border-radius: 1.5rem 0 0 1.5rem;
+    padding: 1rem 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+/* Items individuales de la lista */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* Links / Botones de navegación */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li .p-tabview-nav-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.95rem 1.25rem !important;
+    color: #9797a0 !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-left: 4px solid transparent !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+}
+
+/* Hover en las pestañas */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li:not(.p-highlight) .p-tabview-nav-link:hover {
+    color: #005f73 !important;
+    background-color: #ffffff !important;
+}
+
+/* Pestaña Selección / Activa */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: #005f73 !important;
+    background-color: #ffffff !important;
+    border-left-color: #005f73 !important;
+    /* Indicador acento brillante */
+    font-weight: 700 !important;
+}
+
+/* Ajuste de iconos dentro de los botones */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li .p-tabview-nav-link i {
+    font-size: 1rem !important;
+    transition: color 0.2s ease !important;
+}
+
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-nav li.p-highlight .p-tabview-nav-link i {
+    color: #005f73 !important;
+}
+
+/* Panel de Contenido Derecho */
+::ng-deep .vertical-tab-container .tabview-vertical .p-tabview-panels {
+    flex: 1 !important;
+    background-color: #f1f5f9 !important;
+    padding: 2rem !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.text-divider {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.6375rem;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    color: #005f73;
+}
+
+.text-divider::after {
+    content: '';
+    height: 8px;
+    background-color: #005f73;
+    flex-grow: 1;
+    border-radius: 20px;
+}
+
+.catalog-workspace {
+    padding-top: 30px;
+    border-top: 8px solid var(--active-phase-color, #1b2229);
+    background: linear-gradient(180deg,
+            color-mix(in srgb, var(--active-phase-color, #b9bec3) 15%, white) 0, #f8fafc 210px);
+}
+
+.catalog-results-head {
+    align-items: center;
+    margin: 0 0 20px;
+    padding: 17px 19px;
+    border-left: 7px solid var(--active-phase-color, #2f679f);
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(19, 53, 88, .07);
+}
+
+.catalog-results-head p {
+    color: var(--active-phase-color, #2d659e);
+}
+
+.catalog-results-head h2 {
+    margin: 0;
+    color: #173f70;
+    font-size: 1.45rem;
+}
+
+.catalog-results-head>span {
+    padding: 6px 9px;
+    background:
+        color-mix(in srgb, var(--active-phase-color, #2f679f) 30%, white);
+    color: #324c65;
+    font-weight: 800;
+}

@@ -1,0 +1,249 @@
+<header class="hero text-center text-white py-5" style="background: linear-gradient(135deg, #3B69AE 0%, #0C2992 100%);">
+  <div class="container py-4">
+    <h1 class="display-4 fw-bold mb-4">CEPLAN</h1>
+
+    <div class="mx-auto mb-5" style="max-width: 600px;">
+      <div class="p-inputgroup shadow-sm">
+        <span class="p-inputgroup-addon bg-white border-end-0">
+          <i class="pi pi-search text-muted"></i>
+        </span>
+        <input type="text" pInputText placeholder="¿Qué estás buscando?" class="border-start-0" />
+        <button type="button" pButton label="Buscar" icon="pi pi-search" class="p-button-primary px-4"></button>
+      </div>
+    </div>
+
+    <div class="row g-3 justify-content-center" style="max-width: 1000px; margin: 0 auto;">
+      <div class="col-md-4">
+        <div class="card bg-primary text-white border-0 shadow h-100 p-3 text-start cursor-pointer transition-hover"
+          style="min-height: 120px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), #0d6efd;">
+          <h5 class="fw-bold m-0"><i class="pi pi-globe me-2"></i>Megatendencias</h5>
+          <p class="small text-white-50 m-0 mt-2">Cambios sociales, tecnológicos, económicos, ambientales y políticos de
+            gran magnitud a nivel global.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-success text-white border-0 shadow h-100 p-3 text-start cursor-pointer transition-hover"
+          style="min-height: 120px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), #198754;">
+          <h5 class="fw-bold m-0"><i class="pi pi-chart-line me-2"></i>Tendencias</h5>
+          <p class="small text-white-50 m-0 mt-2">Comportamiento de una variable que muestra una dirección creciente,
+            decreciente o estable a largo plazo.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-danger text-white border-0 shadow h-100 p-3 text-start cursor-pointer transition-hover"
+          style="min-height: 120px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), #dc3545;">
+          <h5 class="fw-bold m-0"><i class="pi pi-exclamation-triangle me-2"></i>Riesgos</h5>
+          <p class="small text-white-50 m-0 mt-2">Evento con probabilidad de ocurrencia que puede generar un impacto
+            negativo en el bienestar de la población.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container my-5">
+
+  <section class="row align-items-center mb-5 g-4">
+    <div class="col-lg-7">
+      <h3 class="mb-3 fw-bold text-dark">Observatorio Nacional de Prospectiva</h3>
+      <p class="text-secondary lh-lg">
+        El Observatorio Nacional de Prospectiva es la plataforma de información sobre tendencias, escenarios, riesgos,
+        oportunidades y eventos de futuro, sistematizada para el uso, consulta y aportes de los planificadores del país
+        y del público en general.
+      </p>
+      <p class="text-secondary lh-lg">
+        Su aplicación directa es en la elaboración de políticas y planes a todo nivel, puesto que presenta contenidos de
+        interés de escala internacional, nacional y subnacional.
+      </p>
+    </div>
+    <div class="col-lg-5">
+      <div class="ratio ratio-16x9 shadow rounded-3 overflow-hidden border border-light">
+        <iframe src="https://www.youtube.com/embed/9P872x6ZdXU" title="Observatorio de Prospectiva"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="my-5 py-4 bg-light rounded-3 p-4 border shadow-2xs">
+    <div class="row align-items-center g-4">
+      <div class="col-md-4 text-center text-md-start">
+        <h5 class="fw-bold m-0 text-secondary text-uppercase tracking-wider">Información por categoría</h5>
+      </div>
+      <div class="col-md-8">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <button pButton routerLink="/territorial"
+              class="p-button-raised w-100 p-4 d-flex align-items-center justify-content-center gap-3 p-button-info"
+              style="min-height: 85px;">
+              <i class="pi pi-map-marker fs-2 text-white"></i>
+              <span class="fw-semibold fs-5 text-white">Ámbito Territorial</span>
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <button pButton routerLink="/sectorial"
+              class="p-button-raised w-100 p-4 d-flex align-items-center justify-content-center gap-3 p-button-help"
+              style="min-height: 85px;">
+              <i class="pi pi-sitemap fs-2 text-white"></i>
+              <span class="fw-semibold fs-5 text-white">Ámbito Sectorial</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h4 class="mb-4 fw-bold text-dark"><span class="border-bottom border-primary border-3 pb-1">Actualidad</span></h4>
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <p-card header="Informe sobre los Megatendencias Globales"
+          styleClass="h-100 border-0 shadow-sm overflow-hidden">
+          <ng-template pTemplate="header">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Actualidad Destacada"
+              style="height: 280px; object-fit: cover; width: 100%;">
+          </ng-template>
+          <p class="text-secondary small mt-2">Explora nuestro último análisis detallado de tendencias tecnológicas y de
+            desarrollo sostenible proyectadas hacia las próximas décadas.</p>
+        </p-card>
+      </div>
+
+      <div class="col-lg-5 d-flex flex-column gap-3">
+        <div
+          class="d-flex bg-white p-3 rounded-3 shadow-sm align-items-center border-start border-primary border-4 border">
+          <div class="flex-grow-1 pe-2">
+            <h6 class="fw-bold mb-1 small">Actualización de Índices de Desarrollo Regional</h6>
+            <span class="text-muted small">Publicado recientemente</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" class="rounded object-fit-cover"
+            width="70" height="60" alt="Thumb">
+        </div>
+        <div
+          class="d-flex bg-white p-3 rounded-3 shadow-sm align-items-center border-start border-primary border-4 border">
+          <div class="flex-grow-1 pe-2">
+            <h6 class="fw-bold mb-1 small">Informe de Avance Metodológico de Planificación</h6>
+            <span class="text-muted small">Publicado hace 1 semana</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5" class="rounded object-fit-cover"
+            width="70" height="60" alt="Thumb">
+        </div>
+        <button pButton label="Ver más Actualidad"
+          class="p-button-outlined p-button-rounded w-100 py-2 mt-auto"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h4 class="mb-4 fw-bold text-dark"><span class="border-bottom border-primary border-3 pb-1">Encuentros
+        Prospectivos</span></h4>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card border-0 text-white p-4 shadow h-100 rounded-3 d-flex flex-column justify-content-center"
+          style="background: linear-gradient(135deg, #dc3545 0%, #7a1520 100%); min-height: 200px;">
+          <div>
+            <span class="badge bg-white text-danger mb-3 px-3 py-2 fw-bold text-uppercase">Próximo Evento</span>
+            <h3 class="fw-bold mb-3">Futuros al Centro: Foro Anual de Gestión Estratégica</h3>
+            <p class="text-white-50 small mb-0"><i class="pi pi-calendar me-2"></i>Próximamente — Registro Virtual
+              Abierto</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 d-flex flex-column gap-3">
+        <div class="bg-white p-3 rounded-3 shadow-sm d-flex align-items-center gap-3 border">
+          <div class="bg-primary text-white text-center p-2 rounded fw-bold" style="min-width: 50px;">15 <span
+              class="d-block small fw-normal">Jul</span></div>
+          <div>
+            <h6 class="fw-bold mb-1">Mesa Técnica de Prospectiva Regional</h6>
+            <p class="m-0 small text-muted">Modalidad Virtual</p>
+          </div>
+        </div>
+        <div class="bg-white p-3 rounded-3 shadow-sm d-flex align-items-center gap-3 border">
+          <div class="bg-secondary text-white text-center p-2 rounded fw-bold" style="min-width: 50px;">28 <span
+              class="d-block small fw-normal">Jun</span></div>
+          <div>
+            <h6 class="fw-bold mb-1">Taller Macrorregional de Identificación de Riesgos</h6>
+            <p class="m-0 small text-muted">Finalizado - Grabaciones Disponibles</p>
+          </div>
+        </div>
+        <button pButton label="Ver todos los Encuentros"
+          class="p-button-outlined p-button-rounded w-100 py-2 mt-auto"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h4 class="mb-4 fw-bold text-dark"><span class="border-bottom border-primary border-3 pb-1">Publicaciones
+        Destacadas</span></h4>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <p-card styleClass="text-center p-2 border-0 shadow-sm h-100 transition-hover">
+          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c" class="rounded object-fit-cover mb-3"
+            height="220" style="width: 100%;">
+          <span class="text-primary fw-bold small d-block mb-1">INFORME NACIONAL</span>
+          <h6 class="fw-bold text-dark mb-0">Plan Estratégico de Desarrollo Nacional al 2050</h6>
+        </p-card>
+      </div>
+      <div class="col-md-4">
+        <p-card styleClass="text-center p-2 border-0 shadow-sm h-100 transition-hover">
+          <img src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6" class="rounded object-fit-cover mb-3"
+            height="220" style="width: 100%;">
+          <span class="text-primary fw-bold small d-block mb-1">ESTUDIO TÉCNICO</span>
+          <h6 class="fw-bold text-dark mb-0">Análisis Prospectivo de Seguridad Alimentaria</h6>
+        </p-card>
+      </div>
+      <div class="col-md-4">
+        <p-card styleClass="text-center p-2 border-0 shadow-sm h-100 transition-hover">
+          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794" class="rounded object-fit-cover mb-3"
+            height="220" style="width: 100%;">
+          <span class="text-primary fw-bold small d-block mb-1">GUÍA METODOLÓGICA</span>
+          <h6 class="fw-bold text-dark mb-0">Guía para el Diseño de Escenarios Territoriales</h6>
+        </p-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div
+        class="p-4 d-flex align-items-center justify-content-between rounded-3 bg-white border shadow-sm cursor-pointer transition-hover">
+        <div class="d-flex align-items-center gap-3">
+          <i class="pi pi-share-alt text-primary fs-3"></i>
+          <span class="fw-semibold fs-5 text-dark">Redes de Observatorios</span>
+        </div>
+        <i class="pi pi-arrow-right text-muted"></i>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div
+        class="p-4 d-flex align-items-center justify-content-between rounded-3 bg-white border shadow-sm cursor-pointer transition-hover">
+        <div class="d-flex align-items-center gap-3">
+          <i class="pi pi-sliders-h text-primary fs-3"></i>
+          <span class="fw-semibold fs-5 text-dark">Mapa de Interrelaciones</span>
+        </div>
+        <i class="pi pi-arrow-right text-muted"></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="row align-items-center mb-5 g-4">
+    <div class="col-lg-7">
+      <h3 class="mb-3 fw-bold text-dark">Plataforma de información territorial para el planeamiento
+        estratégico</h3>
+      <p class="text-secondary lh-lg">
+        La plataforma tiene como objetivo facilitar el acceso a información relevante para los procesos de planeamiento
+        estratégico en los territorios.
+      </p>
+
+      <p-button styleClass="p-button-outlined" label="Visítanos" icon="pi pi-arrow-up-right" iconPos="right"
+        (onClick)="abrirEnlace()">
+      </p-button>
+
+    </div>
+    <div class="col-lg-5">
+      <div class="ratio ratio-16x9 shadow rounded-3 overflow-hidden border border-light">
+        <iframe src="https://www.youtube.com/embed/uozHCZXy41s?si=DAbJLj_y52zbvgwG" title="Observatorio de Prospectiva"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>

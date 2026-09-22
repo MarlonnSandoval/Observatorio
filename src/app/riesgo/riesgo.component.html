@@ -1,0 +1,488 @@
+<main class="container my-4">
+
+    <!-- Header / Hero Section -->
+    <section class="row mb-4 align-items-center">
+        <div class="col-lg-7 col-md-12">
+            <h1 class="fw-bold text-navy display-6 mb-3">Riesgos globales y nacionales</h1>
+            <p class="text-dark fs-6 mb-2">
+                Los riesgos globales y nacionales son condiciones o eventos potenciales que, de ocurrir, tendrían un
+                impacto negativo sobre el bienestar de la población peruana o el desarrollo nacional.
+            </p>
+            <p class="text-dark fs-6 mb-0">
+                Explora los riesgos que podrían afectar el desarrollo nacional durante los próximos diez años.
+            </p>
+        </div>
+        <div class="col-lg-5 col-md-12 mt-3 mt-lg-0">
+            <!-- Banner / Carousel simulado con Bootstrap -->
+            <div class="hero-banner rounded-4 overflow-hidden position-relative p-4 text-white d-flex flex-column justify-content-end"
+                style="min-height: 180px; background: linear-gradient(90deg, rgba(27,73,101,0.9) 0%, rgba(72,149,239,0.4) 100%), url('https://picsum.photos/500/200') center/cover;">
+                <h4 class="fw-bold mb-1">Exacerbación de la inseguridad ciudadana</h4>
+                <span class="small text-light">Riesgo Territorial</span>
+                <!-- Indicadores de slide -->
+                <div class="position-absolute bottom-0 end-0 m-3 d-flex gap-1">
+                    <span class="rounded-circle bg-white opacity-50" style="width: 8px; height: 8px;"></span>
+                    <span class="rounded-circle bg-white opacity-50" style="width: 8px; height: 8px;"></span>
+                    <span class="rounded-circle bg-white" style="width: 8px; height: 8px;"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtro Periodo, Título Central y Botón PDF -->
+    <section class="row mb-4 align-items-end g-3">
+        <!-- Selector de Período -->
+        <div class="col-12 col-md-3">
+            <div class="d-flex flex-column gap-1">
+                <label class="form-label small fw-bold text-navy mb-0">Periodo de evaluación</label>
+                <p-dropdown [options]="periodos" [(ngModel)]="periodoSeleccionado" optionLabel="label"
+                    optionValue="label" styleClass="w-100 custom-navy-dropdown" placeholder="Seleccione periodo">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <!-- Título Principal -->
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="h3 fw-bold text-navy mb-0">Riesgos globales y para el Perú</h2>
+            <h3 class="h4 fw-bold text-navy mb-0">2026 - 2036</h3>
+        </div>
+
+        <!-- Botón Descarga -->
+        <div class="col-12 col-md-3 text-md-end text-center">
+            <p-button label="Descarga pdf" icon="pi pi-download" styleClass="p-button-sm custom-pdf-btn"
+                (onClick)="descargarPDF()">
+            </p-button>
+        </div>
+    </section>
+
+    <!-- Tarjetas de Resumen KPI -->
+    <section class="row g-3 mb-5">
+        <!-- Total Riesgos -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 text-center d-flex flex-column justify-content-center bg-navy">
+                <span class="display-4 fw-bold mb-0">{{ kpis.totalRiesgos }}</span>
+                <span class="fw-semibold fs-6">Riesgos evaluados</span>
+            </div>
+        </div>
+
+        <!-- Mayor Impacto -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 d-flex flex-column justify-content-between bg-blue-dark">
+                <span class="display-5 fw-bold">{{ kpis.mayorImpacto.valor }}</span>
+                <div>
+                    <span class="fw-bold d-block lh-sm mb-1">Mayor nivel de impacto</span>
+                    <p class="small mb-0 opacity-90">{{ kpis.mayorImpacto.titulo }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mayor Probabilidad -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 d-flex flex-column justify-content-between bg-blue-medium">
+                <span class="display-5 fw-bold">{{ kpis.mayorProbabilidad.valor }}</span>
+                <div>
+                    <span class="fw-bold d-block lh-sm mb-1">Mayor probabilidad de ocurrencia</span>
+                    <p class="small mb-0 opacity-90">{{ kpis.mayorProbabilidad.titulo }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interconexión y Brecha -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="d-flex flex-column gap-2 h-100">
+                <!-- Interconectado -->
+                <div class="card border-0 rounded-4 p-2 px-3 bg-blue-light h-50 justify-content-center">
+                    <span class="fw-bold text-navy small d-block">Riesgo más interconectado:</span>
+                    <span class="small text-secondary">{{ kpis.masInterconectado }}</span>
+                </div>
+                <!-- Mayor Brecha -->
+                <div class="card border-0 rounded-4 p-2 px-3 bg-blue-light h-50 justify-content-center">
+                    <span class="fw-bold text-navy small d-block">Riesgo con mayor brecha de preparación:</span>
+                    <span class="small text-secondary">{{ kpis.mayorBrecha }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa / Scatter Graph -->
+    <section class="mb-5">
+        <div class="text-center mb-3">
+            <h2 class="h3 fw-bold text-navy mb-1">Mapa de riesgos globales y nacionales</h2>
+            <h5 _ngcontent-ng-c699718404="" class="div-info"> Seleccione un nodo ( <i _ngcontent-ng-c699718404=""
+                    class="fa fa-stop fa-rotate-45 fa-icon"></i> ) para interactuar con el mapa de riesgos.</h5>
+        </div>
+
+        <!-- Reemplazar únicamente el contenedor dentro de la sección "Mapa de riesgos globales y nacionales" -->
+        <div class="w-100 overflow-auto bg-white p-3 rounded-4 border shadow-sm text-center position-relative">
+
+            <svg id="svg-scatter" preserveAspectRatio="xMinYMin meet" viewBox="0 0 960 700">
+                <g transform="translate(60,10)">
+
+                    <!-- EJE X (Ticks) -->
+                    <g transform="translate(0,660)" fill="none" font-size="10" font-family="sans-serif"
+                        text-anchor="middle">
+                        <path class="domain" stroke="currentColor" d="M0,6V0H870V6"></path>
+                        <g class="tick" opacity="1" transform="translate(43.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">2.6</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(130.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">2.8</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(217.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">3.0</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(304.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">3.2</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(391.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">3.4</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(478.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">3.6</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(565.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">3.8</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(652.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">4.0</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(739.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">4.2</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(826.5,0)">
+                            <line stroke="currentColor" y2="6"></line><text fill="currentColor" y="9"
+                                dy="0.71em">4.4</text>
+                        </g>
+                    </g>
+
+                    <!-- EJE Y (Ticks) -->
+                    <g fill="none" font-size="10" font-family="sans-serif" text-anchor="end">
+                        <path class="domain" stroke="currentColor" d="M-6,660H0V0H-6"></path>
+                        <g class="tick" opacity="1" transform="translate(0,660)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">3.2</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(0,518.57)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">3.5</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(0,377.14)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">3.8</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(0,235.71)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">4.1</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(0,94.28)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">4.4</text>
+                        </g>
+                        <g class="tick" opacity="1" transform="translate(0,0)">
+                            <line stroke="currentColor" x2="-6"></line><text fill="currentColor" x="-9"
+                                dy="0.32em">4.6</text>
+                        </g>
+                    </g>
+
+                    <!-- LÍNEAS PROMEDIO / UMBRAL -->
+                    <line class="prom_x" x1="494.45" y1="660" x2="494.45" y2="0"
+                        style="stroke: rgb(180, 72, 79); stroke-dasharray: 5, 5; fill: none;"></line>
+                    <line class="prom_y" x1="870" y1="333.58" x2="0" y2="333.58"
+                        style="stroke: rgb(180, 72, 79); stroke-dasharray: 5, 5; fill: none;"></line>
+
+                    <!-- ETIQUETAS DE EJES -->
+                    <text fill="black" x="435" y="690"
+                        style="font-size: 16px; font-weight: bold; text-anchor: middle;">Probabilidad</text>
+                    <text fill="black" transform="translate(-30, 330) rotate(270)"
+                        style="font-size: 16px; font-weight: bold; text-anchor: middle;">Impacto</text>
+
+                    <!-- NODOS DINÁMICOS (Rombos + Etiquetas) -->
+                    <g *ngFor="let item of riesgos">
+                        <!-- Rombo interactivo -->
+                        <rect class="rect" [id]="item.id" [attr.x]="getCoordX(item.probabilidad)"
+                            [attr.y]="getCoordY(item.impacto)" width="10" height="10"
+                            [attr.transform]="'rotate(45,' + getCoordX(item.probabilidad) + ',' + getCoordY(item.impacto) + ')'"
+                            [style.fill]="colorMap[item.tematica]" style="opacity: 1; cursor: pointer;"
+                            (mouseenter)="showTooltip($event, item)" (mousemove)="moveTooltip($event)"
+                            (mouseleave)="hideTooltip()">
+                        </rect>
+
+                        <!-- Etiqueta de Texto -->
+                        <text class="label" [id]="'text-' + item.id" [attr.x]="getCoordX(item.probabilidad)"
+                            [attr.y]="getCoordY(item.impacto) - 12" fill="black" stroke="white" paint-order="stroke"
+                            stroke-linejoin="round" stroke-width="2"
+                            style="font-size: 10px; text-anchor: middle; font-weight: normal; pointer-events: none;">
+                            {{ item.nombre }}
+                        </text>
+                    </g>
+
+                </g>
+            </svg>
+
+            <!-- Tarjeta Flotante / Tooltip -->
+            <div *ngIf="selectedRiesgo"
+                class="card position-fixed shadow-lg border-primary rounded-3 p-3 z-3 bg-white text-start"
+                [ngStyle]="tooltipStyle" style="width: 260px; pointer-events: none; border-width: 2px;">
+                <h6 class="fw-bold mb-1 text-dark">{{ selectedRiesgo.nombre }}</h6>
+                <p class="small text-muted mb-2 text-capitalize">Temática: {{ selectedRiesgo.tematica }}</p>
+
+                <div class="d-flex justify-content-between small mb-1"><span>Ranking:</span> <strong>{{
+                        selectedRiesgo.ranking }}°</strong></div>
+                <div class="d-flex justify-content-between small mb-1"><span>Impacto:</span> <strong>{{
+                        selectedRiesgo.impacto | number:'1.2-2' }}</strong></div>
+                <div class="d-flex justify-content-between small mb-1"><span>Probabilidad:</span> <strong>{{
+                        selectedRiesgo.probabilidad | number:'1.2-2' }}</strong></div>
+                <div class="d-flex justify-content-between small mb-1"><span>Interconexión:</span> <strong>{{
+                        selectedRiesgo.interconexion | number:'1.2-2' }}</strong></div>
+                <div class="d-flex justify-content-between small mb-2"><span>Preparación:</span> <strong>{{
+                        selectedRiesgo.preparacion | number:'1.2-2' }}</strong></div>
+                <hr class="my-1">
+                <div class="d-flex justify-content-between small fw-bold text-danger">
+                    <span>Brecha de preparación:</span> <span>{{ selectedRiesgo.brecha }}</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Ranking / Tabla por Dimensiones -->
+    <section class="my-5">
+        <h3 class="fw-bold text-primary mb-1">Ranking de riesgos globales y nacionales por dimensiones</h3>
+        <p class="text-muted mb-4">Compara y ordena los riesgos según sus principales dimensiones de evaluación.</p>
+
+        <div class="table-responsive shadow-sm rounded-3">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead style="background-color: #0b253a; color: white;">
+                    <tr class="text-center">
+                        <th scope="col" style="width: 50px;">N°</th>
+                        <th scope="col" style="width: 60px;">Cod</th>
+                        <th scope="col" class="text-start">Temática</th>
+                        <th scope="col" class="text-start">Riesgo</th>
+
+                        <!-- Columnas Ordenables / Dimensiones -->
+                        <th scope="col" (click)="ordenarPor('impacto')" class="user-select-none cursor-pointer">
+                            Nivel de impacto
+                            <span *if="columnaOrden === 'impacto'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+                        </th>
+                        <th scope="col" (click)="ordenarPor('probabilidad')" class="user-select-none cursor-pointer">
+                            Probabilidad de ocurrencia
+                            <span *ngIf="columnaOrden === 'probabilidad'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+                        </th>
+                        <th scope="col" (click)="ordenarPor('periodo')" class="user-select-none cursor-pointer">
+                            Periodo de concretización
+                            <span *ngIf="columnaOrden === 'periodo'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+                        </th>
+                        <th scope="col" (click)="ordenarPor('preparacion')" class="user-select-none cursor-pointer">
+                            Nivel de preparación
+                            <span *ngIf="columnaOrden === 'preparacion'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of riesgosTabla">
+                        <td class="fw-bold text-center">{{ item.ranking }}</td>
+                        <td class="text-muted text-center">{{ item.codigo }}</td>
+                        <td>{{ item.tematica }}</td>
+                        <td class="fw-semibold">{{ item.nombre }}</td>
+
+                        <!-- Valores formateados con el pipe 'number' -->
+                        <td class="text-center" [class.fw-bold]="columnaOrden === 'impacto'">{{ item.impacto |
+                            number:'1.2-2' }}</td>
+                        <td class="text-center" [class.fw-bold]="columnaOrden === 'probabilidad'">{{ item.probabilidad |
+                            number:'1.2-2' }}</td>
+                        <td class="text-center" [class.fw-bold]="columnaOrden === 'periodo'">{{ item.periodo |
+                            number:'1.2-2' }}</td>
+                        <td class="text-center" [class.fw-bold]="columnaOrden === 'preparacion'">{{ item.preparacion |
+                            number:'1.2-2' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Red de Interconexiones de Riesgos -->
+    <section class="my-5">
+        <div class="text-center mb-3">
+            <h3 class="fw-bold text-navy mb-1">Red de interconexiones de riesgos</h3>
+            <p class="text-muted mb-0">Visualiza la influencia e interdependencia entre los distintos riesgos evaluados.
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white position-relative overflow-hidden p-3">
+
+            <!-- Mensaje de Estado / Guía -->
+            <div class="d-flex justify-content-end mb-2">
+                <span class="badge bg-light text-dark border font-monospace px-3 py-2 rounded-pill shadow-sm">
+                    {{ statusHintRed }}
+                </span>
+            </div>
+
+            <!-- Contenedor dinámico del Grafo D3 -->
+            <div #networkContainer class="w-100" style="min-height: 550px;"></div>
+
+            <!-- Leyendas Informativas -->
+            <div class="row g-2 mt-2 pt-2 border-top small text-secondary">
+                <div class="col-12 col-md-6 d-flex flex-wrap align-items-center gap-3">
+                    <span class="fw-bold text-dark">Temáticas:</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(255, 85, 51);"></span> Social</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(78, 135, 198);"></span> Tecnológico</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(5, 145, 65);"></span> Ambiental</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(239, 197, 20);"></span> Económico</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(154, 32, 226);"></span> Político</span>
+                </div>
+                <div class="col-12 col-md-6 d-flex justify-content-md-end align-items-center gap-3">
+                    <span class="fw-bold text-dark">Nivel de influencia:</span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="4" />
+                        </svg> Fuerte
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="2" />
+                        </svg> Alta
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="1" />
+                        </svg> Moderada
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección: Brechas de preparación frente a los riesgos -->
+    <section class="my-5">
+        <h3 class="fw-bold text-navy mb-1">Brechas de preparación frente a los riesgos</h3>
+        <p class="text-muted mb-4">¿Frente a cuáles riesgos disponemos de menores capacidades?</p>
+
+        <div class="row g-4 align-items-center">
+            <!-- Matriz SVG de Cuadrantes (2x2) -->
+            <div class="col-12 col-lg-7">
+                <div class="bg-light p-4 rounded-4 border position-relative text-center shadow-sm">
+
+                    <svg viewBox="0 0 500 400" class="w-100 h-auto" style="max-height: 380px;">
+                        <!-- Fondo y Ejes -->
+                        <line x1="50" y1="200" x2="450" y2="200" stroke="#6c757d" stroke-width="2"
+                            stroke-dasharray="4" />
+                        <line x1="250" y1="50" x2="250" y2="350" stroke="#6c757d" stroke-width="2"
+                            stroke-dasharray="4" />
+
+                        <!-- Flechas de Ejes -->
+                        <path d="M 245 60 L 250 50 L 255 60" fill="none" stroke="#6c757d" stroke-width="2" />
+                        <path d="M 245 340 L 250 350 L 255 340" fill="none" stroke="#6c757d" stroke-width="2" />
+                        <path d="M 440 195 L 450 200 L 440 205" fill="none" stroke="#6c757d" stroke-width="2" />
+
+                        <!-- Etiquetas Eje Y -->
+                        <text x="250" y="25" text-anchor="middle" font-weight="bold" font-size="12" fill="#333">NIVEL DE
+                            PRIORIDAD</text>
+                        <text x="250" y="42" text-anchor="middle" font-weight="bold" font-size="11"
+                            fill="#555">ALTO</text>
+                        <text x="250" y="370" text-anchor="middle" font-weight="bold" font-size="11"
+                            fill="#555">BAJO</text>
+
+                        <!-- Etiqueta Eje X -->
+                        <text x="440" y="225" text-anchor="end" font-weight="bold" font-size="11"
+                            fill="#555">PREPARACIÓN</text>
+
+                        <!-- Etiquetas Cuadrantes -->
+                        <text x="130" y="100" text-anchor="middle" font-weight="bold" font-size="13" fill="#222">BRECHA
+                            CRÍTICA</text>
+                        <text x="370" y="100" text-anchor="middle" font-weight="bold" font-size="13"
+                            fill="#222">VIGILANCIA</text>
+                        <text x="130" y="300" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">FORTALECER</text>
+                        <text x="130" y="315" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">CAPACIDADES</text>
+                        <text x="370" y="300" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">CONTROL</text>
+                        <text x="370" y="315" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">RELATIVO</text>
+
+                        <!-- Puntos Interactivos (Mapeados dinámicamente) -->
+                        <g *ngFor="let item of top5Brechas">
+                            <circle [attr.cx]="50 + (item.preparacionVal * 4)" [attr.cy]="350 - (item.prioridadVal * 3)"
+                                r="6" fill="#000" />
+                        </g>
+                    </svg>
+
+                </div>
+            </div>
+
+            <!-- Listado Top 5 Brechas -->
+            <div class="col-12 col-lg-5 ps-lg-4">
+                <h4 class="fw-bold text-danger mb-4">Top 5 de riesgos con mayor brecha</h4>
+                <div class="d-flex flex-column gap-3">
+                    <div *ngFor="let item of top5Brechas" class="border-bottom pb-2">
+                        <h6 class="fw-bold mb-1 text-dark">{{ item.nombre }}</h6>
+                        <div class="small text-muted">
+                            <div>Temática: <span class="text-capitalize">{{ item.tematica }}</span></div>
+                            <div>Prioridad: {{ item.prioridadLabel }}</div>
+                            <div>Preparación: {{ item.preparacionLabel }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Nuevos riesgos -->
+    <section class="my-5">
+        <h3 class="fw-bold text-navy mb-1">Nuevos riesgos</h3>
+        <p class="text-muted mb-4">Descubre los nuevos riesgos identificados para esta edición.</p>
+
+        <div class="border-dashed-blue p-4 rounded-4 position-relative">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-md-10">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4" *ngFor="let item of nuevosRiesgos">
+                            <div class="card card-nuevo-riesgo h-100 rounded-4 text-white p-3 d-flex flex-column justify-content-between border-0 shadow-sm"
+                                style="background-color: #0c4a6e; min-height: 200px;">
+                                <div>
+                                    <span class="badge bg-light text-navy fw-semibold mb-2">Nuevo</span>
+                                    <h6 class="fw-bold mb-3 lh-sm">{{ item.nombre }}</h6>
+                                </div>
+                                <div>
+                                    <p class="small mb-1 opacity-90">Impacto: {{ item.impacto }}</p>
+                                    <p class="small mb-3 opacity-90">Probabilidad: {{ item.probabilidad }}</p>
+                                    <button
+                                        class="btn btn-link text-white text-decoration-none p-0 small fw-semibold d-flex align-items-center gap-2"
+                                        (click)="explorarRiesgo(item)">
+                                        Explorar riesgo <i class="pi pi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flecha Navegación / Indicador -->
+                <div class="col-12 col-md-2 text-center">
+                    <div class="btn btn-navy rounded-circle p-3 shadow d-inline-flex align-items-center justify-content-center cursor-pointer"
+                        style="width: 50px; height: 50px;">
+                        <i class="pi pi-arrow-right fs-4 text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>

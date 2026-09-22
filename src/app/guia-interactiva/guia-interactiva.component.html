@@ -1,0 +1,961 @@
+<main class="container d-flex flex-column gap-4 py-4">
+
+    <!-- ENCABEZADO GENERAL -->
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="header-line"></span>
+            <span class="text-uppercase fw-bold text-teal small tracking-wider">Centro de Recursos</span>
+        </div>
+        <h1 class="fw-bold display-5 text-dark mb-2">Prospectiva para políticas y planes del SINAPLAN</h1>
+        <p class="text-muted col-lg-8 fs-6 mb-0">
+            Explore métodos prospectivos, comprenda la secuencia de aplicación, descargue formatos oficiales y consulte
+            el glosario institucional.
+        </p>
+    </div>
+
+    <!-- TABS NAVEGACIÓN -->
+    <ul class="nav nav-tabs custom-tabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link fw-bold" [class.active]="activeTab === 'teoria'" (click)="cambiarTab('teoria')">
+                <i class="pi pi-compass me-2"></i> Teoría Prospectiva
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold" [class.active]="activeTab === 'aplicada'" (click)="cambiarTab('aplicada')">
+                <i class="bi bi-clipboard-data me-2"></i> Prospectiva Aplicada
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold" [class.active]="activeTab === 'recursos'" (click)="cambiarTab('recursos')">
+                <i class="pi pi-sitemap me-2"></i> Métodos
+            </button>
+        </li>
+
+        <li class="nav-item">
+            <button class="nav-link fw-bold" [class.active]="activeTab === 'glosario'" (click)="cambiarTab('glosario')">
+                <i class="pi pi-book me-2"></i> Glosario
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-2">
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA: TEORIA (REDISEÑADA Y DINÁMICA)    -->
+        <!-- ========================================== -->
+        <div *ngIf="activeTab === 'teoria'" class="fade-in">
+
+            <!-- CONCEPTUALIZACIÓN BÁSICA -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 mb-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <span class="badge bg-teal text-white fw-bold px-3 py-1 mb-3">Marco Metodológico</span>
+                        <h2 class="fs-3 fw-bold text-dark mb-4">¿Qué es la prospectiva?</h2>
+
+                        <div class="quote-box p-4 mb-4">
+                            <i class="pi pi-quote-left text-teal fs-3 mb-2 opacity-50"></i>
+                            <p class="text-secondary fs-5 fst-italic mb-2 lh-base">
+                                “La prospectiva es una reflexión para iluminar la acción presente con la luz de los
+                                futuros posibles.”
+                            </p>
+                            <small class="text-dark fw-bold">— Michel Godet</small>
+                        </div>
+
+                        <p class="text-secondary mb-0 lh-base">
+                            Para los propósitos de la presente Guía y del Sinaplan, se conceptualiza como una
+                            <strong>reflexión y exploración colectiva e informada</strong> sobre la situación presente
+                            y posibles futuros, la cual orienta la toma de decisiones estratégicas para la
+                            construcción de un <strong>futuro deseado factible.</strong>
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div
+                            class="p-4 bg-light rounded-4 text-center h-100 d-flex flex-column justify-content-center hover-card border-0 shadow-sm">
+                            <div class="icon-circle mb-3">
+                                <i class="pi pi-sync"></i>
+                            </div>
+                            <h4 class="fw-bold text-dark fs-5 mb-2">Enfoque de Planeamiento</h4>
+                            <div class="d-flex justify-content-center align-items-center gap-2 text-teal fw-bold">
+                                <span>Anticipar</span>
+                                <i class="pi pi-arrow-right extra-small"></i>
+                                <span>Diseñar</span>
+                                <i class="pi pi-arrow-right extra-small"></i>
+                                <span>Actuar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVA SECCIÓN: CONCEPTOS Y TEORÍAS EN ANÁLISIS DE FUTURO Y PROSPECTIVA -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 mb-5">
+                <div class="d-flex align-items-center mb-4 text-divider">
+                    <h3 class="fs-4 fw-bold text-dark mb-0">Conceptos y Teorías en Análisis de Futuro</h3>
+                </div>
+                <p class="text-secondary lh-base mb-4">
+                    La reflexión sobre el futuro ha transitado desde enfoques místico-religiosos hasta la aplicación de
+                    enfoques científicos para la toma de decisiones. Esta evolución se estructura a través de
+                    representaciones clave:
+                </p>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <strong class="text-teal d-block mb-2">Futuro como Destino</strong>
+                            <p class="text-secondary small mb-0 lh-base">
+                                Explorado a través de la adivinación y oráculos (como el oráculo de Delfos en la antigua
+                                Grecia). El futuro se consideraba determinado e inalterable.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <strong class="text-teal d-block mb-2">Futuro como Porvenir</strong>
+                            <p class="text-secondary small mb-0 lh-base">
+                                Vinculado al desarrollo industrial y expresado en la literatura utópica (Platón, Tomás
+                                Moro, Francis Bacon) y ciencia ficción (Julio Verne, Isaac Asimov) para imaginar futuros
+                                posibles distintos al presente.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <strong class="text-teal d-block mb-2">Futuro como Devenir</strong>
+                            <p class="text-secondary small mb-0 lh-base">
+                                Concebido como un proceso histórico sujeto a la acción, sentando las bases para el
+                                surgimiento de los estudios de futuros sistemáticos para lograr el bien común.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="fs-5 fw-bold text-dark mb-3">Enfoques y Autores Clave</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="principle-card p-3 rounded-3 h-100">
+                            <strong class="text-dark d-block mb-1">Enfoque de Bienestar (Wendell Bell)</strong>
+                            <span class="text-secondary extra-small">Define la disciplina como la exploración
+                                sistemática de los futuros posibles para mantener o mejorar la libertad, el bienestar y
+                                el desarrollo humano y sostenible.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="principle-card p-3 rounded-3 h-100">
+                            <strong class="text-dark d-block mb-1">Previsión Interdisciplinaria (Eleonora
+                                Masini)</strong>
+                            <span class="text-secondary extra-small">Plantea que los estudios de futuros son
+                                interdisciplinarios por necesidad y participativos, pues deben intervenir quienes
+                                construirán ese futuro.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="principle-card p-3 rounded-3 h-100">
+                            <strong class="text-dark d-block mb-1">Consolidación Post-Guerra (Kuosa)</strong>
+                            <span class="text-secondary extra-small">Los estudios de futuro cobraron relevancia
+                                académica tras la Segunda Guerra Mundial, ante la necesidad de reconstruir Europa con
+                                una visión de mediano y largo plazo.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVOLUCIÓN DEL CONCEPTO (TARJETAS ANIMADAS) -->
+            <div class="mb-5">
+                <div class="text-center mb-4">
+                    <span class="text-teal fw-bold tracking-wider small text-uppercase">Exploración de la
+                        incertidumbre</span>
+                    <h3 class="fs-4 fw-bold text-dark mt-1">Los Tres Futuros de la Prospectiva</h3>
+                    <p class="text-secondary col-md-8 mx-auto">
+                        Bertrand de Jouvenel define la prospectiva como la exploración de diferentes tipos de futuros,
+                        introduciendo el concepto de "futurible" (futuro posible).
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4 text-center">
+                            <div class="icon-circle mb-4">
+                                <i class="pi pi-globe"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-teal mb-3">Futuros Posibles</h4>
+                            <p class="text-secondary mb-0 small lh-base">Son todos aquellos imaginables e inimaginables,
+                                todos los futuros potenciales sin ningún tipo de restricción.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4 text-center">
+                            <div class="icon-circle mb-4">
+                                <i class="pi pi-chart-pie"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-teal mb-3">Futuros Probables</h4>
+                            <p class="text-secondary mb-0 small lh-base">Surgen de discriminar los posibles. El
+                                análisis se centra en determinar si es probable o no que ocurran.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4 text-center">
+                            <div class="icon-circle mb-4">
+                                <i class="pi pi-star-fill"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-teal mb-3">Futuros Deseables</h4>
+                            <p class="text-secondary mb-0 small lh-base">Implican pensar si el futuro es conveniente o
+                                no, para luego intentar su construcción desde las condiciones de los actores.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRINCIPIOS DE LA PROSPECTIVA (GRID INTERACTIVO) -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 mb-5">
+                <div class="d-flex align-items-center mb-4 text-divider">
+                    <!-- <div class="p-2 bg-teal bg-opacity-10 rounded-3 me-3">
+                        <i class="bi bi-card-list fs-4 text-white"></i>
+                    </div> -->
+                    <h3 class="fs-4 fw-bold text-dark mb-0">Principios Fundamentales</h3>
+                </div>
+                <p class="text-secondary lh-base mb-4">La toma de decisiones informadas y la comprensión de los futuros
+                    potenciales se sustentan en los siguientes pilares (Medina y otros):</p>
+
+                <div class="vertical-tab-container">
+                    <p-tabView styleClass="tabview-vertical">
+                        <!-- Tab 1 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-compass me-2"></i>
+                                <span>Exploración del futuro</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Exploración del futuro</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Investigar los posibles futuros sin intentar predecirlos. Parte del supuesto de que
+                                    el futuro no está predeterminado y puede tomar diversas direcciones según las
+                                    decisiones tomadas por las personas en el presente.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 2 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-check-square me-2"></i>
+                                <span>Libertad y elección</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Libertad y elección</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Contar con opciones futuras implica la capacidad de elegir futuros que sean
+                                    deseables. En este caso, la sociedad debe considerar la influencia de valores y
+                                    visiones del futuro al tomar decisiones.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 3 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-sitemap me-2"></i>
+                                <span>Globalidad</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Globalidad</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Se propone comprender las interconexiones entre los sistemas internos y externos,
+                                    así como las interacciones e interdependencias entre sistemas, suprasistemas y
+                                    subsistemas involucrados.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 4 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-bolt me-2"></i>
+                                <span>Dinamismo</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Dinamismo</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Implica un proceso continuo de aprendizaje, adaptación y renovación frente a los
+                                    cambios sociales. Mantenerse actualizado representa un desafío significativo que
+                                    requiere aprendizaje continuo.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 5 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-database me-2"></i>
+                                <span>Cientificidad</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Cientificidad</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    La cientificidad radica en el rigor del método, la investigación detallada,
+                                    recopilación de información, formulación de hipótesis, simulación y validación
+                                    posterior de los resultados.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 6 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-share-alt me-2"></i>
+                                <span>Complejidad</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Complejidad</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Busca una comprensión integral de la realidad integrando múltiples enfoques más allá
+                                    de las disciplinas tradicionales, como administración, medioambiente y desarrollo.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 7 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-users me-2"></i>
+                                <span>Multidisciplinariedad</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Multidisciplinariedad</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Requiere un conocimiento tanto teórico como aplicado. Por ejemplo, el uso del método
+                                    Delphi implica la aplicación cruzada de conocimientos de matemáticas y sociología.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 8 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-comments me-2"></i>
+                                <span>Democracia y participación</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Democracia y participación</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Implica la comprensión de los actores involucrados y la implementación de procesos
+                                    de preparación, animación, comunicación y diálogo social con cada uno de ellos.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 9 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-briefcase me-2"></i>
+                                <span>Coordinación Técnico-Política</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Coordinación Técnico-Política</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Involucra a múltiples actores en el ámbito público donde se debaten hipótesis. Se
+                                    basa en datos y hechos para elaborar programas de acción que coordinen la
+                                    movilización de recursos.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                        <!-- Tab 10 -->
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <i class="pi pi-flag me-2"></i>
+                                <span>Orientación a resultados</span>
+                            </ng-template>
+                            <div class="principle-card p-4 rounded-4 h-100">
+                                <h4 class="fw-bold text-dark mb-2">Orientación a resultados</h4>
+                                <p class="text-secondary mb-0 lh-base">
+                                    Se aplica en contextos específicos donde se buscan alcanzar metas concretas.
+                                    Observar los cambios sociales es parte integral de la toma de decisiones
+                                    estratégicas.
+                                </p>
+                            </div>
+                        </p-tabPanel>
+
+                    </p-tabView>
+                </div>
+
+                <!-- <div class="row g-3">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-compass"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Exploración del futuro</strong>
+                                <span class="text-secondary extra-small">Investigar posibles futuros sin predecirlos. No
+                                    está predeterminado.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-check-square"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Libertad y elección</strong>
+                                <span class="text-secondary extra-small">Capacidad de elegir un futuro deseable
+                                    basándose en valores.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-sitemap"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Globalidad</strong>
+                                <span class="text-secondary extra-small">Comprender las interconexiones entre diferentes
+                                    sistemas y subsistemas.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-bolt"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Dinamismo</strong>
+                                <span class="text-secondary extra-small">Proceso continuo de adaptación y renovación
+                                    frente a cambios sociales.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="bi bi-sd-card"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Cientificidad</strong>
+                                <span class="text-secondary extra-small">Rigor del método, formulación de hipótesis y
+                                    validación con evidencia.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-share-alt"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Complejidad</strong>
+                                <span class="text-secondary extra-small">Comprensión integral de la realidad con
+                                    múltiples enfoques disciplinarios.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-users"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Multidisciplinariedad</strong>
+                                <span class="text-secondary extra-small">Integración de conocimiento teórico y aplicado
+                                    (ej. Delphi).</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-comments"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Democracia y participación</strong>
+                                <span class="text-secondary extra-small">Implementación de procesos de comunicación y
+                                    diálogo social con actores.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-briefcase"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Coordinación Técnico-Política</strong>
+                                <span class="text-secondary extra-small">Basarse en datos para coordinar personas y
+                                    recursos efectivamente.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="principle-card p-3 rounded-3 h-100 d-flex align-items-start gap-3">
+                            <div class="principle-icon flex-shrink-0"><i class="pi pi-flag"></i></div>
+                            <div>
+                                <strong class="text-dark d-block mb-1">Orientación a resultados</strong>
+                                <span class="text-secondary extra-small">Aplicable donde las instituciones intentan dar
+                                    forma al futuro.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- PLANEAMIENTO Y PROSPECTIVA (INFOGRAFÍA VISUAL) -->
+            <div class="mb-5">
+                <h3 class="fs-4 fw-bold text-dark mb-4 text-center">La sinergia estratégica</h3>
+
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+
+                    <!-- Tarjeta Prospectiva -->
+                    <div
+                        class="card bg-white shadow-sm border-0 rounded-4 p-4 text-center equation-card flex-fill w-100">
+                        <i class="pi pi-eye text-teal fs-1 mb-3"></i>
+                        <h4 class="fs-5 fw-bold text-dark">Prospectiva</h4>
+                        <p class="small text-muted mb-0">Crea y visualiza el futuro deseado. Propicia la creatividad y
+                            reflexión colaborativa.</p>
+                    </div>
+
+                    <!-- Icono de Suma -->
+                    <div class="equation-icon mx-2 my-3 my-md-0 flex-shrink-0">
+                        <i class="pi pi-plus"></i>
+                    </div>
+
+                    <!-- Tarjeta Planeamiento -->
+                    <div
+                        class="card bg-white shadow-sm border-0 rounded-4 p-4 text-center equation-card flex-fill w-100">
+                        <i class="pi pi-calendar-plus text-teal fs-1 mb-3"></i>
+                        <h4 class="fs-5 fw-bold text-dark">Planeamiento</h4>
+                        <p class="small text-muted mb-0">Organiza las acciones y define el camino viable a seguir para
+                            alcanzar metas.</p>
+                    </div>
+
+                    <!-- Icono de Igual -->
+                    <div class="equation-icon mx-2 my-3 my-md-0 flex-shrink-0 bg-teal text-white border-teal">
+                        <i class="pi pi-arrow-right"></i>
+                    </div>
+
+                    <!-- Resultado -->
+                    <div
+                        class="card bg-teal shadow-sm border-0 rounded-4 p-4 text-center flex-fill w-100 text-white hover-card">
+                        <i class="pi pi-trophy fs-1 mb-3"></i>
+                        <h4 class="fs-5 fw-bold text-white">Estrategia Exitosa</h4>
+                        <p class="small text-white-50 mb-0">Decisiones precisas y alineadas a las dinámicas del
+                            entorno.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- RESTO DE LAS PESTAÑAS (MANTENIDAS INTACTAS)-->
+        <!-- ========================================== -->
+
+        <!-- PESTAÑA UNIFICADA: MÉTODOS -->
+        <div *ngIf="activeTab === 'recursos'" class="fade-in">
+
+            <div class="phase-section" aria-labelledby="phase-title">
+                <div class="obs-container">
+                    <div class="phase-section-head">
+                        <div>
+                            <span>Proceso prospectivo en el Sinaplan</span>
+                            <h2 id="phase-title">Elija una fase del planeamiento</h2>
+                        </div>
+                        <a href="https://metodos-prospectivos-ceplan.ceplan-ia-2815.chatgpt.site/assets/guia-prospectiva-ceplan-2024.pdf#page=19"
+                            target="_blank" rel="noreferrer">Consultar guía oficial ↗</a>
+                    </div>
+
+                    <div class="phase-selector" id="phase-selector">
+                        <!-- FASE 1 -->
+                        <article class="phase-card-v3"
+                            [class.active]="etapaSelect === 'Fase 1' || subetapaSelect === 'Caracterización' || subetapaSelect === 'Diagnóstico'"
+                            style="--phase-color:#2f679f; --phase-bg-light:#f0f4f8;">
+                            <button class="phase-main" data-phase="1" [attr.aria-pressed]="etapaSelect === 'Fase 1'"
+                                (click)="filtrarMetodosPorFase('Fase 1')">
+                                <span class="phase-index">Fase 1</span>
+                                <strong>Análisis de la situación actual</strong>
+                                <small>11 recursos metodológicos</small>
+                                <p>Comprende el objeto de estudio, delimita problemas y reconoce las variables y actores
+                                    que explican su comportamiento.</p>
+                            </button>
+                            <div class="stage-links" aria-label="Etapas de la fase 1">
+                                <button class="stage-link"
+                                    [class.active-stage]="(subetapaSelect === 'Caracterización' && etapaSelect === 'Fase 1') || subetapaSelect === 'Caracterización'"
+                                    data-stage="caracterizacion" data-stage-phase="1"
+                                    [attr.aria-pressed]="subetapaSelect === 'Caracterización' || etapaSelect === 'Fase 1'"
+                                    (click)="seleccionarFaseYSubetapa('Fase 1', 'Caracterización')">
+                                    <span>Caracterización</span>
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                                <button class="stage-link"
+                                    [class.active-stage]="(subetapaSelect === 'Diagnóstico' && etapaSelect === 'Fase 1') || subetapaSelect === 'Diagnóstico'"
+                                    data-stage="diagnostico" data-stage-phase="1"
+                                    [attr.aria-pressed]="subetapaSelect === 'Diagnóstico' || etapaSelect === 'Fase 1'"
+                                    (click)="seleccionarFaseYSubetapa('Fase 1', 'Diagnóstico')">
+                                    <span>Diagnóstico</span>
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- FASE 2 -->
+                        <article class="phase-card-v3"
+                            [class.active]="etapaSelect === 'Fase 2' || subetapaSelect === 'Formulación de escenarios' || subetapaSelect === 'Opciones estratégicas'"
+                            style="--phase-color:#0796a6; --phase-bg-light:#e6f7f9;">
+                            <button class="phase-main" data-phase="2" [attr.aria-pressed]="etapaSelect === 'Fase 2'"
+                                (click)="filtrarMetodosPorFase('Fase 2')">
+                                <span class="phase-index">Fase 2</span>
+                                <strong>Análisis prospectivo</strong>
+                                <small>17 recursos metodológicos</small>
+                                <p>Explora cambios, incertidumbres y futuros posibles para formular escenarios y
+                                    opciones de respuesta.</p>
+                            </button>
+                            <div class="stage-links" aria-label="Etapas de la fase 2">
+                                <button class="stage-link"
+                                    [class.active-stage]="(subetapaSelect === 'Formulación de escenarios' && etapaSelect === 'Fase 2') || subetapaSelect === 'Formulación de escenarios'"
+                                    data-stage="escenarios" data-stage-phase="2"
+                                    [attr.aria-pressed]="subetapaSelect === 'Formulación de escenarios' || etapaSelect === 'Fase 2'"
+                                    (click)="seleccionarFaseYSubetapa('Fase 2', 'Formulación de escenarios')">
+                                    <span>Formulación de escenarios</span>
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                                <button class="stage-link"
+                                    [class.active-stage]="(subetapaSelect === 'Opciones estratégicas' && etapaSelect === 'Fase 2') || subetapaSelect === 'Opciones estratégicas'"
+                                    data-stage="opciones" data-stage-phase="2"
+                                    [attr.aria-pressed]="subetapaSelect === 'Opciones estratégicas' || etapaSelect === 'Fase 2'"
+                                    (click)="seleccionarFaseYSubetapa('Fase 2', 'Opciones estratégicas')">
+                                    <span>Opciones estratégicas</span>
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- FASE 3 -->
+                        <article class="phase-card-v3"
+                            [class.active]="etapaSelect === 'Fase 3' || subetapaSelect === 'Definición del futuro deseado'"
+                            style="--phase-color:#7b2c83; --phase-bg-light:#f8eafb;">
+                            <button class="phase-main" data-phase="3" [attr.aria-pressed]="etapaSelect === 'Fase 3'"
+                                (click)="filtrarMetodosPorFase('Fase 3')">
+                                <span class="phase-index">Fase 3</span>
+                                <strong>Decisión estratégica</strong>
+                                <small>9 recursos metodológicos</small>
+                                <p>Construye una visión compartida y organiza las decisiones, hitos y acciones
+                                    necesarias para alcanzarla.</p>
+                            </button>
+                            <div class="stage-links" aria-label="Etapas de la fase 3">
+                                <button class="stage-link"
+                                    [class.active-stage]="(subetapaSelect === 'Definición del futuro deseado' && etapaSelect === 'Fase 3') || subetapaSelect === 'Definición del futuro deseado'"
+                                    data-stage="futuro" data-stage-phase="3"
+                                    [attr.aria-pressed]="subetapaSelect === 'Definición del futuro deseado' || etapaSelect === 'Fase 3'"
+                                    (click)="seleccionarFaseYSubetapa('Fase 3', 'Definición del futuro deseado')">
+                                    <span>Definición del futuro deseado</span>
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+            <div class="search-panel p-3 rounded-4 shadow-sm border mb-4" [style.---active-phase-color]="
+                               etapaSelect === 'Fase 1' || (subetapaSelect === 'Diagnóstico' || subetapaSelect === 'Caracterización') ? '#2f679f' : 
+                               etapaSelect === 'Fase 2' || (subetapaSelect === 'Formulación de escenarios' || subetapaSelect === 'Opciones estratégicas')? '#0796a6' : 
+                               etapaSelect === 'Fase 3' || subetapaSelect === 'Definición del futuro deseado' ? '#7b2c83' 
+                               : '#f5f4f5'">
+                <div class="row g-2 align-items-center">
+
+                    <div class="col-12 col-lg-6">
+                        <div class="search-input-wrapper">
+                            <i class="pi pi-search search-icon"></i>
+                            <input type="text" class="form-control modern-input" placeholder="Buscar por método..."
+                                [(ngModel)]="textoBusqueda" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-2">
+                        <select [(ngModel)]="etapaSelect" (change)="onEtapaChange()" class="form-select modern-select">
+                            <option value="">Todas las fases</option>
+                            <option *ngFor="let op of opcionesEtapas" [value]="op">{{ op }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <select [(ngModel)]="subetapaSelect" class="form-select modern-select">
+                            <option value="">Todas las etapas</option>
+                            <option *ngFor="let op of opcionesSubetapasDisponibles" [value]="op">{{ op }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-lg-1 text-end">
+                        <button (click)="limpiarFiltros()" class="btn btn-light-reset w-100" title="Limpiar Filtros">
+                            <i class="pi pi-filter-slash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTADOR DE RESULTADOS -->
+
+            <div class="d-flex justify-content-between align-items-center mb-5 catalog-results-head"
+                [style.--active-phase-color]="
+                               etapaSelect === 'Fase 1' || (subetapaSelect === 'Diagnóstico' || subetapaSelect === 'Caracterización') ? '#2f679f' : 
+                               etapaSelect === 'Fase 2' || (subetapaSelect === 'Formulación de escenarios' || subetapaSelect === 'Opciones estratégicas')? '#0796a6' : 
+                               etapaSelect === 'Fase 3' || subetapaSelect === 'Definición del futuro deseado' ? '#7b2c83' 
+                               : '#9a9a9a'">
+                <div *ngIf="hasSelectionSubetapa || hasSelectionfase">
+                    <p class="fw-bold text-uppercase">{{ tituloSeccion }}</p>
+                    <h2>Métodos para {{tituloSeccion2}}</h2>
+                </div>
+                <span>{{ recursosFiltrados.length }} resultados</span>
+            </div>
+
+            <!-- TARJETAS -->
+            <div class="row g-4 catalog-workspace" [style.--active-phase-color]="
+                               etapaSelect === 'Fase 1' || (subetapaSelect === 'Diagnóstico' || subetapaSelect === 'Caracterización') ? '#2f679f' : 
+                               etapaSelect === 'Fase 2' || (subetapaSelect === 'Formulación de escenarios' || subetapaSelect === 'Opciones estratégicas')? '#0796a6' : 
+                               etapaSelect === 'Fase 3' || subetapaSelect === 'Definición del futuro deseado' ? '#7b2c83' 
+                               : '#fffff'">
+                <div *ngFor="let item of recursosFiltrados" class="col-12 col-md-6 col-lg-4">
+                    <div
+                        class="card h-100 border-0 shadow-sm rounded-4 bg-white hover-card overflow-hidden d-flex flex-column justify-content-between">
+
+                        <div>
+                            <div class="card-img-wrapper position-relative">
+                                <img [src]="item.imagen" [alt]="item.nombre" class="card-img-top custom-card-img">
+                                <span class="badge position-absolute top-0 end-0 m-3 px-3 py-2 rounded-3 shadow-sm"
+                                    [ngClass]="item.tipoRecurso === 'metodo' ? 'bg-teal text-white' : 'bg-purple text-white'">
+                                    {{ item.tipoRecurso === 'metodo' ? 'Método ' + (item.num || '') : 'Kits'
+                                    }}
+                                </span>
+                            </div>
+
+                            <div class="p-4">
+                                <h3 class="fs-5 fw-bold text-dark mb-2">{{ item.nombre }}</h3>
+                                <p class="text-muted small mb-3 lh-base">{{ item.finalidad }}</p>
+
+                                <div class="mb-3 small">
+                                    <p *ngIf="item.etapa" class="mb-1">
+                                        <strong class="text-dark">Fases: </strong>
+                                        <span class="text-muted">{{ item.etapa.join(', ') }}</span>
+                                    </p>
+                                    <p *ngIf="item.subetapa" class="mb-1">
+                                        <strong class="text-dark">Etapa: </strong>
+                                        <span class="text-muted">{{ item.subetapa }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="px-4 pb-4">
+                            <hr class="text-muted opacity-25">
+
+                            <div *ngIf="item.tipoRecurso === 'metodo'"
+                                class="d-flex justify-content-between align-items-center">
+                                <!-- Enlace corregido usando 'item' en lugar de 'metodo' -->
+                                <a [routerLink]="['/guia-interactiva/metodo', item.num]" class="btn-ver-ficha">
+                                    Ver ficha &rarr;
+                                </a>
+                                <a *ngIf="item.kit" href="{{ item.kit.urlArchivo }}" target="_blank"
+                                    class="btn btn-outline-teal btn-sm rounded-3 fw-bold px-3 d-flex align-items-center gap-1">
+                                    Consulta el {{ item.kit.ext }}
+                                </a>
+                            </div>
+
+                            <!-- <div *ngIf="item.tipoRecurso === 'kit'"
+                                class="d-flex justify-content-between align-items-center">
+                                <a href="{{item.ficha}}" class="text-teal fw-bold text-decoration-none ver-ficha-link">
+                                    Ver Kit <i class="pi pi-arrow-right ms-1"></i>
+                                </a>
+                                <a *ngIf="item.kit" href="{{ item.kit.urlArchivo }}" target="_blank"
+                                    class="btn btn-outline-teal btn-sm rounded-3 fw-bold px-3 d-flex align-items-center gap-1">
+                                    Consulta el {{ item.kit.ext }}
+                                </a>
+                            </div> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="recursosFiltrados.length === 0"
+                class="text-center text-muted py-5 bg-white rounded-4 border mt-3">
+                <i class="pi pi-inbox display-6 text-muted mb-2 d-block"></i>
+                No se encontraron recursos que coincidan con la búsqueda.
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA: PROSPECTIVA APLICADA              -->
+        <!-- ========================================== -->
+        <div *ngIf="activeTab === 'aplicada'" class="fade-in">
+
+            <!-- INTRODUCCIÓN APLICADA -->
+            <!-- DIAGRAMA ESPECÍFICO: FASE 2 DEL CICLO DE PLANEAMIENTO -->
+            <div class="mb-5">
+                <div class="text-center mb-4">
+                    <span class="text-teal fw-bold tracking-wider small text-uppercase">Ciclo de Planeamiento
+                        Estratégico</span>
+                    <h3 class="fs-4 fw-bold text-dark mt-1">Fase 2: Análisis Prospectivo</h3>
+                    <p class="text-secondary col-md-8 mx-auto">
+                        Esta fase busca anticipar futuros posibles para generar opciones estratégicas, diseñando
+                        escenarios basados en tendencias, riesgos, oportunidades y las aspiraciones de las
+                        personas.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-column flex-md-row align-items-stretch justify-content-center gap-4">
+                    <!-- Etapa 1 -->
+                    <div class="card bg-white border-0 shadow-sm rounded-4 hover-card p-4 flex-fill w-100 text-center"
+                        style="border-top: 5px solid #0796a6 !important;">
+                        <div class="icon-circle mb-3 mx-auto" style="background-color: #e6f7f9; color: #0796a6;">
+                            <i class="pi pi-clone"></i>
+                        </div>
+                        <h4 class="fs-5 fw-bold text-dark mb-2">Etapa 1: Formulación de Escenarios</h4>
+                        <p class="text-secondary mb-0 small lh-base">
+                            Anticipación e identificación de riesgos y oportunidades para formular posibles futuros
+                            (escenarios) a fin de minimizar o aprovechar sus efectos.
+                        </p>
+                    </div>
+
+                    <!-- Flecha conectora -->
+                    <div class="d-flex align-items-center justify-content-center">
+                        <i class="pi pi-arrow-right fs-2 text-teal d-none d-md-block opacity-50"></i>
+                        <i class="pi pi-arrow-down fs-2 text-teal d-block d-md-none opacity-50 my-2"></i>
+                    </div>
+
+                    <!-- Etapa 2 -->
+                    <div class="card bg-white border-0 shadow-sm rounded-4 hover-card p-4 flex-fill w-100 text-center"
+                        style="border-top: 5px solid #0796a6 !important;">
+                        <div class="icon-circle mb-3 mx-auto" style="background-color: #e6f7f9; color: #0796a6;">
+                            <i class="pi pi-compass"></i>
+                        </div>
+                        <h4 class="fs-5 fw-bold text-dark mb-2">Etapa 2: Opciones Estratégicas</h4>
+                        <p class="text-secondary mb-0 small lh-base">
+                            Formulación de opciones estratégicas de respuesta fundamentadas en la información crucial
+                            recopilada durante la exploración de los futuros alternativos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 mb-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <span class="badge bg-teal text-white fw-bold px-3 py-1 mb-3">Fase Metodológica y
+                            Operativa</span>
+                        <h2 class="fs-3 fw-bold text-dark mb-3">Prospectiva Aplicada al Planeamiento Estratégico</h2>
+                        <p class="text-secondary mb-0 lh-base">
+                            La prospectiva aplicada traslada la reflexión conceptual a herramientas metodológicas
+                            concretas. Permite estructurar el análisis del entorno, identificar variables clave, reducir
+                            la incertidumbre y diseñar rutas estratégicas viables para la toma de decisiones en el marco
+                            del Sinaplan.
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div
+                            class="p-4 bg-light rounded-4 text-center h-100 d-flex flex-column justify-content-center border-0 shadow-sm">
+                            <div class="icon-circle mb-3">
+                                <i class="pi pi-cog"></i>
+                            </div>
+                            <h4 class="fw-bold text-dark fs-5 mb-1">Ciclo Metodológico</h4>
+                            <span class="text-teal small fw-bold">De la reflexión a la acción</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASES DEL PROCESO APLICADO (STEPS / GRID) -->
+            <div class="mb-5">
+                <div class="text-center mb-4">
+                    <span class="text-teal fw-bold tracking-wider small text-uppercase">Ruta operativa</span>
+                    <h3 class="fs-4 fw-bold text-dark mt-1">Etapas de la Prospectiva Aplicada</h3>
+                    <p class="text-secondary col-md-8 mx-auto">
+                        El proceso operativo se despliega a través de fases estructuradas que garantizan el rigor
+                        técnico y la participación de los actores clave.
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Etapa 1 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="icon-circle-sm bg-teal bg-opacity-10 text-white fw-bold rounded-3 p-2">01</div>
+                                <i class="pi pi-search text-teal fs-4"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-dark mb-2">Diagnóstico y Vigilancia</h4>
+                            <p class="text-secondary mb-0 small lh-base">
+                                Identificación de tendencias, señales débiles y análisis del estado actual del sistema de estudio.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 2 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="icon-circle-sm bg-teal bg-opacity-10 text-white fw-bold rounded-3 p-2">02</div>
+                                <i class="pi pi-sitemap text-teal fs-4"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-dark mb-2">Análisis Estructural</h4>
+                            <p class="text-secondary mb-0 small lh-base">
+                                Uso de matrices de impactos cruzados para determinar las variables clave y clave de cambio del sistema.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 3 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="icon-circle-sm bg-teal bg-opacity-10 text-white fw-bold rounded-3 p-2">03</div>
+                                <i class="pi pi-sliders text-teal fs-4"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-dark mb-2">Construcción de Escenarios</h4>
+                            <p class="text-secondary mb-0 small lh-base">
+                                Diseño de hipótesis sobre variables estratégicas y modelamiento de escenarios alternativos y apuesta.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 4 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-white border-0 shadow-sm rounded-4 h-100 hover-card p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="icon-circle-sm bg-teal bg-opacity-10 text-white fw-bold rounded-3 p-2">04</div>
+                                <i class="pi pi-flag text-teal fs-4"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold text-dark mb-2">Estrategia y Plan de Acción</h4>
+                            <p class="text-secondary mb-0 small lh-base">
+                                Transformación del escenario objetivo en decisiones estratégicas, proyectos e indicadores medibles.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PESTAÑA: GLOSARIO                          -->
+        <!-- ========================================== -->
+        <div *ngIf="activeTab === 'glosario'" class="fade-in">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 mb-4">
+                <h3 class="fs-4 fw-bold text-dark mb-3">Glosario de Términos</h3>
+                
+                <!-- Buscador Glosario -->
+                <div class="mb-3">
+                    <input type="text" class="form-control modern-input" placeholder="Buscar término..." [(ngModel)]="textoBusquedaGlosario">
+                </div>
+
+                <!-- Abecedario -->
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                    <button *ngFor="let letra of abecedario" 
+                            class="alphabet-chip" 
+                            [class.active-letter]="letraActiva === letra"
+                            (click)="seleccionarLetra(letra)">
+                        {{ letra }}
+                    </button>
+                </div>
+
+                <!-- Lista Glosario -->
+                <div class="row g-3">
+                    <div *ngFor="let item of glosarioFiltrado" class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <strong class="text-teal d-block mb-1">{{ item.termino }}</strong>
+                            <p class="text-secondary small mb-0">{{ item.definicion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>

@@ -1,0 +1,379 @@
+<div class="page-container">
+  <div class="ficha-body">
+
+    <!-- 1. COLUMNA IZQUIERDA: NAVEGACIÓN STICKY -->
+    <aside class="sidebar-left">
+      <nav class="sticky-nav" aria-label="Índice del documento">
+        <span class="nav-header">ÍNDICE</span>
+        <ul>
+          <li><button (click)="scrollToSection('sumilla')">1. Sumilla</button></li>
+          <li><button (click)="scrollToSection('resumen')">2. Resumen</button></li>
+          <li><button (click)="scrollToSection('figura1')">3. Figura 1. Población que utiliza servicios de saneamiento
+              gestionados sin riesgos</button></li>
+          <li><button (click)="scrollToSection('figura2')">4. Figura 2. Hogares rurales con saneamiento básico</button></li>
+          <li><button (click)="scrollToSection('figura3')">5. Figura 3. Población que dispone de agua por red
+              pública</button></li>
+          <li><button (click)="scrollToSection('figura4')">5. Figura 4. Hogares con cloro residual adecuado en el agua
+              de consumo</button></li>
+          <li><button (click)="scrollToSection('tabla1')">6. Tabla 1. evolución de cobertura de agua potable y
+              saneamiento</button></li>
+          <li><button (click)="scrollToSection('recomendaciones')">7. Recomendaciones estratégicas</button></li>
+          <li><button (click)="scrollToSection('referencias')">8. Referencias bibliográficas</button></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- 2. COLUMNA CENTRAL: TEXTO PRINCIPAL -->
+    <main class="main-content">
+
+      <h1 class="main-title">
+        Aumento del acceso seguro a agua y saneamiento en Apurímac
+      </h1>
+
+      <p id="sumilla" class="lead-text">
+        Para 2030, se espera que el acceso seguro a agua y saneamiento en Apurímac continúe mejorando, aunque con un
+        ritmo moderado. La situación histórica muestra un avance, ya que el saneamiento gestionado sin riesgos se
+        incrementó del 38,9 % en 2011 al 72,7 % en 2025, aunque todavía se mantiene por debajo del promedio nacional,
+        que llegó a un 80,0 %, y de la Macrorregión Sur, que alcanzó el 77,8 %. A su vez, el acceso al agua por red
+        pública se mantuvo en niveles altos, al pasar del 93,3 % en 2013 al 97,0 % en 2025; sin embargo, la calidad del
+        agua revela una brecha persistente, porque los hogares con niveles adecuados de cloro residual apenas aumentaron
+        del 6,9 % en 2020 al 11,1 % en 2025, muy por debajo de la Macrorregión Sur, con un 40,5 %, y del promedio
+        nacional, con un 38,4 %.
+      </p>
+
+      <div class="meta-dates omitir">
+        <span class="meta-item"><span class="meta-line"></span> Publicación: septiembre 2026</span>
+        <span class="meta-item">Actualización: julio 2026</span>
+      </div>
+
+      <!-- Reproductor de Audio Flotante / Superior -->
+      <!-- Se quitaron las clases de utilidad (bg-slate-900, p-2, rounded-lg, etc.):
+           duplicaban o entraban en conflicto con los estilos ya definidos en el CSS
+           del componente (.audio-player-bar, .play-btn, .stop-btn, .audio-info). -->
+      <div class="audio-player-bar">
+        <button (click)="togglePlayPause()" class="btn-audio play-btn" [attr.aria-label]="isPlaying ? 'Pausar lectura' : 'Reproducir lectura'">
+          <span *ngIf="!isPlaying">▶</span>
+          <span *ngIf="isPlaying">⏸</span>
+        </button>
+
+        <button (click)="stopAudio()" [disabled]="!isPlaying && !isPaused" class="btn-audio stop-btn" aria-label="Detener lectura">
+          ⏹
+        </button>
+
+        <div class="audio-info">
+          <span>Escuchar la ficha: Aumento del acceso seguro a agua y saneamiento en Apurímac</span>
+        </div>
+      </div>
+
+      <!-- SECCIONES EN ALINEACIÓN VERTICAL DIRECTA CON EL ENCABEZADO -->
+      <article class="sections-wrapper">
+
+        <section class="section-block">
+          <img
+            src="https://observatorio.ceplan.gob.pe/uploads/sT-FKgDiIVVc-4Q-VJmq9rvW.png"
+            alt="Mapa e indicadores de acceso a agua y saneamiento en la región Apurímac"
+            class="section-image"
+            loading="lazy"
+            width="150" height="350">
+        </section>
+
+        <section id="resumen" class="section-block">
+          <p class="fw-bold">
+            El acceso seguro a agua y saneamiento comprende mucho más que la instalación de redes o conexiones
+            domiciliarias, porque exige servicios adecuados, sostenibles, continuos y con calidad sanitaria desde la
+            fuente hasta el uso final. En Apurímac, el análisis muestra avances relevantes en cobertura, sobre todo en
+            agua por red pública y saneamiento rural, pero también deja ver una brecha crítica en la calidad del agua
+            para consumo, especialmente por los bajos niveles de cloro residual adecuado. Hacia el futuro, la proyección
+            apunta a mejoras graduales, aunque todavía insuficientes para cerrar por completo las diferencias
+            territoriales y de calidad. Por ello, las recomendaciones se orientan a ordenar las inversiones bajo una
+            cartera regional, fortalecer la gestión rural y municipal, mejorar la operación y mantenimiento de los
+            sistemas, y reforzar el control sanitario y el tratamiento de aguas residuales.
+          </p>
+          <p>
+            El acceso a agua y saneamiento se define como la posibilidad efectiva de que la población disponga de agua
+            potable y servicios de saneamiento adecuados, seguros y sostenibles. En el Perú, el acceso al agua potable y
+            al saneamiento constituye un derecho fundamental de carácter prestacional, y comprende tanto el servicio de
+            agua potable como el servicio de saneamiento en ámbitos urbanos y rurales; este último incluye
+            alcantarillado sanitario, tratamiento de aguas residuales y saneamiento básico vinculado a la disposición
+            sanitaria de excretas [1]. A nivel internacional, el estándar de “agua gestionada de forma segura” exige que
+            la fuente sea mejorada, esté disponible cuando se necesita, sea accesible en la vivienda y esté libre de
+            contaminación, mientras que el saneamiento gestionado de forma segura implica instalaciones mejoradas, no
+            compartidas y con excretas dispuestas in situ o transportadas y tratadas fuera del sitio [2, 3].
+          </p>
+        </section>
+
+        <section class="section-block">
+          <p>
+            Conceptualmente, el acceso a agua y saneamiento no se limita a la existencia de infraestructura física,
+            conexiones domiciliarias o unidades sanitarias, sino que supone una cadena completa de prestación del
+            servicio; protección y aprovechamiento de fuentes, captación, tratamiento, almacenamiento, distribución,
+            recolección de aguas residuales, tratamiento, reúso o disposición final, además de operación, mantenimiento,
+            regulación y sostenibilidad financiera e institucional. En esa línea, el reglamento peruano precisa que
+            estos servicios abarcan el abastecimiento domiciliario de agua potable, la recolección y tratamiento de
+            aguas residuales o la disposición sanitaria de excretas, incluyendo sistemas de agua potable,
+            alcantarillado, tratamiento de aguas residuales y saneamiento básico. Asimismo, la normativa nacional
+            incorpora criterios de sostenibilidad ambiental, confiabilidad, gestión del riesgo de desastres y adaptación
+            a la variabilidad climática, por lo que el enfoque prospectivo debe considerar no solo cobertura, sino
+            también calidad, continuidad, resiliencia y adecuación territorial [1].
+          </p>
+          <p>
+            La importancia del acceso a agua y saneamiento radica en su contribución directa a la salud pública, la
+            dignidad humana, la reducción de desigualdades y la sostenibilidad ambiental. La Organización Mundial de la
+            Salud (OMS) señala que el agua segura, el saneamiento y la higiene son condiciones esenciales para la salud
+            y el bienestar, pues el consumo de agua insegura y la mala gestión de excretas favorecen enfermedades como
+            la diarrea y la contaminación de fuentes superficiales y subterráneas [4].
+          </p>
+        </section>
+
+        <section id="figura1" class="section-block">
+          <p>
+            En esa línea, la Figura 1 muestra que el acceso a servicios de saneamiento gestionados sin riesgos en
+            Apurímac tuvo una mejora importante durante el periodo histórico, aunque con avances irregulares, ya que,
+            entre 2011 y 2025, el indicador se incrementó del 38,9 % al 72,7 %, lo que evidencia una expansión sostenida
+            frente al punto de partida, pese a algunos retrocesos intermedios, como el observado entre 2013 y 2014, y la
+            caída reciente del 74,1 % en 2024 al 72,7 % en 2025. Aun así, Apurímac se mantiene por debajo del promedio
+            nacional, que pasó del 64,0 % al 80,0 %, y de la Macrorregión Sur, que aumentó del 57,4 % al 77,8 %.
+          </p>
+          <p>
+            A partir de 2026, los datos proyectados indican una recuperación moderada para Apurímac, con un aumento del
+            74,0 % al 76,9 % hacia 2030. No obstante, el crecimiento previsto sería más lento que el observado en los
+            años de mayor expansión, lo que podría limitar una convergencia más rápida con el promedio nacional, que
+            subiría del 80,6 % al 82,1 %, y con la Macrorregión Sur, que pasaría del 78,4 % al 80,6 %. Además, los
+            intervalos de predicción para Apurímac muestran un margen relativamente acotado, con valores esperados que
+            en 2030 se ubicarían entre el 75,9 % y el 77,7 %, lo cual refuerza la idea de una mejora gradual, pero
+            todavía insuficiente para cerrar plenamente las diferencias territoriales en el acceso seguro al
+            saneamiento.
+          </p>
+          <iframe width="100%" height="430" scrolling="no" loading="lazy"
+            title="Figura 1. Población que utiliza servicios de saneamiento gestionados sin riesgos"
+            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
+          </iframe>
+          <p>Nota. h/ valor histórico; p/ valor proyectado por el Ceplan. Los datos del periodo 2026-2030 corresponden a
+            un ejercicio de proyección tendencial basado en la trayectoria histórica del indicador. Las proyecciones se
+            elaboraron mediante un modelo estadístico conservador e incluye intervalos estandarizados de predicción para
+            representar el margen de incertidumbre inherente al ejercicio de proyección. Los resultados son
+            referenciales, no constituyen predicciones ni metas oficiales, y no sustituyen estimaciones específicas por
+            entidades especializadas para la toma de decisiones. Su evolución está sujeta a cambios en los factores
+            determinantes y a choques externos no previstos. Elaboración del Ceplan a partir de los datos Instituto
+            Nacional de Estadística e Informática [5].</p>
+        </section>
+
+        <section id="figura2" class="section-block">
+          <p>
+            Por su parte, la Figura 2 muestra que el acceso de los hogares rurales a saneamiento básico en Apurímac tuvo
+            una mejora fuerte durante el periodo histórico, al pasar del 56,7 % en 2007 al 89,3 % en 2024. El avance;
+            sin embargo, no fue parejo, ya que, hubo caídas puntuales, como la reducción del 67,0 % al 65,0 % entre 2009
+            y 2010, y del 71,0 % al 69,2 % entre 2011 y 2012. Más adelante, después del salto a un 95,1 % en 2020, el
+            indicador retrocedió hasta el 88,3 % en 2023, antes de recuperarse ligeramente en 2024. Aun con esas
+            variaciones, Apurímac terminó el periodo por encima del promedio nacional, que subió del 61,0 % al 86,5 %,
+            aunque todavía quedó algo por debajo de la Macrorregión Sur, que pasó del 60,3 % al 90,9 %.
+          </p>
+          <p>
+            En cuanto al tramo proyectado, Apurímac mantendría una trayectoria ascendente y podría alcanzar el 94,2 % en
+            2030, lo que refleja una recuperación importante respecto de los años previos. En ese mismo horizonte, el
+            promedio nacional aumentaría al 90,9 %, mientras que la Macrorregión Sur avanzaría al 92,5 %. Además, el
+            intervalo de predicción se iría ajustando, al pasar de un rango del 88,0 % al 94,3 % en 2025 a un rango del
+            90,3 % al 94,9 % en 2030, lo que sugiere una mejora sostenida, aunque todavía con cierto margen de
+            incertidumbre en el área rural.
+          </p>
+
+          <!-- ⚠️ REVISAR: este src es idéntico al de Figura 1 (zYKPX59Lp0N). Probablemente debería
+               apuntar a un dashboard distinto para Figura 2; lo dejo igual que el original para no
+               inventar un ID de gráfico que no me diste. -->
+          <iframe width="100%" height="430" scrolling="no" loading="lazy"
+            title="Figura 2. Hogares rurales con saneamiento básico"
+            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
+          </iframe>
+          <p>
+            Figura 2.Perú, Macrorregión Sur y Apurímac: porcentaje de hogares rurales con saneamiento básico, en el
+            periodo 2007-2030 (Porcentaje).
+            Nota. h/ valor histórico; p/ valor proyectado por el Ceplan. Los datos del periodo 2025-2030 corresponden a
+            un ejercicio de proyección tendencial basado en la trayectoria histórica del indicador. Las proyecciones se
+            elaboraron mediante un modelo estadístico conservador e incluye intervalos estandarizados de predicción para
+            representar el margen de incertidumbre inherente al ejercicio de proyección. Los resultados son
+            referenciales, no constituyen predicciones ni metas oficiales, y no sustituyen estimaciones específicas por
+            entidades especializadas para la toma de decisiones. Su evolución está sujeta a cambios en los factores
+            determinantes y a choques externos no previstos. Elaboración del Ceplan a partir de los datos de la Encuesta
+            Demográfica y de Salud Familiar del Instituto Nacional de Estadística e Informática [6].
+          </p>
+        </section>
+
+        <section id="figura3" class="section-block">
+          <p>
+            En continuidad con el análisis de los servicios básicos, la Figura 3 muestra que Apurímac mantuvo una
+            cobertura alta de población que dispone de agua por red pública entre 2013 y 2025. El indicador pasó del
+            93,3 % al 97,0 %, con una trayectoria favorable, aunque no del todo lineal. En algunos años se observan
+            caídas puntuales, como la reducción del 93,2 % en 2015 al 92,0 % en 2016, y más adelante el descenso del
+            97,9 % en 2023 al 95,8 % en 2024. Sin embargo, el dato de 2025 vuelve a ubicarse en un nivel elevado,
+            llegando a un 97,0 %, lo que confirma que el acceso por red pública se encuentra bastante extendido en el
+            departamento.
+          </p>
+          <p>
+            Por su parte, la Macrorregión Sur también muestra una mejora sostenida, al incrementarse del 87,5 % al 93,3
+            %, mientras que el promedio nacional avanzó del 86,1 % al 90,4 %. En ese aspecto, Apurímac se mantuvo
+            durante todo el periodo por encima de ambos referentes, aunque la distancia con la Macrorregión Sur se fue
+            reduciendo. En 2013, la diferencia entre Apurímac y la Macrorregión Sur fue de 5,8 puntos porcentuales,
+            mientras que en 2025 bajó a 3,7 puntos. Frente al promedio nacional, la brecha pasó de 7,2 puntos a 6,6
+            puntos, lo que sugiere que el departamento conserva una posición favorable, pero en un contexto donde los
+            demás ámbitos también han venido cerrando parte de la distancia.
+          </p>
+          <iframe width="100%" height="430" scrolling="no" loading="lazy"
+            title="Figura 3. Población que dispone de agua por red pública"
+            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
+          </iframe>
+        </section>
+
+        <section id="figura4" class="section-block">
+          <p>
+            En continuidad con el acceso por red pública, la Figura 4 permite observar una dimensión más exigente de la
+            calidad del agua, referida a los hogares con niveles de cloro residual adecuado en el agua que utilizan para
+            su consumo, entendido como adecuada cuando el cloro es mayor o igual 0,5 mg/l. Por ello, la Figura 4
+            evidencia una situación distinta a la observada en el acceso por red pública, ya que en Apurímac la
+            proporción de hogares con niveles adecuados de cloro residual en el agua para consumo se mantiene en valores
+            reducidos durante todo el periodo. Entre 2020 y 2025, el indicador pasó del 6,9 % al 11,1 %, con un avance
+            leve y bastante irregular. Luego de subir a un 11,2 % en 2021, descendió al 9,0 % en 2022 y al 8,3 % en
+            2023, para recuperarse después al 10,6 % en 2024 y cerrar en un 11,1 % en 2025.
+          </p>
+          <p>Asimismo, la brecha con los otros ámbitos sigue siendo amplia, debido a que, la Macrorregión Sur se mantuvo
+            en niveles cercanos al 40,0 %, al pasar del 39,8 % al 40,5 %, mientras que el promedio nacional disminuyó
+            del 40,2 % al 38,4 %. Aunque estos dos referentes también presentan fluctuaciones, sus valores superan
+            ampliamente a los de Apurímac durante todos los años analizados. En 2025, la diferencia de Apurímac frente a
+            la Macrorregión Sur llegó a 29,4 puntos porcentuales y frente al promedio nacional a 27,3 puntos, lo que
+            deja ver un problema persistente en la desinfección efectiva del agua para consumo humano.</p>
+
+          <iframe width="100%" height="430" scrolling="no" loading="lazy"
+            title="Figura 4. Hogares con cloro residual adecuado en el agua de consumo"
+            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/mAMpmXDxPVJ/?standalone=2">
+          </iframe>
+
+          <p>Nota. Los datos de Apurímac deben considerarse referenciales, debido a que el tamaño de la muestra no es
+            suficiente para garantizar una estimación robusta a ese nivel de desagregación y, además, presentan un
+            coeficiente de variación superior al 15 % durante todo el periodo analizado. Elaboración del Ceplan a partir
+            de los datos del Instituto Nacional de Estadística e Informática [7, 8, 9].</p>
+        </section>
+
+        <section id="tabla1" class="section-block">
+          <p>Complementariamente, la Tabla 1 permite ver que la cobertura de agua potable avanzó de manera amplia entre
+            1993, 2007 y 2017, aunque con ritmos distintos según provincia. Los crecimientos más notorios se observan en
+            Chincheros, que pasó del 17,4 % al 91,9 %, Aymaraes, del 17,2 % al 85,4 %, y Cotabambas, del 14,5 % al 80,3
+            %. También destacan Andahuaylas, con un aumento del 32,4 % al 92,8 %, y Grau, que subió del 22,2 % al 77,3
+            %. En el último año registrado, las provincias con mejores niveles fueron Abancay, con un 93,8 %,
+            Andahuaylas, con un 92,8 %, y Chincheros, con un 91,9 %, lo que muestra una concentración de los mayores
+            avances en territorios que lograron acercarse a coberturas casi universales.</p>
+          <p>A nivel distrital, el cambio es todavía más visible en varios casos. Entre los avances más representativos
+            aparecen Gamarra, que creció del 11,0 % al 94,9 %, Toraya, del 8,0 % al 95,3 %, Huancaray, del 9,4 % al 91,9
+            %, Huaccana, del 8,0 % al 90,4 %, y Kishuara, del 12,7 % al 91,6 %. También resaltan San Antonio de Cachi,
+            que pasó del 8,6 % al 86,9 %, Mara, del 8,5 % al 84,7 %, y Curahuasi, del 20,6 % al 91,1 %. En 2017, los
+            valores más altos se registraron en Colcabamba, con un 98,1 %, Abancay, con un 98,0 %, El Porvenir, con un
+            97,6 %, Tamburco y Kaquiabamba, ambos con un 97,4 %, además de Pacucha, con un 96,4 %, y Chincheros, con
+            96,0 %. Por tanto, la tabla muestra que la expansión fue generalizada, pero todavía quedaron distritos con
+            rezagos importantes, como Pataypampa, con un 38,3 %, Progreso, con un 50,3 %, Chapimarca, con un 61,2 %, y
+            Yanaca, con un 64,1 %.</p>
+          <p>En relación con el acceso a servicios de saneamiento, la Tabla 1 muestra que la cobertura de saneamiento
+            básico en Apurímac mejoró entre 1993, 2007 y 2017, aunque con brechas todavía marcadas entre provincias. Los
+            mayores crecimientos provinciales se observan en Antabamba, que pasó del 2,3 % al 53,4 %, Aymaraes, del 4,6
+            % al 53,3 %, y Cotabambas, del 0,9 % al 46,5 %. También destacan Abancay, que aumentó del 32,7 % al 75,7 %,
+            y Chincheros, del 3,9 % al 46,8 %. En el último año registrado, Abancay concentró el mayor nivel de
+            cobertura, con 75,7 %, mientras que Antabamba y Aymaraes se ubicaron alrededor del 53,0 %. En cambio,
+            Andahuaylas, Chincheros, Cotabambas y Grau quedaron por debajo del 50,0 %, lo que evidencia que el avance
+            fue importante, pero aún insuficiente en buena parte del territorio.</p>
+          <p>A nivel distrital, los cambios más representativos se aprecian en Vilcabamba, que subió del 10,6 % al 88,5
+            %, Virundo, del 0,0 % al 81,5 %, Tamburco, del 13,2 % al 86,7 %, Sañayca, del 0,3 % al 77,0 %, y Colcabamba,
+            del 0,0 % al 73,5 %. También resaltan San Antonio, que pasó del 2,2 % al 69,6 %, Ranracancha, del 6,4 % en
+            2007 al 73,4 % en 2017, y Chalhuanca, del 28,6 % al 82,8 %. En 2017, los mayores valores distritales se
+            registraron en Abancay, con un 89,6 %, Vilcabamba, con un 88,5 %, Tamburco, con un 86,7 %, Chalhuanca, con
+            un 82,8 %, y Virundo, con un 81,5 %. Pese a ello, la Tabla 1 también deja ver rezagos fuertes en distritos
+            como El Porvenir, con un 5,7 %, Kaquiabamba, con un 9,4 %, Andarapa, con un 10,8 %, Ongoy, con un 11,4 %, y
+            Huancaray, con un 12,7 %, lo que confirma que la expansión del saneamiento fue desigual y todavía dejó zonas
+            con coberturas muy bajas.</p>
+
+          <iframe width="100%" height="900" scrolling="no" loading="lazy"
+            title="Tabla 1. Evolución de cobertura de agua potable y saneamiento"
+            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/YLjPj8eW17E/?standalone=2">
+          </iframe>
+          <p>Tabla 1.Apurímac: evolución de cobertura de agua potable y saneamiento básico según provincias y distritos,
+            para los años 1993, 2007 y 2017.
+            Nota. El indicador de “agua potable” comprende las categorías de red pública dentro de la vivienda; red
+            pública fuera de la vivienda, pero dentro de la edificación; y pilón o pileta de uso público. Y para el
+            indicador de “saneamiento básico” comprende las categorías de red pública de desagüe dentro de la vivienda;
+            red pública de desagüe fuera de la vivienda, pero dentro de la edificación; y pozo séptico, tanque séptico o
+            biodigestor. Elaboración del Ceplan a partir de los datos de los Censos Nacionales de Población y Vivienda
+            del Instituto Nacional de Estadística e Informática [10].</p>
+        </section>
+
+        <section id="recomendaciones" class="section-block">
+          <p class="fw-bold">Recomendaciones estratégicas</p>
+          <p>
+            En el territorio, convendría ordenar las intervenciones de saneamiento bajo prioridades claras por distrito,
+            tipo de prestador y estado del sistema. No es suficiente con ampliar infraestructura; también habría que
+            asegurar operación, mantenimiento, reposición de equipos y acompañamiento técnico municipal. El Plan
+            Regional de Agua Potable y Saneamiento de Apurímac 2025-2029, aprobado por el Gobierno Regional, ofrece una
+            base institucional para esa articulación, mientras que el Compromiso 4 del Programa Nacional de Saneamiento
+            Rural (PNSR) y el Ministerio de Economía y Finanzas (MEF) abre una ruta práctica para vincular metas
+            municipales, asistencia técnica e incentivos presupuestales. La recomendación sería que el Gobierno
+            Regional, las municipalidades y el Ministerio de Vivienda, Construcción y Saneamiento (MVCS) trabajen con
+            una misma agenda de seguimiento, evitando proyectos aislados que luego quedan sin soporte operativo [11,
+            12].
+          </p>
+          <p>
+            En el ámbito rural, la estrategia tendría que concentrarse en fortalecer a las Juntas Administradoras de
+            Servicios de Saneamiento (JASS), las áreas técnicas municipales y la cultura de pago, ya que la
+            sostenibilidad del servicio depende tanto de la infraestructura como de la gestión cotidiana. En necesario
+            replicar experiencias como la Ruta Integral del Agua, que en Apurímac viene promoviendo la lectura completa
+            del sistema, desde la zona de recarga hasta la medición del cloro en viviendas, junto con espacios de
+            reflexión entre usuarios y directivos comunales. A ello se puede sumar el aprendizaje de prácticas
+            reconocidas por la Sunass, como el uso de tecnologías de cloración y la mejora continua de pequeños
+            prestadores, para que las comunidades no solo reciban obras, sino capacidades para sostenerlas [13, 14].
+          </p>
+          <p>En las zonas urbanas y periurbanas, la recomendación apunta a reforzar la calidad del servicio, el control
+            sanitario y la gestión empresarial de las EPS. La modificación del estudio tarifario de “Emsap Chanka”
+            muestra una oportunidad para financiar mejoras, siempre que los nuevos recursos estén ligados a inversiones
+            verificables, mantenimiento oportuno y protección de hogares vulnerables mediante subsidios focalizados. De
+            manera complementaria, la supervisión de la desinfección en Abancay y Tamburco evidencia que el monitoreo
+            del cloro residual debe ser permanente, con reportes simples para la ciudadanía y acciones correctivas
+            rápidas cuando haya variaciones. En saneamiento, además, la situación de las plantas de tratamiento de aguas
+            residuales exige una respuesta específica y sostenible [15, 16].</p>
+        </section>
+
+        <section id="referencias" class="section-block omitir">
+
+          <p class="fw-bold">
+            Referencias bibliográficas
+          </p>
+
+          <p>[1] Organismo Técnico de la Administración de los Servicios de Saneamiento, «Decreto Supremo N.°
+            001-2025-VIVIENDA.,» 15 enero 2025. Disponible en:
+            https://www.gob.pe/institucion/otass/normas-legales/6413611-001-2025-vivienda</p>
+          <p>[2] Unicef, «Drinking water,» agosto 2025a. Disponible en:
+            https://data.unicef.org/topic/water-and-sanitation/drinking-water/</p>
+          <p>[3] Unicef, «Sanitation,» agosto 2025b. Disponible en:
+            https://data.unicef.org/topic/water-and-sanitation/sanitation/</p>
+          <p>[4] WHO, «Water, sanitation and hygiene (WASH),» 2026. Disponible en:
+            https://www.who.int/health-topics/water-sanitation-and-hygiene-wash#tab=tab_1</p>
+          <p>[5] Instituto Nacional de Estadística e Informática, «Sistema de Monitoreo y Seguimiento de los Indicadores
+            de los Objetivos de Desarrollo Sostenible,» 2026d. Disponible en: https://ods.inei.gob.pe/</p>
+          <p>[6] Instituto Nacional de Estadística e Informática, «Sistema de informacion regional para la toma de
+            decisiones. Porcentaje de hogares rurales con saneamiento básico (Porcentaje).,» mayo 2026c. Disponible en:
+            https://systems.inei.gob.pe/SIRTOD/app/consulta</p>
+        </section>
+
+      </article>
+
+    </main>
+
+    <!-- 3. COLUMNA DERECHA: DOCUMENTOS DESCARGABLES -->
+    <aside class="download-box">
+      <h2>Documentos descargables</h2>
+      <a href="assets/docs/Cusco_Poblacion_Urbana_2026.xlsx" download class="excel-item">
+        <svg class="excel-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#107c41" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
+          <path fill="#33c481" d="M14 2v6h6" />
+          <path fill="#ffffff"
+            d="M8.5 16.5l2.25-3.5L8.5 9.5h1.8l1.35 2.3 1.35-2.3h1.8l-2.25 3.5 2.25 3.5h-1.8l-1.35-2.3-1.35 2.3z" />
+        </svg>
+        <span class="file-name">Cusco_Mayor_concentracion_poblacion_urbana_2026.xlsx</span>
+      </a>
+    </aside>
+
+  </div>
+</div>

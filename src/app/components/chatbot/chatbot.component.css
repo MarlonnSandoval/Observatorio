@@ -1,0 +1,101 @@
+/* 1. Mantiene TODO el widget fijo en la pantalla, ignore el scroll de la web */
+.chatbot-fixed-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 10000; /* Super por encima de todo */
+}
+
+/* El botón flotante */
+.chat-trigger-btn {
+  width: 60px !important;
+  height: 60px !important;
+  font-size: 1.4rem !important;
+}
+
+::ng-deep .chatbot-overlay {
+  position: sticky !important;
+  top: auto !important;
+  bottom: 75px !important; /* justo encima del botón flotante */
+  right: 15px !important;
+  max-height: calc(100vh - 110px);
+}
+
+.chat-bubble a {
+  text-decoration: underline;
+  font-weight: 600;
+  word-break: break-all; /* evita que URLs largas rompan el ancho de la burbuja */
+}
+
+/* La flechita/indicador de PrimeNG apuntaba dinámicamente al botón;
+   como ahora la posición es fija, la ocultamos para que no quede
+   desalineada */
+::ng-deep .chatbot-overlay:before,
+::ng-deep .chatbot-overlay:after {
+  display: none !important;
+}
+
+/* Caja de mensajes interna */
+.chat-box {
+  height: 280px !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  padding: 5px !important;
+  background-color: #f8f9fa; /* Fondo sutil para contrastar las burbujas */
+  border-radius: 8px;
+  scroll-behavior: smooth;
+}
+
+/* Estilos de las Burbujas Reales */
+.chat-bubble {
+  padding: 8px 10px !important;
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+  max-width: 75% !important;
+  display: inline-block !important;
+  word-wrap: break-word !important;
+}
+
+/* Burbuja del Bot (Izquierda) */
+.bubble-bot {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border-radius: 14px 14px 14px 2px !important;
+  border: 1px solid #e2e8f0;
+}
+
+/* Burbuja del Usuario (Derecha) */
+.bubble-user {
+  background-color: #007bff !important; /* Reemplaza por tu color primario si deseas */
+  color: #ffffff !important;
+  border-radius: 14px 14px 2px 14px !important;
+}
+
+/* 2. Botones de opciones pequeños e inline */
+.options-container {
+  background: white;
+}
+
+.chatbot-mini-btn {
+  padding: 4px 10px !important; /* Reducción drástica del tamaño */
+  font-size: 12px !important; /* Letra compacta */
+  height: auto !important;
+  white-space: nowrap !important; /* Mantiene el texto en una sola línea si es corto */
+  border: 1px solid #007bff !important;
+  color: #007bff !important;
+}
+
+.chatbot-mini-btn:hover {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+/* Estilización fina de la barra de scroll */
+.chat-box::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-box::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+

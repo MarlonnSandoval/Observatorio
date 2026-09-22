@@ -1,0 +1,405 @@
+.title-trends {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2a68a2;
+}
+
+.icon-trends {
+  max-width: 45px;
+  height: auto;
+}
+
+.img {
+  max-width: 45px;
+  height: auto;
+}
+
+.text-navy {
+  color: #1b365d;
+}
+
+/* ===================================================
+   Mapa SVG
+   =================================================== */
+.map-ut {
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+}
+
+.map-region {
+  fill: #e2e8f0;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.map-region:hover {
+  fill: #cbd5e1;
+}
+
+.map-region.active {
+  fill: #0d6efd;
+}
+
+/* ===================================================
+   Tarjetas de artículos
+   =================================================== */
+.article-link-card {
+  padding: 12px;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #0d6efd;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.article-link-card:last-child {
+  margin-bottom: 0;
+}
+
+.article-link-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff !important;
+}
+
+/* ===================================================
+   Acordeón PrimeNG Custom
+   =================================================== */
+::ng-deep .territorial-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+::ng-deep .territorial-accordion .p-accordion-tab {
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+::ng-deep .custom-header-accordion .p-accordion-header .p-accordion-header-link {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.custom-accordion-banner {
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  font-size: 1.05rem;
+}
+
+.custom-accordion-banner:hover {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  opacity: 0.9;
+}
+
+/* Hero / Carrusel */
+.hero-img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  max-width: 480px;
+  background: linear-gradient(90deg,
+      rgba(15, 58, 107, 0.94) 0%,
+      rgba(15, 58, 107, 0.88) 45%,
+      rgba(15, 58, 107, 0.15) 85%,
+      rgba(15, 58, 107, 0) 100%);
+}
+
+.hero-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Imagen de tarjetas */
+.article-image-container {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Estilos Radar */
+.radar-node circle.radar-node-dot {
+  transition: r 0.15s ease, stroke-width 0.15s ease;
+  cursor: pointer;
+}
+
+.radar-node:hover circle.radar-node-dot,
+.radar-node.radar-node-active circle.radar-node-dot {
+  r: 13;
+  stroke-width: 3;
+}
+
+.radar-node text {
+  pointer-events: none;
+}
+
+.radar-list-item {
+  border: 1px solid #e2e8f0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.radar-list-item:hover,
+.radar-list-item.radar-list-item-active {
+  background-color: #eef2ff !important;
+  border-color: #93c5fd !important;
+  transform: translateX(4px);
+}
+
+.radar-list-number {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-article-list {
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.legend-color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* ===================================================
+   DISEÑO CONO DE FUTUROS (CEPLAN / PERÚ 2050)
+   =================================================== */
+
+/* Wrapper del Cono Principal */
+.cono-main-wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 380px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+/* Fondo con efecto Trapezoidal que simula el Cono */
+.cono-perspective-bg {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  width: 65%;
+  background: rgba(239, 246, 255, 0.6);
+  clip-path: polygon(0% 28%, 100% 0%, 100% 100%, 0% 72%);
+  border-left: 2px solid #cbd5e1;
+  z-index: 1;
+}
+
+/* Columnas de Horizontes */
+.cono-columns-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 62%;
+}
+
+.cono-time-col {
+  flex: 1;
+  border-right: 2px dashed #94a3b8;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cono-time-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #334155;
+  text-anchor: middle;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.cono-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/* Tarjetas/Nodos flotantes dentro del Cono */
+.cono-node-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #1e293b;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.cono-node-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+  color: #0f172a;
+}
+
+.cono-node-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.cono-node-text {
+  font-weight: 500;
+}
+
+/* Elipses de Futuros Posibles (Anillos más delgados) */
+.cono-oval-container {
+  position: relative;
+  z-index: 3;
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 -10px;
+}
+
+.cono-oval-outer {
+  width: 100%;
+  height: 92%;
+  background: #f59e0b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cono-oval-inner {
+  width: 100%;
+  height: 88%;
+  background: #38bdf8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2px;
+}
+
+.cono-oval-inner span {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.68rem;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Columna de Escenarios (Bloques Grises) */
+.cono-scenarios-column {
+  position: relative;
+  z-index: 2;
+  width: 30%;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cono-scenarios-header {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #3b82f6;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.cono-scenarios-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.cono-scenario-card {
+  background: #94a3b8;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 10px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.cono-scenario-card:hover {
+  background: #64748b;
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.cono-legend-box {
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .cono-main-wrapper {
+    min-width: 600px;
+  }
+}

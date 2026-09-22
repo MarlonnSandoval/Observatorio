@@ -1,0 +1,465 @@
+<div class="container mt-5">
+
+  <div>
+    <div class="row">
+      <div class="col-sm-7 col-12 title-trends">
+        Ámbito territorial
+      </div>
+      <div class="col-sm-5 col-12">
+        <div class="row justify-content-end">
+          <a routerLink="../tendencia-global" class="col-3" href="/tendencia-global">
+            <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tg-b.webp"
+              alt="Tendencia global">
+          </a>
+          <a routerLink="../tendencia-nacional" class="col-3" href="/tendencia-nacional">
+            <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tn-w.webp"
+              alt="Tendencia nacional">
+          </a>
+          <a routerLink="../tendencia-territorial" class="col-3" href="/tendencia-territorial">
+            <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tt-w.webp"
+              alt="Tendencia territorial">
+          </a>
+          <a routerLink="../tendencia-sectorial" class="col-3" href="/tendencia-sectorial">
+            <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/ts-w.webp"
+              alt="Tendencia sectorial">
+          </a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <p class="col-12">
+        <b>Fenómeno de escala mundial</b> consistente en el tiempo, que interactúa o <b>que podría incidir en el
+          desarrollo nacional</b> actual y hacia el mediano o largo plazo. Su movimiento permite identificar la dinámica
+        entre lo local y global.
+      </p>
+    </div>
+  </div>
+
+  <!-- Hero Carousel -->
+  <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+    data-bs-interval="6000">
+    <div class="carousel-inner">
+      <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index" [class.active]="i === 0">
+        <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+        <div
+          class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-white p-4 p-md-5">
+          <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+          <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-indicators hero-indicators">
+      <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+        [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+        [attr.aria-label]="'Diapositiva ' + (i + 1)">
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!-- Mapa Selector (Columna Izquierda) -->
+    <div class="col-12 col-sm-4 col-md-4 mt-2">
+      <div class="map-ut sticky-top">
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="regionSelect" class="form-label font-weight-bold">Seleccionar Región:</label>
+            <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
+              (ngModelChange)="onRegionChange($event)">
+              <option [ngValue]="null">Selecciona una región</option>
+              <option *ngFor="let region of regions" [value]="region.name">
+                {{ region.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox">
+          <g>
+            <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
+              [attr.data-region]="region.name" [attr.d]="region.d" (click)="selectRegion(region.name)">
+            </path>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Contenido Principal (Columna Derecha) -->
+    <div class="col-12 col-md-8">
+      <div class="card shadow-sm h-100 bg-white">
+        <div class="card-body p-4">
+
+          <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-dark mb-0">
+              {{ hasSelection ? selectedRegion : '¿Cómo queremos vivir?' }}
+            </h2>
+
+            <button *ngIf="hasSelection" type="button" class="btn btn-outline-secondary btn-sm rounded-pill"
+              (click)="resetearFiltroGlobal()">
+              <i class="pi pi-globe me-1"></i> Explorador Global
+            </button>
+          </div>
+
+          <div class="animate__animated animate__fadeIn">
+
+            <!-- VISTA BÚSQUEDA GLOBAL -->
+            <ng-container *ngIf="!hasSelection">
+              <div class="filter-bar row g-2 mb-3">
+                <div class="col-7 p-input-icon-left">
+                  <i class="pi pi-search"></i>
+                  <input type="text" placeholder="Buscar en territorios" pInputText [(ngModel)]="textoBusqueda"
+                    class="filter-input w-100" />
+                </div>
+
+                <div class="col-12 col-md-5 p-input-icon-right">
+                  <i class="pi pi-chevron-down text-muted" style="pointer-events: none;"></i>
+                  <select [(ngModel)]="temaSeleccionadoSelect" class="p-inputtext w-100 filter-select pe-5"
+                    style="appearance: none;">
+                    <option value="">Seleccionar temática</option>
+                    <option value="Acceso a agua y saneamiento">Acceso a agua y saneamiento</option>
+                    <option value="Digitalización de la educación">Digitalización de la educación</option>
+                    <option value="Conectividad digital">Conectividad digital</option>
+                    <option value="Conflictos sociales">Conflictos sociales</option>
+                    <option value="Participación electoral">Participación electoral</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="theme-articles-container d-flex flex-column gap-3">
+                <div *ngIf="(textoBusqueda || temaSeleccionadoSelect) && articulosPorTemaGlobal.length === 0"
+                  class="text-center py-4 text-muted">
+                  No se encontraron artículos que coincidan con tu búsqueda.
+                </div>
+
+                <div *ngIf="!textoBusqueda && !temaSeleccionadoSelect" class="text-center py-4 text-muted">
+                  <h4><strong>Seleccione una región en el mapa</strong></h4>
+                </div>
+
+                <a *ngFor="let articulo of articulosPorTemaGlobal" [href]="articulo.url" target="_blank"
+                  class="article-link-card p-3 bg-light rounded text-decoration-none text-dark d-flex justify-content-between align-items-center gap-3">
+                  <div class="article-info flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <span
+                        class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small fw-semibold">
+                        {{ articulo.regionOriginaria }}
+                      </span>
+                      <i class="pi pi-arrow-right text-muted small"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1 mt-1">{{ articulo.titulo }}</h6>
+                    <p class="text-secondary small mb-0">{{ articulo.resumen }}</p>
+                    <strong class="fst-italic text-primary small">ver más &rarr;</strong>
+                  </div>
+
+                  <div *ngIf="articulo.imagenUrl" class="article-image-container flex-shrink-0">
+                    <img [src]="articulo.imagenUrl" [alt]="articulo.titulo" class="article-image rounded">
+                  </div>
+                </a>
+              </div>
+            </ng-container>
+
+            <!-- REGIÓN SIN DATOS -->
+            <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted text-center py-5">
+              No hay artículos o registros para la región <strong>{{ selectedRegion }}</strong>.
+            </p>
+
+            <!-- VISTA REGIÓN SELECCIONADA -->
+            <ng-container *ngIf="hasSelection && hasData">
+
+              <!-- Acordeón por Categoría -->
+              <p-accordion [(activeIndex)]="activeIndex" styleClass="territorial-accordion custom-header-accordion">
+                <p-accordionTab *ngFor="let categoria of categories">
+
+                  <ng-template pTemplate="header">
+                    <div
+                      class="custom-accordion-banner w-100 py-2 px-3 text-center fw-semibold rounded border bg-light text-dark">
+                      {{ getCount(categoria) }} {{ categoria.toLowerCase() }}
+                    </div>
+                  </ng-template>
+
+                  <ng-template pTemplate="content">
+                    <div class="d-flex flex-column gap-3 py-2">
+
+                      <div *ngIf="getDescargaUrl(categoria)" class="mb-1">
+                        <div class="p-2 px-3 bg-white rounded border d-inline-flex align-items-center gap-2 shadow-sm">
+                          <i class="bi bi-file-earmark-pdf text-danger fs-5"></i>
+                          <a [href]="getDescargaUrl(categoria)" target="_blank"
+                            class="fw-bold text-decoration-none small">
+                            Descargue el reporte<i class="bi bi-download ms-1"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6" *ngFor="let articulo of getArticulos(categoria)">
+                          <a [href]="articulo.url" target="_blank"
+                            class="article-link-card h-100 p-3 bg-light rounded-3 text-decoration-none text-dark d-flex align-items-center justify-content-between gap-3"
+                            [style.borderColor]="getCategoryColorData(categoria).border">
+
+                            <div class="article-info flex-grow-1 overflow-hidden">
+                              <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                <span class="badge rounded-pill small fw-semibold"
+                                  [style.background-color]="getCategoryColorData(categoria).badgeBg"
+                                  [style.color]="getCategoryColorData(categoria).badgeText">
+                                  {{ articulo.tema || categoria }}
+                                </span>
+                                <span class="badge bg-secondary-subtle text-secondary rounded-pill small flex-shrink-0">
+                                  {{ articulo.periodo || '2030-2040' }}
+                                </span>
+                              </div>
+
+                              <h6 class="fw-bold text-dark mb-1 text-truncate-2" style="font-size: 0.9rem;">
+                                {{ articulo.titulo }}
+                              </h6>
+                              <p class="text-secondary small mb-2 text-truncate-3" style="font-size: 0.8rem;">
+                                {{ articulo.resumen }}
+                              </p>
+                              <strong class="fst-italic small text-primary">ver más &rarr;</strong>
+                            </div>
+
+                            <div *ngIf="articulo.imagenUrl" class="article-image-container flex-shrink-0">
+                              <img [src]="articulo.imagenUrl" [alt]="articulo.titulo" class="article-image rounded">
+                            </div>
+                          </a>
+                        </div>
+
+                        <div *ngIf="getArticulos(categoria).length === 0" class="col-12 text-center text-muted py-3">
+                          No existen artículos registrados para {{ categoria }}.
+                        </div>
+                      </div>
+
+                    </div>
+                  </ng-template>
+
+                </p-accordionTab>
+              </p-accordion>
+
+              <!-- Exportar Lista Completa -->
+              <div class="mt-4 p-3 bg-light rounded d-flex align-items-center justify-content-between border">
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-pill"
+                  (click)="descargarListaCompletaPDF()">
+                  <i class="bi bi-file-earmark-pdf me-1"></i> Descargue la lista completa
+                </button>
+              </div>
+
+              <!-- Selector de vista: Radar vs Cono de futuros -->
+              <div class="d-flex justify-content-center gap-2 my-4">
+                <button type="button" class="btn btn-sm rounded-pill"
+                  [class.btn-primary]="vistaVisualizacion === 'radar'"
+                  [class.btn-outline-primary]="vistaVisualizacion !== 'radar'" (click)="setVistaVisualizacion('radar')">
+                  <i class="bi bi-bullseye me-1"></i> Vista Radar
+                </button>
+                <button type="button" class="btn btn-sm rounded-pill"
+                  [class.btn-primary]="vistaVisualizacion === 'cono'"
+                  [class.btn-outline-primary]="vistaVisualizacion !== 'cono'" (click)="setVistaVisualizacion('cono')">
+                  <i class="bi bi-cone-striped me-1"></i> Vista Cono de futuros
+                </button>
+              </div>
+
+              <!-- VISTA 1: RADAR SVG -->
+              <div class="radar-container mb-4 p-3 bg-light rounded shadow-sm" *ngIf="vistaVisualizacion === 'radar'">
+                <div class="text-center mb-3">
+                  <h5 class="fw-bold text-dark mb-1">Radar</h5>
+                </div>
+
+                <div class="row g-3">
+                  <!-- Gráfico del Radar principal ocupando todo el ancho -->
+                  <div class="col-12">
+                    <div class="chart-wrapper"
+                      style="width: 100%; max-width: 650px; margin: 0 auto; position: relative;">
+                      <svg viewBox="0 0 500 500" class="w-100 h-auto">
+                        <defs>
+                          <path id="pathTerritorio" d="M 60,190 A 190,190 0 0,1 190,60" />
+                          <path id="pathPersonas" d="M 310,60 A 190,190 0 0,1 440,190" />
+                          <path id="pathDemocracia" d="M 440,310 A 190,190 0 0,1 310,440" />
+                          <path id="pathInnovacion" d="M 190,440 A 190,190 0 0,1 60,310" />
+                        </defs>
+
+                        <circle cx="250" cy="250" r="210" fill="#e2e8f0" opacity="0.4" />
+                        <circle cx="250" cy="250" r="150" fill="#cbd5e1" opacity="0.4" />
+                        <circle cx="250" cy="250" r="90" fill="#94a3b8" opacity="0.3" />
+
+                        <line x1="250" y1="40" x2="250" y2="460" stroke="#ffffff" stroke-width="3" />
+                        <line x1="40" y1="250" x2="460" y2="250" stroke="#ffffff" stroke-width="3" />
+
+                        <text font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">
+                          <textPath href="#pathTerritorio" startOffset="50%">Territorio sostenible</textPath>
+                        </text>
+                        <text font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">
+                          <textPath href="#pathPersonas" startOffset="50%">Desarrollo de las personas</textPath>
+                        </text>
+                        <text font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">
+                          <textPath href="#pathDemocracia" startOffset="50%">Democracia y paz</textPath>
+                        </text>
+                        <text font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">
+                          <textPath href="#pathInnovacion" startOffset="50%">Competitividad e innovación</textPath>
+                        </text>
+
+                        <text x="250" y="246" text-anchor="middle" font-size="10" font-weight="bold"
+                          fill="#0f172a">PRESENTE-2030</text>
+                        <text x="360" y="246" text-anchor="middle" font-size="9" font-weight="bold"
+                          fill="#334155">2030-2040</text>
+                        <text x="425" y="246" text-anchor="middle" font-size="9" font-weight="bold"
+                          fill="#334155">2040-2050</text>
+
+                        <a *ngFor="let node of radarNodes" [attr.xlink:href]="node.url" target="_blank" rel="noopener">
+                          <g class="radar-node" [class.radar-node-active]="hoveredNode === node.number"
+                            [attr.transform]="'translate(' + node.x + ',' + node.y + ')'"
+                            (mouseenter)="hoveredNode = node.number" (mouseleave)="hoveredNode = null">
+                            <title>{{ node.label }} · {{ node.categoria }} ({{ node.periodo }})</title>
+                            <circle class="radar-node-dot" r="10" [attr.fill]="node.color" stroke="#ffffff"
+                              stroke-width="2" />
+                            <text x="0" y="3.5" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">{{
+                              node.number }}</text>
+                          </g>
+                        </a>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Lista de artículos debajo del Radar -->
+                  <div class="col-12 text-start mt-3">
+                    <strong class="d-block mb-2 small text-uppercase text-muted">Artículos en el radar ({{
+                      radarNodes.length }})</strong>
+                    <div class="radar-article-list d-flex flex-column gap-2">
+                      <a *ngFor="let node of radarNodes" [attr.href]="node.url || null" target="_blank"
+                        rel="noopener noreferrer"
+                        class="radar-list-item d-flex align-items-center gap-2 p-2 rounded text-decoration-none text-dark bg-white border"
+                        [class.radar-list-item-active]="hoveredNode === node.number"
+                        (mouseenter)="hoveredNode = node.number" (mouseleave)="hoveredNode = null">
+                        <span class="radar-list-number flex-shrink-0" [style.background-color]="node.color">{{
+                          node.number }}</span>
+                        <span class="flex-grow-1">
+                          <span class="d-block small fw-semibold lh-sm">{{ node.shortLabel }}</span>
+                        </span>
+                        <span class="d-flex gap-1 flex-shrink-0">
+                          <span class="badge rounded-pill small"
+                            [style.background-color]="getCategoryColorData(node.categoria).badgeBg"
+                            [style.color]="getCategoryColorData(node.categoria).badgeText">{{ node.categoria }}</span>
+                          <span class="badge bg-secondary-subtle text-secondary rounded-pill small">{{ node.periodo
+                            }}</span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Leyendas del Radar -->
+                  <div class="col-12 border-top pt-3 small">
+                    <div class="row">
+                      <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <strong class="d-block mb-2 text-center text-md-start">Categorías</strong>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                          <span class="d-flex align-items-center gap-1" *ngFor="let cat of categories">
+                            <span class="legend-color-box" [style.background]="getCategoryColorData(cat).border"></span>
+                            {{ cat }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <strong class="d-block mb-2 text-center text-md-start">Anillos (Períodos)</strong>
+                        <div class="d-flex flex-column gap-1 align-items-center align-items-md-start text-muted">
+                          <span>• Centro: Presente - 2030</span>
+                          <span>• Intermedio: 2030 - 2040</span>
+                          <span>• Exterior: 2040 - 2050</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+
+              <!-- VISTA 2: CONO DE FUTUROS MEJORADO -->
+              <div class="cono-container mb-4 p-4 rounded shadow-sm bg-white border"
+                *ngIf="vistaVisualizacion === 'cono'">
+
+                <div class="text-center mb-4">
+                  <h4 class="fw-bold text-navy mb-1">Cono de futuros: {{ selectedRegion }}</h4>
+                  <p class="text-muted small mb-0">Evolución de tendencias, riesgos y oportunidades hacia escenarios
+                    prospectivos</p>
+                </div>
+
+                <!-- CONTENEDOR DEL CONO CON PERSPECTIVA -->
+                <div class="cono-main-wrapper">
+
+                  <!-- CAPA DEL CONO TRAPEZOIDAL (EFECTO CONO DE FUTUROS) -->
+                  <div class="cono-perspective-bg"></div>
+
+                  <!-- TRES COLUMNAS TEMPORALES / HORIZONTES -->
+                  <div class="cono-columns-container">
+                    <div class="cono-time-col" *ngFor="let col of conoColumns; let isLast = last">
+                      <div class="cono-time-header">{{ col.label }}</div>
+
+                      <div class="cono-items-list">
+                        <a *ngFor="let item of col.items" [href]="item.url" target="_blank" class="cono-node-card">
+                          <i [class]="item.icon" class="cono-node-icon"></i>
+                          <span class="cono-node-text">{{ item.shortLabel }}</span>
+                        </a>
+
+                        <div *ngIf="col.items.length === 0" class="text-center text-muted small py-4 opacity-75">
+                          Sin elementos en este horizonte
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ELIPSES DE FUTUROS POSIBLES (BOCA DEL CONO MEJORADA) -->
+                  <div class="cono-oval-container">
+                    <div class="cono-oval-outer">
+                      <div class="cono-oval-inner">
+                        <span>FUTUROS POSIBLES</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- BLOQUE DE ESCENARIOS (DERECHA) -->
+                  <div class="cono-scenarios-column">
+                    <div class="cono-scenarios-header">ESCENARIOS</div>
+                    <div class="cono-scenarios-list">
+                      <a *ngFor="let esc of conoEscenarios" [href]="esc.url" target="_blank" class="cono-scenario-card">
+                        {{ esc.titulo }}
+                      </a>
+
+                      <div *ngIf="!tieneEscenariosCono" class="text-center text-muted small py-3">
+                        Sin escenarios registrados
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- LEYENDA TIPO INFOGRAFÍA CEPLAN -->
+                <div class="cono-legend-box mt-4 p-3 rounded">
+                  <div class="fw-bold mb-2 small text-dark">Leyenda:</div>
+                  <div class="d-flex flex-wrap gap-3 align-items-center small">
+                    <span class="d-flex align-items-center gap-1">
+                      <i class="bi bi-send-fill text-success" style="transform: rotate(-45deg);"></i> Oportunidad
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                      <i class="bi bi-lightning-charge-fill text-danger"></i> Riesgo
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                      <i class="bi bi-activity text-primary"></i> Señal débil
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                      <i class="bi bi-box-square-fill text-dark"></i> Carta salvaje
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                      <i class="bi bi-arrow-right text-primary"></i> Tendencia
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

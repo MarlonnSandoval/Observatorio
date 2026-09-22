@@ -1,0 +1,38 @@
+/* Refuerza la paleta de la leyenda del radar de eventos futuros dentro de
+   las etiquetas p-tag. PrimeNG no trae una severity "morada" ni "gris"
+   por defecto en algunos temas, por eso se ajustan puntualmente aquí. */
+
+::ng-deep .p-tag.tema-política {
+  background-color: #EEEDFE;
+  color: #3C3489;
+}
+
+::ng-deep .p-tag.tema-general {
+  background-color: #F1EFE8;
+  color: #444441;
+}
+
+/* Filas cebra + hover más visible para escaneo rápido */
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--surface-100);
+  cursor: default;
+}
+
+/* Encabezados con jerarquía tipográfica clara */
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+  background-color: var(--surface-50);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.eventos-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+

@@ -1,0 +1,236 @@
+<div class="container-fluid py-4 px-md-5 fade-in" *ngIf="metodo as m">
+
+  <!-- BOTÓN REGRESAR ENCABEZADO -->
+  <div class="mb-4">
+    <button class="btn btn-outline-teal rounded-pill px-4 fw-bold small shadow-sm" (click)="volver()">
+      <i class="pi pi-arrow-left me-2"></i>Volver al catálogo
+    </button>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- ========================================== -->
+    <!-- BARRA LATERAL NAVEGACIÓN FIJA (LEFT SIDEBAR)-->
+    <!-- ========================================== -->
+    <aside class="col-12 col-lg-3">
+      <div class="sticky-sidebar card border-0 shadow-sm rounded-4 p-3 bg-white">
+        
+        <!-- ENCABEZADO DEL MENÚ -->
+        <div class="px-3 pt-2 pb-3 border-bottom mb-3">
+          <span class="badge bg-teal text-white px-3 py-1 rounded-pill small mb-2">Método N° {{ m.num }}</span>
+          <h2 class="h6 fw-bold text-dark m-0">{{ m.nombre }}</h2>
+        </div>
+
+        <!-- LISTA DE SECCIONES -->
+        <nav class="nav nav-pills flex-column gap-1">
+          <button 
+            *ngFor="let item of navItems"
+            class="nav-link text-start d-flex align-items-center gap-2 rounded-3 px-3 py-2 border-0"
+            [class.active]="seccionActiva === item.id"
+            (click)="scrollToSection(item.id)">
+            <i class="pi {{ item.icon }} text-teal fs-6"></i>
+            <span class="small fw-medium">{{ item.titulo }}</span>
+          </button>
+        </nav>
+
+        <!-- INDICADOR DE COMPLETITUD / RESUMEN -->
+        <div class="mt-4 p-3 bg-light rounded-3 text-center border">
+          <small class="text-muted d-block mb-1">Fase del Sinaplan</small>
+          <span class="fw-bold text-teal small">{{ m.fase }}</span>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- CONTENIDO PRINCIPAL                        -->
+    <!-- ========================================== -->
+    <main class="col-12 col-lg-9">
+      <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-md-5">
+
+        <!-- CABECERA -->
+        <div class="border-bottom pb-4 mb-5">
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="badge bg-teal text-white px-3 py-2 rounded-pill fw-bold">{{ m.fase }}</span>
+            <span *ngIf="m.subetapa" class="badge bg-light text-teal border border-teal px-3 py-2 rounded-pill fw-bold">
+              {{ m.subetapa }}
+            </span>
+          </div>
+          <h1 class="display-6 fw-bold text-dark m-0">{{ m.nombre }}</h1>
+        </div>
+
+        <!-- SECCIÓN 3.1: DÓNDE SE APLICA -->
+        <section id="donde-se-aplica" class="mb-5 section-scroll-margin">
+          <div class="d-flex align-items-center mb-4 text-divider">
+            <h3 class="fs-4 fw-bold text-dark mb-0">3.1. Dónde se aplica</h3>
+          </div>
+
+          <p class="text-secondary lh-base mb-4">{{ m.aplicacion.caracteristicas }}</p>
+
+          <div class="row g-3">
+            <!-- Fases -->
+            <div class="col-12 col-md-6">
+              <div class="p-4 bg-light rounded-4 h-100 border-4 border-teal">
+                <h4 class="h6 fw-bold text-teal text-uppercase tracking-wider mb-2">
+                  <i class="pi pi-compass me-2"></i>Fases y Etapas
+                </h4>
+                <ul class="list-unstyled mb-0 text-secondary small lh-lg">
+                  <li *ngFor="let f of m.aplicacion.fasesAplicacion">
+                    <i class="pi pi-check-circle text-teal me-2"></i>{{ f }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Participación y Dificultad -->
+            <div class="col-12 col-md-6">
+              <div class="p-4 bg-light rounded-4 h-100 border-start border-4 border-teal">
+                <h4 class="h6 fw-bold text-teal text-uppercase tracking-wider mb-2">
+                  <i class="pi pi-users me-2"></i>Participación y Nivel
+                </h4>
+                <p class="small text-secondary mb-2">
+                  <strong>Involucrados:</strong> {{ m.aplicacion.nivelParticipacion }}
+                </p>
+                <p class="small text-secondary mb-0">
+                  <strong>Dificultad técnica:</strong>
+                  <span class="badge bg-warning bg-opacity-25 text-dark ms-1 px-2 py-1 rounded-2">
+                    {{ m.aplicacion.dificultad }}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Recursos -->
+            <div class="col-12">
+              <div class="p-4 bg-light rounded-4">
+                <h4 class="h6 fw-bold text-teal text-uppercase tracking-wider mb-3">
+                  <i class="pi pi-desktop me-2"></i>Recursos e Insumos Requeridos
+                </h4>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <strong class="d-block small text-dark mb-2">Modalidad Presencial:</strong>
+                    <div class="d-flex flex-wrap gap-2">
+                      <span *ngFor="let rec of m.aplicacion.recursosPresenciales"
+                            class="badge bg-white text-secondary border px-3 py-2 rounded-3 small fw-normal">
+                        {{ rec }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <strong class="d-block small text-dark mb-2">Modalidad Virtual:</strong>
+                    <div class="d-flex flex-wrap gap-2">
+                      <span *ngFor="let rec of m.aplicacion.recursosVirtuales"
+                            class="badge bg-white text-secondary border px-3 py-2 rounded-3 small fw-normal">
+                        {{ rec }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 3.2: DESARROLLO DEL MÉTODO -->
+        <div class="d-flex align-items-center mb-4 text-divider">
+          <h3 class="fs-4 fw-bold text-dark mb-0">3.2. Desarrollo del método</h3>
+        </div>
+
+        <!-- DEFINICIÓN -->
+        <section id="definicion" class="mb-5 section-scroll-margin">
+          <h4 class="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+            <i class="pi pi-book text-teal fs-5"></i> Definición
+          </h4>
+          <div class="quote-box p-4">
+            <p class="text-secondary lh-lg mb-0 fs-6">
+              {{ m.definicion }}
+            </p>
+          </div>
+        </section>
+
+        <!-- ESTRUCTURA / HERRAMIENTAS -->
+        <section id="herramientas" class="mb-5 section-scroll-margin">
+          <h4 class="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+            <i class="pi pi-wrench text-teal fs-5"></i> Estructura y Herramientas
+          </h4>
+          <div class="row g-3">
+            <div *ngFor="let herramienta of m.herramientas" class="col-12 col-md-6">
+              <div class="p-3 bg-light rounded-3 border-start border-4 border-teal h-100 d-flex align-items-center">
+                <span class="text-dark small fw-medium">
+                  <i class="pi pi-check-circle text-teal me-2"></i>{{ herramienta }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PASOS DE IMPLEMENTACIÓN INTERACTIVOS -->
+        <section id="pasos" class="mb-5 section-scroll-margin">
+          <h4 class="h5 fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+            <i class="pi pi-list text-teal fs-5"></i> Pasos para su implementación
+          </h4>
+
+          <!-- NAVEGACIÓN DE PASOS EN PESTAÑAS DICHAS -->
+          <div class="d-flex gap-2 mb-4 overflow-auto pb-2">
+            <button 
+              *ngFor="let paso of m.pasos"
+              class="btn step-tab-btn flex-shrink-0 d-flex align-items-center gap-2 px-3 py-2 rounded-pill fw-bold small"
+              [class.active]="pasoSeleccionado === paso.numero"
+              (click)="seleccionarPaso(paso.numero)">
+              <span class="step-circle">{{ paso.numero }}</span>
+              <span>Paso {{ paso.numero }}</span>
+            </button>
+          </div>
+
+          <!-- DETALLE DEL PASO SELECCIONADO -->
+          <div *ngFor="let paso of m.pasos">
+            <div *ngIf="pasoSeleccionado === paso.numero" class="card border-0 bg-teal-subtle rounded-4 p-4 fade-in">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="step-badge flex-shrink-0">{{ paso.numero }}</div>
+                <h5 class="fw-bold text-dark m-0 fs-5">{{ paso.titulo }}</h5>
+              </div>
+              <p class="text-secondary lh-lg mb-0">
+                {{ paso.descripcion }}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- VENTAJAS Y RIESGOS -->
+        <section id="ventajas-riesgos" class="pt-3 section-scroll-margin">
+          <div class="row g-4">
+            <!-- Ventajas -->
+            <div class="col-12 col-md-6">
+              <div class="p-4 bg-light rounded-4 h-100">
+                <h4 class="h6 fw-bold text-teal text-uppercase tracking-wider mb-3">
+                  <i class="pi pi-thumbs-up me-2"></i>Ventajas
+                </h4>
+                <ul class="list-unstyled mb-0 text-secondary small lh-lg">
+                  <li *ngFor="let v of m.ventajas" class="mb-2 d-flex align-items-start">
+                    <i class="pi pi-check text-teal me-2 mt-1"></i>
+                    <span>{{ v }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Riesgos -->
+            <div class="col-12 col-md-6">
+              <div class="p-4 bg-light rounded-4 h-100">
+                <h4 class="h6 fw-bold text-danger text-uppercase tracking-wider mb-3">
+                  <i class="pi pi-exclamation-triangle me-2"></i>Riesgos y Recomendaciones
+                </h4>
+                <div *ngFor="let d of m.desventajas" class="mb-3 p-3 bg-white rounded-3 border">
+                  <strong class="text-dark d-block mb-1 small">• {{ d.riesgo }}</strong>
+                  <span class="text-muted small"><em>Recomendación:</em> {{ d.recomendacion }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+</div>  

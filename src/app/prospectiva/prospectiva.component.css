@@ -1,0 +1,45 @@
+/* Contenedor principal de la navegación */
+.custom-navbar {
+  /* Gradiente moderno oscuro/azulado */
+  background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+  min-height: 70px;
+}
+
+/* Estilos de los enlaces */
+.custom-nav-link {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  padding: 0.6rem 1rem !important;
+  transition: all 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Efecto Hover */
+.custom-nav-link:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Estado Activo (routerLinkActive) */
+.active-link {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Íconos de PrimeNG dentro de los enlaces */
+.custom-nav-link i {
+  font-size: 1.1rem;
+}
+
+/* Ajustes para el cuerpo de la aplicación */
+.prospectiva-body {
+  min-height: calc(100vh - 70px);
+  background-color: #f8f9fa; /* Fondo claro de Bootstrap */
+}

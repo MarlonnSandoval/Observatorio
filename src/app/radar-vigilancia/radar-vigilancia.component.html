@@ -1,0 +1,184 @@
+<div class="radar-module-container">
+
+  <!-- HERO CAROUSEL -->
+  <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+    data-bs-interval="6000">
+    <div class="carousel-inner">
+      <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index" [class.active]="i === 0">
+        <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+        <div
+          class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-white p-4 p-md-5">
+          <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+          <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-indicators hero-indicators">
+      <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+        [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+        [attr.aria-label]="'Diapositiva ' + (i + 1)">
+      </button>
+    </div>
+  </div>
+
+  <!-- CABECERA Y FILTROS -->
+  <div class="module-header">
+    <div class="header-titles">
+      <h2>Radar de Vigilancia Prospectiva</h2>
+      <p>Monitoreo de elementos de futuro según nivel de alerta y proximidad</p>
+    </div>
+
+    <div class="header-actions">
+      <div class="filter-group">
+        <label for="filtroVista">Enfoque:</label>
+        <select id="filtroVista" class="form-control" [(ngModel)]="enfoqueSeleccionado">
+          <option value="TODOS">Todos</option>
+          <option value="TERRITORIAL">Territorial</option>
+          <option value="SECTORIAL">Sectorial</option>
+        </select>
+      </div>
+
+      <button class="btn btn-outline-primary" (click)="exportarReporte()">
+        Descargar Reporte
+      </button>
+
+      <button class="btn btn-primary" (click)="abrirEncuesta()">
+        Validar / Encuesta
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="radar-main-content">
+
+    <!-- COLUMNA IZQUIERDA: RADAR -->
+    <div class="radar-card">
+      <div class="radar-viewport">
+        <div class="radar-circle">
+
+          <!-- Anillos -->
+          <div class="ring ring-alta" title="Inminente"></div>
+          <div class="ring ring-media" title="Mediano Plazo"></div>
+          <div class="ring ring-baja" title="Monitoreo Continuo"></div>
+
+          <!-- Ejes -->
+          <div class="axis axis-v"></div>
+          <div class="axis axis-h"></div>
+
+          <!-- Etiquetas de Orientación / Cuadrantes Dinámicos -->
+          <span class="quadrant-label label-top">{{ getEtiquetaCuadrante('TOP') }}</span>
+          <span class="quadrant-label label-right">{{ getEtiquetaCuadrante('RIGHT') }}</span>
+          <span class="quadrant-label label-bottom">{{ getEtiquetaCuadrante('BOTTOM') }}</span>
+          <span class="quadrant-label label-left">{{ getEtiquetaCuadrante('LEFT') }}</span>
+
+          <!-- PUNTOS / ALERTAS -->
+          <div *ngFor="let item of elementos" class="radar-dot"
+            [ngClass]="[getClaseAlerta(item.alerta), item.id === elementoSeleccionado?.id ? 'active-dot' : '']"
+            [style.left.%]="getPosicionX(item)" [style.top.%]="getPosicionY(item)" (click)="seleccionarElemento(item)">
+            <span *ngIf="item.alerta === 'ROJO'" class="pulse-ring"></span>
+            <div class="dot-tooltip">{{ item.titulo }}</div>
+          </div>
+        </div>
+
+        <!-- Leyenda de Semaforización (Corregida) -->
+        <div class="radar-legend">
+          <div class="legend-item"><span class="dot alerta-roja"></span> Alto / Crítico</div>
+          <div class="legend-item"><span class="dot alerta-ambar"></span> Medio / Alerta</div>
+          <div class="legend-item"><span class="dot alerta-verde"></span> Bajo / Monitoreo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: PANEL DE DETALLE / LISTADO -->
+    <div class="details-card">
+
+      <!-- Detalle Seleccionado -->
+      <div *ngIf="elementoSeleccionado" class="selected-detail">
+        <div class="detail-header" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
+          <span class="badge-tipo">{{ elementoSeleccionado.tipo }}</span>
+          <button class="close-btn" (click)="elementoSeleccionado = null">×</button>
+        </div>
+
+        <div class="detail-body">
+          <h3>{{ elementoSeleccionado.titulo }}</h3>
+
+          <div class="meta-info">
+            <p><strong>Sector:</strong> {{ elementoSeleccionado.sector }}</p>
+            <p><strong>Territorio:</strong> {{ elementoSeleccionado.territorio }}</p>
+            <p><strong>Estado de Alerta:</strong>
+              <span class="status-tag" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
+                {{ elementoSeleccionado.alerta }}
+              </span>
+            </p>
+          </div>
+
+          <div class="description-box">
+            <h4>Descripción del Análisis:</h4>
+            <p>{{ elementoSeleccionado.descripcion }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listado General (Cuando no hay nada seleccionado) -->
+      <div *ngIf="!elementoSeleccionado" class="general-list">
+        <h3>Elementos Identificados ({{ elementos.length }})</h3>
+        <p class="list-subtitle">Selecciona un punto en el radar o en la lista para ver su detalle:</p>
+
+        <div class="elements-scroll">
+          <div *ngFor="let item of elementos" class="list-item" (click)="seleccionarElemento(item)">
+            <span class="dot" [ngClass]="getClaseAlerta(item.alerta)"></span>
+            <div class="item-text">
+              <strong>{{ item.titulo }}</strong>
+              <small>{{ item.tipo }} | {{ item.territorio }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL DE ENCUESTA DE VALIDACIÓN -->
+  <div class="modal-overlay" *ngIf="mostrarModalEncuesta">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Encuesta de Validación</h3>
+        <button class="close-btn" (click)="cerrarEncuesta()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Elemento evaluado:</strong> {{ elementoSeleccionado?.titulo || 'Evaluación General' }}</p>
+
+        <div class="form-group">
+          <label>¿Considera pertinente la alerta detectada?</label>
+          <div class="radio-group">
+            <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="SI"> Sí, es pertinente</label>
+            <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="NO"> No es relevante</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nivel de Alerta Recomendado:</label>
+          <select [(ngModel)]="encuesta.nivelAlertaSugerido" class="form-control">
+            <option value="ROJO">Alto / Crítico (Rojo)</option>
+            <option value="AMBAR">Medio / Alerta (Ámbar)</option>
+            <option value="VERDE">Bajo / Monitoreo (Verde)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Observaciones / Justificación:</label>
+          <textarea [(ngModel)]="encuesta.comentarios" rows="3" class="form-control"
+            placeholder="Escriba aquí los sustentos o comentarios..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-primary" (click)="cerrarEncuesta()">Cancelar</button>
+        <button class="btn btn-primary" (click)="enviarEncuesta()">Guardar Validación</button>
+      </div>
+    </div>
+  </div>
+
+</div>

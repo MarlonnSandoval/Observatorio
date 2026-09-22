@@ -1,0 +1,115 @@
+<main class="container mt-5 px-5">
+    <div>
+        <div class="row">
+            <div class="col-sm-7 col-12 title-trends">
+                Tendencias
+            </div>
+            <div class="col-sm-5 col-12">
+                <div class="row justify-content-end">
+                    <a routerlink="../tendencia-global" class="col-3" href="/tendencia-global">
+                        <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tg-b.webp"
+                            alt="Tendencia global">
+                    </a>
+                    <a routerlink="../tendencia-nacional" class="col-3" href="/tendencia-nacional">
+                        <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tn-w.webp"
+                            alt="Tendencia nacional">
+                    </a>
+                    <a routerlink="../tendencia-territorial" class="col-3" href="/tendencia-territorial">
+                        <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tt-w.webp"
+                            alt="Tendencia territorial">
+                    </a>
+                    <a routerlink="../tendencia-sectorial" class="col-3" href="/tendencia-sectorial">
+                        <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/ts-w.webp"
+                            alt="Tendencia sectorial">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <p class="col-12">
+                <b>Fenómeno de escala
+                    mundial</b> consistente en el tiempo, que interactúa o <b>que podría
+                    incidir en el desarrollo nacional</b> actual y hacia el mediano o largo plazo. Su movimiento permite
+                identificar la dinámica entre lo local y global.
+            </p>
+        </div>
+    </div>
+
+    <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+        data-bs-interval="6000">
+        <div class="carousel-inner">
+            <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index"
+                [class.active]="i === 0">
+                <img class="icon-trends" [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+                <div class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column
+                    justify-content-center text-white p-4 p-md-5">
+                    <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+                    <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-indicators hero-indicators">
+            <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+                [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Diapositiva ' + (i + 1)">
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>Seleccione una temática para explorar las principales tendencias globales:</p>
+        </div>
+
+        <div class="col-md-12">
+            <div class="">
+
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                    <div class="input-group tendencias-search">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" placeholder="Buscar una tendencia"
+                            [(ngModel)]="busqueda" name="busqueda" aria-label="Buscar una tendencia">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Filtrar por temática">
+                    <button type="button" *ngFor="let cat of categorias" class="chip-categoria"
+                        [class.active]="cat.id === categoriaSeleccionada" [style.--chip-color]="cat.color"
+                        [attr.aria-pressed]="cat.id === categoriaSeleccionada" (click)="seleccionarCategoria(cat.id)">
+                        <i class="bi" [ngClass]="cat.icono" aria-hidden="true"></i>
+                        <span>{{ cat.nombre }}</span>
+                        <span class="chip-count">{{ contarPorCategoria(cat.id) }}</span>
+                    </button>
+                </div>
+
+                <p class="tendencias-resultado-count" aria-live="polite">
+                    {{ tendenciasFiltradas.length }}
+                    {{ tendenciasFiltradas.length === 1 ? 'tendencia' : 'tendencias' }}
+                    en {{ categoriaActiva.nombre | lowercase }}
+                </p>
+
+                <div class="row g-3">
+                    <div class="col-12 col-md-3" *ngFor="let tendencia of tendenciasFiltradas">
+                        <a [routerLink]="tendencia.ruta"
+                            class="tendencia-fila d-flex h-100 align-items-center justify-content-between"
+                            [style.--chip-color]="categoriaActiva.color">
+                            <span>{{ tendencia.titulo }}</span>
+                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="tendencias-vacio" *ngIf="tendenciasFiltradas.length === 0">
+                        No se encontraron tendencias con ese criterio.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

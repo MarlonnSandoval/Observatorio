@@ -1,0 +1,49 @@
+<div class="chatbot-fixed-container">
+
+    <p-button (click)="op.toggle($event); onChatOpen()" icon="pi pi-comments" label="¿Ayuda?"
+        styleClass="p-button-rounded p-button-raised p-button-lg chat-trigger-btn">
+    </p-button>
+
+    <p-overlayPanel #op [style]="{ width: '380px' }" styleClass="chatbot-overlay shadow-6 p-0">
+        <ng-template pTemplate="content">
+
+            <p-card header="Asistente Virtual" styleClass="chatbot-card border-none shadow-none m-0 p-0">
+
+                <div #chatBox class="chat-box d-flex flex-column gap-2 overflow-y-auto">
+
+                    <ng-container *ngIf="historial.length > 0; else noMessages">
+                        <div *ngFor="let mensaje of historial" [ngClass]="{
+                   'justify-content-start': mensaje.remitente === 'bot',
+                   'justify-content-end': mensaje.remitente === 'usuario'
+                 }" class="d-flex w-100 mb-1">
+
+                            <div [ngClass]="{
+                     'bubble-bot': mensaje.remitente === 'bot',
+                     'bubble-user': mensaje.remitente === 'usuario'
+                   }" class="chat-bubble shadow-1" [innerHTML]="mensaje.html">
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                    <ng-template #noMessages>
+                        <div class="text-center p-3 text-muted small">Iniciando chat...</div>
+                    </ng-template>
+
+                </div>
+
+                <ng-template pTemplate="footer">
+                    <div class="options-container d-flex flex-wrap gap-1 justify-content-center border-top pt-2">
+                        <button *ngFor="let opcion of opcionesActuales" pButton type="button" [label]="opcion.texto"
+                            class="p-button-outlined p-button-sm p-button-rounded chatbot-mini-btn"
+                            (click)="seleccionarOpcion(opcion); $event.stopPropagation()">
+                        </button>
+                    </div>
+                </ng-template>
+
+            </p-card>
+
+        </ng-template>
+    </p-overlayPanel>
+
+</div> 

@@ -1,0 +1,58 @@
+<!-- Nav propio de Prospectiva -->
+<nav class="navbar navbar-expand-lg custom-navbar shadow-sm px-4">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" routerLink="/prospectiva">
+      <i class="pi pi-chart-line fs-4 text-white"></i>
+      <span class="text-white">Módulo de Prospectiva</span>
+    </a>
+
+    <button class="navbar-toggler border-0 shadow-none text-white" type="button" data-bs-toggle="collapse"
+      data-bs-target="#prospectivaNav" aria-controls="prospectivaNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="pi pi-bars fs-4"></i>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="prospectivaNav">
+      <ul class="navbar-nav gap-1 mt-3 mt-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" routerLink="/prospectiva/inicio" routerLinkActive="active-link">
+            Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" routerLink="/prospectiva/aprende" routerLinkActive="active-link">
+            Aprende
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" routerLink="/prospectiva/ruta-prospectiva" routerLinkActive="active-link">
+            Rutas Prospectivas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" routerLink="/prospectiva/metodos" routerLinkActive="active-link">
+            Metodos Prospectivos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" routerLink="/prospectiva/kits" routerLinkActive="active-link">
+            Kits
+          </a>
+        </li>
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Aquí dentro se cargan las subpáginas -->
+<div class="prospectiva-body container-fluid py-4">
+  <router-outlet></router-outlet>
+</div>
+

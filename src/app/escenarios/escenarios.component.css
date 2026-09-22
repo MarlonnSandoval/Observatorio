@@ -1,0 +1,189 @@
+/* ---------- Variables ---------- */
+:root {
+  --peach: #f4cda9;
+  --peach-text: #4a2f13;
+  --lavender: #dcd6ef;
+  --lavender-text: #362b57;
+  --overlay-color: #0f3a6b;
+}
+
+/* ---- Hero / carrusel ---- */
+.hero-img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  max-width: 480px;
+  background: linear-gradient(90deg,
+      rgba(15, 58, 107, 0.94) 0%,
+      rgba(15, 58, 107, 0.88) 45%,
+      rgba(15, 58, 107, 0.15) 85%,
+      rgba(15, 58, 107, 0) 100%);
+}
+
+.hero-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+}
+
+/* ---- Toggle de categorías ---- */
+.bg-toggle-active {
+  background-color: #f7e9df;
+  
+}
+
+.bg-toggle-inactive {
+  background-color: #e8e2f7;
+}
+
+
+.map-ut {
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+}
+
+.map-region {
+  fill: #004cc6;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.map-region:hover {
+  fill: #003486;
+}
+
+.map-region.active {
+  fill: #003486;
+}
+
+.map-region.noData {
+  fill: #acccff;
+  pointer-events: none;
+}
+
+/* Redefinimos la tarjeta para ser el contenedor base flexible */
+.tarjetas {
+  border: 1px solid #3b69ae;
+  border-radius: 8px;
+  /* Bordes un poco más suaves y modernos */
+  height: 100%;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  /* Transición suave para hover */
+  overflow: hidden;
+}
+
+/* El enlace debe cubrir todo el espacio de la tarjeta */
+.tarjeta-link {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 0.7rem;
+  display: flex;
+  align-items: center;
+
+  color: #3b69ae;
+  text-decoration: none;
+  /* Quita el subrayado del enlace */
+  font-size: 0.875rem;
+  /* 14px */
+  font-weight: 500;
+}
+
+/* Icono (no se encoge si el texto es largo) */
+.tarjeta-link .icon-arrow {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+/* Hover: Cambia fondo de la tarjeta Y color del texto del enlace */
+.tarjetas:hover {
+  background-color: #3b69ae;
+  border-color: #3b69ae;
+  box-shadow: 0 4px 12px rgba(59, 105, 174, 0.2);
+}
+
+.tarjetas:hover .tarjeta-link {
+  color: #ffffff;
+}
+
+/* Estado Activo / Seleccionado (Si aplica) */
+.tarjetas .tarjeta-link.active {
+  background-color: #3b69ae;
+  color: #ffffff;
+}
+
+.map-text span {
+  font-size: 0.8rem;
+}
+
+.map-text i {
+  font-size: 0.7rem;
+}
+
+
+/* ===================================================
+   Tarjetas de artículos dentro del acordeón
+   (único bloque visual que no tiene equivalente en
+   Bootstrap/PrimeNG, se mantiene con CSS propio)
+   =================================================== */
+.article-link-card {
+  display: block;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+  border-left: 3px solid #0d6efd;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.article-link-card:last-child {
+  margin-bottom: 0;
+}
+
+.article-link-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  color: inherit;
+}
+
+.category-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #e9ecef;
+  color: #495057;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-label {
+  font-weight: 600;
+  color: #343a40;
+  font-size: 0.95rem;
+  flex: 1 1 auto;
+}
+
+.count-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6c757d;
+  background-color: #e9ecef;
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-left: 8px;
+}
+

@@ -1,0 +1,282 @@
+<main class="container my-4">
+
+    <!-- Header / Hero Section -->
+    <section class="row mb-4 align-items-center">
+        <div class="col-lg-7 col-md-12">
+            <h1 class="fw-bold text-navy display-6 mb-3">Oportunidades globales y nacionales</h1>
+            <p class="text-dark fs-6 mb-2">
+                Los riesgos globales y nacionales son condiciones o eventos potenciales que, de ocurrir, tendrían un
+                impacto negativo sobre el bienestar de la población peruana o el desarrollo nacional.
+            </p>
+            <p class="text-dark fs-6 mb-0">
+                Explora los riesgos que podrían afectar el desarrollo nacional durante los próximos diez años.
+            </p>
+        </div>
+        <div class="col-lg-5 col-md-12 mt-3 mt-lg-0">
+            <!-- Banner / Carousel simulado con Bootstrap -->
+            <div class="hero-banner rounded-4 overflow-hidden position-relative p-4 text-white d-flex flex-column justify-content-end"
+                style="min-height: 180px; background: linear-gradient(90deg, rgba(27,73,101,0.9) 0%, rgba(72,149,239,0.4) 100%), url('https://picsum.photos/500/200') center/cover;">
+                <h4 class="fw-bold mb-1">Exacerbación de la inseguridad ciudadana</h4>
+                <span class="small text-light">Riesgo Territorial</span>
+                <!-- Indicadores de slide -->
+                <div class="position-absolute bottom-0 end-0 m-3 d-flex gap-1">
+                    <span class="rounded-circle bg-white opacity-50" style="width: 8px; height: 8px;"></span>
+                    <span class="rounded-circle bg-white opacity-50" style="width: 8px; height: 8px;"></span>
+                    <span class="rounded-circle bg-white" style="width: 8px; height: 8px;"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtro Periodo, Título Central y Botón PDF -->
+    <section class="row mb-4 align-items-end g-3">
+        <!-- Selector de Período -->
+        <div class="col-12 col-md-3">
+            <div class="d-flex flex-column gap-1">
+                <label class="form-label small fw-bold text-navy mb-0">Periodo de evaluación</label>
+                <p-dropdown [options]="periodos" [(ngModel)]="periodoSeleccionado" optionLabel="label"
+                    optionValue="label" styleClass="w-100 custom-navy-dropdown" placeholder="Seleccione periodo">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <!-- Título Principal -->
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="h3 fw-bold text-navy mb-0">Oportunidades globales y para el Perú</h2>
+            <h3 class="h4 fw-bold text-navy mb-0">2026 - 2036</h3>
+        </div>
+
+        <!-- Botón Descarga -->
+        <div class="col-12 col-md-3 text-md-end text-center">
+            <p-button label="Descarga pdf" icon="pi pi-download" styleClass="p-button-sm custom-pdf-btn"
+                (onClick)="descargarPDF()">
+            </p-button>
+        </div>
+    </section>
+
+    <!-- Tarjetas de Resumen KPI -->
+    <section class="row g-3 mb-5">
+        <!-- Total Riesgos -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 text-center d-flex flex-column justify-content-center bg-navy">
+                <span class="display-4 fw-bold mb-0">{{ kpis.totalRiesgos }}</span>
+                <span class="fw-semibold fs-6">Riesgos evaluados</span>
+            </div>
+        </div>
+
+        <!-- Mayor Impacto -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 d-flex flex-column justify-content-between bg-blue-dark">
+                <span class="display-5 fw-bold">{{ kpis.mayorImpacto.valor }}</span>
+                <div>
+                    <span class="fw-bold d-block lh-sm mb-1">Mayor nivel de impacto</span>
+                    <p class="small mb-0 opacity-90">{{ kpis.mayorImpacto.titulo }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mayor Probabilidad -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div
+                class="card h-100 border-0 rounded-4 text-white p-3 d-flex flex-column justify-content-between bg-blue-medium">
+                <span class="display-5 fw-bold">{{ kpis.mayorProbabilidad.valor }}</span>
+                <div>
+                    <span class="fw-bold d-block lh-sm mb-1">Mayor probabilidad de ocurrencia</span>
+                    <p class="small mb-0 opacity-90">{{ kpis.mayorProbabilidad.titulo }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interconexión y Brecha -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="d-flex flex-column gap-2 h-100">
+                <!-- Interconectado -->
+                <div class="card border-0 rounded-4 p-2 px-3 bg-blue-light h-50 justify-content-center">
+                    <span class="fw-bold text-navy small d-block">Riesgo más interconectado:</span>
+                    <span class="small text-secondary">{{ kpis.masInterconectado }}</span>
+                </div>
+                <!-- Mayor Brecha -->
+                <div class="card border-0 rounded-4 p-2 px-3 bg-blue-light h-50 justify-content-center">
+                    <span class="fw-bold text-navy small d-block">Riesgo con mayor brecha de preparación:</span>
+                    <span class="small text-secondary">{{ kpis.mayorBrecha }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Red de Interconexiones de Riesgos -->
+    <section class="my-5">
+        <div class="text-center mb-3">
+            <h3 class="fw-bold text-navy mb-1">Red de interconexiones de riesgos</h3>
+            <p class="text-muted mb-0">Visualiza la influencia e interdependencia entre los distintos riesgos evaluados.
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white position-relative overflow-hidden p-3">
+
+            <!-- Mensaje de Estado / Guía -->
+            <div class="d-flex justify-content-end mb-2">
+                <span class="badge bg-light text-dark border font-monospace px-3 py-2 rounded-pill shadow-sm">
+                    {{ statusHintRed }}
+                </span>
+            </div>
+
+            <!-- Contenedor dinámico del Grafo D3 -->
+            <div #networkContainer class="w-100" style="min-height: 550px;"></div>
+
+            <!-- Leyendas Informativas -->
+            <div class="row g-2 mt-2 pt-2 border-top small text-secondary">
+                <div class="col-12 col-md-6 d-flex flex-wrap align-items-center gap-3">
+                    <span class="fw-bold text-dark">Temáticas:</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(255, 85, 51);"></span> Social</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(78, 135, 198);"></span> Tecnológico</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(5, 145, 65);"></span> Ambiental</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(239, 197, 20);"></span> Económico</span>
+                    <span class="d-flex align-items-center gap-1"><span class="rounded-circle d-inline-block"
+                            style="width:10px; height:10px; background:rgb(154, 32, 226);"></span> Político</span>
+                </div>
+                <div class="col-12 col-md-6 d-flex justify-content-md-end align-items-center gap-3">
+                    <span class="fw-bold text-dark">Nivel de influencia:</span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="4" />
+                        </svg> Fuerte
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="2" />
+                        </svg> Alta
+                    </span>
+                    <span class="d-flex align-items-center gap-1">
+                        <svg width="24" height="6">
+                            <line x1="0" y1="3" x2="24" y2="3" stroke="#94a3b8" stroke-width="1" />
+                        </svg> Moderada
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección: Brechas de preparación frente a los riesgos -->
+    <section class="my-5">
+        <h3 class="fw-bold text-navy mb-1">Brechas de preparación frente a los riesgos</h3>
+        <p class="text-muted mb-4">¿Frente a cuáles riesgos disponemos de menores capacidades?</p>
+
+        <div class="row g-4 align-items-center">
+            <!-- Matriz SVG de Cuadrantes (2x2) -->
+            <div class="col-12 col-lg-7">
+                <div class="bg-light p-4 rounded-4 border position-relative text-center shadow-sm">
+
+                    <svg viewBox="0 0 500 400" class="w-100 h-auto" style="max-height: 380px;">
+                        <!-- Fondo y Ejes -->
+                        <line x1="50" y1="200" x2="450" y2="200" stroke="#6c757d" stroke-width="2"
+                            stroke-dasharray="4" />
+                        <line x1="250" y1="50" x2="250" y2="350" stroke="#6c757d" stroke-width="2"
+                            stroke-dasharray="4" />
+
+                        <!-- Flechas de Ejes -->
+                        <path d="M 245 60 L 250 50 L 255 60" fill="none" stroke="#6c757d" stroke-width="2" />
+                        <path d="M 245 340 L 250 350 L 255 340" fill="none" stroke="#6c757d" stroke-width="2" />
+                        <path d="M 440 195 L 450 200 L 440 205" fill="none" stroke="#6c757d" stroke-width="2" />
+
+                        <!-- Etiquetas Eje Y -->
+                        <text x="250" y="25" text-anchor="middle" font-weight="bold" font-size="12" fill="#333">NIVEL DE
+                            PRIORIDAD</text>
+                        <text x="250" y="42" text-anchor="middle" font-weight="bold" font-size="11"
+                            fill="#555">ALTO</text>
+                        <text x="250" y="370" text-anchor="middle" font-weight="bold" font-size="11"
+                            fill="#555">BAJO</text>
+
+                        <!-- Etiqueta Eje X -->
+                        <text x="440" y="225" text-anchor="end" font-weight="bold" font-size="11"
+                            fill="#555">PREPARACIÓN</text>
+
+                        <!-- Etiquetas Cuadrantes -->
+                        <text x="130" y="100" text-anchor="middle" font-weight="bold" font-size="13" fill="#222">BRECHA
+                            CRÍTICA</text>
+                        <text x="370" y="100" text-anchor="middle" font-weight="bold" font-size="13"
+                            fill="#222">VIGILANCIA</text>
+                        <text x="130" y="300" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">FORTALECER</text>
+                        <text x="130" y="315" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">CAPACIDADES</text>
+                        <text x="370" y="300" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">CONTROL</text>
+                        <text x="370" y="315" text-anchor="middle" font-weight="bold" font-size="12"
+                            fill="#222">RELATIVO</text>
+
+                        <!-- Puntos Interactivos (Mapeados dinámicamente) -->
+                        <g *ngFor="let item of top5Brechas">
+                            <circle [attr.cx]="50 + (item.preparacionVal * 4)" [attr.cy]="350 - (item.prioridadVal * 3)"
+                                r="6" fill="#000" />
+                        </g>
+                    </svg>
+
+                </div>
+            </div>
+
+            <!-- Listado Top 5 Brechas -->
+            <div class="col-12 col-lg-5 ps-lg-4">
+                <h4 class="fw-bold text-danger mb-4">Top 5 de riesgos con mayor brecha</h4>
+                <div class="d-flex flex-column gap-3">
+                    <div *ngFor="let item of top5Brechas" class="border-bottom pb-2">
+                        <h6 class="fw-bold mb-1 text-dark">{{ item.nombre }}</h6>
+                        <div class="small text-muted">
+                            <div>Temática: <span class="text-capitalize">{{ item.tematica }}</span></div>
+                            <div>Prioridad: {{ item.prioridadLabel }}</div>
+                            <div>Preparación: {{ item.preparacionLabel }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Nuevos riesgos -->
+    <section class="my-5">
+        <h3 class="fw-bold text-navy mb-1">Nuevos riesgos</h3>
+        <p class="text-muted mb-4">Descubre los nuevos riesgos identificados para esta edición.</p>
+
+        <div class="border-dashed-blue p-4 rounded-4 position-relative">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-md-10">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4" *ngFor="let item of nuevosRiesgos">
+                            <div class="card card-nuevo-riesgo h-100 rounded-4 text-white p-3 d-flex flex-column justify-content-between border-0 shadow-sm"
+                                style="background-color: #0c4a6e; min-height: 200px;">
+                                <div>
+                                    <span class="badge bg-light text-navy fw-semibold mb-2">Nuevo</span>
+                                    <h6 class="fw-bold mb-3 lh-sm">{{ item.nombre }}</h6>
+                                </div>
+                                <div>
+                                    <p class="small mb-1 opacity-90">Impacto: {{ item.impacto }}</p>
+                                    <p class="small mb-3 opacity-90">Probabilidad: {{ item.probabilidad }}</p>
+                                    <button
+                                        class="btn btn-link text-white text-decoration-none p-0 small fw-semibold d-flex align-items-center gap-2"
+                                        (click)="explorarRiesgo(item)">
+                                        Explorar riesgo <i class="pi pi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flecha Navegación / Indicador -->
+                <div class="col-12 col-md-2 text-center">
+                    <div class="btn btn-navy rounded-circle p-3 shadow d-inline-flex align-items-center justify-content-center cursor-pointer"
+                        style="width: 50px; height: 50px;">
+                        <i class="pi pi-arrow-right fs-4 text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
