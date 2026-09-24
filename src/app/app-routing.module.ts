@@ -23,7 +23,7 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', component: IndexComponent },
+      { path: 'inicio', component: IndexComponent },
       { path: 'territorial', component: TerritorialComponent },
       { path: 'sectorial', component: SectorialComponent },
       { path: 'evento', component: EventoComponent },
