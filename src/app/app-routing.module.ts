@@ -23,6 +23,7 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
       { path: 'inicio', component: IndexComponent },
       { path: 'territorial', component: TerritorialComponent },
       { path: 'sectorial', component: SectorialComponent },
