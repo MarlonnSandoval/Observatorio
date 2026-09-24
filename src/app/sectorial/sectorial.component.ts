@@ -259,7 +259,7 @@ export class SectorialComponent implements AfterViewInit {
           const esMitadInferior = midAngle > Math.PI / 2 && midAngle < (3 * Math.PI) / 2;
           return esMitadInferior ? -2 : 3;
         })
-        .style('font-size', '9px')
+        .style('font-size', '9.5px')
         .style('font-weight', 600)
         .style('fill', '#ffffff')
         .style('pointer-events', 'none')
@@ -397,7 +397,7 @@ export class SectorialComponent implements AfterViewInit {
     const sectorNombre = this.sectorSeleccionado || this.selectedSector;
     if (!sectorNombre) return [];
 
-    const sector = SECTOR_DATABASE[sectorNombre];
+    const sector = this.sectorData || SECTOR_DATABASE[sectorNombre];
     if (!sector) return [];
 
     return [
@@ -405,6 +405,14 @@ export class SectorialComponent implements AfterViewInit {
       ...(sector["Riesgos"]?.articulos || []),
       ...(sector["Oportunidades"]?.articulos || [])
     ];
+  }
+
+  get articulosCaracterizan(): ArticuloRadar[] {
+    return this.articulosCompletos.filter(art => art.tipo === 'caracterizan');
+  }
+
+  get articulosImpactan(): ArticuloRadar[] {
+    return this.articulosCompletos.filter(art => art.tipo === 'impactan');
   }
 
   getArticulos(categoriaNombre: string): ArticuloRadar[] {
@@ -441,12 +449,12 @@ export class SectorialComponent implements AfterViewInit {
     return sector;
   }
 
-  trackByArticulo(index: number, articulo: ArticuloRadar): string {
+  trackByArticulo(_index: number, articulo: ArticuloRadar): string {
     return articulo.titulo;
   }
 
   getConoIcon(categoriaNombre: string): string {
-    if (categoriaNombre.includes('Riesgos')) return 'bi bi-lightning-charge-fill text-danger';
+    if (categoriaNombre.includes('Riesgos')) return 'bi bi-exclamation-triangle-fill text-danger';
     if (categoriaNombre.includes('Oportunidades')) return 'bi bi-send-fill text-success';
     if (categoriaNombre.includes('Tendencias')) return 'bi bi-arrow-right text-primary';
     return 'bi bi-activity text-secondary';
@@ -472,7 +480,7 @@ export class SectorialComponent implements AfterViewInit {
 
         columna.items.push({
           titulo: art.titulo,
-          shortLabel: art.titulo.length > 38 ? art.titulo.substring(0, 38) + '…' : art.titulo,
+          shortLabel: art.tituloCorto,
           categoriaNombre: catNombre,
           horizonte: art.horizonte,
           url: art.url,
@@ -491,5 +499,21 @@ export class SectorialComponent implements AfterViewInit {
 
   get tieneEscenariosCono(): boolean {
     return this.conoEscenarios.length > 0;
+  }
+
+  getCategoryColorData(categoriaName: string) { 
+    if (categoriaName.includes('Tendencias')) {
+      return { border: '#3B82F6', badgeBg: '#E0F2FE', badgeText: '#0369A1' };
+    }
+    if (categoriaName.includes('Riesgos')) {
+      return { border: '#EF4444', badgeBg: '#FEE2E2', badgeText: '#B91C1C' };
+    }
+    if (categoriaName.includes('Oportunidades')) {
+      return { border: '#10B981', badgeBg: '#D1FAE5', badgeText: '#047857' };
+    }
+    if (categoriaName.includes('Escenarios')) {
+      return { border: '#8B5CF6', badgeBg: '#EDE9FE', badgeText: '#6D28D9' };
+    }
+    return { border: '#0d6efd', badgeBg: '#e7f1ff', badgeText: '#0d6efd' };
   }
 }

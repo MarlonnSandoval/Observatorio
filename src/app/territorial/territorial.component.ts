@@ -176,7 +176,7 @@ export class TerritorialComponent {
   }
 
   getConoIcon(categoria: string): string {
-    if (categoria.includes('Riesgos')) return 'bi bi-lightning-charge-fill text-danger';
+    if (categoria.includes('Riesgos')) return 'bi bi-exclamation-triangle-fill text-danger';
     if (categoria.includes('Oportunidades')) return 'bi bi-send-fill text-success';
     if (categoria.includes('Tendencias')) return 'bi bi-arrow-right text-primary';
     return 'bi bi-activity text-secondary';

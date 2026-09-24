@@ -53,7 +53,6 @@ import { ChartComponent } from './components/chart/chart.component';
 import { OportunidadesComponent } from './oportunidades/oportunidades.component';
 import { FichaComponent } from './ficha/ficha.component';
 import { GlobalNacionalComponent } from './global-nacional/global-nacional.component';
-import { TendenciaComponent } from './tendencia/tendencia.component';
 import { MetodosComponent } from './guia-interactiva/pages/metodos/metodos.component';
 import { RadarVigilanciaComponent } from './radar-vigilancia/radar-vigilancia.component';
 
@@ -81,7 +80,6 @@ registerLocaleData(localeEsPe);
     OportunidadesComponent,
     FichaComponent,
     GlobalNacionalComponent,
-    TendenciaComponent,
     MetodosComponent,
     RadarVigilanciaComponent
   ],

@@ -1,38 +1,81 @@
-/* Refuerza la paleta de la leyenda del radar de eventos futuros dentro de
-   las etiquetas p-tag. PrimeNG no trae una severity "morada" ni "gris"
-   por defecto en algunos temas, por eso se ajustan puntualmente aquí. */
-
-::ng-deep .p-tag.tema-política {
-  background-color: #EEEDFE;
-  color: #3C3489;
-}
-
-::ng-deep .p-tag.tema-general {
-  background-color: #F1EFE8;
-  color: #444441;
-}
-
-/* Filas cebra + hover más visible para escaneo rápido */
-::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
-  background-color: var(--surface-100);
-  cursor: default;
-}
-
-/* Encabezados con jerarquía tipográfica clara */
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--text-color-secondary);
-  background-color: var(--surface-50);
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-  font-size: 0.9rem;
-  vertical-align: middle;
-}
-
 .eventos-card {
   border-radius: 12px;
   overflow: hidden;
 }
 
+/* Pestañas */
+.eventos-tabs .nav-link {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.eventos-tabs .nav-link.active {
+  color: #7e22ce;
+  font-weight: 600;
+  border-bottom-color: #a855f7;
+}
+
+/* Filtros */
+.filter-select,
+.filter-input {
+  height: 38px;
+  border-radius: 6px;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  border-color: #a855f7;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.2);
+}
+
+.btn-limpiar {
+  height: 38px;
+}
+
+/* Tabla */
+.eventos-table thead th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  white-space: nowrap;
+}
+
+.eventos-table tbody td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.eventos-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.eventos-table th.sortable:hover {
+  color: #343a40;
+}
+
+.sort-icon {
+  font-size: 0.7rem;
+  margin-left: 0.25rem;
+  opacity: 0.7;
+}
+
+/* Tags de temática (sin ::ng-deep, son elementos propios) */
+.tema-tag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background-color: #F1EFE8;
+  color: #444441;
+}
+
+.tema-politica  { background-color: #EEEDFE; color: #3C3489; }
+.tema-general   { background-color: #F1EFE8; color: #444441; }
+.tema-ambiental { background-color: #E6F4EA; color: #1E6B3A; }
+.tema-tecnologica { background-color: #E3F0FB; color: #1B5E9E; }
+.tema-social    { background-color: #FDE8F1; color: #9C2A63; }
+.tema-economica { background-color: #FFF3DC; color: #8A5A00; }

@@ -1,9 +1,10 @@
-export interface ArticuloRadar {
+export interface ArticuloRadar { 
   titulo: string;
+  tituloCorto: string;
   resumen: string;
   url: string;
   imagen?: string;
-  categoria?: string; // <-- Agregar esta línea
+  categoria?: string;
   tipo: 'caracterizan' | 'impactan';
   horizonte: 'PRESENTE-2030' | '2030-2040' | '2040-2050';
   cuadrante: 'Desarrollo de las personas' | 'Democracia y paz' | 'Competitividad e innovación' | 'Territorio sostenible';
@@ -11,6 +12,7 @@ export interface ArticuloRadar {
   colorBgCategory: string;
   colorTextCategory: string;
 }
+
 export interface CategoriaSectorDetalle {
   descargaUrl?: string;
   articulos: ArticuloRadar[];
@@ -35,9 +37,80 @@ export const SECTOR_DATABASE: DatabaseSectores = {
       articulos: [
         {
           tipo: 'caracterizan',
-          titulo: "Aumento del acceso seguro a la producción hídrica",
+          titulo: "Recuperación de la clase media",
+          tituloCorto: "Clase media",
           resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
-          url: "https://observatorio.ceplan.gob.pe/",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t33",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "PRESENTE-2030",
+          cuadrante: "Territorio sostenible",
+          categoria: "Tendencia",
+          colorBadge: "#3b82f6",
+          colorBgCategory: "#dbeafe",
+          colorTextCategory: "#1e40af"
+        },
+        {
+          tipo: 'caracterizan',
+          titulo: "Incremento de la cobertura de electrificación",
+          tituloCorto: "Cobertura de electrificación",
+          resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t39",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "PRESENTE-2030",
+          cuadrante: "Territorio sostenible",
+          categoria: "Tendencia",
+          colorBadge: "#3b82f6",
+          colorBgCategory: "#dbeafe",
+          colorTextCategory: "#1e40af"
+        },
+        {
+          tipo: 'caracterizan',
+          titulo: "Incremento de la cobertura de los sistemas previsionales contributivos",
+          tituloCorto: "Cobertura de pensiones",
+          resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t28",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "PRESENTE-2030",
+          cuadrante: "Territorio sostenible",
+          categoria: "Tendencia",
+          colorBadge: "#3b82f6",
+          colorBgCategory: "#dbeafe",
+          colorTextCategory: "#1e40af"
+        },
+        {
+          tipo: 'caracterizan',
+          titulo: "Aumento del comercio electrónico",
+          tituloCorto: "Comercio electrónico",
+          resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t68",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "PRESENTE-2030",
+          cuadrante: "Territorio sostenible",
+          categoria: "Tendencia",
+          colorBadge: "#3b82f6",
+          colorBgCategory: "#dbeafe",
+          colorTextCategory: "#1e40af"
+        },
+        {
+          tipo: 'caracterizan',
+          titulo: "Mayor concentración de la población en centros urbanos",
+          tituloCorto: "Concentración urbana",
+          resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t18",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "PRESENTE-2030",
+          cuadrante: "Territorio sostenible",
+          categoria: "Tendencia",
+          colorBadge: "#3b82f6",
+          colorBgCategory: "#dbeafe",
+          colorTextCategory: "#1e40af"
+        },
+        {
+          tipo: 'caracterizan',
+          titulo: "Mayores conflictos sociales",
+          tituloCorto: "Conflictos sociales",
+          resumen: "Ampliación de la cobertura de agua segura en las cuencas productivas industriales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/t27",
           imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
@@ -48,9 +121,53 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         },
         {
           tipo: 'impactan',
-          titulo: "Automatización de la pesca industrial",
+          titulo: "Aumento de la adopción de biomateriales para la industria",
+          tituloCorto: "Biomateriales en la industria",
           resumen: "Uso de IA y sensores para la sostenibilidad del recurso marino.",
-          url: "https://observatorio.ceplan.gob.pe/",
+          url: "https://observatorio.ceplan.gob.pe/ficha/ts_6_mp",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "2030-2040",
+          cuadrante: "Competitividad e innovación",
+          categoria: "Innovación",
+          colorBadge: "#10b981",
+          colorBgCategory: "#d1fae5",
+          colorTextCategory: "#065f46"
+        },
+        {
+          tipo: 'impactan',
+          titulo: "Mayor consumo de productos hidrobiológicos",
+          tituloCorto: "Consumo de productos hidrobiológicos",
+          resumen: "Uso de IA y sensores para la sostenibilidad del recurso marino.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/ts_4_mp",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "2030-2040",
+          cuadrante: "Competitividad e innovación",
+          categoria: "Innovación",
+          colorBadge: "#10b981",
+          colorBgCategory: "#d1fae5",
+          colorTextCategory: "#065f46"
+        },
+        {
+          tipo: 'impactan',
+          titulo: "Crecimiento de oportunidades sostenibles en la industria textil",
+          tituloCorto: "Oportunidades sostenibles en la industria textil",
+          resumen: "Uso de IA y sensores para la sostenibilidad del recurso marino.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/ts_10_mp",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
+          horizonte: "2030-2040",
+          cuadrante: "Competitividad e innovación",
+          categoria: "Innovación",
+          colorBadge: "#10b981",
+          colorBgCategory: "#d1fae5",
+          colorTextCategory: "#065f46"
+        },
+        {
+          tipo: 'impactan',
+          titulo: "Incremento de la sostenibilidad empresarial en la industria",
+          tituloCorto: "Sostenibilidad empresarial",
+          resumen: "Uso de IA y sensores para la sostenibilidad del recurso marino.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/ts_7_mp",
+          imagen: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           categoria: "Innovación",
@@ -71,6 +188,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Expansión del ecoturismo digital",
+          tituloCorto: "Clase media",
           resumen: "Integración de plataformas digitales para reservas comunitarias sostenibles.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -93,6 +211,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Digitalización de programas sociales",
+          tituloCorto: "Clase media",
           resumen: "Implementación de identidades digitales para la entrega eficiente de subsidios.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -115,6 +234,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Interoperabilidad del Estado peruano",
+          tituloCorto: "Clase media",
           resumen: "Modernización de trámites mediante APIs públicas y firma digital.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",
@@ -137,6 +257,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Modelos híbridos de educación superior",
+          tituloCorto: "Clase media",
           resumen: "Combinación de laboratorios virtuales y clases presenciales adaptativas.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -159,6 +280,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Monitoreo satelital de la Amazonía",
+          tituloCorto: "Clase media",
           resumen: "Detección temprana de la deforestación usando aprendizaje automático.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -181,6 +303,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Sistemas integrados de protección infantil",
+          tituloCorto: "Clase media",
           resumen: "Plataformas de alerta temprana contra la violencia intrafamiliar.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -203,6 +326,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Preservación digital del patrimonio inmaterial",
+          tituloCorto: "Clase media",
           resumen: "Digitalización 3D y archivo audiovisual de manifestaciones culturales ancestrales.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",
@@ -225,6 +349,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Telemedicina descentralizada",
+          tituloCorto: "Clase media",
           resumen: "Acceso a diagnóstico médico remoto en zonas rurales de difícil acceso.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -247,6 +372,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Agricultura de precisión e irrigación inteligente",
+          tituloCorto: "Clase media",
           resumen: "Tecnología IoT para la gestión óptima del agua en cultivos de exportación.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -269,6 +395,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Cooperación bilateral en ciencia y tecnología",
+          tituloCorto: "Clase media",
           resumen: "Convenios para la transferencia tecnológica en energías limpias.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",
@@ -291,6 +418,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Ciberdefensa e infraestructura crítica",
+          tituloCorto: "Clase media",
           resumen: "Protección de los sistemas informáticos nacionales ante ciberataques.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",
@@ -313,6 +441,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Adopción masiva de pagos digitales",
+          tituloCorto: "Clase media",
           resumen: "Disminución del uso de efectivo mediante interoperabilidad bancaria.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -335,6 +464,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Transición hacia el Hidrógeno Verde",
+          tituloCorto: "Clase media",
           resumen: "Proyectos piloto para la descarbonización de la minería de gran escala.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2040-2050",
@@ -357,6 +487,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Expediente Judicial Electrónico (EJE)",
+          tituloCorto: "Clase media",
           resumen: "Reducción de tiempos procesales mediante tramitación 100% digital.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -379,6 +510,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Despliegue de red 5G y conectividad rural",
+          tituloCorto: "Clase media",
           resumen: "Ampliación de la banda ancha para reducir la brecha de conectividad.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -401,6 +533,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Patrullaje inteligente asistido por IA",
+          tituloCorto: "Clase media",
           resumen: "Análisis predictivo de delitos para el despliegue policial eficiente.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",
@@ -423,6 +556,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Regulación de plataformas de trabajo digital",
+          tituloCorto: "Clase media",
           resumen: "Marcos normativos para la protección social de trabajadores independientes.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "PRESENTE-2030",
@@ -445,6 +579,7 @@ export const SECTOR_DATABASE: DatabaseSectores = {
         {
           tipo: 'caracterizan',
           titulo: "Ciudades resilientes e infraestructura ecoeficiente",
+          tituloCorto: "Clase media",
           resumen: "Construcción sostenible orientada a la mitigación de riesgos sísmicos.",
           url: "https://observatorio.ceplan.gob.pe/",
           horizonte: "2030-2040",

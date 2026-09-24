@@ -1,102 +1,80 @@
 export type Tematica = 'Ambiental' | 'Tecnológica' | 'Política' | 'Social' | 'Económica' | 'General';
 export type CategoriaProspectiva = 'Señal Débil' | 'Carta Salvaje' | 'Tecnología Emergente' | 'Ruptura o disrupción' | 'Evento catastrófico';
 export type Categoria = '' | 'Carta Salvaje' | 'Tecnología Emergente' | 'Ruptura o disrupción' | 'Evento catastrófico';
+export type TipoEvento = '' | 'SD' | 'RD' | 'CS' | 'EC';
 
 export interface Evento {
-
   nombre: string;
   tematica: Tematica;
-  fechaActualizacion: string; // ISO string, ej. '2025-07-17'
+  fechaActualizacion: string; // Ej. '30 sept 2024'
   urlFicha: string;
   categoria: CategoriaProspectiva;
+  ejeEstrategico?: string;
+  horizonte?: string;
+  tipoEvento?: 'SD' | 'RD' | 'CS' | 'EC';
+  categoriaPertenencia?: 'SD/RD' | 'CS/EC';
 }
 
-// Mapea cada temática al "severity" de PrimeNG (p-tag) para que el color
-// sea consistente con la leyenda del radar de eventos futuros.
 export const TEMATICA_SEVERITY: Record<Tematica, 'success' | 'info' | 'warning' | 'danger' | 'contrast' | 'secondary'> = {
   Ambiental: 'success',   // verde
   Tecnológica: 'info',    // azul
-  Política: 'contrast',   // morado -> se sobreescribe por CSS
+  Política: 'contrast',   // morado
   Social: 'danger',       // rojo
   Económica: 'warning',   // ámbar
-  General: 'secondary'    // gris o neutro
+  General: 'secondary'    // gris
 };
 
 export const DATABASE: Evento[] = [
-  // --- SEÑALES DÉBILES / RUPTURAS ---
-  {
+  // --- SEÑALES DÉBILES (SD) / RUPTURAS O DISRUPCIONES (RD) ---
+  { nombre: 'SD-Expansión de la ansiedad climática', tematica: 'Ambiental', fechaActualizacion: '30 sept 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S28', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Mayor uso de vehículos aéreos no tripulados', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S33', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Uso de la justicia a favor de la acción climática', tematica: 'Ambiental', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S34', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Impresión 3D aplicada a la industria de la construcción', tematica: 'Tecnológica', fechaActualizacion: '28 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S39', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Prolongada recesión económica', tematica: 'Económica', fechaActualizacion: '22 dec 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S41', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Prolongada interrupción en la cadena de semiconductores', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S44', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Normalización de la cirugía robótica', tematica: 'Tecnológica', fechaActualizacion: '27 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S38', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Surgimiento de la IA explicable', tematica: 'Tecnológica', fechaActualizacion: '31 jul 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/s45', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Colonias urbanas flotantes por cambio climático', tematica: 'Ambiental', fechaActualizacion: '17 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/s50', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Proliferación de incendios forestales en la Amazonía', tematica: 'Ambiental', fechaActualizacion: '17 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/s48', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Erosión de la soberanía por Big Tech', tematica: 'Económica', fechaActualizacion: '17 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/s49', categoria: 'Señal Débil', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Fin de la Internet abierta', tematica: 'Social', fechaActualizacion: '1 sept 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd1', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Democracia y paz', horizonte: '2030-2040', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Surgimiento de zonas inhabitables por temperaturas extremas', tematica: 'Ambiental', fechaActualizacion: '1 sept 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD2', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Territorio sostenible', horizonte: '2040-2050', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Descargas masivas de sulfuro de hidrógeno de océanos desoxigenados', tematica: 'Ambiental', fechaActualizacion: '2 sept 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S51', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Normalización de la computación cuántica', tematica: 'Tecnológica', fechaActualizacion: '21 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD3', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Competitividad e innovación', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Surgimiento de la Inteligencia Artificial General', tematica: 'Tecnológica', fechaActualizacion: '21 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD6', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Competitividad e innovación', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Ruptura de ciberseguridad por capacidades cuánticas', tematica: 'Tecnológica', fechaActualizacion: '21 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD7', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Competitividad e innovación', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Normalización de la tecnología espacial', tematica: 'Tecnológica', fechaActualizacion: '21 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/SD52', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Longevidad extrema con biotecnología avanzada', tematica: 'Tecnológica', fechaActualizacion: '22 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD8', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Plena digitalización del mundo real en entornos virtuales', tematica: 'Tecnológica', fechaActualizacion: '22 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD9', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Propagación de modelos de IA ultraeficientes y portátiles', tematica: 'Tecnológica', fechaActualizacion: '22 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/SD53', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Escalada de la Muskonomía', tematica: 'Tecnológica', fechaActualizacion: '22 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/SD54', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Restauración natural de ecosistemas degradados por proyectos bioeconómicos', tematica: 'Ambiental', fechaActualizacion: '31 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/SD55', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Normalización de ciudades submarinas o subterráneas', tematica: 'Social', fechaActualizacion: '31 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD10', categoria: 'Señal Débil', ejeEstrategico: 'Democracia y paz', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Captura criminal del Estado y pérdida del control territorial en el Perú', tematica: 'Social', fechaActualizacion: '31 oct 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/RD11', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Democracia y paz', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Avances en geoingeniería regional', tematica: 'Ambiental', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/SD56', categoria: 'Señal Débil', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Política del más fuerte vuelve a imperar en el mundo', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd12', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Democracia y paz', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Fragilidad del Estado de derecho en el Perú', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd13', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Democracia y paz', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'RD-Fin de la democracia y retorno al autoritarismo', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd14', categoria: 'Ruptura o disrupción', ejeEstrategico: 'Democracia y paz', horizonte: 'PRESENTE-2030', tipoEvento: 'RD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Desarrollo de políticas e instituciones inclusivas', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/sd57', categoria: 'Señal Débil', ejeEstrategico: 'Democracia y paz', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Uso generalizado de implantes neuronales', tematica: 'Tecnológica', fechaActualizacion: '22 dec 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/sd49', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
+  { nombre: 'SD-Despegue de la minería espacial', tematica: 'Tecnológica', fechaActualizacion: '31 dec 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/sd58', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
 
-    nombre: 'SD-Expansión de la ansiedad climática',
-    tematica: 'Ambiental',
-    fechaActualizacion: '2024-09-30',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S28',
-    categoria: 'Señal Débil'
-  },
-  {
-    nombre: 'SD-Mayor uso de vehículos aéreos no tripulados',
-    tematica: 'Tecnológica',
-    fechaActualizacion: '2024-12-20',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S33',
-    categoria: 'Señal Débil'
-  },
-  {
-    nombre: 'SD-Uso de la justicia a favor de la acción climática',
-    tematica: 'Ambiental',
-    fechaActualizacion: '2026-12-20',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S34',
-    categoria: 'Señal Débil'
-  },
-  {
-    nombre: 'RD-Fin de la Internet abierta',
-    tematica: 'Social',
-    fechaActualizacion: '2026-09-01',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd1',
-    categoria: 'Ruptura o disrupción'
-  },
-  {
-    nombre: 'RD-Política del más fuerte vuelve a imperar en el mundo',
-    tematica: 'Política',
-    fechaActualizacion: '2026-11-03',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/rd12',
-    categoria: 'Ruptura o disrupción'
-  },
-
-  // --- CARTAS SALVAJES / CATASTRÓFICOS ---
-  {
-    nombre: 'EC-Extraordinario Fenómeno de El Niño',
-    tematica: 'Ambiental',
-    fechaActualizacion: '2026-07-06',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S24',
-    categoria: 'Evento catastrófico'
-  },
-  {
-    nombre: 'CS-Ataque a satélites',
-    tematica: 'Tecnológica',
-    fechaActualizacion: '2026-12-20',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C9',
-    categoria: 'Carta Salvaje'
-  },
-  {
-    nombre: 'EC-Amenaza de bioterrorismo con patógenos modificados',
-    tematica: 'Social',
-    fechaActualizacion: '2026-07-16',
-    urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C6',
-    categoria: 'Evento catastrófico'
-  },
-
-  // --- TECNOLOGÍAS EMERGENTES ---
-  {
-    nombre: 'Aplicaciones inteligentes autónomas: el futuro móvil',
-    tematica: 'Tecnológica',
-    fechaActualizacion: '2026-08-14',
-    urlFicha: '/fichas/apps-inteligentes',
-    categoria: 'Tecnología Emergente'
-  },
-  {
-    nombre: 'Plenaria e integración de Sistemas de Energías Limpias',
-    tematica: 'General',
-    fechaActualizacion: '2026-01-10',
-    urlFicha: '/fichas/plenaria-anual',
-    categoria: 'Tecnología Emergente'
-  }
+  // --- CARTAS SALVAJES (CS) / EVENTOS CATASTRÓFICOS (EC) ---
+  { nombre: 'EC-Extraordinario Fenómeno de El Niño', tematica: 'Ambiental', fechaActualizacion: '6 jul 2026', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S24', categoria: 'Evento catastrófico', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'EC', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'EC-Amenaza de bioterrorismo con patógenos modificados', tematica: 'Social', fechaActualizacion: '16 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C6', categoria: 'Evento catastrófico', ejeEstrategico: 'Democracia y paz', horizonte: '2030-2040', tipoEvento: 'EC', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Ataque a satélites', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C9', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Liberación de patógenos por deshielo de glaciares', tematica: 'Ambiental', fechaActualizacion: '14 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C10', categoria: 'Carta Salvaje', ejeEstrategico: 'Territorio sostenible', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Erupción volcánica de gran magnitud', tematica: 'Ambiental', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C12', categoria: 'Carta Salvaje', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Aprovechamiento ético y sostenible de la biología sintética', tematica: 'Tecnológica', fechaActualizacion: '20 may 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C15', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Guerra civil por convulsión social', tematica: 'Política', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C18', categoria: 'Carta Salvaje', ejeEstrategico: 'Democracia y paz', horizonte: 'PRESENTE-2030', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Edición del genoma humano para tratamientos médicos', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C19', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Mayor implementación de la manufactura aditiva 4D', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C20', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Extinción de la Unión Europea', tematica: 'Política', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C21', categoria: 'Carta Salvaje', ejeEstrategico: 'Democracia y paz', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Transformación del sistema de salud hacia hospitales virtuales', tematica: 'Tecnológica', fechaActualizacion: '28 oct 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C23', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Escalada de una guerra nuclear', tematica: 'General', fechaActualizacion: '20 may 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C24', categoria: 'Carta Salvaje', ejeEstrategico: 'Democracia y paz', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Colapso económico en los Estados Unidos', tematica: 'Económica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/c25', categoria: 'Carta Salvaje', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Fracaso en la adopción de la IA', tematica: 'Tecnológica', fechaActualizacion: '20 dec 2024', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/c26', categoria: 'Carta Salvaje', ejeEstrategico: 'Competitividad e innovación', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Gran tormenta solar', tematica: 'Ambiental', fechaActualizacion: '7 feb 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/C27', categoria: 'Carta Salvaje', ejeEstrategico: 'Territorio sostenible', horizonte: '2040-2050', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Colapso del sistema energético global', tematica: 'Social', fechaActualizacion: '17 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/c28', categoria: 'Carta Salvaje', ejeEstrategico: 'Democracia y paz', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' },
+  { nombre: 'CS-Universalización de la renta básica', tematica: 'Económica', fechaActualizacion: '17 jul 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S35', categoria: 'Carta Salvaje', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'CS', categoriaPertenencia: 'CS/EC' }
 ];

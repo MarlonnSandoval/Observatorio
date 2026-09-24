@@ -225,9 +225,9 @@
   top: 10px;
   bottom: 10px;
   left: 0;
-  width: 65%;
+  width: 78%;
   background: rgba(239, 246, 255, 0.6);
-  clip-path: polygon(0% 28%, 100% 0%, 100% 100%, 0% 72%);
+  clip-path: polygon(0% 45%, 100% 25%, 100% 75%, 0% 55%);
   border-left: 2px solid #cbd5e1;
   z-index: 1;
 }
