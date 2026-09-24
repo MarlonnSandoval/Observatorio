@@ -101,12 +101,12 @@ export class RiesgoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heroSlides: HeroSlide[] = [
     {
-      image: 'https://observatorio.ceplan.gob.pe/uploads/A3IXVw9IKvScqsYSMQl-o0zv.png',
+      image: '/assets/img/A3IXVw9IKvScqsYSMQl-o0zv.png',
       title: 'Aumento del acceso seguro a agua y saneamiento en Amazonas',
       subtitle: 'Escenarios del Plan Estratégico de Desarrollo Nacional',
     },
     {
-      image: 'https://observatorio.ceplan.gob.pe/uploads/tbiiZTH0aN88k81XDBQgKllY.png',
+      image: '/assets/img/tbiiZTH0aN88k81XDBQgKllY.png',
       title: 'Aumento de logros educativos en Cajamarca',
       subtitle: 'Escenarios del Perú al 2050',
     },

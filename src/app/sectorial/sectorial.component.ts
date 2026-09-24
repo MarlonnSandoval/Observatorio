@@ -100,13 +100,13 @@ export class SectorialComponent implements AfterViewInit {
 
   heroSlides: HeroSlide[] = [
     {
-      image: 'https://observatorio.ceplan.gob.pe/uploads/A3IXVw9IKvScqsYSMQl-o0zv.png',
-      title: 'Mayor demanda de edificios y viviendas inteligentes',
+      image: '/assets/img/A3IXVw9IKvScqsYSMQl-o0zv.png',
+      title: 'Aumento del acceso seguro a agua y saneamiento en Amazonas',
       subtitle: 'Escenarios del Plan Estratégico de Desarrollo Nacional',
     },
     {
-      image: 'https://observatorio.ceplan.gob.pe/uploads/tbiiZTH0aN88k81XDBQgKllY.png',
-      title: 'Incremento de víctimas de acoso (bullying)',
+      image: '/assets/img/tbiiZTH0aN88k81XDBQgKllY.png',
+      title: 'Aumento de logros educativos en Cajamarca',
       subtitle: 'Escenarios del Perú al 2050',
     },
   ];
@@ -501,7 +501,7 @@ export class SectorialComponent implements AfterViewInit {
     return this.conoEscenarios.length > 0;
   }
 
-  getCategoryColorData(categoriaName: string) { 
+  getCategoryColorData(categoriaName: string) {
     if (categoriaName.includes('Tendencias')) {
       return { border: '#3B82F6', badgeBg: '#E0F2FE', badgeText: '#0369A1' };
     }
