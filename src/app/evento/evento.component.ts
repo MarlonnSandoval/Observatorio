@@ -57,7 +57,7 @@ export class EventoComponent implements OnInit {
       id: 'senales',
       titulo: 'Señal débil (SD) / Ruptura o disrupción (RD)',
       tituloDescripcion: 'Señal débil (SD) / Ruptura o disrupción (RD)',
-      imagen: 'https://observatorio.ceplan.gob.pe/assets/img/s/senal-debil.webp',
+      imagen: 'assets/img/senal-debil.webp',
       placeholder: 'Buscar señal o ruptura...',
       definiciones: [
         { termino: 'Señal débil (SD)', texto: 'indicio temprano y poco visible de un posible cambio futuro con alta incertidumbre.' },
@@ -72,7 +72,7 @@ export class EventoComponent implements OnInit {
       id: 'cartas',
       titulo: 'Carta salvaje (CS) / Evento catastrófico (EC)',
       tituloDescripcion: 'Carta salvaje (CS) / Evento catastrófico (EC)',
-      imagen: 'https://observatorio.ceplan.gob.pe/assets/img/s/carta-salvaje.webp',
+      imagen: 'assets/img/carta-salvaje.webp',
       placeholder: 'Buscar carta salvaje o catástrofe...',
       definiciones: [
         { termino: 'Carta salvaje (CS)', texto: 'evento poco probable, pero de alto impacto que puede transformar escenarios de forma inesperada.' },
@@ -87,7 +87,7 @@ export class EventoComponent implements OnInit {
       id: 'tecnologias',
       titulo: 'Tecnologías Emergentes',
       tituloDescripcion: 'Tecnología emergente',
-      imagen: 'https://observatorio.ceplan.gob.pe/assets/img/s/tendencia-emergente.webp',
+      imagen: 'assets/img/tendencia-emergente.webp',
       placeholder: 'Buscar tecnología emergente...',
       definiciones: [
         { termino: '', texto: 'Son aquellas innovaciones y avances tecnológicos que están en las etapas iniciales de desarrollo, pero que muestran un gran potencial para impactar significativamente en diversas áreas de la sociedad, la economía y la vida cotidiana.' }
