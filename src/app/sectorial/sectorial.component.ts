@@ -14,6 +14,7 @@ interface SectorConfig {
   nombre: string;
   color: string;
   anillo: string;
+  icono: string; // <-- Nuevo campo para el icono de Bootstrap
 }
 
 export interface ConoItem {
@@ -67,25 +68,25 @@ export class SectorialComponent implements AfterViewInit {
   private readonly sectoresPorAnillo = new Map<string, SectorConfig[]>();
 
   private readonly configSectores: SectorConfig[] = [
-    { nombre: 'Comercio Exterior y Turismo', color: 'rgb(44, 194, 177)', anillo: 'exterior_2' },
-    { nombre: 'Desarrollo e Inclusión Social', color: 'rgb(101, 161, 169)', anillo: 'exterior_2' },
-    { nombre: 'Competitividad Institucional', color: 'rgb(84, 203, 51)', anillo: 'exterior_2' },
-    { nombre: 'Mujer y poblaciones vulnerables', color: 'rgb(193, 202, 51)', anillo: 'exterior_2' },
-    { nombre: 'Transporte y Comunicaciones', color: 'rgb(97, 149, 131)', anillo: 'exterior_2' },
-    { nombre: 'Trabajo y Promoción de Empleo', color: 'rgb(142, 68, 173)', anillo: 'exterior_2' },
-    { nombre: 'Energía y Minas', color: 'rgb(211, 84, 0)', anillo: 'exterior_2' },
-    { nombre: 'Relaciones exteriores', color: 'rgb(35, 158, 215)', anillo: 'exterior' },
-    { nombre: 'Economía y Finanzas', color: 'rgb(243, 120, 24)', anillo: 'exterior' },
-    { nombre: 'Agrario y de Riesgo', color: 'rgb(146, 24, 47)', anillo: 'exterior' },
-    { nombre: 'Vivienda, construcción y saneamiento', color: 'rgb(108, 117, 125)', anillo: 'exterior' },
-    { nombre: 'Salud', color: 'rgb(247, 182, 26)', anillo: 'interior' },
-    { nombre: 'Defensa', color: 'rgb(214, 53, 68)', anillo: 'interior' },
-    { nombre: 'Justicia', color: 'rgb(63, 93, 122)', anillo: 'interior' },
-    { nombre: 'Interior', color: 'rgb(12, 86, 165)', anillo: 'interior' },
-    { nombre: 'Educación', color: 'rgb(127, 179, 69)', anillo: 'interior' },
-    { nombre: 'Ambiental', color: 'rgb(24, 175, 158)', anillo: 'interior' },
-    { nombre: 'Producción', color: 'rgb(235, 154, 161)', anillo: 'interior' },
-    { nombre: 'Cultura', color: 'rgb(15, 148, 165)', anillo: 'interior' },
+    { nombre: 'Comercio Exterior y Turismo', color: 'rgb(44, 194, 177)', anillo: 'exterior_2', icono: 'bi-airplane' },
+    { nombre: 'Desarrollo e Inclusión Social', color: 'rgb(101, 161, 169)', anillo: 'exterior_2', icono: 'bi-people' },
+    { nombre: 'Competitividad Institucional', color: 'rgb(84, 203, 51)', anillo: 'exterior_2', icono: 'bi-building' },
+    { nombre: 'Mujer y poblaciones vulnerables', color: 'rgb(193, 202, 51)', anillo: 'exterior_2', icono: 'bi-person-hearts' },
+    { nombre: 'Transporte y Comunicaciones', color: 'rgb(97, 149, 131)', anillo: 'exterior_2', icono: 'bi-truck' },
+    { nombre: 'Trabajo y Promoción de Empleo', color: 'rgb(142, 68, 173)', anillo: 'exterior_2', icono: 'bi-briefcase' },
+    { nombre: 'Energía y Minas', color: 'rgb(211, 84, 0)', anillo: 'exterior_2', icono: 'bi-lightning' },
+    { nombre: 'Relaciones exteriores', color: 'rgb(35, 158, 215)', anillo: 'exterior', icono: 'bi-globe2' },
+    { nombre: 'Economía y Finanzas', color: 'rgb(243, 120, 24)', anillo: 'exterior', icono: 'bi-graph-up-arrow' },
+    { nombre: 'Agrario y de Riesgo', color: 'rgb(146, 24, 47)', anillo: 'exterior', icono: 'bi-tree' },
+    { nombre: 'Vivienda, construcción y saneamiento', color: 'rgb(108, 117, 125)', anillo: 'exterior', icono: 'bi-house' },
+    { nombre: 'Salud', color: 'rgb(247, 182, 26)', anillo: 'interior', icono: 'bi-heart-pulse' },
+    { nombre: 'Defensa', color: 'rgb(214, 53, 68)', anillo: 'interior', icono: 'bi-shield-shaded' },
+    { nombre: 'Justicia', color: 'rgb(63, 93, 122)', anillo: 'interior', icono: 'bi-duffle' },
+    { nombre: 'Interior', color: 'rgb(12, 86, 165)', anillo: 'interior', icono: 'bi-shield-lock' },
+    { nombre: 'Educación', color: 'rgb(127, 179, 69)', anillo: 'interior', icono: 'bi-book' },
+    { nombre: 'Ambiental', color: 'rgb(24, 175, 158)', anillo: 'interior', icono: 'bi-leaf' },
+    { nombre: 'Producción', color: 'rgb(235, 154, 161)', anillo: 'interior', icono: 'bi-gear' },
+    { nombre: 'Cultura', color: 'rgb(15, 148, 165)', anillo: 'interior', icono: 'bi-palette' },
   ];
 
   readonly sectoresDisponibles: string[] = [
@@ -132,58 +133,215 @@ export class SectorialComponent implements AfterViewInit {
     this.svgRoot = d3.select(this.svgContainer.nativeElement);
     this.svgRoot.selectAll('svg').remove();
 
-    const width = 410;
-    const height = 410;
+    // 1. Ampliamos el viewBox a 1280 para evitar recortes laterales
+    const width = 1280;
+    const height = 620;
+    const innerRadius = 75;
+    const radius = 190;          // Tamaño optimizado del donut
+    const labelX = radius * 1.5; // Distancia hacia las columnas de texto
+    const minGap = 22;           // Separación vertical entre textos
 
     const svg = this.svgRoot
       .append('svg')
       .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMidYMid meet');
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', 'auto');
 
     const defs = svg.append('defs');
 
+    // Clip para la bandera central
     defs.append('clipPath')
       .attr('id', 'centro-bandera-clip')
       .append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
-      .attr('r', RADIO_CENTRO - 2);
+      .attr('r', innerRadius - 2);
 
     const filtro = defs.append('filter')
       .attr('id', 'sombra-sector')
       .attr('x', '-40%').attr('y', '-40%')
       .attr('width', '180%').attr('height', '180%');
     filtro.append('feDropShadow')
-      .attr('dx', 0).attr('dy', 1.5)
-      .attr('stdDeviation', 1.5)
+      .attr('dx', 0).attr('dy', 2)
+      .attr('stdDeviation', 2.5)
       .attr('flood-color', '#000')
-      .attr('flood-opacity', 0.18);
+      .attr('flood-opacity', 0.15);
 
     const g = svg.append('g')
       .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-    for (const anillo of DEFINICION_ANILLOS) {
-      const datosAnillo = this.sectoresPorAnillo.get(anillo.id);
-      if (!datosAnillo || datosAnillo.length === 0) continue;
-      this.dibujarAnillo(g, datosAnillo, anillo);
+    const pie = d3.pie<SectorConfig>().value(1).sort(null).padAngle(0.015);
+    const pieData = pie(this.configSectores);
+
+    const arcGenerator = d3.arc<d3.PieArcDatum<SectorConfig>>()
+      .innerRadius(innerRadius)
+      .outerRadius(radius)
+      .cornerRadius(2);
+
+    const hoverArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
+      .innerRadius(innerRadius)
+      .outerRadius(radius + 8)
+      .cornerRadius(2);
+
+    const edgeArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
+      .innerRadius(radius + 4)
+      .outerRadius(radius + 4);
+
+    const outerArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
+      .innerRadius(radius * 1.15)
+      .outerRadius(radius * 1.15);
+
+    interface LabelPos {
+      d: d3.PieArcDatum<SectorConfig>;
+      side: 1 | -1;
+      y: number;
     }
 
+    const labels: LabelPos[] = pieData.map(d => {
+      const mid = (d.startAngle + d.endAngle) / 2;
+      const side: 1 | -1 = mid < Math.PI ? 1 : -1;
+      return { d, side, y: outerArc.centroid(d)[1] };
+    });
+
+    const minY = -height / 2 + 30;
+    const maxY = height / 2 - 30;
+
+    for (const side of [1, -1] as const) {
+      const col = labels
+        .filter(l => l.side === side)
+        .sort((a, b) => a.y - b.y);
+
+      for (let i = 0; i < col.length; i++) {
+        const previo = i > 0 ? col[i - 1].y + minGap : minY;
+        col[i].y = Math.max(col[i].y, previo);
+      }
+
+      if (col.length && col[col.length - 1].y > maxY) {
+        col[col.length - 1].y = maxY;
+      }
+
+      for (let i = col.length - 2; i >= 0; i--) {
+        col[i].y = Math.min(col[i].y, col[i + 1].y - minGap);
+      }
+    }
+
+    const labelOf = new Map<string, LabelPos>(
+      labels.map(l => [l.d.data.nombre, l])
+    );
+
+    // 1. Porciones
+    const slices = g.selectAll<SVGPathElement, d3.PieArcDatum<SectorConfig>>('path.sector-slice')
+      .data(pieData)
+      .enter()
+      .append('path')
+      .attr('class', 'sector-slice')
+      .attr('d', arcGenerator)
+      .attr('fill', d => d.data.color)
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', d => d.data.nombre)
+      .style('filter', 'url(#sombra-sector)')
+      .style('cursor', 'pointer')
+      .style('outline', 'none')
+      .on('mouseenter', function (_event, d) {
+        slices.style('opacity', s => (s === d ? 1 : 0.45));
+        d3.select(this).transition().duration(150).attr('d', hoverArc(d) as string);
+      })
+      .on('mouseleave', function (_event, d) {
+        slices.style('opacity', 1);
+        d3.select(this).transition().duration(150).attr('d', arcGenerator(d) as string);
+      })
+      .on('click', (_event, d) => this.toggleSector(d.data.nombre));
+
+    slices.append('title').text(d => d.data.nombre);
+
+    // 2. Íconos mejorados (mayor tamaño y mejor contraste con drop-shadow)
+    g.selectAll('foreignObject.sector-icon')
+      .data(pieData)
+      .enter()
+      .append('foreignObject')
+      .attr('class', 'sector-icon')
+      .attr('width', 32)
+      .attr('height', 32)
+      .attr('x', d => arcGenerator.centroid(d)[0] - 16)
+      .attr('y', d => arcGenerator.centroid(d)[1] - 16)
+      .style('pointer-events', 'none')
+      .append('xhtml:div')
+      .style('width', '100%')
+      .style('height', '100%')
+      .style('display', 'flex')
+      .style('align-items', 'center')
+      .style('justify-content', 'center')
+      .html(d => `<i class="bi ${d.data.icono}" style="color: #ffffff; font-size: 18px; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.7));"></i>`);
+
+    // 3. Líneas guía
+    g.selectAll('polyline.sector-line')
+      .data(pieData)
+      .enter()
+      .append('polyline')
+      .attr('class', 'sector-line')
+      .attr('points', d => {
+        const l = labelOf.get(d.data.nombre)!;
+        const p1 = edgeArc.centroid(d);
+        const p2 = outerArc.centroid(d);
+        const p3: [number, number] = [l.side * (labelX - 12), l.y];
+        const p4: [number, number] = [l.side * labelX, l.y];
+        return [p1, p2, p3, p4].map(p => p.join(',')).join(' ');
+      })
+      .style('fill', 'none')
+      .style('stroke', d => d.data.color)
+      .style('stroke-width', 1.5)
+      .style('opacity', 0.85)
+      .style('pointer-events', 'none');
+
+    // 4. Puntos extremos
+    g.selectAll('circle.sector-dot')
+      .data(pieData)
+      .enter()
+      .append('circle')
+      .attr('class', 'sector-dot')
+      .attr('r', 3.5)
+      .attr('fill', d => d.data.color)
+      .attr('cx', d => labelOf.get(d.data.nombre)!.side * labelX)
+      .attr('cy', d => labelOf.get(d.data.nombre)!.y)
+      .style('pointer-events', 'none');
+
+    // 5. Textos de los sectores (tamaño de fuente 14px optimizado para evitar desbordes)
+    g.selectAll('text.sector-label')
+      .data(pieData)
+      .enter()
+      .append('text')
+      .attr('class', 'sector-label')
+      .attr('dy', '.35em')
+      .attr('x', d => labelOf.get(d.data.nombre)!.side * (labelX + 8))
+      .attr('y', d => labelOf.get(d.data.nombre)!.y)
+      .style('text-anchor', d => (labelOf.get(d.data.nombre)!.side === 1 ? 'start' : 'end'))
+      .style('font-size', '14px')
+      .style('font-weight', '600')
+      .style('fill', '#1e293b')
+      .style('cursor', 'pointer')
+      .text(d => d.data.nombre)
+      .on('click', (_event, d) => this.toggleSector(d.data.nombre));
+
+    // 6. Centro blanco
     g.append('circle')
-      .attr('r', RADIO_CENTRO)
+      .attr('r', innerRadius)
       .attr('fill', '#ffffff')
       .attr('stroke', '#cbd5e1')
-      .attr('stroke-width', 2);
+      .attr('stroke-width', 2)
+      .style('pointer-events', 'none');
 
+    // 7. Bandera
     g.append('image')
       .attr('href', this.flagPeruUrl)
-      .attr('x', -RADIO_CENTRO)
-      .attr('y', -RADIO_CENTRO)
-      .attr('width', RADIO_CENTRO * 2)
-      .attr('height', RADIO_CENTRO * 2)
+      .attr('x', -innerRadius)
+      .attr('y', -innerRadius)
+      .attr('width', innerRadius * 2)
+      .attr('height', innerRadius * 2)
       .attr('preserveAspectRatio', 'xMidYMid slice')
-      .attr('clip-path', 'url(#centro-bandera-clip)');
-
-    this.actualizarEstilosGrafico();
+      .attr('clip-path', 'url(#centro-bandera-clip)')
+      .style('pointer-events', 'none');
   }
 
   private dibujarAnillo(
