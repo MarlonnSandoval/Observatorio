@@ -187,3 +187,71 @@
   margin-left: 8px;
 }
 
+
+
+/* ===== Tarjetas de escenarios (lista plana, sin segundo desplegable) ===== */
+.escenario-card {
+  padding: 14px;
+  background-color: #DEEBF7;
+  border-radius: 12px;
+  text-decoration: none;
+}
+
+.escenario-card:hover{
+  background-color: #c1e1ff;
+}
+
+.escenario-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1f3f73;
+  margin-bottom: 4px;
+}
+
+.escenario-card-text {
+  font-size: 0.85rem;
+  color: #495057;
+  margin-bottom: 6px;
+  /* Limita el resumen a 3 líneas para mantener la lista compacta */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.escenario-card-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3b69ae;
+  text-decoration: none;
+}
+
+.escenario-card-link i {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+  
+}
+
+.escenario-card-link:hover i {
+  transform: translateX(3px);
+}
+
+/* ===== Escenario deseado y factible ===== */
+.escenario-deseado {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #DEEBF7;
+  /* border: 2px solid #3b69ae; */
+}
+
+
+/* ===== Encabezados del acordeón de nivel 1: quitar subrayado =====
+   El <a> del encabezado lo genera PrimeNG (fuera de este componente),
+   por eso se necesita ::ng-deep para que el estilo le llegue. */
+:host ::ng-deep .territorial-accordion .p-accordion-header-link,
+:host ::ng-deep .territorial-accordion .p-accordion-header-link:hover,
+:host ::ng-deep .territorial-accordion .p-accordion-header-link:focus,
+:host ::ng-deep .territorial-accordion .p-accordion-header-action,
+:host ::ng-deep .territorial-accordion .p-accordion-header-action:hover {
+  text-decoration: none;
+}

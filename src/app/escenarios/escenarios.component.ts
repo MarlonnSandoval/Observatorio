@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MAP_REGIONS, MapRegionPath } from './map-regions.data';
-import { ARTICLES_DATABASE, RegionArticulos, Articulo } from './articles-database.data';
+import { ARTICLES_DATABASE, RegionArticulos, Articulo, EscenarioDeseado } from './articles-database.data';
 
-export type CategoriaTipo = 'Tendencias territoriales' | 'Riesgos territoriales' | 'Oportunidades territoriales';
+export type CategoriaTipo = 'Tendencias territoriales' | 'Riesgos territoriales' | 'Oportunidades territoriales' | 'Escenarios territoriales';
 
 interface HeroSlide {
   image: string;
@@ -54,6 +54,7 @@ export class EscenariosComponent {
     'Tendencias territoriales',
     'Riesgos territoriales',
     'Oportunidades territoriales',
+    'Escenarios territoriales'
   ];
 
   // Configuración de Categoría Principal (PEDN / Largo plazo / Territorial)
@@ -74,8 +75,39 @@ export class EscenariosComponent {
 
   get urlReporteRegion(): string | null {
     if (!this.regionData) return null;
-    // Devuelve la propiedad 'url' del objeto RegionArticulos de la región seleccionada
     return (this.regionData as any)?.url || null;
+  }
+
+  // Descarga directa del PDRC (punto 3 del correo)
+  get urlPdrcDescargaRegion(): string | null {
+    return (this.regionData as any)?.urlPdrcDescarga || null;
+  }
+
+  // Escenario deseado y factible del PDRC (puntos 4 y 5 del correo)
+  get escenarioDeseadoRegion(): EscenarioDeseado | null {
+    return (this.regionData as any)?.escenarioDeseado || null;
+  }
+
+  // Artículos desplegados (tarjetas colapsables, punto 2 del correo)
+  private articulosAbiertos = new Set<string>();
+
+  toggleArticulo(url: string): void {
+    this.articulosAbiertos.has(url) ? this.articulosAbiertos.delete(url) : this.articulosAbiertos.add(url);
+  }
+
+  isArticuloAbierto(url: string): boolean {
+    return this.articulosAbiertos.has(url);
+  }
+
+  // Enlace "reporte": prioriza el PDRC; si no existe, usa el reporte de la categoría
+  getReporteUrl(categoria: CategoriaTipo | string): string | null {
+    return this.urlPdrcDescargaRegion || this.getDescargaUrl(categoria);
+  }
+
+  // Getter añadido para la URL del PDRC
+  get urlPdrcRegion(): string | null {
+    if (!this.regionData) return null;
+    return (this.regionData as any)?.urlPdrc || null;
   }
 
   sections: Record<Exclude<CategoryKey, 'territorial'>, CategorySection> = {
@@ -85,7 +117,7 @@ export class EscenariosComponent {
       scenarios: [
         {
           slug: 'crisis-social',
-          image: 'https://observatorio.ceplan.gob.pe/uploads/nlc7w_v7yoj4U7WYhktI8ehW.png',
+          image: '[https://observatorio.ceplan.gob.pe/uploads/nlc7w_v7yoj4U7WYhktI8ehW.png](https://observatorio.ceplan.gob.pe/uploads/nlc7w_v7yoj4U7WYhktI8ehW.png)',
           title: 'Escenario de crisis social',
           description: 'Para el año 2050, el Perú enfrenta las profundas y persistentes secuelas de una crisis social...',
         },
@@ -97,7 +129,7 @@ export class EscenariosComponent {
       scenarios: [
         {
           slug: 'horizonte-radiante',
-          image: 'https://observatorio.ceplan.gob.pe/uploads/tI3mtpWdF9KQ-vp-JGW3Eizx.jpg',
+          image: '[https://observatorio.ceplan.gob.pe/uploads/tI3mtpWdF9KQ-vp-JGW3Eizx.jpg](https://observatorio.ceplan.gob.pe/uploads/tI3mtpWdF9KQ-vp-JGW3Eizx.jpg)',
           title: 'Escenario "Un horizonte radiante"',
           description: 'En 2050, como resultado de la cooperación público-privada...',
           updatedAt: 'noviembre 2024',
@@ -124,12 +156,12 @@ export class EscenariosComponent {
       return;
     }
 
-    // Si la región no tiene datos registrados, ignora la interacción
     if (!this.hasDataForRegion(regionName)) {
       return;
     }
 
     this.selectedRegion = regionName;
+    this.articulosAbiertos.clear();
     this.regionData = this.articlesDatabase[regionName] || null;
   }
 
@@ -176,8 +208,7 @@ export class EscenariosComponent {
         const dataRegion = this.articlesDatabase[region] as any;
         if (!dataRegion) return;
   
-        // Extraemos dinámicamente las categorías disponibles de CADA región sin tocar this.categories
-        const categoriasDeRegion = Object.keys(dataRegion).filter((key) => key !== 'urlRegion');
+        const categoriasDeRegion = Object.keys(dataRegion).filter((key) => key !== 'urlRegion' && key !== 'urlPdrc');
   
         categoriasDeRegion.forEach((cat) => {
           const categoriaObj = dataRegion[cat];
@@ -216,7 +247,6 @@ export class EscenariosComponent {
     return this.sections[this.selectedCategory];
   }
 
-  // Devuelve únicamente las regiones que tienen información registrada
   get availableRegions(): MapRegionPath[] {
     return this.regions.filter(region => this.hasDataForRegion(region.name));
   }
