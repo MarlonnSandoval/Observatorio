@@ -90,6 +90,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Lima Metropolitana": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/LimaMetro-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Lima Metropolitana es una metrópoli moderna, policéntrica y resiliente, con un sistema de transporte público integrado y masivo, espacios públicos recuperados, y un desarrollo urbano que respeta sus cuencas hídricas y promueve la equidad social.",
@@ -150,6 +152,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Apurímac": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Apurimac-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Apurímac es una región integrada y competitiva que aprovecha sosteniblemente sus recursos mineros y agropecuarios, con cierre de brechas sociales en zonas rurales y una sólida gestión de conflictos socioambientales.",
@@ -203,6 +207,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Loreto": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Loreto-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Loreto es una región amazónica conectada y próspera, que basa su desarrollo en la bioeconomía, el turismo sostenible y la conservación de sus bosques, garantizando el bienestar y los derechos de las comunidades originarias.",
@@ -256,6 +262,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Tumbes": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Tumbes-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Tumbes es el principal destino ecoturístico de la costa norte, con una frontera dinámica, segura e integrada comercialmente, y un sector agroindustrial resiliente a los fenómenos climáticos.",
@@ -309,6 +317,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Tacna": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Tacna-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Tacna es un polo de desarrollo comercial, tecnológico y de servicios médicos en el sur del país, con una gestión hídrica eficiente que asegura el recurso para la agroexportación y el consumo humano.",
@@ -356,6 +366,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Puno": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Puno-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Puno es el articulador comercial y turístico del Eje Andino, destacando por su cadena productiva de camélidos, el saneamiento integral del Lago Titicaca y la erradicación del contrabando a favor del comercio formal.",
@@ -409,6 +421,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Lima": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/LimaReg-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, el Gobierno Regional de Lima (Provincias) ha consolidado sus corredores agroexportadores y turísticos, reduciendo su dependencia administrativa de la metrópoli y garantizando infraestructura segura frente a desastres naturales.",
@@ -455,7 +469,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Ucayali": {
+    
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Ucayali-Tendencias.pdf",
+    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781.pdf",
     "escenarioDeseado": {
       titulo: "Imagen del territorio deseado al 2034",
       sintesis: "Al 2034, Ucayali es un clúster de innovación forestal y agroindustrial responsable, libre de deforestación ilegal y con servicios básicos interculturales garantizados para sus comunidades nativas.",
