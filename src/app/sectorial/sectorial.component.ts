@@ -62,8 +62,6 @@ export class SectorialComponent implements AfterViewInit {
   articuloDestacado: ArticuloRadar | null = null;
   private svgRoot: SvgRootSelection | null = null;
 
-  flagPeruUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg';
-
   private readonly colorPorSector = new Map<string, string>();
   private readonly sectoresPorAnillo = new Map<string, SectorConfig[]>();
 
@@ -133,13 +131,13 @@ export class SectorialComponent implements AfterViewInit {
     this.svgRoot = d3.select(this.svgContainer.nativeElement);
     this.svgRoot.selectAll('svg').remove();
 
-    // 1. Ampliamos el viewBox a 1280 para evitar recortes laterales
-    const width = 1280;
-    const height = 620;
-    const innerRadius = 75;
-    const radius = 190;          // Tamaño optimizado del donut
-    const labelX = radius * 1.5; // Distancia hacia las columnas de texto
-    const minGap = 22;           // Separación vertical entre textos
+    // viewBox más ajustado: así el gráfico se escala ~1:1 y se ve grande
+    const width = 1180;
+    const height = 640;
+    const innerRadius = 80;
+    const radius = 235;          // Tamaño del donut (antes 190)
+    const labelX = radius * 1.22; // Distancia hacia las columnas de texto
+    const minGap = 26;           // Separación vertical entre textos
 
     const svg = this.svgRoot
       .append('svg')
@@ -149,14 +147,6 @@ export class SectorialComponent implements AfterViewInit {
       .style('height', 'auto');
 
     const defs = svg.append('defs');
-
-    // Clip para la bandera central
-    defs.append('clipPath')
-      .attr('id', 'centro-bandera-clip')
-      .append('circle')
-      .attr('cx', 0)
-      .attr('cy', 0)
-      .attr('r', innerRadius - 2);
 
     const filtro = defs.append('filter')
       .attr('id', 'sombra-sector')
@@ -181,7 +171,7 @@ export class SectorialComponent implements AfterViewInit {
 
     const hoverArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
       .innerRadius(innerRadius)
-      .outerRadius(radius + 8)
+      .outerRadius(radius + 10)
       .cornerRadius(2);
 
     const edgeArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
@@ -189,8 +179,8 @@ export class SectorialComponent implements AfterViewInit {
       .outerRadius(radius + 4);
 
     const outerArc = d3.arc<d3.PieArcDatum<SectorConfig>>()
-      .innerRadius(radius * 1.15)
-      .outerRadius(radius * 1.15);
+      .innerRadius(radius * 1.1)
+      .outerRadius(radius * 1.1);
 
     interface LabelPos {
       d: d3.PieArcDatum<SectorConfig>;
@@ -262,10 +252,10 @@ export class SectorialComponent implements AfterViewInit {
       .enter()
       .append('foreignObject')
       .attr('class', 'sector-icon')
-      .attr('width', 32)
-      .attr('height', 32)
-      .attr('x', d => arcGenerator.centroid(d)[0] - 16)
-      .attr('y', d => arcGenerator.centroid(d)[1] - 16)
+      .attr('width', 40)
+      .attr('height', 40)
+      .attr('x', d => arcGenerator.centroid(d)[0] - 20)
+      .attr('y', d => arcGenerator.centroid(d)[1] - 20)
       .style('pointer-events', 'none')
       .append('xhtml:div')
       .style('width', '100%')
@@ -273,7 +263,7 @@ export class SectorialComponent implements AfterViewInit {
       .style('display', 'flex')
       .style('align-items', 'center')
       .style('justify-content', 'center')
-      .html(d => `<i class="bi ${d.data.icono}" style="color: #ffffff; font-size: 18px; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.7));"></i>`);
+      .html(d => `<i class="bi ${d.data.icono}" style="color: #ffffff; font-size: 24px; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.7));"></i>`);
 
     // 3. Líneas guía
     g.selectAll('polyline.sector-line')
@@ -291,7 +281,7 @@ export class SectorialComponent implements AfterViewInit {
       })
       .style('fill', 'none')
       .style('stroke', d => d.data.color)
-      .style('stroke-width', 1.5)
+      .style('stroke-width', 2)
       .style('opacity', 0.85)
       .style('pointer-events', 'none');
 
@@ -301,23 +291,23 @@ export class SectorialComponent implements AfterViewInit {
       .enter()
       .append('circle')
       .attr('class', 'sector-dot')
-      .attr('r', 3.5)
+      .attr('r', 4.5)
       .attr('fill', d => d.data.color)
       .attr('cx', d => labelOf.get(d.data.nombre)!.side * labelX)
       .attr('cy', d => labelOf.get(d.data.nombre)!.y)
       .style('pointer-events', 'none');
 
-    // 5. Textos de los sectores (tamaño de fuente 14px optimizado para evitar desbordes)
+    // 5. Textos de los sectores
     g.selectAll('text.sector-label')
       .data(pieData)
       .enter()
       .append('text')
       .attr('class', 'sector-label')
       .attr('dy', '.35em')
-      .attr('x', d => labelOf.get(d.data.nombre)!.side * (labelX + 8))
+      .attr('x', d => labelOf.get(d.data.nombre)!.side * (labelX + 10))
       .attr('y', d => labelOf.get(d.data.nombre)!.y)
       .style('text-anchor', d => (labelOf.get(d.data.nombre)!.side === 1 ? 'start' : 'end'))
-      .style('font-size', '14px')
+      .style('font-size', '16px')
       .style('font-weight', '600')
       .style('fill', '#1e293b')
       .style('cursor', 'pointer')
@@ -330,17 +320,6 @@ export class SectorialComponent implements AfterViewInit {
       .attr('fill', '#ffffff')
       .attr('stroke', '#cbd5e1')
       .attr('stroke-width', 2)
-      .style('pointer-events', 'none');
-
-    // 7. Bandera
-    g.append('image')
-      .attr('href', this.flagPeruUrl)
-      .attr('x', -innerRadius)
-      .attr('y', -innerRadius)
-      .attr('width', innerRadius * 2)
-      .attr('height', innerRadius * 2)
-      .attr('preserveAspectRatio', 'xMidYMid slice')
-      .attr('clip-path', 'url(#centro-bandera-clip)')
       .style('pointer-events', 'none');
   }
 

@@ -69,8 +69,9 @@
       <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
 
         <!-- VISTA INICIAL: GRÁFICO SVG ESTILO DONUT (Solo se muestra si NO hay sector) -->
-        <div class="w-100 d-flex justify-content-center align-items-center" [class.d-none]="sectorSeleccionado">
-          <div id="megas-draw" class="w-100 position-relative" style="max-width: 1100px;">
+        <div class="w-100 d-flex flex-column justify-content-center align-items-center" [class.d-none]="sectorSeleccionado">
+          <h5 class="fw-bold text-center mb-3" style="color: #2a68a2;">Selecciona un sector</h5>
+          <div id="megas-draw" class="w-100 position-relative" style="max-width: 1200px;">
             <div #svgContainer class="w-100 position-relative"></div>
           </div>
         </div>
