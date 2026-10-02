@@ -6,31 +6,29 @@
             </div>
             <div class="col-sm-5 col-12">
                 <div class="row justify-content-end">
-                    <a routerlink="../tendencia-global" class="col-3" href="/tendencia-global">
+                    <a routerLink="/tendencia-global" class="col-3">
                         <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tg-b.webp"
                             alt="Tendencia global">
                     </a>
-                    <a routerlink="../tendencia-nacional" class="col-3" href="/tendencia-nacional">
+                    <a routerLink="/tendencia-nacional" class="col-3">
                         <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tn-w.webp"
                             alt="Tendencia nacional">
                     </a>
-                    <a routerlink="../tendencia-territorial" class="col-3" href="/tendencia-territorial">
+                    <a routerLink="/tendencia-territorial" class="col-3">
                         <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/tt-w.webp"
                             alt="Tendencia territorial">
                     </a>
-                    <a routerlink="../tendencia-sectorial" class="col-3" href="/tendencia-sectorial">
+                    <a routerLink="/tendencia-sectorial" class="col-3">
                         <img class="icon-trends" src="https://observatorio.ceplan.gob.pe/assets/img/t/ts-w.webp"
                             alt="Tendencia sectorial">
                     </a>
                 </div>
-
             </div>
         </div>
         <br>
         <div class="row">
             <p class="col-12">
-                <b>Fenómeno de escala
-                    mundial</b> consistente en el tiempo, que interactúa o <b>que podría
+                <b>Fenómeno de escala mundial</b> consistente en el tiempo, que interactúa o <b>que podría
                     incidir en el desarrollo nacional</b> actual y hacia el mediano o largo plazo. Su movimiento permite
                 identificar la dinámica entre lo local y global.
             </p>
@@ -42,9 +40,9 @@
         <div class="carousel-inner">
             <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index"
                 [class.active]="i === 0">
-                <img class="icon-trends" [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
-                <div class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column
-                    justify-content-center text-white p-4 p-md-5">
+                <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+                <div
+                    class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-white p-4 p-md-5">
                     <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
                     <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
                 </div>
@@ -57,58 +55,133 @@
                 [attr.aria-label]="'Diapositiva ' + (i + 1)">
             </button>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
+        <div class="mt-3">
             <p>Seleccione una temática para explorar las principales tendencias globales:</p>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <div class="">
+    <div class="row" >
+        <!-- SVG Interactivo de Hexágonos -->
+        <div class="col-md-4">
+            <div id="hexas-global">
+                <svg preserveAspectRatio="xMinYMin meet" viewBox="0 0 400 400">
 
-                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-                    <div class="input-group tendencias-search">
-                        <span class="input-group-text bg-white border-end-0">
-                            <i class="bi bi-search" aria-hidden="true"></i>
+                    <!-- Social -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Social"
+                        [class.active]="categoriaSeleccionada === 'social'" (click)="seleccionarCategoria('social')"
+                        (keydown.enter)="seleccionarCategoria('social')">
+                        <path
+                            d="M214.12,1.6L231.3,31.36L248.48,61.12L231.3,90.88L214.12,120.64L179.75,120.64L145.38,120.65L128.2,90.88L111.02,61.12L128.2,31.36L145.38,1.6L179.75,1.6L214.12,1.6"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(255, 85, 51);"></path>
+                        <text x="178" y="70"
+                            style="font-size: 1.3rem; font-family: Calibri; font-weight: bold; fill: rgb(255, 85, 51); text-anchor: middle; pointer-events: none;">Social</text>
+                    </g>
+
+                    <!-- Ambiental -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Ambiental"
+                        [class.active]="categoriaSeleccionada === 'ambiental'"
+                        (click)="seleccionarCategoria('ambiental')" (keydown.enter)="seleccionarCategoria('ambiental')">
+                        <path
+                            d="M323.29,64.63L340.47,94.39L357.66,124.15L340.47,153.92L323.29,183.68L288.92,183.68L254.56,183.68L237.37,153.92L220.19,124.15L237.37,94.39L254.56,64.63L288.92,64.63L323.29,64.63"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(5, 145, 65);"></path>
+                        <text x="282" y="130"
+                            style="font-size: 1.3rem; font-family: Calibri; font-weight: bold; fill: rgb(5, 145, 65); text-anchor: middle; pointer-events: none;">Ambiental</text>
+                    </g>
+
+                    <!-- Económica -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Económica"
+                        [class.active]="categoriaSeleccionada === 'economica'"
+                        (click)="seleccionarCategoria('economica')" (keydown.enter)="seleccionarCategoria('economica')">
+                        <path
+                            d="M323.29,190.69L340.47,220.46L357.66,250.22L340.47,279.98L323.29,309.74L288.92,309.74L254.56,309.74L237.37,279.98L220.19,250.22L237.37,220.46L254.56,190.69L288.92,190.69L323.29,190.69"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(239, 197, 20);"></path>
+                        <text x="285" y="255"
+                            style="font-size: 1.3rem; font-family: Calibri; font-weight: bold; fill: rgb(104, 104, 104); text-anchor: middle; pointer-events: none;">Económica</text>
+                    </g>
+
+                    <!-- Tecnológica -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Tecnológica"
+                        [class.active]="categoriaSeleccionada === 'tecnologica'"
+                        (click)="seleccionarCategoria('tecnologica')"
+                        (keydown.enter)="seleccionarCategoria('tecnologica')">
+                        <path
+                            d="M214.12,253.72L231.3,283.49L248.48,313.25L231.3,343.01L214.12,372.77L179.75,372.77L145.38,372.77L128.2,343.01L111.02,313.25L128.2,283.49L145.38,253.73L179.75,253.73L214.12,253.72"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(78, 135, 198);"></path>
+                        <text x="178" y="320"
+                            style="font-size: 1.3rem; font-family: Calibri; font-weight: bold; fill: rgb(78, 135, 198); text-anchor: middle; pointer-events: none;">Tecnológica</text>
+                    </g>
+
+                    <!-- Política -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Política"
+                        [class.active]="categoriaSeleccionada === 'politica'" (click)="seleccionarCategoria('politica')"
+                        (keydown.enter)="seleccionarCategoria('politica')">
+                        <path
+                            d="M104.94,190.69L122.12,220.46L139.31,250.22L122.12,279.98L104.94,309.74L70.57,309.74L36.21,309.74L19.02,279.98L1.84,250.22L19.02,220.46L36.21,190.69L70.57,190.69L104.94,190.69"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(154, 32, 226);"></path>
+                        <text x="65" y="255"
+                            style="font-size: 1.3rem; font-family: Calibri; font-weight: bold; fill: rgb(154, 32, 226); text-anchor: middle; pointer-events: none;">Política</text>
+                    </g>
+
+                    <!-- Ética -->
+                    <g class="hex-group" role="button" tabindex="0" aria-label="Actitud, valores y ética"
+                        [class.active]="categoriaSeleccionada === 'etica'" (click)="seleccionarCategoria('etica')"
+                        (keydown.enter)="seleccionarCategoria('etica')">
+                        <path
+                            d="M104.94,64.63L122.12,94.39L139.31,124.15L122.12,153.92L104.94,183.68L70.57,183.68L36.21,183.68L19.02,153.92L1.84,124.15L19.02,94.39L36.21,64.63L70.57,64.63L104.94,64.63"
+                            style="fill: rgb(255, 254, 255); stroke: rgb(131, 183, 221);"></path>
+                        <text x="65" y="140"
+                            style="font-size: 1rem; font-family: Calibri; font-weight: bold; fill: rgb(60, 130, 180); text-anchor: middle; pointer-events: none;">
+                            <tspan x="65" dy="-0.6em">Actitud, valores</tspan>
+                            <tspan x="65" dy="1.2em">y ética</tspan>
+                        </text>
+                    </g>
+
+                </svg>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0" placeholder="Buscar por nombre"
+                        [(ngModel)]="busqueda" (ngModelChange)="onBusquedaChange()" name="busqueda"
+                        aria-label="Buscar una tendencia">
+                </div>
+            </div>
+
+            <p class="tendencias-resultado-count" aria-live="polite">
+                {{ tendenciasFiltradas.length }}
+                {{ tendenciasFiltradas.length === 1 ? 'tendencia' : 'tendencias' }}
+                en {{ categoriaActiva.nombre | lowercase }}
+            </p>
+
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 col-xl-3" *ngFor="let tendencia of tendenciasPagina; ">
+                    <a [href]="tendencia.ruta" class="tendencia-card" [style.--chip-color]="categoriaActiva.color"
+                        target="_blank">
+                        <span class="tendencia-icono">
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
                         </span>
-                        <input type="text" class="form-control border-start-0" placeholder="Buscar una tendencia"
-                            [(ngModel)]="busqueda" name="busqueda" aria-label="Buscar una tendencia">
-                    </div>
+                        <span class="tendencia-titulo">{{ tendencia.titulo }}</span>
+                        <!-- <span class="tendencia-link">
+                            Ver tendencia <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        </span> -->
+                    </a>
                 </div>
 
-                <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Filtrar por temática">
-                    <button type="button" *ngFor="let cat of categorias" class="chip-categoria"
-                        [class.active]="cat.id === categoriaSeleccionada" [style.--chip-color]="cat.color"
-                        [attr.aria-pressed]="cat.id === categoriaSeleccionada" (click)="seleccionarCategoria(cat.id)">
-                        <i class="bi" [ngClass]="cat.icono" aria-hidden="true"></i>
-                        <span>{{ cat.nombre }}</span>
-                        <span class="chip-count">{{ contarPorCategoria(cat.id) }}</span>
-                    </button>
+                <div class="tendencias-vacio" *ngIf="tendenciasFiltradas.length === 0">
+                    No se encontraron tendencias con ese criterio.
                 </div>
+            </div>
 
-                <p class="tendencias-resultado-count" aria-live="polite">
-                    {{ tendenciasFiltradas.length }}
-                    {{ tendenciasFiltradas.length === 1 ? 'tendencia' : 'tendencias' }}
-                    en {{ categoriaActiva.nombre | lowercase }}
-                </p>
-
-                <div class="row g-3">
-                    <div class="col-12 col-md-3" *ngFor="let tendencia of tendenciasFiltradas">
-                        <a [routerLink]="tendencia.ruta"
-                            class="tendencia-fila d-flex h-100 align-items-center justify-content-between"
-                            [style.--chip-color]="categoriaActiva.color">
-                            <span>{{ tendencia.titulo }}</span>
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-
-
-                    <div class="tendencias-vacio" *ngIf="tendenciasFiltradas.length === 0">
-                        No se encontraron tendencias con ese criterio.
-                    </div>
-                </div>
-
+            <div class="mt-4" *ngIf="tendenciasFiltradas.length > opcionesFilas[0]">
+                <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                    [totalRecords]="tendenciasFiltradas.length"
+                    currentPageReportTemplate="{first} - {last} de {totalRecords}">
+                </p-paginator>
             </div>
         </div>
     </div>

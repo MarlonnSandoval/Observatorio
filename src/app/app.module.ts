@@ -55,6 +55,7 @@ import { FichaComponent } from './ficha/ficha.component';
 import { GlobalNacionalComponent } from './global-nacional/global-nacional.component';
 import { MetodosComponent } from './guia-interactiva/pages/metodos/metodos.component';
 import { RadarVigilanciaComponent } from './radar-vigilancia/radar-vigilancia.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -85,6 +86,7 @@ registerLocaleData(localeEsPe);
   ],
   imports: [
     BrowserModule,
+    PaginatorModule,
     AppRoutingModule,
     InputTextModule,
     CheckboxModule,
