@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Evento, DATABASE } from './evento.model';
+import { Evento, DATABASE, SVG_PATHS } from './evento.model';
 
 export type CategoriaPestana = 'senales' | 'cartas' | 'tecnologias';
 export type CampoOrden = 'nombre' | 'tematica' | 'fechaActualizacion';
@@ -51,6 +51,27 @@ export class EventoComponent implements OnInit {
     { label: 'Económica', value: 'Económica' },
     { label: 'General', value: 'General' }
   ];
+
+  readonly coloresTematica: Record<string, string> = {
+    'Ambiental': '#059141',   // Verde
+    'Tecnológica': '#4E87C6',  // Azul
+    'Política': '#6f42c1',     // Morado
+    'Social': '#FF5533',       // Rojo
+    'Económica': '#EFC514',    // Amarillo/Ámbar
+    'General': '#6c757d'       // Gris
+  };
+
+  obtenerSvgPath(e: Evento): string {
+    const tipo = e.tipoEvento || this.prefijoDe(e);
+    if (tipo === 'SD' || tipo === 'RD') return SVG_PATHS['SD_RD'];
+    if (tipo === 'CS' || tipo === 'EC') return SVG_PATHS['CS_EC'];
+    return SVG_PATHS['TE'];
+  }
+
+  /** Retorna el color Hex de relleno para el SVG según la temática */
+  obtenerColorIcono(tematica: string): string {
+    return this.coloresTematica[tematica] || '#6c757d';
+  }
 
   readonly pestanas: PestanaConfig[] = [
     {

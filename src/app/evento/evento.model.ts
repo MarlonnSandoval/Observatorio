@@ -3,7 +3,17 @@ export type CategoriaProspectiva = 'Señal Débil' | 'Carta Salvaje' | 'Tecnolog
 export type Categoria = '' | 'Carta Salvaje' | 'Tecnología Emergente' | 'Ruptura o disrupción' | 'Evento catastrófico';
 export type TipoEvento = '' | 'SD' | 'RD' | 'CS' | 'EC';
 
+export const SVG_PATHS: Record<string, string> = {
+  // Path para SD y RD
+  SD_RD: 'M12.001 3C16.2854 3 20.2201 4.49683 23.3108 6.99607L22.4994 8H18.001L18.0004 13.571L12.001 21L0.69043 6.99671C3.78127 4.49709 7.71632 3 12.001 3ZM22.001 19V21H20.001V19H22.001ZM22.001 10V17H20.001V10H22.001Z',
+  // Path para CS y EC
+  CS_EC: 'M20,0H4C3.4,0,3,0.4,3,1v22c0,0.6,0.4,1,1,1h16c0.6,0,1-0.4,1-1V1C21,0.4,20.6,0,20,0z M19,22H5V2h14V22z M11,15v2h2v-2c2,0,3-1.1,3-3c0-2.2-2-3-4-6c-2,3-4,3.8-4,6C8,13.9,9,15,11,15z',
+  // Path para Tecnologías Emergentes (TE)
+  TE: 'M6 18H18V6H6V18ZM14 20H10V22H8V20H5C4.44772 20 4 19.5523 4 19V16H2V14H4V10H2V8H4V5C4 4.44772 4.44772 4 5 4H8V2H10V4H14V2H16V4H19C19.5523 4 20 4.44772 20 5V8H22V10H20V14H22V16H20V19C20 19.5523 19.5523 20 19 20H16V22H14V20ZM8 8H16V16H8V8Z'
+};
+
 export interface Evento {
+  scg?: 'SD/RD' | 'CS/EC',
   nombre: string;
   tematica: Tematica;
   fechaActualizacion: string; // Ej. '30 sept 2024'

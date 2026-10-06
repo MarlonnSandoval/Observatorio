@@ -10,9 +10,8 @@
 }
 
 .eventos-tabs .nav-link.active {
-  color: #7e22ce;
+  color: #2A68A2;
   font-weight: 600;
-  border-bottom-color: #a855f7;
 }
 
 /* Filtros */
@@ -22,12 +21,7 @@
   border-radius: 6px;
 }
 
-.filter-select:focus,
-.filter-input:focus {
-  border-color: #a855f7;
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.2);
-}
+
 
 .btn-limpiar {
   height: 38px;
