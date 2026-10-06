@@ -27,6 +27,117 @@
   color: #1e293b;
 }
 
+/* ===================================================
+   Mapa SVG
+   =================================================== */
+.map-ut {
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+}
+
+.map-region {
+  fill: #416BAE;
+  stroke: #ffffff;
+  stroke-width: 0.5;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.map-region:hover {
+  fill: #003486;
+}
+
+.map-region.active {
+  fill: #003486;
+}
+
+/* ===================================================
+   Tarjetas de artículos
+   =================================================== */
+.article-link-card {
+  padding: 12px;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #0d6efd;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.article-link-card:last-child {
+  margin-bottom: 0;
+}
+
+.article-link-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff !important;
+}
+
+/* ===================================================
+   Acordeón PrimeNG Custom
+   =================================================== */
+::ng-deep .territorial-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+::ng-deep .territorial-accordion .p-accordion-tab {
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+::ng-deep .custom-header-accordion .p-accordion-header .p-accordion-header-link {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.custom-accordion-banner {
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  font-size: 1.05rem;
+}
+
+.custom-accordion-banner:hover {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  opacity: 0.9;
+}
+
+/* Imagen de tarjetas */
+.article-image-container {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* CABECERA */
 .module-header {
   display: flex;
@@ -508,3 +619,167 @@
   gap: 16px;
   margin-top: 4px;
 }
+
+/* ===================================================
+   PASO 1 · Casos del Observatorio + diseño de vigilancia
+   =================================================== */
+.map-region.sin-data { fill: #a9bddb; }
+.map-region.sin-data:hover,
+.map-region.sin-data.active { fill: #003486; }
+
+.vig-empty { padding: 32px 12px; text-align: center; }
+
+/* Colores por categoría (mismos del Observatorio) */
+.cat-tendencias { --cat: #3B82F6; --cat-bg: #E0F2FE; --cat-tx: #0369A1; }
+.cat-riesgos { --cat: #EF4444; --cat-bg: #FEE2E2; --cat-tx: #B91C1C; }
+.cat-oportunidades { --cat: #10B981; --cat-bg: #D1FAE5; --cat-tx: #047857; }
+.cat-escenarios { --cat: #8B5CF6; --cat-bg: #EDE9FE; --cat-tx: #6D28D9; }
+
+/* Pestañas de categoría */
+.vig-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.vig-tab {
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.vig-tab:hover { border-color: var(--cat); }
+.vig-tab.active { background: var(--cat-bg); border-color: var(--cat); color: var(--cat-tx); }
+
+/* Tarjetas de casos */
+.vig-ficha {
+  display: block;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--cat);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.vig-ficha:hover { background: #f8fafc; }
+.vig-ficha.active { background: var(--cat-bg); box-shadow: 0 0 0 2px var(--cat); }
+
+/* Detalle */
+.vig-detalle {
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-top: 4px solid var(--cat);
+  border-radius: 10px;
+}
+.vig-aviso { padding: 12px 14px; background: #fdecc8; color: #9a5b00; border-radius: 8px; font-size: 0.9rem; }
+.vig-subtitulo { font-size: 0.85rem; font-weight: 600; color: #64748b; margin-bottom: 8px; }
+
+.vig-nodo {
+  display: block;
+  padding: 9px 12px;
+  margin-bottom: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--cat, #416BAE);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: opacity 0.2s, background 0.2s;
+}
+button.vig-nodo { cursor: pointer; }
+.vig-nodo.active { background: var(--cat-bg, #e8eef8); outline: 2px solid var(--cat, #416BAE); }
+.vig-nodo.atenuado,
+.vig-tabla tr.atenuado { opacity: 0.3; }
+.vig-hecho { --cat: #416BAE; }
+
+/* Etiquetas */
+.vig-tag {
+  display: inline-block;
+  padding: 1px 9px;
+  margin-right: 4px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #334155;
+}
+.vig-nodo .vig-tag, .vig-detalle > div > div > .vig-tag:first-child { background: var(--cat-bg, #e2e8f0); color: var(--cat-tx, #334155); }
+.vig-tag.hecho-observable { background: #d9f3ef; color: #0f766e; }
+.vig-tag.hecho-potencial { background: #fdecc8; color: #9a5b00; }
+.vig-tag.sin-diseno { background: #e2e8f0; color: #64748b; }
+
+/* Tabla */
+.vig-tabla th { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+.vig-tabla td { font-size: 0.85rem; }
+
+.vig-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+
+/* ===================================================
+   PASO 2 · Búsqueda y captación
+   =================================================== */
+.p2-tabs { --cat: #416BAE; --cat-bg: #e8eef8; --cat-tx: #0f3a6b; }
+
+.vig-contexto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--cat-bg);
+  border-left: 5px solid var(--cat);
+  border-radius: 10px;
+}
+
+/* Estado del hecho */
+.vig-tag.estado-configurado { background: #e0f2fe; color: #0369a1; }
+.vig-tag.estado-evidencia { background: #d9f3ef; color: #0f766e; }
+
+/* Lista de definición del perfil de búsqueda */
+.p2-dl { margin: 0; }
+.p2-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.p2-row:last-child { border-bottom: none; }
+.p2-row dt { font-size: 0.82rem; font-weight: 600; color: #64748b; }
+.p2-row dd { margin: 0; font-size: 0.9rem; }
+@media (max-width: 576px) { .p2-row { grid-template-columns: 1fr; gap: 2px; } }
+
+.p2-chip {
+  display: inline-block;
+  margin: 0 6px 6px 0;
+  padding: 2px 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 0.82rem;
+}
+
+/* Nivel de la fuente */
+.vig-tag.nivel-oficial { background: #e0f2fe; color: #0369a1; }
+.vig-tag.nivel-cientifica { background: #d9f3ef; color: #0f766e; }
+.vig-tag.nivel-senal-temprana { background: #ede9fe; color: #6d28d9; }
+.vig-tag.nivel-abierta { background: #e2e8f0; color: #475569; }
+
+/* Dirección de la señal (respecto de la trayectoria, no es bueno/malo) */
+.vig-tag.dir-consistente { background: #e0f2fe; color: #0369a1; }
+.vig-tag.dir-contraria { background: #fdecc8; color: #9a5b00; }
+.vig-tag.dir-neutra { background: #e2e8f0; color: #475569; }
+.vig-tag.dir-incierta { background: #ede9fe; color: #6d28d9; }
+
+.vig-detalle .form-control { width: 100%; }
+.modal-body .form-control { width: 100%; }

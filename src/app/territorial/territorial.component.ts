@@ -330,7 +330,7 @@ export class TerritorialComponent {
     this.temaSeleccionadoSelect = '';
   }
 
-  hasDataForRegion(regionName: string): boolean {
+  hasDataForRegion(regionName: string): boolean { 
     const data = this.articlesDatabase[regionName] as any;
     if (!data) return false;
 

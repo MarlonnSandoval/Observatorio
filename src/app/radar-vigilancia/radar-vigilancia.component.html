@@ -21,164 +21,614 @@
     </div>
   </div>
 
-  <!-- CABECERA Y FILTROS -->
-  <div class="module-header">
-    <div class="header-titles">
-      <h2>Radar de Vigilancia Prospectiva</h2>
-      <p>Monitoreo de elementos de futuro según nivel de alerta y proximidad</p>
-    </div>
 
-    <div class="header-actions">
-      <div class="filter-group">
-        <label for="filtroVista">Enfoque:</label>
-        <select id="filtroVista" class="form-control" [(ngModel)]="enfoqueSeleccionado">
-          <option value="TODOS">Todos</option>
-          <option value="TERRITORIAL">Territorial</option>
-          <option value="SECTORIAL">Sectorial</option>
-        </select>
-      </div>
 
-      <button class="btn btn-outline-primary" (click)="exportarReporte()">
-        Descargar Reporte
-      </button>
-
-      <button class="btn btn-primary" (click)="abrirEncuesta()">
-        Validar / Encuesta
-      </button>
-    </div>
-  </div>
-
-  <!-- CONTENIDO PRINCIPAL -->
-  <div class="radar-main-content">
-
-    <!-- COLUMNA IZQUIERDA: RADAR -->
-    <div class="radar-card">
-      <div class="radar-viewport">
-        <div class="radar-circle">
-
-          <!-- Anillos -->
-          <div class="ring ring-alta" title="Inminente"></div>
-          <div class="ring ring-media" title="Mediano Plazo"></div>
-          <div class="ring ring-baja" title="Monitoreo Continuo"></div>
-
-          <!-- Ejes -->
-          <div class="axis axis-v"></div>
-          <div class="axis axis-h"></div>
-
-          <!-- Etiquetas de Orientación / Cuadrantes Dinámicos -->
-          <span class="quadrant-label label-top">{{ getEtiquetaCuadrante('TOP') }}</span>
-          <span class="quadrant-label label-right">{{ getEtiquetaCuadrante('RIGHT') }}</span>
-          <span class="quadrant-label label-bottom">{{ getEtiquetaCuadrante('BOTTOM') }}</span>
-          <span class="quadrant-label label-left">{{ getEtiquetaCuadrante('LEFT') }}</span>
-
-          <!-- PUNTOS / ALERTAS -->
-          <div *ngFor="let item of elementos" class="radar-dot"
-            [ngClass]="[getClaseAlerta(item.alerta), item.id === elementoSeleccionado?.id ? 'active-dot' : '']"
-            [style.left.%]="getPosicionX(item)" [style.top.%]="getPosicionY(item)" (click)="seleccionarElemento(item)">
-            <span *ngIf="item.alerta === 'ROJO'" class="pulse-ring"></span>
-            <div class="dot-tooltip">{{ item.titulo }}</div>
+  <p-tabView [(activeIndex)]="pasoActivo">
+    <p-tabPanel header="PASO 1" [disabled]="false">
+      <div class="row">
+        <!-- Mapa Selector (Columna Izquierda) -->
+        <div class="col-12 col-sm-4 col-md-4 mt-2">
+          <div class="map-ut sticky-top">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="regionSelect" class="form-label font-weight-bold">Seleccionar territorio:</label>
+                <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
+                  (ngModelChange)="onRegionChange($event)">
+                  <option [ngValue]="null">Selecciona un territorio</option>
+                  <option *ngFor="let region of regions" [value]="region.name">
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox">
+              <g>
+                <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
+                  [class.sin-data]="!hasDataForRegion(region.name)" [attr.data-region]="region.name"
+                  [attr.d]="region.d" (click)="selectRegion(region.name)">
+                  <title>{{ region.name }}{{ hasDataForRegion(region.name) ? '' : ' (sin casos en el Observatorio)' }}</title>
+                </path>
+              </g>
+            </svg>
+            <p class="small text-muted mt-2 mb-0">Los territorios en tono claro aún no tienen casos en el Observatorio.</p>
           </div>
         </div>
 
-        <!-- Leyenda de Semaforización (Corregida) -->
-        <div class="radar-legend">
-          <div class="legend-item"><span class="dot alerta-roja"></span> Alto / Crítico</div>
-          <div class="legend-item"><span class="dot alerta-ambar"></span> Medio / Alerta</div>
-          <div class="legend-item"><span class="dot alerta-verde"></span> Bajo / Monitoreo</div>
-        </div>
-      </div>
-    </div>
+        <!-- Casos del Observatorio + diseño de vigilancia (Columna Derecha) -->
+        <div class="col-12 col-md-8">
+          <div class="card shadow-sm h-100 bg-white">
+            <div class="card-body p-4">
 
-    <!-- COLUMNA DERECHA: PANEL DE DETALLE / LISTADO -->
-    <div class="details-card">
+              <!-- Señal devuelta desde el escaneo del horizonte (Paso 2) -->
+              <div *ngIf="senalEnRevision" class="vig-aviso mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <strong>Señal en revisión:</strong> {{ senalEnRevision.titulo }}.
+                  Analiza si se vincula a un escenario y si corresponde incorporarla como hecho precursor.
+                </div>
+                <button type="button" class="btn btn-outline-primary" (click)="senalEnRevision = null">Entendido</button>
+              </div>
 
-      <!-- Detalle Seleccionado -->
-      <div *ngIf="elementoSeleccionado" class="selected-detail">
-        <div class="detail-header" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
-          <span class="badge-tipo">{{ elementoSeleccionado.tipo }}</span>
-          <button class="close-btn" (click)="elementoSeleccionado = null">×</button>
-        </div>
+              <div *ngIf="!hasSelection" class="vig-empty">
+                <h5 class="fw-bold mb-1">Selecciona un territorio</h5>
+                <p class="mb-0 text-secondary">Elige un territorio en el mapa para ver los casos del Observatorio y cómo se vigilan.</p>
+              </div>
 
-        <div class="detail-body">
-          <h3>{{ elementoSeleccionado.titulo }}</h3>
+              <div *ngIf="hasSelection && !hasData" class="vig-empty">
+                <h5 class="fw-bold mb-1">{{ selectedRegion }} aún no tiene casos en el Observatorio</h5>
+                <p class="mb-0 text-secondary">Cuando existan fichas de tendencias, riesgos, oportunidades o escenarios, aparecerán aquí.</p>
+              </div>
 
-          <div class="meta-info">
-            <p><strong>Sector:</strong> {{ elementoSeleccionado.sector }}</p>
-            <p><strong>Territorio:</strong> {{ elementoSeleccionado.territorio }}</p>
-            <p><strong>Estado de Alerta:</strong>
-              <span class="status-tag" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
-                {{ elementoSeleccionado.alerta }}
-              </span>
-            </p>
-          </div>
+              <ng-container *ngIf="hasSelection && hasData">
+                <h5 class="fw-bold mb-1">{{ selectedRegion }}</h5>
+                <p class="small text-muted mb-3">Casos existentes en el Observatorio. Elige qué vigilar.</p>
 
-          <div class="description-box">
-            <h4>Descripción del Análisis:</h4>
-            <p>{{ elementoSeleccionado.descripcion }}</p>
-          </div>
-        </div>
-      </div>
+                <!-- Categorías -->
+                <div class="vig-tabs mb-3">
+                  <button type="button" class="vig-tab" *ngFor="let c of categorias" [ngClass]="getClaseCategoria(c)"
+                    [class.active]="c === categoriaActiva" (click)="seleccionarCategoria(c)">
+                    <strong>{{ getCount(c) }}</strong> {{ c | lowercase }}
+                  </button>
+                </div>
 
-      <!-- Listado General (Cuando no hay nada seleccionado) -->
-      <div *ngIf="!elementoSeleccionado" class="general-list">
-        <h3>Elementos Identificados ({{ elementos.length }})</h3>
-        <p class="list-subtitle">Selecciona un punto en el radar o en la lista para ver su detalle:</p>
+                <!-- Casos de la categoría -->
+                <div class="row g-2 mb-4">
+                  <div class="col-12 col-md-6" *ngFor="let f of getFichas(categoriaActiva)">
+                    <button type="button" class="vig-ficha w-100 text-start" [ngClass]="getClaseCategoria(f.categoria)"
+                      [class.active]="f === fichaActiva" (click)="seleccionarFicha(f)">
+                      <span class="vig-tag" [ngClass]="tieneDiseno(f) ? 'hecho-observable' : 'sin-diseno'">
+                        {{ tieneDiseno(f) ? 'Con vigilancia' : 'Sin diseño' }}
+                      </span>
+                      <span class="vig-tag" *ngIf="f.periodo">{{ f.periodo }}</span>
+                      <strong class="d-block mt-1">{{ f.titulo }}</strong>
+                    </button>
+                  </div>
+                  <div *ngIf="getCount(categoriaActiva) === 0" class="col-12 text-muted small">
+                    No hay {{ categoriaActiva | lowercase }} registrados para {{ selectedRegion }}.
+                  </div>
+                </div>
 
-        <div class="elements-scroll">
-          <div *ngFor="let item of elementos" class="list-item" (click)="seleccionarElemento(item)">
-            <span class="dot" [ngClass]="getClaseAlerta(item.alerta)"></span>
-            <div class="item-text">
-              <strong>{{ item.titulo }}</strong>
-              <small>{{ item.tipo }} | {{ item.territorio }}</small>
+                <!-- Detalle del caso seleccionado -->
+                <ng-container *ngIf="fichaActiva as f">
+                  <div class="vig-detalle" [ngClass]="getClaseCategoria(f.categoria)">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                      <div>
+                        <span class="vig-tag">{{ getEtiquetaCategoria(f.categoria) }}</span>
+                        <span class="vig-tag" *ngIf="f.tema">{{ f.tema }}</span>
+                      </div>
+                      <a [href]="f.url" target="_blank" class="small text-decoration-none">Ver ficha en el Observatorio</a>
+                    </div>
+                    <h4 class="fw-bold mt-2 mb-1">{{ f.titulo }}</h4>
+                    <p class="text-secondary">{{ f.resumen }}</p>
+
+                    <div *ngIf="!tieneDiseno(f)" class="vig-aviso">
+                      Este caso aún no tiene hechos precursores definidos. El Ceplan los diseñará a partir de la ficha.
+                    </div>
+
+                    <ng-container *ngIf="tieneDiseno(f)">
+                      <div class="row g-3 my-1">
+                        <div class="col-12 col-lg-6">
+                          <ng-container *ngIf="f.categoria === 'Escenarios'; else relacionados">
+                            <h6 class="vig-subtitulo">Elementos de futuro del escenario</h6>
+                            <button type="button" class="vig-nodo w-100 text-start" *ngFor="let e of getElementosEscenario(f)"
+                              [ngClass]="getClaseCategoria(e.ficha.categoria)" [class.active]="elementoResaltado === e.ficha.id"
+                              [class.atenuado]="estaAtenuado(e.ficha.id)" (click)="alternarElemento(e.ficha.id)">
+                              <span class="vig-tag">{{ getEtiquetaCategoria(e.ficha.categoria) }}</span>
+                              <strong class="d-block">{{ e.ficha.titulo }}</strong>
+                              <small class="text-muted">{{ e.justificacion }}</small>
+                            </button>
+                          </ng-container>
+                          <ng-template #relacionados>
+                            <h6 class="vig-subtitulo">Escenarios que lo utilizan</h6>
+                            <button type="button" class="vig-nodo w-100 text-start cat-escenarios"
+                              *ngFor="let s of getEscenariosDeElemento(f)" (click)="irAFicha(s)">
+                              <span class="vig-tag">Escenario</span>
+                              <strong class="d-block">{{ s.titulo }}</strong>
+                            </button>
+                            <p *ngIf="getEscenariosDeElemento(f).length === 0" class="small text-muted">
+                              Aún no está vinculado a un escenario con diseño de vigilancia.
+                            </p>
+                          </ng-template>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                          <h6 class="vig-subtitulo">Hechos precursores que se vigilan</h6>
+                          <div class="vig-nodo vig-hecho" *ngFor="let h of getHechos(f)"
+                            [class.atenuado]="estaAtenuado(h.elementoId)">
+                            <strong>{{ h.id }}</strong>
+                            <span class="vig-tag" [ngClass]="getClaseTipoHecho(h.tipo)">{{ h.tipo | titlecase }}</span>
+                            <div>{{ h.descripcion }}</div>
+                            <small class="text-muted" *ngIf="f.categoria === 'Escenarios'">Deriva de: {{ getTituloElemento(h.elementoId) }}</small>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="small text-muted" *ngIf="f.categoria === 'Escenarios'">
+                        Selecciona un elemento de futuro para ver solo los hechos que se derivan de él.
+                        Un hecho potencial pasa a observable cuando existe evidencia suficiente.
+                      </p>
+
+                      <h5 class="fw-bold mt-4 mb-2">Indicadores, fuentes y umbrales</h5>
+                      <div class="table-responsive">
+                        <table class="table table-sm align-middle vig-tabla">
+                          <thead>
+                            <tr>
+                              <th>Hecho</th>
+                              <th>Indicador o proxy</th>
+                              <th>Fuente</th>
+                              <th>Periodicidad</th>
+                              <th>Umbral o condición de alerta</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let h of getHechos(f)" [class.atenuado]="estaAtenuado(h.elementoId)">
+                              <td><strong>{{ h.id }}</strong></td>
+                              <td>{{ h.indicador }}</td>
+                              <td>{{ h.fuente }}</td>
+                              <td>{{ h.periodicidad }}</td>
+                              <td>{{ h.umbral }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="vig-acciones">
+                        <span class="small text-muted">Escenario → elemento de futuro → hecho precursor → indicador → umbral</span>
+                        <div class="d-flex gap-2">
+                          <button type="button" class="btn btn-outline-primary" (click)="descargarFicha()">Descargar ficha de diseño</button>
+                          <button type="button" class="btn btn-primary" (click)="iniciarVigilancia()">Iniciar vigilancia (Paso 2)</button>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </ng-container>
             </div>
           </div>
         </div>
       </div>
+    </p-tabPanel>
+    <p-tabPanel header="PASO 2" [disabled]="!puedeIrAPaso2">
+      <ng-container *ngIf="fichaVigilada as fv">
 
-    </div>
+        <!-- Contexto heredado del Paso 1 -->
+        <div class="vig-contexto" [ngClass]="getClaseCategoria(fv.categoria)">
+          <div>
+            <span class="vig-tag">{{ getEtiquetaCategoria(fv.categoria) }}</span>
+            <span class="vig-tag">{{ selectedRegion }}</span>
+            <h5 class="fw-bold mb-0 mt-1">{{ fv.titulo }}</h5>
+            <small class="text-muted">
+              {{ hechosVigilados.length }} hechos precursores · {{ totalConfigurados }} con perfil de búsqueda ·
+              {{ totalEvidencias }} evidencias captadas
+            </small>
+          </div>
+          <button type="button" class="btn btn-outline-primary" (click)="volverAPaso1()">Volver al Paso 1</button>
+        </div>
 
-  </div>
+        <div class="row g-3 mt-1">
+          <!-- Hechos precursores -->
+          <div class="col-12 col-md-4">
+            <h6 class="vig-subtitulo">Hechos precursores</h6>
+            <button type="button" class="vig-nodo w-100 text-start" *ngFor="let h of hechosVigilados"
+              [class.active]="h.id === hechoActivoId" (click)="seleccionarHecho(h.id)">
+              <strong>{{ h.id }}</strong>
+              <span class="vig-tag" [ngClass]="getClaseTipoHecho(h.tipo)">{{ h.tipo | titlecase }}</span>
+              <div>{{ h.descripcion }}</div>
+              <span class="vig-tag mt-1" [ngClass]="getClaseEstadoHecho(h.id)">{{ getEtiquetaEstadoHecho(h.id) }}</span>
+              <small class="d-block text-muted" *ngIf="getUltimaCaptacion(h.id) as ult">
+                Última captación: {{ ult | date:'dd/MM/yyyy' }}
+              </small>
+            </button>
+          </div>
 
-  <!-- MODAL DE ENCUESTA DE VALIDACIÓN -->
-  <div class="modal-overlay" *ngIf="mostrarModalEncuesta">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>Encuesta de Validación</h3>
-        <button class="close-btn" (click)="cerrarEncuesta()">×</button>
-      </div>
+          <!-- Detalle del hecho -->
+          <div class="col-12 col-md-8">
+            <div class="vig-detalle p2-tabs" *ngIf="hechoActivo as ha">
+              <h6 class="fw-bold mb-1">{{ ha.id }} · {{ ha.descripcion }}</h6>
+              <p class="small text-muted mb-3">
+                <strong>Indicador:</strong> {{ ha.indicador }} · <strong>Umbral:</strong> {{ ha.umbral }}
+              </p>
 
-      <div class="modal-body">
-        <p><strong>Elemento evaluado:</strong> {{ elementoSeleccionado?.titulo || 'Evaluación General' }}</p>
+              <div class="vig-tabs mb-3">
+                <button type="button" class="vig-tab" [class.active]="pestanaPaso2 === 'ESTRATEGIA'"
+                  (click)="pestanaPaso2 = 'ESTRATEGIA'">Estrategia de búsqueda</button>
+                <button type="button" class="vig-tab" [class.active]="pestanaPaso2 === 'EVIDENCIA'"
+                  (click)="pestanaPaso2 = 'EVIDENCIA'">
+                  Evidencia captada <strong>({{ getEvidencias(ha.id).length }})</strong>
+                </button>
+              </div>
 
-        <div class="form-group">
-          <label>¿Considera pertinente la alerta detectada?</label>
-          <div class="radio-group">
-            <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="SI"> Sí, es pertinente</label>
-            <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="NO"> No es relevante</label>
+              <!-- Estrategia de búsqueda -->
+              <ng-container *ngIf="pestanaPaso2 === 'ESTRATEGIA'">
+                <dl class="p2-dl" *ngIf="getPerfil(ha.id) as p; else sinPerfil">
+                  <div class="p2-row">
+                    <dt>Modalidad</dt>
+                    <dd><span class="vig-tag">{{ p.modalidad === 'DIRIGIDA' ? 'Búsqueda dirigida' : 'Búsqueda exploratoria' }}</span></dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Información requerida</dt>
+                    <dd>{{ p.informacionRequerida }}</dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Fuentes</dt>
+                    <dd>
+                      <div *ngFor="let f of p.fuentes" class="mb-1">
+                        <span class="vig-tag" [ngClass]="getClaseNivel(f.nivel)">{{ getEtiquetaNivel(f.nivel) }}</span>
+                        {{ f.nombre }} <small class="text-muted">({{ f.principal ? 'principal' : 'complementaria' }})</small>
+                      </div>
+                    </dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Mecanismo de captación</dt>
+                    <dd>{{ getEtiquetaMecanismo(p.mecanismo) }}</dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Términos de búsqueda</dt>
+                    <dd><span class="p2-chip" *ngFor="let t of p.terminos">{{ t }}</span></dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Frecuencia</dt>
+                    <dd>{{ p.frecuencia }}</dd>
+                  </div>
+                  <div class="p2-row">
+                    <dt>Criterio de pertinencia</dt>
+                    <dd>{{ p.pertinencia }}</dd>
+                  </div>
+                </dl>
+                <ng-template #sinPerfil>
+                  <div class="vig-aviso">
+                    El perfil de búsqueda de este hecho aún no está configurado en el ONP. El Ceplan debe definir fuentes,
+                    mecanismo y frecuencia antes de captar evidencia.
+                  </div>
+                </ng-template>
+                <p class="small text-muted mt-3 mb-0" *ngIf="getPerfil(ha.id)">
+                  {{ ha.id }} → {{ ha.indicador }} → información requerida → fuente → mecanismo → frecuencia
+                </p>
+              </ng-container>
+
+              <!-- Evidencia captada -->
+              <ng-container *ngIf="pestanaPaso2 === 'EVIDENCIA'">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                  <p class="small text-muted mb-0">
+                    Lo captado es un insumo de trabajo. No es evidencia validada ni alerta: eso se analiza en el Paso 3.
+                  </p>
+                  <button type="button" class="btn btn-primary" (click)="abrirModalEvidencia()">Registrar evidencia</button>
+                </div>
+                <div class="table-responsive" *ngIf="getEvidencias(ha.id).length > 0; else sinEvidencia">
+                  <table class="table table-sm align-top vig-tabla">
+                    <thead>
+                      <tr>
+                        <th>Captada</th>
+                        <th>Periodo</th>
+                        <th>Hallazgo</th>
+                        <th>Valor</th>
+                        <th>Fuente</th>
+                        <th>Mecanismo</th>
+                        <th>Señal</th>
+                        <th>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let e of getEvidencias(ha.id)">
+                        <td>{{ e.fechaCaptacion | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ e.periodoReferencia }}</td>
+                        <td>{{ e.hallazgo }}</td>
+                        <td>{{ e.valorIndicador || '—' }}</td>
+                        <td>
+                          <a *ngIf="e.enlace; else fuenteSinEnlace" [href]="e.enlace" target="_blank">{{ e.fuente }}</a>
+                          <ng-template #fuenteSinEnlace>{{ e.fuente }}</ng-template>
+                        </td>
+                        <td>{{ getEtiquetaMecanismo(e.mecanismo) }}</td>
+                        <td><span class="vig-tag" [ngClass]="getClaseDireccion(e.direccion)">{{ getEtiquetaDireccion(e.direccion) }}</span></td>
+                        <td><span class="vig-tag sin-diseno">Sin validar</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ng-template #sinEvidencia>
+                  <div class="vig-aviso">Aún no hay evidencia captada para {{ ha.id }}. Usa «Registrar evidencia» para agregar la primera.</div>
+                </ng-template>
+              </ng-container>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Nivel de Alerta Recomendado:</label>
-          <select [(ngModel)]="encuesta.nivelAlertaSugerido" class="form-control">
-            <option value="ROJO">Alto / Crítico (Rojo)</option>
-            <option value="AMBAR">Medio / Alerta (Ámbar)</option>
-            <option value="VERDE">Bajo / Monitoreo (Verde)</option>
-          </select>
+        <!-- Escaneo del horizonte -->
+        <div class="vig-detalle p2-tabs mt-4">
+          <h5 class="fw-bold mb-1">Escaneo del horizonte</h5>
+          <p class="small text-muted">
+            Señales nuevas que no estaban en el diseño. Si una señal es relevante, se propone como hecho precursor y se vuelve al Paso 1.
+          </p>
+          <div class="vig-nodo" *ngFor="let s of getSenales()">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+              <div>
+                <span class="vig-tag" [ngClass]="s.estado === 'PROPUESTA' ? 'estado-configurado' : 'sin-diseno'">
+                  {{ s.estado === 'PROPUESTA' ? 'Enviada al Paso 1' : 'Nueva' }}
+                </span>
+                <small class="text-muted">{{ s.fecha | date:'dd/MM/yyyy' }} · {{ s.fuente }}</small>
+                <strong class="d-block">{{ s.titulo }}</strong>
+                <small class="text-muted" *ngIf="s.descripcion">{{ s.descripcion }}</small>
+              </div>
+              <button type="button" class="btn btn-outline-primary" *ngIf="s.estado === 'NUEVA'"
+                (click)="proponerSenal(s)">Proponer como hecho precursor</button>
+            </div>
+          </div>
+          <p *ngIf="getSenales().length === 0" class="small text-muted">No hay señales registradas.</p>
+
+          <div class="row g-2 mt-1">
+            <div class="col-12 col-md-6">
+              <input type="text" class="form-control w-100" placeholder="Describe la señal" [(ngModel)]="nuevaSenal.titulo">
+            </div>
+            <div class="col-12 col-md-4">
+              <input type="text" class="form-control w-100" placeholder="Fuente" [(ngModel)]="nuevaSenal.fuente">
+            </div>
+            <div class="col-12 col-md-2">
+              <button type="button" class="btn btn-outline-primary w-100" (click)="agregarSenal()">Registrar</button>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Observaciones / Justificación:</label>
-          <textarea [(ngModel)]="encuesta.comentarios" rows="3" class="form-control"
-            placeholder="Escriba aquí los sustentos o comentarios..."></textarea>
+        <!-- Modal: registrar evidencia -->
+        <div class="modal-overlay" *ngIf="mostrarModalEvidencia">
+          <div class="modal-card">
+            <div class="modal-header">
+              <h3>Registrar evidencia · {{ hechoActivoId }}</h3>
+              <button type="button" class="close-btn" (click)="cerrarModalEvidencia()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Periodo al que corresponde el dato</label>
+                <input type="text" class="form-control" placeholder="Ej.: SE 14-2025" [(ngModel)]="nuevaEvidencia.periodoReferencia">
+              </div>
+              <div class="form-group">
+                <label>Hallazgo</label>
+                <textarea rows="3" class="form-control" placeholder="Qué dice la evidencia" [(ngModel)]="nuevaEvidencia.hallazgo"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Valor del indicador (opcional)</label>
+                <input type="text" class="form-control" [(ngModel)]="nuevaEvidencia.valorIndicador">
+              </div>
+              <div class="form-group">
+                <label>Fuente</label>
+                <input type="text" class="form-control" [(ngModel)]="nuevaEvidencia.fuente">
+              </div>
+              <div class="form-group">
+                <label>Enlace a la evidencia original</label>
+                <input type="text" class="form-control" placeholder="https://" [(ngModel)]="nuevaEvidencia.enlace">
+              </div>
+              <div class="form-group">
+                <label>Mecanismo de captación</label>
+                <select class="form-control" [(ngModel)]="nuevaEvidencia.mecanismo">
+                  <option value="MANUAL">Manual</option>
+                  <option value="SEMIAUTOMATIZADA">Semiautomatizada</option>
+                  <option value="AUTOMATIZADA">Automatizada</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Dirección de la señal respecto de la trayectoria del escenario</label>
+                <select class="form-control" [(ngModel)]="nuevaEvidencia.direccion">
+                  <option value="CONSISTENTE">Consistente</option>
+                  <option value="CONTRARIA">Contraria</option>
+                  <option value="NEUTRA">Neutra</option>
+                  <option value="INCIERTA">Incierta</option>
+                </select>
+              </div>
+              <p class="small text-danger mb-0" *ngIf="errorEvidencia">{{ errorEvidencia }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" (click)="cerrarModalEvidencia()">Cancelar</button>
+              <button type="button" class="btn btn-primary" (click)="guardarEvidencia()">Guardar evidencia</button>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+    </p-tabPanel>
+    <p-tabPanel header="PASO 3" [disabled]="true">
+      <p>
+        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+        corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
+        culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
+        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+      </p>
+    </p-tabPanel>
+    <p-tabPanel header="PASO 4" [disabled]="true">
+      <div>
+        <!-- CABECERA Y FILTROS -->
+        <div class="module-header">
+          <div class="header-titles">
+            <h2>Radar de Vigilancia Prospectiva</h2>
+            <p>Monitoreo de elementos de futuro según nivel de alerta y proximidad</p>
+          </div>
+
+          <div class="header-actions">
+            <div class="filter-group">
+              <label for="filtroVista">Enfoque:</label>
+              <select id="filtroVista" class="form-control" [(ngModel)]="enfoqueSeleccionado">
+                <option value="TODOS">Todos</option>
+                <option value="TERRITORIAL">Territorial</option>
+                <option value="SECTORIAL">Sectorial</option>
+              </select>
+            </div>
+
+            <button class="btn btn-outline-primary" (click)="exportarReporte()">
+              Descargar Reporte
+            </button>
+
+            <button class="btn btn-primary" (click)="abrirEncuesta()">
+              Validar / Encuesta
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="radar-main-content">
+
+          <!-- COLUMNA IZQUIERDA: RADAR -->
+          <div class="radar-card">
+            <div class="radar-viewport">
+              <div class="radar-circle">
+
+                <!-- Anillos -->
+                <div class="ring ring-alta" title="Inminente"></div>
+                <div class="ring ring-media" title="Mediano Plazo"></div>
+                <div class="ring ring-baja" title="Monitoreo Continuo"></div>
+
+                <!-- Ejes -->
+                <div class="axis axis-v"></div>
+                <div class="axis axis-h"></div>
+
+                <!-- Etiquetas de Orientación / Cuadrantes Dinámicos -->
+                <span class="quadrant-label label-top">{{ getEtiquetaCuadrante('TOP') }}</span>
+                <span class="quadrant-label label-right">{{ getEtiquetaCuadrante('RIGHT') }}</span>
+                <span class="quadrant-label label-bottom">{{ getEtiquetaCuadrante('BOTTOM') }}</span>
+                <span class="quadrant-label label-left">{{ getEtiquetaCuadrante('LEFT') }}</span>
+
+                <!-- PUNTOS / ALERTAS -->
+                <div *ngFor="let item of elementos" class="radar-dot"
+                  [ngClass]="[getClaseAlerta(item.alerta), item.id === elementoSeleccionado?.id ? 'active-dot' : '']"
+                  [style.left.%]="getPosicionX(item)" [style.top.%]="getPosicionY(item)"
+                  (click)="seleccionarElemento(item)">
+                  <span *ngIf="item.alerta === 'ROJO'" class="pulse-ring"></span>
+                  <div class="dot-tooltip">{{ item.titulo }}</div>
+                </div>
+              </div>
+
+              <!-- Leyenda de Semaforización (Corregida) -->
+              <div class="radar-legend">
+                <div class="legend-item"><span class="dot alerta-roja"></span> Alto / Crítico</div>
+                <div class="legend-item"><span class="dot alerta-ambar"></span> Medio / Alerta</div>
+                <div class="legend-item"><span class="dot alerta-verde"></span> Bajo / Monitoreo</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: PANEL DE DETALLE / LISTADO -->
+          <div class="details-card">
+
+            <!-- Detalle Seleccionado -->
+            <div *ngIf="elementoSeleccionado" class="selected-detail">
+              <div class="detail-header" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
+                <span class="badge-tipo">{{ elementoSeleccionado.tipo }}</span>
+                <button class="close-btn" (click)="elementoSeleccionado = null">×</button>
+              </div>
+
+              <div class="detail-body">
+                <h3>{{ elementoSeleccionado.titulo }}</h3>
+
+                <div class="meta-info">
+                  <p><strong>Sector:</strong> {{ elementoSeleccionado.sector }}</p>
+                  <p><strong>Territorio:</strong> {{ elementoSeleccionado.territorio }}</p>
+                  <p><strong>Estado de Alerta:</strong>
+                    <span class="status-tag" [ngClass]="getClaseAlerta(elementoSeleccionado.alerta)">
+                      {{ elementoSeleccionado.alerta }}
+                    </span>
+                  </p>
+                </div>
+
+                <div class="description-box">
+                  <h4>Descripción del Análisis:</h4>
+                  <p>{{ elementoSeleccionado.descripcion }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Listado General (Cuando no hay nada seleccionado) -->
+            <div *ngIf="!elementoSeleccionado" class="general-list">
+              <h3>Elementos Identificados ({{ elementos.length }})</h3>
+              <p class="list-subtitle">Selecciona un punto en el radar o en la lista para ver su detalle:</p>
+
+              <div class="elements-scroll">
+                <div *ngFor="let item of elementos" class="list-item" (click)="seleccionarElemento(item)">
+                  <span class="dot" [ngClass]="getClaseAlerta(item.alerta)"></span>
+                  <div class="item-text">
+                    <strong>{{ item.titulo }}</strong>
+                    <small>{{ item.tipo }} | {{ item.territorio }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- MODAL DE ENCUESTA DE VALIDACIÓN -->
+        <div class="modal-overlay" *ngIf="mostrarModalEncuesta">
+          <div class="modal-card">
+            <div class="modal-header">
+              <h3>Encuesta de Validación</h3>
+              <button class="close-btn" (click)="cerrarEncuesta()">×</button>
+            </div>
+
+            <div class="modal-body">
+              <p><strong>Elemento evaluado:</strong> {{ elementoSeleccionado?.titulo || 'Evaluación General' }}</p>
+
+              <div class="form-group">
+                <label>¿Considera pertinente la alerta detectada?</label>
+                <div class="radio-group">
+                  <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="SI"> Sí, es pertinente</label>
+                  <label><input type="radio" [(ngModel)]="encuesta.pertinencia" value="NO"> No es relevante</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Nivel de Alerta Recomendado:</label>
+                <select [(ngModel)]="encuesta.nivelAlertaSugerido" class="form-control">
+                  <option value="ROJO">Alto / Crítico (Rojo)</option>
+                  <option value="AMBAR">Medio / Alerta (Ámbar)</option>
+                  <option value="VERDE">Bajo / Monitoreo (Verde)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Observaciones / Justificación:</label>
+                <textarea [(ngModel)]="encuesta.comentarios" rows="3" class="form-control"
+                  placeholder="Escriba aquí los sustentos o comentarios..."></textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-outline-primary" (click)="cerrarEncuesta()">Cancelar</button>
+              <button class="btn btn-primary" (click)="enviarEncuesta()">Guardar Validación</button>
+            </div>
+          </div>
         </div>
       </div>
+    </p-tabPanel>
+  </p-tabView>
+  <!-- PASO 1: MAPA -->
 
-      <div class="modal-footer">
-        <button class="btn btn-outline-primary" (click)="cerrarEncuesta()">Cancelar</button>
-        <button class="btn btn-primary" (click)="enviarEncuesta()">Guardar Validación</button>
-      </div>
-    </div>
-  </div>
+
+  <!-- PASO 2:  -->
+
+
+
+  <!-- PASO 3:  -->
+
+
+
+  <!-- PASO 4: RADAR -->
+
+
 
 </div>
