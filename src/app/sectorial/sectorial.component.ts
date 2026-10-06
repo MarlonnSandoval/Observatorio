@@ -23,7 +23,7 @@ export interface ConoItem {
   categoriaNombre: string;
   horizonte: string;
   url: string;
-  icon: string;
+  icono: string; // id del símbolo SVG (ver sprite en el HTML)
   color: string;
 }
 
@@ -31,6 +31,28 @@ export interface ConoColumn {
   key: 'PRESENTE-2030' | '2030-2040' | '2040-2050';
   label: string;
   items: ConoItem[];
+}
+
+export interface RadarItem {
+  articulo: ArticuloRadar;
+  numero: number;
+  icono: string; // id del símbolo SVG (ver sprite en el HTML)
+}
+
+export interface RadarNodo {
+  articulo: ArticuloRadar;
+  numero: number;
+  icono: string;
+  x: number;
+  y: number;
+}
+
+export interface RadarColumna {
+  nombre: string;
+  border: string;
+  badgeBg: string;
+  badgeText: string;
+  items: RadarItem[];
 }
 
 const DEFINICION_ANILLOS: { id: string; inner: number; outer: number; modoTexto: 'curvo' | 'radial' }[] = [
@@ -459,7 +481,7 @@ export class SectorialComponent implements AfterViewInit {
     };
   }
 
-  get radarNodes(): { articulo: ArticuloRadar; numero: number; x: number; y: number }[] {
+  get radarNodes(): RadarNodo[] {
     const articulos = this.articulosCompletos;
     if (articulos.length === 0) return [];
 
@@ -489,7 +511,14 @@ export class SectorialComponent implements AfterViewInit {
 
     const angleStepCuadrante = Math.PI / 2;
     const margenSeguridad = angleStepCuadrante * 0.12;
-    const nodos: { articulo: ArticuloRadar; numero: number; x: number; y: number }[] = [];
+    const nodos: RadarNodo[] = [];
+
+    // Categoría de cada artículo (para elegir su ícono)
+    const iconoPorArticulo = new Map<ArticuloRadar, string>();
+    this.categoriesBase.forEach((cat) => {
+      const nombre = String(cat);
+      this.getArticulos(nombre).forEach((a) => iconoPorArticulo.set(a, this.iconoCategoria(nombre)));
+    });
 
     porCuadrante.forEach((lista, cuadrante) => {
       const baseAngle = angulosCuadrante[cuadrante] ?? 0;
@@ -507,6 +536,7 @@ export class SectorialComponent implements AfterViewInit {
         nodos.push({
           articulo: item.art,
           numero: item.numero,
+          icono: iconoPorArticulo.get(item.art) ?? this.iconoCategoria(''),
           x: this.radarCenter + finalRadius * Math.cos(finalAngle),
           y: this.radarCenter + finalRadius * Math.sin(finalAngle)
         });
@@ -514,6 +544,16 @@ export class SectorialComponent implements AfterViewInit {
     });
 
     return nodos;
+  }
+
+  /** Devuelve el id del símbolo SVG según la categoría (Tendencia, Riesgo, Oportunidad, Señal débil, Carta salvaje). */
+  iconoCategoria(categoria: string): string {
+    const c = (categoria || '').toLowerCase();
+    if (c.includes('riesg')) return '#ico-riesgo';
+    if (c.includes('oportun')) return '#ico-oportunidad';
+    if (c.includes('señal') || c.includes('senal')) return '#ico-senal-debil';
+    if (c.includes('carta') || c.includes('salvaje')) return '#ico-carta-salvaje';
+    return '#ico-tendencia';
   }
 
   hoverArticulo(articulo: ArticuloRadar | null): void {
@@ -544,12 +584,34 @@ export class SectorialComponent implements AfterViewInit {
     ];
   }
 
-  get articulosCaracterizan(): ArticuloRadar[] {
-    return this.articulosCompletos.filter(art => art.tipo === 'caracterizan');
-  }
+  /**
+   * Artículos del radar agrupados por categoría (una columna por categoría).
+   * La numeración es correlativa entre columnas y coincide con la de `radarNodes`,
+   * ya que `articulosCompletos` concatena las categorías en el mismo orden.
+   */
+  get radarColumnas(): RadarColumna[] {
+    let offset = 0;
 
-  get articulosImpactan(): ArticuloRadar[] {
-    return this.articulosCompletos.filter(art => art.tipo === 'impactan');
+    return this.categoriesBase.map((cat) => {
+      const nombre = String(cat);
+      const articulos = this.getArticulos(nombre);
+      const colores = this.getCategoryColorData(nombre);
+
+      const items: RadarItem[] = articulos.map((articulo, i) => ({
+        articulo,
+        numero: offset + i + 1,
+        icono: this.iconoCategoria(nombre),
+      }));
+      offset += articulos.length;
+
+      return {
+        nombre,
+        border: colores.border,
+        badgeBg: colores.badgeBg,
+        badgeText: colores.badgeText,
+        items,
+      };
+    });
   }
 
   getArticulos(categoriaNombre: string): ArticuloRadar[] {
@@ -590,11 +652,12 @@ export class SectorialComponent implements AfterViewInit {
     return articulo.titulo;
   }
 
-  getConoIcon(categoriaNombre: string): string {
-    if (categoriaNombre.includes('Riesgos')) return 'bi bi-exclamation-triangle-fill text-danger';
-    if (categoriaNombre.includes('Oportunidades')) return 'bi bi-send-fill text-success';
-    if (categoriaNombre.includes('Tendencias')) return 'bi bi-arrow-right text-primary';
-    return 'bi bi-activity text-secondary';
+  trackByColumna(_index: number, col: RadarColumna): string {
+    return col.nombre;
+  }
+
+  trackByItemRadar(_index: number, item: RadarItem): string {
+    return item.articulo.titulo;
   }
 
   get conoColumns(): ConoColumn[] {
@@ -621,21 +684,13 @@ export class SectorialComponent implements AfterViewInit {
           categoriaNombre: catNombre,
           horizonte: art.horizonte,
           url: art.url,
-          icon: this.getConoIcon(catNombre),
+          icono: this.iconoCategoria(catNombre),
           color: art.colorBadge || '#3b82f6',
         });
       });
     });
 
     return columnas;
-  }
-
-  get conoEscenarios(): ArticuloRadar[] {
-    return this.getArticulos('Escenarios');
-  }
-
-  get tieneEscenariosCono(): boolean {
-    return this.conoEscenarios.length > 0;
   }
 
   getCategoryColorData(categoriaName: string) {

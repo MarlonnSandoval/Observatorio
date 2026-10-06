@@ -21,6 +21,7 @@ export interface ArticuloConRegion extends Articulo {
 
 export interface RadarNode {
   number: number;
+  icono: string; // id del símbolo SVG (ver sprite en el HTML)
   x: number;
   y: number;
   label: string;
@@ -38,8 +39,17 @@ export interface ConoItem {
   tema?: string;
   periodo: string;
   url: string;
-  icon: string;
+  icono: string; // id del símbolo SVG (ver sprite en el HTML)
   color: string;
+}
+
+export interface RadarColumna {
+  nombre: string;
+  border: string;
+  badgeBg: string;
+  badgeText: string;
+  icono: string;
+  items: RadarNode[];
 }
 
 export interface ConoColumn {
@@ -84,6 +94,33 @@ export class TerritorialComponent {
     },
   ];
 
+  /** Artículos del radar agrupados por categoría (una columna por categoría). */
+  get radarColumnas(): RadarColumna[] {
+    const nodos = this.radarNodes;
+    return this.categories.map((cat) => {
+      const colores = this.getCategoryColorData(cat);
+      return {
+        nombre: cat,
+        border: colores.border,
+        badgeBg: colores.badgeBg,
+        badgeText: colores.badgeText,
+        icono: this.iconoCategoria(cat),
+        items: nodos.filter((n) => n.categoria === cat),
+      };
+    });
+  }
+
+  /** Id del símbolo SVG según la categoría (Tendencia, Riesgo, Oportunidad, Señal débil, Carta salvaje, Escenario). */
+  iconoCategoria(categoria: string): string {
+    const c = (categoria || '').toLowerCase();
+    if (c.includes('riesg')) return '#ico-riesgo';
+    if (c.includes('oportun')) return '#ico-oportunidad';
+    if (c.includes('señal') || c.includes('senal')) return '#ico-senal-debil';
+    if (c.includes('carta') || c.includes('salvaje')) return '#ico-carta-salvaje';
+    if (c.includes('escenario')) return '#ico-escenario';
+    return '#ico-tendencia';
+  }
+
   get radarNodes(): RadarNode[] {
     if (!this.selectedRegion || !this.regionData) return [];
 
@@ -91,7 +128,8 @@ export class TerritorialComponent {
     const center = 250;
     let numeroGlobal = 0;
 
-    const totalCategorias = this.categories.length;
+    const categorias = this.categories;
+    const totalCategorias = categorias.length;
     const angleStep = totalCategorias > 0 ? (2 * Math.PI) / totalCategorias : 0;
     const anguloInicial = -Math.PI * 0.75;
 
@@ -111,7 +149,7 @@ export class TerritorialComponent {
 
     const margenSeguridad = angleStep * 0.12;
 
-    this.categories.forEach((cat, catIndex) => {
+    categorias.forEach((cat, catIndex) => {
       const articulos = this.getArticulos(cat);
       const baseAngle = totalCategorias > 0 ? anguloInicial + catIndex * angleStep : 0;
       const color = this.getCategoryColorData(cat).border;
@@ -143,6 +181,7 @@ export class TerritorialComponent {
 
         nodes.push({
           number: numeroGlobal,
+          icono: this.iconoCategoria(cat),
           x: Math.round(x),
           y: Math.round(y),
           label: art.titulo,
@@ -173,13 +212,6 @@ export class TerritorialComponent {
       default:
         return 'medio';
     }
-  }
-
-  getConoIcon(categoria: string): string {
-    if (categoria.includes('Riesgos')) return 'bi bi-exclamation-triangle-fill text-danger';
-    if (categoria.includes('Oportunidades')) return 'bi bi-send-fill text-success';
-    if (categoria.includes('Tendencias')) return 'bi bi-arrow-right text-primary';
-    return 'bi bi-activity text-secondary';
   }
 
   get conoColumns(): ConoColumn[] {
@@ -213,7 +245,7 @@ export class TerritorialComponent {
             tema: art.tema,
             periodo: art.periodo || '2030-2040',
             url: art.url,
-            icon: this.getConoIcon(cat),
+            icono: this.iconoCategoria(cat),
             color: colorData.border,
           });
         });
