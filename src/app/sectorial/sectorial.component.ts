@@ -25,7 +25,7 @@ export interface ConoItem {
   url: string;
   icono: string; // id del símbolo SVG (ver sprite en el HTML)
   color: string;
-}
+} 
 
 export interface ConoColumn {
   key: 'PRESENTE-2030' | '2030-2040' | '2040-2050';

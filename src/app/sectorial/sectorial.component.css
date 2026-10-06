@@ -179,6 +179,19 @@
     gap: 0.5rem;
 }
 
+.radar-list-number {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .cono-perspective-bg {
     position: absolute;
     top: 10%;
@@ -302,4 +315,10 @@
 .cono-legend-box {
     background-color: #f8fafc;
     border: 1px dashed #cbd5e1;
+}
+
+.radar-article-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
 }

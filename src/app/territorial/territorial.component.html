@@ -308,11 +308,10 @@
                           </div>
 
                           <div class="radar-article-list d-flex flex-column gap-2 px-2 pb-2">
-                            <a *ngFor="let node of col.items" [attr.href]="node.url || null" target="_blank"
-                              rel="noopener noreferrer"
+                            <a *ngFor="let node of col.items" [href]="node.url || null" target="_blank"
+                              rel="noopener noreferrer" 
                               class="radar-list-item d-flex align-items-start gap-2 p-2 rounded text-decoration-none text-dark bg-white border"
-                              [class.radar-list-item-active]="hoveredNode === node.number"
-                              (mouseenter)="hoveredNode = node.number" (mouseleave)="hoveredNode = null">
+                              [class.radar-list-item-active]="hoveredNode === node.number">
                               <span class="radar-list-number flex-shrink-0" [style.background-color]="node.color">
                                 <svg width="13" height="13" aria-hidden="true" style="color: #ffffff">
                                   <use [attr.href]="node.icono" width="13" height="13" />

@@ -54,7 +54,8 @@
     <!-- COLUMNA IZQUIERDA: LISTA DE SECTORES / ANILLO CENTRAL -->
     <div [class]="sectorSeleccionado ? 'col-12 col-xl-4' : 'col-12'" class="layout-transition">
       <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-        <h5 class="fw-bold mb-3" style="color: #2a68a2; font-size: 3rem;">Seleccione un sector</h5>
+        <h5 class="fw-bold mb-3" style="color: #2a68a2; font-size: 3rem;" [class.d-none]="sectorSeleccionado">Seleccione
+          un sector</h5>
         <!-- VISTA INICIAL: GRÁFICO SVG ESTILO DONUT (Solo se muestra si NO hay sector) -->
         <div class="w-100 d-flex flex-column justify-content-center align-items-center"
           [class.d-none]="sectorSeleccionado">
@@ -66,10 +67,11 @@
 
         <!-- VISTA DETALLE: LISTA LATERAL DE BOTONES (Solo se muestra si SÍ hay sector) -->
         <div class="w-100 h-100" *ngIf="sectorSeleccionado">
-          <h6 class="fw-bold text-secondary text-uppercase mb-3 small" style="letter-spacing: 0.5px;">Sectores
-            Disponibles</h6>
-          <div class="d-flex flex-column gap-2 sector-list-container h-100 overflow-auto"
-            style="max-height: 75vh; padding-right: 5px;">
+
+          <div class="d-flex flex-column gap-2 h-100 overflow-auto sticky-top "
+            style="max-height: 95vh; padding-right: 5px;">
+            <h6 class="fw-bold text-secondary text-uppercase mb-3 small mt-3" style="letter-spacing: 0.5px;">Sectores
+              Disponibles</h6>
             <button *ngFor="let sector of sectoresDisponibles; trackBy: trackBySector" type="button"
               class="btn btn-sector text-start rounded-pill shadow-sm py-2 px-3 d-flex align-items-center"
               [class.active-sector]="sectorSeleccionado === sector" (click)="toggleSector(sector)">
@@ -104,7 +106,8 @@
             <!-- Oportunidad: cohete -->
             <symbol id="ico-oportunidad" viewBox="0 0 24 24">
               <g transform="rotate(45 12 12)" fill="currentColor" fill-rule="evenodd">
-                <path d="M12 1.5 C15.8 4.8 16.8 10 15.2 16 H8.8 C7.2 10 8.2 4.8 12 1.5 Z M12 7.6 a1.7 1.7 0 1 0 0.001 0 Z" />
+                <path
+                  d="M12 1.5 C15.8 4.8 16.8 10 15.2 16 H8.8 C7.2 10 8.2 4.8 12 1.5 Z M12 7.6 a1.7 1.7 0 1 0 0.001 0 Z" />
                 <path d="M8.9 12.5 L5.2 17.5 L8.9 16.6 Z M15.1 12.5 L18.8 17.5 L15.1 16.6 Z" />
                 <path d="M10.4 17.4 h3.2 L12 22.5 Z" />
               </g>
@@ -219,7 +222,7 @@
           </div>
 
           <!-- ARTÍCULOS DEL RADAR, SEPARADOS POR CATEGORÍA -->
-          <div class="radar-articles-list-container mb-4">
+          <!-- <div class="radar-articles-list-container mb-4">
             <h6 class="fw-bold text-uppercase text-secondary mb-3 small">
               ARTÍCULOS EN EL RADAR ({{ articulosCompletos.length }})
             </h6>
@@ -227,14 +230,12 @@
             <div class="row g-3" *ngIf="articulosCompletos.length > 0; else sinArticulosRadar">
               <div class="col-12 col-md-4" *ngFor="let col of radarColumnas; trackBy: trackByColumna">
                 <div class="radar-category-col h-100 rounded-3 border bg-white" [style.borderTopColor]="col.border">
-                  <!-- Encabezado de la columna -->
                   <div class="radar-category-header d-flex align-items-center justify-content-between px-2 py-2">
                     <span class="fw-bold small text-dark text-uppercase">{{ col.nombre }}</span>
                     <span class="badge rounded-pill" [style.backgroundColor]="col.badgeBg"
                       [style.color]="col.badgeText">{{ col.items.length }}</span>
                   </div>
 
-                  <!-- Artículos de la categoría -->
                   <div class="radar-articles-scroll d-flex flex-column gap-2 px-2 pb-2">
                     <div *ngFor="let item of col.items; trackBy: trackByItemRadar"
                       class="radar-article-card p-2 rounded-3 border bg-white"
@@ -273,6 +274,54 @@
                 No hay artículos registrados para este sector.
               </div>
             </ng-template>
+          </div> -->
+
+          <div class="col-12 text-start mt-3">
+            <strong class="d-block mb-2 small text-uppercase text-muted">Artículos en el radar ({{
+              radarNodes.length }})</strong>
+
+            <div class="row g-3" *ngIf="radarNodes.length > 0; else sinArticulosRadar">
+              <div class="col-12" [ngClass]="radarColumnas.length === 3 ? 'col-md-4' : 'col-md-6'"
+                *ngFor="let col of radarColumnas">
+                <div class="radar-category-col h-100 rounded-3 border bg-white" [style.borderTopColor]="col.border">
+                  <div class="radar-category-header d-flex align-items-center justify-content-between px-2 py-2">
+                    <span class="fw-bold small text-dark text-uppercase">{{ col.nombre }}</span>
+                    <span class="badge rounded-pill" [style.background-color]="col.badgeBg"
+                      [style.color]="col.badgeText">{{ col.items.length }}</span>
+                  </div>
+
+                  <div class="radar-article-list d-flex flex-column gap-2 px-2 pb-2">
+                    <a *ngFor="let node of col.items" [href]="node.articulo.url" target="_blank"
+                      rel="noopener noreferrer"
+                      class="radar-list-item d-flex align-items-start gap-2 p-2 rounded text-decoration-none text-dark bg-white border">
+                      <span
+                        class="badge-number flex-shrink-0 d-flex align-items-center justify-content-center text-white fw-bold rounded-circle"
+                        [style.backgroundColor]="node.articulo.colorBadge || '#0d6efd'">
+                        <svg width="13" height="13" aria-hidden="true" style="color: #ffffff">
+                          <use [attr.href]="node.icono" width="13" height="13" />
+                        </svg>
+                      </span>
+                      <span class="flex-grow-1 overflow-hidden">
+                        <span class="d-block small fw-semibold lh-sm radar-article-title">{{ node.articulo.tituloCorto
+                          }}</span>
+                        <span class="badge bg-secondary-subtle text-secondary rounded-pill small mt-1"
+                          [style.backgroundColor]="node.articulo.colorBadge || '#0d6efd'">{{
+                          node.articulo.horizonte }}</span>
+                      </span>
+                    </a>
+
+                    <div *ngIf="col.items.length === 0" class="text-center text-muted small py-3 opacity-75">
+                      Sin artículos
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #sinArticulosRadar>
+              <div class="text-center text-muted small py-3">No hay artículos registrados para este territorio.
+              </div>
+            </ng-template>
           </div>
 
           <!-- LEYENDA DEL RADAR -->
@@ -281,13 +330,19 @@
               <strong class="d-block text-dark mb-1">Categorías</strong>
               <div class="d-flex flex-wrap gap-3">
                 <span class="d-flex align-items-center gap-1">
-                  <span class="legend-icon bg-primary"><svg width="12" height="12" style="color:#fff"><use href="#ico-tendencia" width="12" height="12" /></svg></span>
+                  <span class="legend-icon bg-primary"><svg width="12" height="12" style="color:#fff">
+                      <use href="#ico-tendencia" width="12" height="12" />
+                    </svg></span>
                   Tendencias</span>
                 <span class="d-flex align-items-center gap-1">
-                  <span class="legend-icon bg-danger"><svg width="12" height="12" style="color:#fff"><use href="#ico-riesgo" width="12" height="12" /></svg></span>
+                  <span class="legend-icon bg-danger"><svg width="12" height="12" style="color:#fff">
+                      <use href="#ico-riesgo" width="12" height="12" />
+                    </svg></span>
                   Riesgos</span>
                 <span class="d-flex align-items-center gap-1">
-                  <span class="legend-icon bg-success"><svg width="12" height="12" style="color:#fff"><use href="#ico-oportunidad" width="12" height="12" /></svg></span>
+                  <span class="legend-icon bg-success"><svg width="12" height="12" style="color:#fff">
+                      <use href="#ico-oportunidad" width="12" height="12" />
+                    </svg></span>
                   Oportunidades</span>
               </div>
             </div>
@@ -307,7 +362,8 @@
         <div *ngIf="vistaActual === 'cono'" class="cono-container bg-white p-4 rounded-4 border shadow-sm">
           <div class="text-center mb-4">
             <h4 class="fw-bold text-dark mb-1">Cono de futuros: {{ sectorSeleccionado }}</h4>
-            <p class="text-muted small mb-0">Evolución de tendencias, riesgos y oportunidades por horizonte de tiempo</p>
+            <p class="text-muted small mb-0">Evolución de tendencias, riesgos y oportunidades por horizonte de tiempo
+            </p>
           </div>
 
           <!-- MAIN CONO WRAPPER -->
@@ -321,7 +377,8 @@
                 <div class="cono-time-header">{{ col.label }}</div>
                 <div class="cono-items-list">
                   <a *ngFor="let item of col.items" [href]="item.url" target="_blank" class="cono-node-card">
-                    <svg class="cono-node-icon me-1" width="16" height="16" aria-hidden="true" [style.color]="item.color">
+                    <svg class="cono-node-icon me-1" width="16" height="16" aria-hidden="true"
+                      [style.color]="item.color">
                       <use [attr.href]="item.icono" width="16" height="16" />
                     </svg>
                     <span class="cono-node-text">{{ item.shortLabel }}</span>
@@ -348,16 +405,24 @@
             <div class="fw-bold mb-2 small text-dark">Leyenda:</div>
             <div class="d-flex flex-wrap gap-3 align-items-center small">
               <span class="d-flex align-items-center gap-1">
-                <svg width="16" height="16" aria-hidden="true" style="color: #10b981"><use href="#ico-oportunidad" width="16" height="16" /></svg> Oportunidad
+                <svg width="16" height="16" aria-hidden="true" style="color: #10b981">
+                  <use href="#ico-oportunidad" width="16" height="16" />
+                </svg> Oportunidad
               </span>
               <span class="d-flex align-items-center gap-1">
-                <svg width="16" height="16" aria-hidden="true" style="color: #ef4444"><use href="#ico-riesgo" width="16" height="16" /></svg> Riesgo
+                <svg width="16" height="16" aria-hidden="true" style="color: #ef4444">
+                  <use href="#ico-riesgo" width="16" height="16" />
+                </svg> Riesgo
               </span>
               <span class="d-flex align-items-center gap-1">
-                <svg width="16" height="16" aria-hidden="true" style="color: #0e7490"><use href="#ico-senal-debil" width="16" height="16" /></svg> Señal débil
+                <svg width="16" height="16" aria-hidden="true" style="color: #0e7490">
+                  <use href="#ico-senal-debil" width="16" height="16" />
+                </svg> Señal débil
               </span>
               <span class="d-flex align-items-center gap-1">
-                <svg width="16" height="16" aria-hidden="true" style="color: #3b82f6"><use href="#ico-tendencia" width="16" height="16" /></svg> Tendencia
+                <svg width="16" height="16" aria-hidden="true" style="color: #3b82f6">
+                  <use href="#ico-tendencia" width="16" height="16" />
+                </svg> Tendencia
               </span>
             </div>
           </div>
