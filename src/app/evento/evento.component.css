@@ -3,55 +3,83 @@
   overflow: hidden;
 }
 
-/* Pestañas */
-.eventos-tabs {
-  --bs-nav-tabs-border-color: #DFE3E7;
-  --bs-nav-tabs-link-active-border-color: #DFE3E7 #DFE3E7 #fff;
-  --bs-nav-tabs-link-hover-border-color: transparent transparent #DFE3E7;
-  margin-bottom: 0 !important; /* quita el mb-3 para que no haya hueco */
+/* ---------- Pestañas (p-tabView) ---------- */
+:host ::ng-deep .eventos-tabview .p-tabview-nav {
+  border-color: #DFE3E7;
 }
 
-.nav-link {
-  margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
-  border: var(--bs-nav-tabs-border-width) solid transparent;
-  border-top-left-radius: var(--bs-nav-tabs-border-radius);
-  border-top-right-radius: var(--bs-nav-tabs-border-radius);
-}
-
-.eventos-tabs .nav-link {
+:host ::ng-deep .eventos-tabview .p-tabview-nav li .p-tabview-nav-link {
   color: #6c757d;
   font-weight: 500;
 }
 
-.eventos-tabs .nav-link.active {
+:host ::ng-deep .eventos-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   color: #2A68A2;
   font-weight: 600;
-  background-color: #fff; /* tapa la línea inferior y la pestaña "se abre" hacia el contenido */
+  border: 1px solid #DFE3E7;
 }
+
+/* Quita el padding-left: 2rem que el reset global de ul/ol le pone al nav */
+:host ::ng-deep .eventos-tabview .p-tabview-nav {
+  padding-left: 0;
+  margin: 0;
+}
+
+:host ::ng-deep .eventos-tabview .p-tabview-nav {
+  padding-left: 0;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-width: 0 0 1px 0;
+}
+
+/*/
+
+/* Pestañas: sin subrayado */
+:host ::ng-deep .eventos-tabview .p-tabview-nav li .p-tabview-nav-link,
+:host ::ng-deep .eventos-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+  text-decoration: none;
+}
+
+/* Sin hueco entre la línea de las pestañas y el contenido */
+:host ::ng-deep .eventos-tabview .p-tabview-nav {
+  margin: 0;
+}
+
+:host ::ng-deep .eventos-tabview .p-tabview-panels {
+  margin-top: 0;
+}
+
+/* La pestaña activa "se abre" hacia el contenido (tapa la línea inferior) */
+:host ::ng-deep .eventos-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link .p-highlight {
+  background: #fff;
+  border-color: #DFE3E7 #DFE3E7 #fff;
+  margin-bottom: -1px;
+}
+
+/*/
 
 /* Contenido: continúa el borde de la pestaña activa */
-.contenido {
+:host ::ng-deep .eventos-tabview .p-tabview-panels {
   border: 1px solid #DFE3E7;
-  border-top: 0;               /* la línea de arriba ya la dibuja el nav-tabs */
+  border-top: 0;
   border-radius: 0 0 8px 8px;
-  padding: 1.5rem;             /* separa imagen, título y tabla de los bordes */
+  padding: 1.5rem;
 }
 
-/* Filtros */
+/* ---------- Filtros ---------- */
 .filter-select,
 .filter-input {
-  height: 38px;
   border-radius: 6px;
+  font-size: 0.9rem;
 }
-
-
 
 .btn-limpiar {
   height: 38px;
 }
 
-/* Tabla */
-.eventos-table thead th {
+/* ---------- Tabla (p-table) ---------- */
+:host ::ng-deep .eventos-table .p-datatable-thead>tr>th {
   font-weight: 600;
   font-size: 0.85rem;
   color: #6c757d;
@@ -59,27 +87,28 @@
   white-space: nowrap;
 }
 
-.eventos-table tbody td {
+:host ::ng-deep .eventos-table .p-sortable-column:hover {
+  color: #343a40;
+}
+
+:host ::ng-deep .eventos-table .p-datatable-tbody>tr>td {
   font-size: 0.9rem;
   vertical-align: middle;
 }
 
-.eventos-table th.sortable {
-  cursor: pointer;
-  user-select: none;
+/* Sumilla recortada a 2 líneas */
+.sumilla {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.eventos-table th.sortable:hover {
-  color: #343a40;
-}
-
-.sort-icon {
-  font-size: 0.7rem;
-  margin-left: 0.25rem;
-  opacity: 0.7;
-}
-
-/* Tags de temática (sin ::ng-deep, son elementos propios) */
+/* ---------- Tags de temática ---------- */
 .tema-tag {
   display: inline-block;
   padding: 0.2rem 0.65rem;

@@ -382,6 +382,7 @@
                       </div>
                     </div>
                   </div>
+                  
                 </div>
 
                 <div class="cono-legend-box mt-4 p-3 rounded">
@@ -615,7 +616,7 @@
                           </td>
                           <td>
                             <p class="table-title" [attr.title]="fila.titulo">{{ fila.tituloCorto || fila.titulo }}</p>
-                            <p class="table-summary">{{ fila.resumen }}</p>
+                            <p class="table-summary">{{ fila.resumen }}</p> 
                           </td>
                           <td class="text-center">
                             <img *ngIf="fila.imagenUrl" [src]="fila.imagenUrl" [alt]="fila.titulo" class="table-thumb">

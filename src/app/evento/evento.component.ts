@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Evento, DATABASE, SVG_PATHS } from './evento.model';
 
 export type CategoriaPestana = 'senales' | 'cartas' | 'tecnologias';
-export type CampoOrden = 'nombre' | 'tematica' | 'fechaActualizacion';
 
 interface Opcion {
   label: string;
@@ -21,7 +20,7 @@ interface PestanaConfig {
   imagen: string;
   placeholder: string;
   definiciones: Definicion[];
-  opcionesTipo: Opcion[]; // vacío = no muestra el filtro de categoría
+  opcionesTipo: Opcion[]; // vacío = no muestra el filtro de período
 }
 
 interface EstadoTabla {
@@ -29,23 +28,23 @@ interface EstadoTabla {
   texto: string;
   tema: string;
   tipo: string;
-  // orden
-  orden: CampoOrden;
-  direccion: 1 | -1;
-  // resultado calculado (filtrado + ordenado)
+  // orden (lo gestiona p-table; se guarda aquí para poder restablecerlo)
+  sortField: string;
+  sortOrder: 1 | -1;
+  // paginación (two-way con p-table)
+  primera: number;
+  // resultado filtrado y total de la categoría
   filtrados: Evento[];
+  total: number;
 }
 
 /** Evento con sus valores ya normalizados, calculados una sola vez al clasificar. */
 interface EventoIndexado {
   evento: Evento;
-  nombre: string;        // crudo, para ordenar
-  tematica: string;      // crudo, para ordenar
   nombreNorm: string;    // para buscar por texto
   temaNorm: string;      // para filtrar por temática
   horizonteNorm: string; // en mayúsculas, para filtrar por período
   prefijo: string;       // SD, RD, CS, EC o ''
-  tiempo: number;        // fechaActualizacion en ms
 }
 
 const CATEGORIAS: readonly CategoriaPestana[] = ['senales', 'cartas', 'tecnologias'];
@@ -56,8 +55,7 @@ const OPCIONES_PERIODO: readonly Opcion[] = [
   { label: 'PRESENTE-2030', value: 'PRESENTE-2030' },
 ];
 
-/** Se crea una sola vez (equivale a localeCompare con estas opciones, pero mucho más rápido). */
-const COLLATOR = new Intl.Collator('es', { numeric: true, sensitivity: 'base' });
+const ORDEN_INICIAL = { sortField: 'fechaActualizacion', sortOrder: -1 as const };
 
 const REGEX_PREFIJO = /^\s*([a-z]{2})\s*-/i;
 
@@ -76,9 +74,9 @@ function prefijoDe(e: Evento): string {
   return m ? m[1].toUpperCase() : '';
 }
 
-function tiempo(fecha: unknown): number {
-  const t = new Date(fecha as any).getTime();
-  return isNaN(t) ? 0 : t;
+/** Escapa un valor para CSV (comillas dobles duplicadas). */
+function csv(valor: unknown): string {
+  return `"${String(valor ?? '').replace(/"/g, '""')}"`;
 }
 
 @Component({
@@ -87,6 +85,10 @@ function tiempo(fecha: unknown): number {
   styleUrls: ['./evento.component.css']
 })
 export class EventoComponent implements OnInit {
+
+  /** Filas por página y opciones del selector del paginador. */
+  readonly filasPorPagina = 10;
+  readonly opcionesFilas = [5, 10, 25];
 
   readonly opcionesTematica: Opcion[] = [
     { label: 'Ambiental', value: 'Ambiental' },
@@ -99,11 +101,11 @@ export class EventoComponent implements OnInit {
 
   readonly coloresTematica: Record<string, string> = {
     'Ambiental': '#059141',   // Verde
-    'Tecnológica': '#4E87C6',  // Azul
-    'Política': '#6f42c1',     // Morado
-    'Social': '#FF5533',       // Rojo
-    'Económica': '#EFC514',    // Amarillo/Ámbar
-    'General': '#6c757d'       // Gris
+    'Tecnológica': '#4E87C6', // Azul
+    'Política': '#6f42c1',    // Morado
+    'Social': '#FF5533',      // Rojo
+    'Económica': '#EFC514',   // Amarillo/Ámbar
+    'General': '#6c757d'      // Gris
   };
 
   readonly pestanas: PestanaConfig[] = [
@@ -131,7 +133,7 @@ export class EventoComponent implements OnInit {
     },
     {
       id: 'tecnologias',
-      titulo: 'Tecnologías Emergentes',
+      titulo: 'Tecnología emergente',
       tituloDescripcion: 'Tecnología emergente',
       imagen: 'assets/img/tendencia-emergente.webp',
       placeholder: 'Buscar tecnología emergente...',
@@ -141,8 +143,6 @@ export class EventoComponent implements OnInit {
       opcionesTipo: [...OPCIONES_PERIODO]
     }
   ];
-
-  tabActiva: CategoriaPestana = 'senales';
 
   estado: Record<CategoriaPestana, EstadoTabla> = {
     senales: this.estadoInicial(),
@@ -171,8 +171,10 @@ export class EventoComponent implements OnInit {
   private estadoInicial(): EstadoTabla {
     return {
       texto: '', tema: '', tipo: '',
-      orden: 'fechaActualizacion', direccion: -1,
-      filtrados: []
+      ...ORDEN_INICIAL,
+      primera: 0,
+      filtrados: [],
+      total: 0
     };
   }
 
@@ -192,13 +194,10 @@ export class EventoComponent implements OnInit {
       if (!e) continue;
       this.base[this.categoriaDe(e)].push({
         evento: e,
-        nombre: String(e.nombre ?? ''),
-        tematica: String(e.tematica ?? ''),
         nombreNorm: norm(e.nombre),
         temaNorm: norm(e.tematica),
         horizonteNorm: norm((e as any).horizonte).toUpperCase(),
-        prefijo: prefijoDe(e),
-        tiempo: tiempo(e.fechaActualizacion)
+        prefijo: prefijoDe(e)
       });
     }
   }
@@ -214,7 +213,7 @@ export class EventoComponent implements OnInit {
     return SVG_PATHS['TE'];
   }
 
-  /** Retorna el color Hex de relleno para el SVG según la temática */
+  /** Color Hex de relleno para el SVG según la temática. */
   obtenerColorIcono(tematica: string): string {
     return this.coloresTematica[tematica] || '#6c757d';
   }
@@ -231,12 +230,8 @@ export class EventoComponent implements OnInit {
     return clase;
   }
 
-  trackByIndex(index: number): number {
-    return index;
-  }
-
   // ---------------------------------------------------------------------------
-  // Cálculo de la tabla (filtrar -> ordenar)
+  // Filtrado (el orden y la paginación los hace p-table)
   // ---------------------------------------------------------------------------
 
   recalcular(id: CategoriaPestana): void {
@@ -245,32 +240,21 @@ export class EventoComponent implements OnInit {
     const tema = norm(s.tema);
     const tipo = s.tipo.toUpperCase();
 
-    // 1) Filtrar (filter ya devuelve una copia, la base no se muta)
-    const lista = this.base[id].filter(i =>
-      (!texto || i.nombreNorm.includes(texto)) &&
-      (!tema || i.temaNorm === tema) &&
-      (!tipo || i.horizonteNorm === tipo || i.prefijo === tipo)
-    );
+    s.filtrados = this.base[id]
+      .filter(i =>
+        (!texto || i.nombreNorm.includes(texto)) &&
+        (!tema || i.temaNorm === tema) &&
+        (!tipo || i.horizonteNorm === tipo || i.prefijo === tipo)
+      )
+      .map(i => i.evento);
 
-    // 2) Ordenar
-    const campo = s.orden;
-    const dir = s.direccion;
-    if (campo === 'fechaActualizacion') {
-      lista.sort((a, b) => (a.tiempo - b.tiempo) * dir);
-    } else {
-      lista.sort((a, b) => COLLATOR.compare(a[campo], b[campo]) * dir);
-    }
-
-    s.filtrados = lista.map(i => i.evento);
+    s.total = this.base[id].length;
+    s.primera = 0; // al cambiar el filtro, vuelve a la primera página
   }
 
   // ---------------------------------------------------------------------------
-  // Manejadores (reciben el valor explícito, sin depender del orden de ngModel)
+  // Manejadores
   // ---------------------------------------------------------------------------
-
-  seleccionarPestana(id: CategoriaPestana): void {
-    this.tabActiva = id;
-  }
 
   onTexto(id: CategoriaPestana, valor: string): void {
     this.actualizarFiltro(id, 'texto', valor);
@@ -289,21 +273,11 @@ export class EventoComponent implements OnInit {
     this.recalcular(id);
   }
 
-  ordenarPor(id: CategoriaPestana, campo: CampoOrden): void {
+  /** (onSort) de p-table: guarda el orden para poder restablecerlo en "Limpiar". */
+  onSort(id: CategoriaPestana, e: { field: string; order: number }): void {
     const s = this.estado[id];
-    if (s.orden === campo) {
-      s.direccion = s.direccion === 1 ? -1 : 1;
-    } else {
-      s.orden = campo;
-      s.direccion = campo === 'fechaActualizacion' ? -1 : 1;
-    }
-    this.recalcular(id);
-  }
-
-  flecha(id: CategoriaPestana, campo: CampoOrden): string {
-    const s = this.estado[id];
-    if (s.orden !== campo) return '↕';
-    return s.direccion === 1 ? '▲' : '▼';
+    s.sortField = e.field;
+    s.sortOrder = e.order === 1 ? 1 : -1;
   }
 
   hayFiltros(id: CategoriaPestana): boolean {
@@ -311,14 +285,38 @@ export class EventoComponent implements OnInit {
     return !!(s.texto || s.tema || s.tipo);
   }
 
-  /** Restablece filtros y orden; conserva el tamaño de página elegido. */
+  /** Restablece filtros y orden. */
   limpiarFiltros(id: CategoriaPestana): void {
     const s = this.estado[id];
     s.texto = '';
     s.tema = '';
     s.tipo = '';
-    s.orden = 'fechaActualizacion';
-    s.direccion = -1;
+    s.sortField = ORDEN_INICIAL.sortField;
+    s.sortOrder = ORDEN_INICIAL.sortOrder;
     this.recalcular(id);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Descarga de la lista (CSV de lo que está filtrado)
+  // ---------------------------------------------------------------------------
+
+  descargarLista(id: CategoriaPestana): void {
+    const filas = this.estado[id].filtrados.map(e => {
+      const fecha = e.fechaActualizacion ? new Date(e.fechaActualizacion).toLocaleDateString('es-PE') : '';
+      return [e.nombre, e.tematica || 'General', e.horizonte, fecha].map(csv).join(',');
+    });
+
+    const contenido = ['Nombre,Temática,Período,Fecha Actualización', ...filas].join('\n');
+    // BOM para que Excel respete las tildes; Blob para que '#' u otros caracteres no rompan el archivo
+    const blob = new Blob(['\uFEFF' + contenido], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `lista_eventos_${id}_${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
 }
