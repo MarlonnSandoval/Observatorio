@@ -7,6 +7,8 @@ export type CategoriaTipo =
   | 'Tendencias'
   | 'Riesgos'
   | 'Oportunidades'
+  | 'Señal débil'
+  | 'Carta salvaje'
   | 'Escenarios';
 
 interface HeroSlide {
@@ -21,7 +23,7 @@ export interface ArticuloConRegion extends Articulo {
 
 export interface RadarNode {
   number: number;
-  icono: string; // id del símbolo SVG (ver sprite en el HTML)
+  icono: string;
   x: number;
   y: number;
   label: string;
@@ -39,8 +41,13 @@ export interface ConoItem {
   tema?: string;
   periodo: string;
   url: string;
-  icono: string; // id del símbolo SVG (ver sprite en el HTML)
+  icono: string;
   color: string;
+}
+
+export interface ConoGroup {
+  categoria: string;
+  items: ConoItem[];
 }
 
 export interface RadarColumna {
@@ -55,10 +62,28 @@ export interface RadarColumna {
 export interface ConoColumn {
   key: 'presente' | 'medio' | 'lejano';
   label: string;
-  items: ConoItem[];
+  totalCount: number;
+  groups: ConoGroup[];
 }
 
 export type VistaVisualizacion = 'radar' | 'cono';
+
+export interface FilaArticulo extends Articulo {
+  categoria: string;
+}
+
+export interface FiltroElementos {
+  texto: string;
+  tipo: string;
+  tema: string;
+  periodo: string;
+}
+
+export interface FiltroEscenarios {
+  texto: string;
+  tema: string;
+  periodo: string;
+}
 
 @Component({
   selector: 'app-territorial',
@@ -66,6 +91,8 @@ export type VistaVisualizacion = 'radar' | 'cono';
   styleUrls: ['./territorial.component.css'],
 })
 export class TerritorialComponent {
+  activeTab: string = 'teoria';
+
   readonly mapViewBox = '0 0 220 320';
   readonly regions: MapRegionPath[] = MAP_REGIONS;
   private readonly articlesDatabase = ARTICLES_DATABASE;
@@ -78,8 +105,26 @@ export class TerritorialComponent {
   textoBusqueda = '';
   temaSeleccionadoSelect = '';
 
+  // Tablas
+  filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+  filtroEscenarios: FiltroEscenarios = { texto: '', tema: '', periodo: '' };
+
+  filasElementos: FilaArticulo[] = [];
+  filasElementosFiltradas: FilaArticulo[] = [];
+  filasEscenarios: FilaArticulo[] = [];
+  filasEscenariosFiltradas: FilaArticulo[] = [];
+
+  tiposElementos: string[] = [];
+  temasElementos: string[] = [];
+  periodosElementos: string[] = [];
+  temasEscenarios: string[] = [];
+  periodosEscenarios: string[] = [];
+
+  primeraFilaElementos = 0;
+  primeraFilaEscenarios = 0;
+
   hoveredNode: number | null = null;
-  vistaVisualizacion: VistaVisualizacion = 'radar';
+  vistaVisualizacion: VistaVisualizacion = 'cono';
 
   heroSlides: HeroSlide[] = [
     {
@@ -94,7 +139,6 @@ export class TerritorialComponent {
     },
   ];
 
-  /** Artículos del radar agrupados por categoría (una columna por categoría). */
   get radarColumnas(): RadarColumna[] {
     const nodos = this.radarNodes;
     return this.categories.map((cat) => {
@@ -110,7 +154,6 @@ export class TerritorialComponent {
     });
   }
 
-  /** Id del símbolo SVG según la categoría (Tendencia, Riesgo, Oportunidad, Señal débil, Carta salvaje, Escenario). */
   iconoCategoria(categoria: string): string {
     const c = (categoria || '').toLowerCase();
     if (c.includes('riesg')) return '#ico-riesgo';
@@ -121,75 +164,109 @@ export class TerritorialComponent {
     return '#ico-tendencia';
   }
 
+  /**
+   * Genera los nodos del Radar distribuyéndolos según su categoría en subsectores angulares dedicados
+   * con radios ampliados para un radar de mayor tamaño.
+   */
   get radarNodes(): RadarNode[] {
     if (!this.selectedRegion || !this.regionData) return [];
 
     const nodes: RadarNode[] = [];
-    const center = 250;
+    const center = 250; // Centro del SVG (500x500)
     let numeroGlobal = 0;
 
-    const categorias = this.categories;
-    const totalCategorias = categorias.length;
-    const angleStep = totalCategorias > 0 ? (2 * Math.PI) / totalCategorias : 0;
-    const anguloInicial = -Math.PI * 0.75;
-
+    // 1. Radios base para los 3 horizontes temporales
     const getRadiusByPeriod = (periodo?: string): number => {
       switch (periodo) {
         case '2023-2030':
         case '2030':
-          return 55;
+          return 80;
         case '2030-2040':
-          return 120;
+          return 150;
         case '2040-2050':
-          return 180;
+          return 210;
         default:
-          return 120;
+          return 150;
       }
     };
 
-    const margenSeguridad = angleStep * 0.12;
+    // 2. Ángulos centrales para cada cuadrante/categoría (en radianes)
+    const getCategoryBaseAngle = (catName: string): number => {
+      const c = catName.toLowerCase();
+      if (c.includes('tendencia')) return -Math.PI * 0.70;  // Cuadrante Superior-Izquierdo (~ -126°)
+      if (c.includes('riesgo')) return -Math.PI * 0.30;     // Cuadrante Superior-Derecho (~ -54°)
+      if (c.includes('oportun')) return Math.PI * 0.20;     // Cuadrante Inferior-Derecho (~ 36°)
+      if (c.includes('señal') || c.includes('senal')) return Math.PI * 0.42; // Cuadrante Inferior-Derecho (~ 75°)
+      if (c.includes('carta')) return Math.PI * 0.75;       // Cuadrante Inferior-Izquierdo (~ 135°)
+      return -Math.PI * 0.5;
+    };
 
-    categorias.forEach((cat, catIndex) => {
+    const categoriasValidas = this.categories.filter((cat) => !cat.includes('Escenarios'));
+
+    categoriasValidas.forEach((cat) => {
       const articulos = this.getArticulos(cat);
-      const baseAngle = totalCategorias > 0 ? anguloInicial + catIndex * angleStep : 0;
+      const baseAngle = getCategoryBaseAngle(cat);
       const color = this.getCategoryColorData(cat).border;
-      const n = articulos.length;
 
-      const maxHalfSpread = Math.max(0, angleStep / 2 - margenSeguridad);
-      const halfSpread = n > 1 ? Math.min(maxHalfSpread, 0.1 + n * 0.075) : 0;
-      const step = n > 1 ? (halfSpread * 2) / (n - 1) : 0;
+      // Agrupamos por periodo para calcular la dispersión exacta dentro de cada anillo
+      const periodGroups = new Map<string, Articulo[]>();
+      articulos.forEach((art) => {
+        const p = art.periodo || '2030-2040';
+        if (!periodGroups.has(p)) periodGroups.set(p, []);
+        periodGroups.get(p)!.push(art);
+      });
 
-      articulos.forEach((art, index) => {
-        numeroGlobal++;
+      periodGroups.forEach((artList, periodoKey) => {
+        const baseRadius = getRadiusByPeriod(periodoKey);
+        const countInPeriod = artList.length;
 
-        const baseRadius = getRadiusByPeriod(art.periodo);
-        const angleOffset = n > 1 ? -halfSpread + step * index : 0;
-        const finalAngle = baseAngle + angleOffset;
+        // Apertura angular más amplia para distribuir nodos a lo largo del arco (aprox. 30° a 40°)
+        const angularSpread = Math.min(0.52, 0.15 * countInPeriod);
 
-        const radialJitter = n > 1 ? ((index % 3) - 1) * 18 : 0;
-        const radius = baseRadius + radialJitter;
+        artList.forEach((art, index) => {
+          numeroGlobal++;
 
-        const x = center + radius * Math.cos(finalAngle);
-        const y = center + radius * Math.sin(finalAngle);
+          // Cálculo del ángulo individual distribuido simétricamente
+          const angleOffset = countInPeriod > 1
+            ? -angularSpread / 2 + (angularSpread / (countInPeriod - 1)) * index
+            : 0;
 
-        // Se asigna tituloCorto si existe; de lo contrario realiza recorte por defecto
-        const shortLabel = art.tituloCorto
-          ? art.tituloCorto
-          : art.titulo.length > 100
-          ? art.titulo.substring(0, 100) + '…'
-          : art.titulo;
+          const finalAngle = baseAngle + angleOffset;
 
-        nodes.push({
-          number: numeroGlobal,
-          icono: this.iconoCategoria(cat),
-          x: Math.round(x),
-          y: Math.round(y),
-          label: art.titulo,
-          shortLabel: shortLabel,
-          color: color,
-          periodo: art.periodo || '2030-2040',
-          categoria: cat,
-          url: art.url
+          // Desplazamiento radial zig-zag (+14px / -14px) para evitar superposición en una misma línea
+          let radialJitter = 0;
+          if (countInPeriod > 1) {
+            radialJitter = (index % 2 === 0) ? 14 : -14;
+            // Si hay más de 3 elementos, añadimos una variación intermedia
+            if (countInPeriod > 3 && index % 3 === 0) {
+              radialJitter = 0;
+            }
+          }
+
+          const radius = baseRadius + radialJitter;
+
+          // Coordenadas cartesianas
+          const x = center + radius * Math.cos(finalAngle);
+          const y = center + radius * Math.sin(finalAngle);
+
+          const shortLabel = art.tituloCorto
+            ? art.tituloCorto
+            : art.titulo.length > 80
+              ? art.titulo.substring(0, 80) + '…'
+              : art.titulo;
+
+          nodes.push({
+            number: numeroGlobal,
+            icono: this.iconoCategoria(cat),
+            x: Math.round(x),
+            y: Math.round(y),
+            label: art.titulo,
+            shortLabel,
+            color,
+            periodo: art.periodo || '2030-2040',
+            categoria: cat,
+            url: art.url
+          });
         });
       });
     });
@@ -215,28 +292,29 @@ export class TerritorialComponent {
   }
 
   get conoColumns(): ConoColumn[] {
-    const columnas: ConoColumn[] = [
+    const rawData: { key: 'presente' | 'medio' | 'lejano'; label: string; items: ConoItem[] }[] = [
       { key: 'presente', label: 'Presente – 2030', items: [] },
       { key: 'medio', label: '2030 – 2040', items: [] },
       { key: 'lejano', label: '2040 – 2050', items: [] },
     ];
 
-    if (!this.selectedRegion || !this.regionData) return columnas;
+    if (!this.selectedRegion || !this.regionData) {
+      return rawData.map(col => ({ key: col.key, label: col.label, totalCount: 0, groups: [] }));
+    }
 
     this.categories
       .filter((cat) => !cat.includes('Escenarios'))
       .forEach((cat) => {
         const colorData = this.getCategoryColorData(cat);
         this.getArticulos(cat).forEach((art) => {
-          const columna = columnas.find((c) => c.key === this.getConoColumnKey(art.periodo));
+          const columna = rawData.find((c) => c.key === this.getConoColumnKey(art.periodo));
           if (!columna) return;
 
-          // Asignación con soporte a tituloCorto en Vista Cono
           const shortLabel = art.tituloCorto
             ? art.tituloCorto
             : art.titulo.length > 38
-            ? art.titulo.substring(0, 38) + '…'
-            : art.titulo;
+              ? art.titulo.substring(0, 38) + '…'
+              : art.titulo;
 
           columna.items.push({
             titulo: art.titulo,
@@ -251,7 +329,27 @@ export class TerritorialComponent {
         });
       });
 
-    return columnas;
+    return rawData.map(col => {
+      const groupsMap = new Map<string, ConoItem[]>();
+      col.items.forEach(item => {
+        if (!groupsMap.has(item.categoria)) {
+          groupsMap.set(item.categoria, []);
+        }
+        groupsMap.get(item.categoria)!.push(item);
+      });
+
+      const groups: ConoGroup[] = Array.from(groupsMap.entries()).map(([categoria, items]) => ({
+        categoria,
+        items
+      }));
+
+      return {
+        key: col.key,
+        label: col.label,
+        totalCount: col.items.length,
+        groups
+      };
+    });
   }
 
   get conoEscenarios(): Articulo[] {
@@ -267,12 +365,14 @@ export class TerritorialComponent {
     this.activeIndex = null;
     this.textoBusqueda = '';
     this.temaSeleccionadoSelect = '';
-    this.vistaVisualizacion = 'radar';
+    this.vistaVisualizacion = 'cono';
 
     this.regionData = this.articlesDatabase[regionName] || null;
     this.categories = this.regionData
       ? Object.keys(this.regionData).filter((key) => key !== 'url' && key !== 'urlRegion')
       : [];
+
+    this.construirTablas();
   }
 
   onRegionChange(regionName: string | null): void {
@@ -328,9 +428,10 @@ export class TerritorialComponent {
     this.categories = [];
     this.textoBusqueda = '';
     this.temaSeleccionadoSelect = '';
+    this.construirTablas();
   }
 
-  hasDataForRegion(regionName: string): boolean { 
+  hasDataForRegion(regionName: string): boolean {
     const data = this.articlesDatabase[regionName] as any;
     if (!data) return false;
 
@@ -374,10 +475,125 @@ export class TerritorialComponent {
     if (categoriaName.includes('Oportunidades')) {
       return { border: '#10B981', badgeBg: '#D1FAE5', badgeText: '#047857' };
     }
+    if (categoriaName.includes('Señal')) {
+      return { border: '#0E7490', badgeBg: '#CFFAFE', badgeText: '#155E75' };
+    }
+    if (categoriaName.includes('Carta')) {
+      return { border: '#7A5AA6', badgeBg: '#EDE7F6', badgeText: '#5B3F86' };
+    }
     if (categoriaName.includes('Escenarios')) {
       return { border: '#8B5CF6', badgeBg: '#EDE9FE', badgeText: '#6D28D9' };
     }
     return { border: '#0d6efd', badgeBg: '#e7f1ff', badgeText: '#0d6efd' };
+  }
+
+  getTematicaColorData(tematicaName?: string | null) {
+    const nombre = tematicaName ?? '';
+    if (nombre.includes('Social')) {
+      return { border: 'rgb(255, 85, 51)', badgeBg: 'rgb(255, 234, 230)', badgeText: 'rgb(255, 85, 51)' };
+    }
+    if (nombre.includes('Ambiental')) {
+      return { border: 'rgb(5, 145, 65)', badgeBg: 'rgb(221, 255, 236)', badgeText: 'rgb(5, 145, 65)' };
+    }
+    if (nombre.includes('Económica')) {
+      return { border: 'rgb(239, 197, 20)', badgeBg: 'rgb(255, 247, 216)', badgeText: 'rgb(239, 197, 20)' };
+    }
+    if (nombre.includes('Tecnológica')) {
+      return { border: 'rgb(78, 135, 198)', badgeBg: 'rgb(225, 239, 255)', badgeText: 'rgb(78, 135, 198)' };
+    }
+    if (nombre.includes('Política')) {
+      return { border: 'rgb(154, 32, 226)', badgeBg: 'rgb(243, 223, 255)', badgeText: 'rgb(154, 32, 226)' };
+    }
+    if (nombre.includes('Actitud, valores y ética')) {
+      return { border: 'rgb(131, 183, 221)', badgeBg: 'rgb(227, 243, 255)', badgeText: 'rgb(131, 183, 221)' };
+    }
+    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#bababa' };
+  }
+
+  private periodoDe(art: Articulo): string {
+    return art.periodo || '2030-2040';
+  }
+
+  private unicos(valores: (string | undefined)[]): string[] {
+    return Array.from(new Set(valores.filter((v): v is string => !!v))).sort((a, b) =>
+      a.localeCompare(b, 'es')
+    );
+  }
+
+  private coincideTexto(art: Articulo, texto: string): boolean {
+    const q = texto.toLowerCase().trim();
+    if (!q) return true;
+    return (
+      (art.titulo || '').toLowerCase().includes(q) ||
+      (art.resumen || '').toLowerCase().includes(q) ||
+      (art.tema || '').toLowerCase().includes(q) ||
+      (art.tematica || '').toLowerCase().includes(q)
+    );
+  }
+
+  private construirTablas(): void {
+    const categoriasElementos = this.categories.filter((c) => !c.includes('Escenarios'));
+
+    this.filasElementos = categoriasElementos.flatMap((cat) =>
+      this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
+    );
+    this.filasEscenarios = this.categories
+      .filter((c) => c.includes('Escenarios'))
+      .flatMap((cat) => this.getArticulos(cat).map((a) => ({ ...a, categoria: cat })));
+
+    this.tiposElementos = categoriasElementos.filter((c) => this.getCount(c) > 0);
+    this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
+    this.periodosElementos = this.unicos(this.filasElementos.map((f) => this.periodoDe(f)));
+    this.temasEscenarios = this.unicos(this.filasEscenarios.map((f) => f.tematica));
+    this.periodosEscenarios = this.unicos(this.filasEscenarios.map((f) => this.periodoDe(f)));
+
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
+    this.aplicarFiltroElementos();
+    this.aplicarFiltroEscenarios();
+  }
+
+  aplicarFiltroElementos(): void {
+    const f = this.filtroElementos;
+    this.filasElementosFiltradas = this.filasElementos.filter(
+      (a) =>
+        this.coincideTexto(a, f.texto) &&
+        (!f.tipo || a.categoria === f.tipo) &&
+        (!f.tema || a.tematica === f.tema) &&
+        (!f.periodo || this.periodoDe(a) === f.periodo)
+    );
+    this.primeraFilaElementos = 0;
+  }
+
+  aplicarFiltroEscenarios(): void {
+    const f = this.filtroEscenarios;
+    this.filasEscenariosFiltradas = this.filasEscenarios.filter(
+      (a) =>
+        this.coincideTexto(a, f.texto) &&
+        (!f.tema || a.tematica === f.tema) &&
+        (!f.periodo || this.periodoDe(a) === f.periodo)
+    );
+    this.primeraFilaEscenarios = 0;
+  }
+
+  get hayFiltroElementos(): boolean {
+    const f = this.filtroElementos;
+    return !!(f.texto || f.tipo || f.tema || f.periodo);
+  }
+
+  get hayFiltroEscenarios(): boolean {
+    const f = this.filtroEscenarios;
+    return !!(f.texto || f.tema || f.periodo);
+  }
+
+  limpiarFiltroElementos(): void {
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.aplicarFiltroElementos();
+  }
+
+  limpiarFiltroEscenarios(): void {
+    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
+    this.aplicarFiltroEscenarios();
   }
 
   descargarListaCompletaPDF(): void {

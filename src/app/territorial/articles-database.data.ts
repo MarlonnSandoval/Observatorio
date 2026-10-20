@@ -1,24 +1,25 @@
 export interface Articulo {
   titulo: string;
-  tituloCorto?: string; // <--- Propiedad opcional para títulos cortos
+  tituloCorto?: string; // Propiedad opcional para títulos cortos
   resumen: string;
   url: string;
   imagenUrl?: string;
   tema?: string;
+  tematica: string; // Obligatoria para evitar errores de undefined en includes()
   periodo?: '2023-2030' | '2030-2040' | '2040-2050';
 }
 
-// Nueva interfaz para agrupar los artículos con su enlace de descarga por categoría
 export interface CategoriaDetalle {
-  descargaUrl?: string; // URL o enlace para descargar la ficha del tipo correspondiente
+  descargaUrl?: string;
   articulos: Articulo[];
 }
 
-// La región ahora tiene claves explícitas para cada tipo de desplegable
 export interface RegionArticulos {
   "Tendencias": CategoriaDetalle;
   "Riesgos": CategoriaDetalle;
   "Oportunidades": CategoriaDetalle;
+  "Señal débil": CategoriaDetalle;
+  "Carta salvaje": CategoriaDetalle;
   "Escenarios": CategoriaDetalle;
   url: string;
 }
@@ -33,732 +34,655 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     "Tendencias": {
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento",
-          periodo: "2023-2030"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/265000/266282-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/1170000/1170631-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/1170000/1170631-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/1170000/1170631-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región", tituloCorto: "Agua y saneamiento", resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento continúe creciendo.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Acceso a agua y saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Mayor digitalización de la educación en Lima Región", tituloCorto: "Digitalización educativa", resumen: "Integración de recursos digitales al aprendizaje y fortalecimiento de capacidades.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/265000/266282-blank-355.png", tema: "Educación digital", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Mayor conectividad digital y fibra óptica", tituloCorto: "Conectividad digital", resumen: "Ampliación del acceso y uso de internet en hogares y zonas periféricas.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/1170000/1170631-blank-355.png", tema: "Infraestructura digital", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Crecimiento del empleo formal en servicios y comercio", tituloCorto: "Empleo formal", resumen: "Expansión de actividades económicas terciarias en centros urbanos.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo y economía", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión de la infraestructura vial metropolitana y regional", tituloCorto: "Infraestructura vial", resumen: "Mejoras en corredores viales para optimizar la logística regional.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Transporte y conectividad", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Transición hacia energías renovables no convencionales", tituloCorto: "Energías renovables", resumen: "Adopción paulatina de fuentes solares y eólicas en industrias locales.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía sostenible", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Envejecimiento demográfico y transición poblacional", tituloCorto: "Envejecimiento", resumen: "Aumento progresivo de la esperanza de vida y reducción de la tasa de natalidad.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Demografía", tematica: "Social", periodo: "2030-2040" },
+        { titulo: "Aumento de la gestión de residuos sólidos urbanos", tituloCorto: "Gestión de residuos", resumen: "Implementación de plantas de valorización y economía circular.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Residuos sólidos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Mayor adopción de agricultura de precisión en valles costeros", tituloCorto: "Agricultura de precisión", resumen: "Uso de sensores y riego tecnificado para optimizar cultivos de agroexportación.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroecología", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Consolidación de gobiernos electrónicos y servicios digitales", tituloCorto: "Gobierno digital", resumen: "Digitalización de trámites administrativos municipales y regionales.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" }
       ]
     },
     "Riesgos": {
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Persistencia de conflictos sociales por uso del agua", tituloCorto: "Conflictos por agua", resumen: "Tensiones por la escasez hídrica entre la agricultura y el consumo poblacional.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflictos sociales", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante eventos climáticos extremos (Fenómeno El Niño)", tituloCorto: "Riesgo climático", resumen: "Impacto de huaicos y desbordes en quebradas e infraestructura urbana.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Incremento de la inseguridad ciudadana y criminalidad urbana", tituloCorto: "Inseguridad ciudadana", resumen: "Aumento de delitos patrimoniales y extorsiones afectando el tejido social.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Informalidad laboral y precarización del empleo", tituloCorto: "Informalidad laboral", resumen: "Alta proporción de trabajadores sin derechos laborales ni seguridad social.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión urbana desordenada y ocupación de zonas de riesgo", tituloCorto: "Expansión urbana informal", resumen: "Crecimiento inmobiliario sin planificación ni servicios básicos.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Urbanismo", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad cibernética en infraestructura crítica regional", tituloCorto: "Ciberseguridad", resumen: "Riesgos de ataques informáticos a sistemas de suministro de agua y energía.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad digital", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Degradación de suelos agrícolas por salinización y sobreuso", tituloCorto: "Degradación de suelos", resumen: "Pérdida de fertilidad en valles por malas prácticas de riego y drenaje.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Desarticulación institucional y baja ejecución presupuestal", tituloCorto: "Baja ejecución", resumen: "Limitaciones en la capacidad de gasto de inversión pública en gobiernos locales.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Brechas persistentes de calidad en salud pública", tituloCorto: "Brechas en salud", resumen: "Deficiencias en infraestructura hospitalaria y escasez de especialistas médicos.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Contaminación por vertimientos industriales en cuencas", tituloCorto: "Contaminación hídrica", resumen: "Efectos nocivos de residuos industriales no tratados en los ríos Chillón y Rímac.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Contaminación", tematica: "Ambiental", periodo: "2023-2030" }
       ]
     },
     "Oportunidades": {
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Potencial para el desarrollo de clústeres logísticos y portuarios", tituloCorto: "Clústeres logísticos", resumen: "Aprovechamiento de la cercanía al Callao y ejes viales principales.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso al ecoturismo y turismo vivencial en provincias altoandinas", tituloCorto: "Ecoturismo andino", resumen: "Valorización de la biodiversidad y cultura local en zonas rurales de Lima.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de energías limpias aprovechando radiación solar", tituloCorto: "Energía solar", resumen: "Instalación de parques solares en provincias del norte y sur de la región.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Fomento de la economía circular en cadenas productivas locales", tituloCorto: "Economía circular", resumen: "Reutilización de subproductos industriales y agrícolas.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Sostenibilidad", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Creación de centros de innovación tecnológica (CITES) agroindustriales", tituloCorto: "CITES agro", resumen: "Apoyo técnico para la transformación y exportación de productos agrícolas.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Implementación de programas de capacitación técnica juvenil", tituloCorto: "Capacitación juvenil", resumen: "Articulación entre institutos tecnológicos y demandas del mercado laboral.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación técnica", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Valorización de denominaciones de origen en productos nativos", tituloCorto: "Denominación de origen", resumen: "Promoción de la chirimoya de Huarochirí y otros productos bandera.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Identidad cultural", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la participación ciudadana mediante plataformas virtuales", tituloCorto: "Participación digital", resumen: "Uso de herramientas de gobierno abierto para la toma de decisiones.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Democracia participativa", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      articulos: [
+        { titulo: "Adopción temprana de agricultura vertical en zonas urbanas densas", tituloCorto: "Agricultura vertical", resumen: "Cultivos hidropónicos en espacios cerrados urbanos para seguridad alimentaria.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura urbana", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Uso masivo de inteligencia artificial en la gestión de tráfico regional", tituloCorto: "IA en tráfico", resumen: "Sistemas autónomos de semaforización y control vehicular en autopistas.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Smart cities", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Emergencia de redes comunitarias de energía descentralizada", tituloCorto: "Microredes energéticas", resumen: "Comunidades rurales generando y compartiendo su propia energía solar.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía comunitaria", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Nuevas formas de trabajo híbrido remoto desde provincias altoandinas", tituloCorto: "Nomadismo regional", resumen: "Descentralización de profesionales gracias a la alta conectividad satelital.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo remoto", tematica: "Social", periodo: "2023-2030" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      articulos: [
+        { titulo: "Megasequía prolongada que colapse las reservas hídricas de la cuenca del Rímac", tituloCorto: "Megasequía extrema", resumen: "Escenario crítico de desabastecimiento de agua potable para Lima Metropolitana y región.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Aparición de un brote epidémico regional de alta virulencia resistente a fármacos", tituloCorto: "Pandemia regional", resumen: "Colapso repentino de los servicios de salud por patógenos emergentes.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud global", tematica: "Social", periodo: "2030-2040" },
+        { titulo: "Sismo de gran magnitud con epicentro en la costa central del país", tituloCorto: "Sismo de gran magnitud", resumen: "Evento telúrico severo que paralice la infraestructura industrial y portuaria.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastres naturales", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Revolución biotecnológica que reemplace la agricultura tradicional de agroexportación", tituloCorto: "Disrupción biotecnológica", resumen: "Desarrollo masivo de alimentos sintéticos que reduzcan la demanda externa de cultivos.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Biotecnología", tematica: "Tecnológica", periodo: "2040-2050" }
       ]
     },
     "Escenarios": {
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      articulos: [
+        { titulo: "Escenario Tendencial: Crecimiento moderado con persistencia de brechas sociales", tituloCorto: "Escenario Tendencial", resumen: "Desarrollo inercial con limitada inversión en resiliencia urbana.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Lima como hub tecnológico y agroexportador sostenible", tituloCorto: "Escenario Óptimo", resumen: "Articulación eficiente entre Estado, empresa privada y academia para el desarrollo.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Catastrófico: Colapso hídrico y vulnerabilidad climática extrema", tituloCorto: "Escenario Crítico", resumen: "Falta de planificación que deriva en crisis humanitaria y económica severa.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Arequipa": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Expansión de la minería metálica moderna y uso de tecnologías limpias", tituloCorto: "Minería moderna", resumen: "Inversiones en procesos de relaves secos y uso de agua desalinizada.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Crecimiento del sector agroexportador en la irrigación Majes Siguas", tituloCorto: "Majes Siguas", resumen: "Desarrollo de cultivos de exportación de alto valor comercial.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroexportación", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Aumento de la cobertura de saneamiento básico en zonas periurbanas", tituloCorto: "Saneamiento arequipeño", resumen: "Ampliación de redes de agua potable en distritos de expansión de Arequipa metropolitana.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Desarrollo turístico cultural y de naturaleza en el cañón del Colca", tituloCorto: "Turismo Colca", resumen: "Promoción de experiencias sostenibles para visitantes nacionales e internacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mayor conectividad vial interregional con el sur del país", tituloCorto: "Conectividad sur", resumen: "Mejoras en carreteras hacia Puno, Cusco y Moquegua.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura vial", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Aumento de la generación de energía solar fotovoltaica en la joya", tituloCorto: "Energía solar Arequipa", resumen: "Aprovechamiento de la alta radiación en pampas costeras.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Consolidación de Arequipa como polo universitario y de investigación", tituloCorto: "Polo universitario", resumen: "Fortalecimiento de la academia y alianzas con el sector productivo.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación superior", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Modernización del transporte público urbano (Sistema Integrado)", tituloCorto: "Transporte integrado", resumen: "Implementación progresiva de buses patrón y ordenamiento vial.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Movilidad urbana", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Digitalización de trámites en el Gobierno Regional de Arequipa", tituloCorto: "Gobierno digital Arequipa", resumen: "Adopción de expediente electrónico y ventanilla única.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Incremento del parque industrial y manufacturero diversificado", tituloCorto: "Parque industrial", resumen: "Desarrollo de nuevas líneas productivas en manufactura ligera.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Industria", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Conflictos socioambientales por actividades mineras", tituloCorto: "Conflictos mineros", resumen: "Tensiones recurrentes en provincias altas por gestión ambiental y recursos hídricos.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflictos sociales", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Actividad volcánica del Misti y Sabancaya", tituloCorto: "Riesgo volcánico", resumen: "Amenaza latente para poblaciones aledañas y cenizas afectando agricultura.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Geodinámica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Escasez hídrica estacional en cuencas altas y regulación insuficiente", tituloCorto: "Escasez hídrica andina", resumen: "Disminución de glaciares andinos afectando el caudal de ríos principales.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Informalidad en el sector comercial y de servicios urbanos", tituloCorto: "Comercio informal", resumen: "Proliferación de comercio ambulatorio en el centro histórico y distritos.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante sismos de gran escala en la zona sur", tituloCorto: "Vulnerabilidad sísmica", resumen: "Riesgo estructural en edificaciones antiguas y autoconstrucción.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Deficiencias en la gestión de residuos peligrosos industriales", tituloCorto: "Residuos peligrosos", resumen: "Riesgos de contaminación por disposición inadecuada de desechos.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Contaminación", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Baja diversificación de exportaciones fuera del sector tradicional", tituloCorto: "Dependencia exportadora", resumen: "Concentración en minerales y pocos productos agrícolas.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio exterior", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Rotación y inestabilidad de funcionarios públicos regionales", tituloCorto: "Inestabilidad institucional", resumen: "Impacto negativo en la continuidad de proyectos de inversión a largo plazo.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Degradación del patrimonio arquitectónico colonial en el centro histórico", tituloCorto: "Degradación patrimonial", resumen: "Presión inmobiliaria y vibraciones por tráfico afectando monumentos de sillar.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Patrimonio cultural", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Contaminación del río Chili por descargas de aguas servidas", tituloCorto: "Contaminación del Chili", resumen: "Impacto ambiental negativo por insuficiencia de plantas de tratamiento.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento ambiental", tematica: "Ambiental", periodo: "2023-2030" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Desarrollo de corredores logísticos interoceánicos hacia Brasil", tituloCorto: "Corredor interoceánico", resumen: "Aprovechamiento de la vía hacia puertos del sur para comercio internacional.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio internacional", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso a la acuicultura en zonas altoandinas y costa", tituloCorto: "Acuicultura regional", resumen: "Producción truchícola y de mariscos con estándares de exportación.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Pesca y acuicultura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Creación de polos tecnológicos de software y servicios digitales", tituloCorto: "Hub tecnológico", resumen: "Aprovechamiento del talento universitario local para externalización de servicios.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Promoción de la gastronomía y turismo de reuniones (MICE)", tituloCorto: "Turismo MICE", resumen: "Posicionamiento de Arequipa como sede de congresos internacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo especializado", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Uso de energías geotérmicas en provincias volcánicas", tituloCorto: "Energía geotérmica", resumen: "Exploración del potencial de vapor subterráneo para generación eléctrica.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía verde", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Fortalecimiento de la cadena de camélidos sudamericanos (fibra de alpaca)", tituloCorto: "Fibra de alpaca", resumen: "Valor agregado e industrialización textil con denominación regional.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Industria textil", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de agricultura orgánica certificada en valles tradicionales", tituloCorto: "Agricultura orgánica", resumen: "Producción de ajo, cebolla y páprika con sellos de sostenibilidad.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Desarrollo de programas de bilingüismo y rescate cultural quechua/aimara", tituloCorto: "Rescate lingüístico", resumen: "Educación intercultural bilingüe en provincias altas de la región.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación intercultural", tematica: "Social", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Uso de nanotecnología para remediación de suelos mineros", tituloCorto: "Nanotecnología minera", resumen: "Aplicación experimental de nanopartículas para neutralizar metales pesados en relaves.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación ambiental", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Sistemas autónomos de alerta temprana para erupciones volcánicas", tituloCorto: "Sensores volcánicos IA", resumen: "Redes neuronales analizando sismicidad volcánica en tiempo real.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Mitigación de riesgos", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Aparición de cooperativas de consumo energético descentralizado", tituloCorto: "Cooperativas energéticas", resumen: "Vecindarios compartiendo excedentes solares mediante blockchain local.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía comunitaria", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Turismo espacial y astronómico en zonas desérticas altas", tituloCorto: "Turismo astronómico", resumen: "Explotación de cielos limpios en la joya y planicies altoandinas para astroturismo.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo de ciencia", tematica: "Económica", periodo: "2030-2040" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Erupción simultánea de los volcanes Misti y Sabancaya", tituloCorto: "Erupción doble", resumen: "Escenario extremo de emergencia nacional con ceniza cubriendo toda la macrorregión sur.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Catástrofe natural", tematica: "Ambiental", periodo: "2040-2050" },
+        { titulo: "Colapso total de reservas de agua de la cordillera occidental por cambio climático", tituloCorto: "Colapso cordillerano", resumen: "Pérdida drástica de fuentes hídricas superficiales para agricultura de exportación.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2040-2050" },
+        { titulo: "Paralización generalizada de la minería por conflictos sociopolíticos prolongados", tituloCorto: "Paralización minera", resumen: "Bloqueo estructural de inversiones que afecte drásticamente el presupuesto regional.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflicto macroeconómico", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Descubrimiento de yacimientos gigantes de minerales críticos para la transición energética", tituloCorto: "Yacimiento crítico", resumen: "Aparición de reservas estratégicas mundiales de litio o tierras raras en la región.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Geopolítica minera", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Arequipa%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Crecimiento minero-agroexportador con tensiones hídricas", tituloCorto: "Escenario Tendencial", resumen: "Desarrollo económico sostenido pero con alta conflictividad por recursos.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Arequipa, potencia sostenible diversificada e innovadora", tituloCorto: "Escenario Óptimo", resumen: "Modelo articulado de minería verde, agroindustria avanzada y turismo de clase mundial.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Crisis hídrica severa y desestabilización social regional", tituloCorto: "Escenario Crítico", resumen: "Colapso de embalses y conflictos agudos que paralizan la economía regional.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_aq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Ica": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Consolidación de la agroexportación intensiva (uva, espárrago, palta)", tituloCorto: "Agroexportación iqueña", resumen: "Liderazgo nacional en envíos agrícolas con tecnología de riego tecnificado.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Aumento del uso de agua desalinizada para procesos industriales y agrícolas", tituloCorto: "Desalación industrial", resumen: "Inversiones privadas para mitigar la sobreexplotación del acuífero subterráneo.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Crecimiento del turismo de sol, playa y reservas naturales (Paracas)", tituloCorto: "Turismo Paracas", resumen: "Aumento de visitantes nacionales y extranjeros en el litoral iqueño.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo costero", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo del sector logístico portuario en Pisco", tituloCorto: "Puerto de Pisco", resumen: "Optimización de operaciones de embarque para productos agroexportadores y minerales.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística portuaria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión de la cobertura de saneamiento y plantas de tratamiento", tituloCorto: "Saneamiento Ica", resumen: "Mejoras en el tratamiento de aguas residuales urbanas.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Implementación de energía solar en instalaciones agroindustriales", tituloCorto: "Solar agroindustrial", resumen: "Uso de paneles fotovoltaicos para autoconsumo en fundos de cultivo.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía verde", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Aumento de la formalización laboral en el sector agrario por nueva ley", tituloCorto: "Formalización agraria", resumen: "Mejora progresiva en condiciones laborales de trabajadores de campo.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo agrario", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Digitalización de servicios municipales en las principales capitales provinciales", tituloCorto: "Digitalización municipal Ica", resumen: "Simplificación administrativa y pagos en línea.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobierno digital", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Uso de tecnología satelital para monitoreo de napas freáticas", tituloCorto: "Monitoreo satelital hídrico", resumen: "Control riguroso de pozos autorizados y no autorizados.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología hídrica", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Desarrollo de la industria vitivinícola con denominación de origen y enoturismo", tituloCorto: "Enoturismo iqueño", resumen: "Promoción de la ruta del pisco y vino artesanal.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo cultural", tematica: "Económica", periodo: "2023-2030" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Sobreexplotación crítica de los acuíferos subterráneos", tituloCorto: "Acuíferos colapsados", resumen: "Abatimiento del nivel freático debido al bombeo intensivo para agricultura.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante sismos de gran magnitud y tsunamis en la costa", tituloCorto: "Riesgo sísmico costero", resumen: "Amenaza latente similar al terremoto de 2007 afectando infraestructura.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Conflictos laborales estacionales en el sector agroindustrial", tituloCorto: "Conflictos laborales", resumen: "Tensiones por condiciones de trabajo, salarios y demandas sindicales.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Laboral", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Desertificación y avance de dunas sobre áreas agrícolas y viales", tituloCorto: "Desertificación", resumen: "Pérdida de suelo cultivable por erosión eólica y cambio climático.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Erosión", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Contaminación marina y costera por actividades portuarias y plásticos", tituloCorto: "Contaminación costera", resumen: "Impacto en la Reserva Nacional de Paracas y ecosistemas marinos.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Ecología marina", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Déficit de infraestructura hospitalaria frente al crecimiento poblacional", tituloCorto: "Déficit hospitalario", resumen: "Sobrecarga en servicios de salud pública en Chincha, Pisco e Ica.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Inseguridad ciudadana y microcomercialización de drogas en zonas urbanas", tituloCorto: "Inseguridad iqueña", resumen: "Aumento de delitos comunes en corredores de alta actividad comercial.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad ciudadana", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Baja capacidad de recaudación tributaria local en municipios provinciales", tituloCorto: "Baja recaudación", resumen: "Limitada autonomía financiera para obras públicas locales.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión municipal", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Aparición de plagas agrícolas resistentes debido al monocultivo intensivo", tituloCorto: "Plagas agrícolas", resumen: "Riesgo fitosanitario para cultivos de exportación por uso prolongado de agroquímicos.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Sanidad vegetal", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Falta de planificación en asentamientos humanos informales", tituloCorto: "Asentamientos informales", resumen: "Crecimiento urbano sin servicios de agua ni saneamiento en arenales.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Urbanismo", tematica: "Social", periodo: "2023-2030" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Desarrollo de proyectos de recarga artificial de acuíferos con aguas excedentes", tituloCorto: "Recarga artificial", resumen: "Inyección de avenidas de agua de río al subsuelo mediante zanjas e infraestructura.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Ingeniería hídrica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Impulso a la energía eólica a gran escala en pampas costeras", tituloCorto: "Parques eólicos", resumen: "Aprovechamiento de vientos constantes de la costa para generación limpia.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía eólica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Promoción de turismo de aventura y arqueológico en Nazca y Palpa", tituloCorto: "Turismo Nazca", resumen: "Diversificación de la oferta turística más allá de las líneas tradicionales.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo arqueológico", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Creación de centros de innovación en biotecnología agrícola", tituloCorto: "Biotecnología agrícola Ica", resumen: "Investigación aplicada para mejorar la resistencia de cultivos ante estrés hídrico.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación agraria", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Optimización logística con corredores intermodales costa-sierra", tituloCorto: "Corredor intermodal", resumen: "Conexión eficiente de la producción agroexportadora con la sierra central.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de economía circular en plantas agroindustriales", tituloCorto: "Economía circular agro", resumen: "Conversión de residuos orgánicos en compost y energía biomasa.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Sostenibilidad", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Fortalecimiento de programas de educación técnica orientados al agro", tituloCorto: "Técnicos agrícolas", resumen: "Formación de especialistas en riego tecnificado y maquinaria moderna.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación técnica", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Uso de plataformas digitales para gobernanza hídrica participativa", tituloCorto: "Plataforma hídrica", resumen: "Comités de cuenca transparentes usando datos en tiempo real.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Experimentación con cultivos transgénicos tolerantes a salinidad extrema", tituloCorto: "Cultivos salinos", resumen: "Ensayos genéticos para aprovechar suelos costeros salinizados.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Biotecnología", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Adopción de desalinización portátil impulsada por energía undimotriz", tituloCorto: "Desalación undimotriz", resumen: "Plantas pequeñas alimentadas por la fuerza de las olas del mar.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía marina", tematica: "Tecnológica", periodo: "2040-2050" },
+        { titulo: "Turismo virtual inmersivo de sitios arqueológicos frágiles de Nazca", tituloCorto: "Turismo virtual Nazca", resumen: "Protección de geoglifos mediante experiencias digitales de realidad aumentada.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología cultural", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Creación de eco-comunidades autosostenibles en el desierto costero", tituloCorto: "Eco-comunidades desierto", resumen: "Asentamientos experimentales con arquitectura bioclimática y cero emisiones.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Urbanismo ecológico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Agotamiento absoluto de acuíferos subterráneos que paralice la agroexportación", tituloCorto: "Colapso acuífero total", resumen: "Escenario crítico de sequía regional por sobreexplotación extrema del subsuelo.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Megaterremoto y tsunami con destrucción de infraestructura portuaria e industrial", tituloCorto: "Megasismo costero", resumen: "Evento geológico severo que interrumpa cadenas logísticas de exportación por años.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastres naturales", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Plaga biológica devastadora que diezme los principales cultivos de agroexportación", tituloCorto: "Plaga devastadora", resumen: "Aparición de un patógeno agrícola resistente a todos los controles fitosanitarios.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis fitosanitaria", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Cambio radical en normativas internacionales de huella hídrica que vetaruen productos", tituloCorto: "Veto hídrico internacional", resumen: "Restricciones comerciales severas a la agroexportación por uso insostenible de agua.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio internacional", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Agroexportación boyante con creciente estrés hídrico", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento económico con alta vulnerabilidad en el suministro de agua subterránea.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Ica como modelo global de gestión hídrica y agroindustria sostenible", tituloCorto: "Escenario Óptimo", resumen: "Uso eficiente de desalinización, recarga de acuíferos y economía circular exitosa.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Colapso de acuíferos y crisis socioeconómica regional", tituloCorto: "Escenario Crítico", resumen: "Agotamiento del recurso hídrico que provoca el colapso de la agroexportación.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_ic", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Moquegua": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Desarrollo de proyectos mineros cupríferos de gran envergadura", tituloCorto: "Minería cuprífera", resumen: "Operación sostenida de grandes yacimientos mineros en la región.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mejora en indicadores de educación y rendimiento escolar", tituloCorto: "Educación moqueguana", resumen: "Mantenimiento de altos estándares educativos en evaluaciones nacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Expansión de la agricultura de paltos y frutales en valles de Moquegua y Omate", tituloCorto: "Fruticultura exportación", resumen: "Crecimiento de áreas dedicadas a agroexportación en valles interandinos.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroexportación", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Ampliación de infraestructura vial costera e interandina", tituloCorto: "Infraestructura vial Moquegua", resumen: "Mejoras en carreteras hacia el puerto de Ilo y la sierra alta.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Transporte", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Consolidación de servicios portuarios en el terminal de Ilo", tituloCorto: "Puerto de Ilo", resumen: "Optimización de operaciones logísticas para carga minera y comercial.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Incremento de cobertura de saneamiento en áreas urbanas y rurales", tituloCorto: "Saneamiento Moquegua", resumen: "Inversiones en agua potable y alcantarillado con enfoque rural.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Uso de energía solar fotovoltaica en proyectos descentralizados", tituloCorto: "Energía solar Moquegua", resumen: "Instalación de paneles en zonas alejadas sin red eléctrica tradicional.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Digitalización de procesos administrativos en el gobierno regional", tituloCorto: "Gobierno digital Moquegua", resumen: "Adopción de herramientas tecnológicas para transparencia y gestión.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Valorización de la cultura vino y pisco moqueguano", tituloCorto: "Vitivinicultura moqueguana", resumen: "Promoción de bodegas tradicionales y denominación de origen.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cultura y turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la investigación científica en minería y medio ambiente", tituloCorto: "Investigación minera", resumen: "Convenios entre universidades locales y empresas del sector.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Ciencia y tecnología", tematica: "Tecnológica", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Conflictos socioambientales por recursos hídricos entre minería y agricultura", tituloCorto: "Conflictos por agua", resumen: "Tensiones por disponibilidad de agua en cuencas altas y valles.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflictos sociales", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Actividad del volcán Ubinas y caída de cenizas", tituloCorto: "Riesgo volcánico Ubinas", resumen: "Afectación recurrente a la ganadería, agricultura y salud en zonas altoandinas.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Alta dependencia económica del sector minero y fluctuación de precios internacionales", tituloCorto: "Dependencia minera", resumen: "Vulnerabilidad fiscal regional ante caídas del precio del cobre.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía regional", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escasez hídrica estacional en cuencas altoandinas", tituloCorto: "Escasez hídrica", resumen: "Disminución de fuentes de agua por retroceso glaciar y estiaje prolongado.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Vulnerabilidad ante sismos en zonas urbanas de Moquegua e Ilo", tituloCorto: "Vulnerabilidad sísmica", resumen: "Riesgo estructural en edificaciones antiguas y zonas de expansión.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastres naturales", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Contaminación de suelos y bofedales por metales pesados naturales o antrópicos", tituloCorto: "Contaminación de bofedales", resumen: "Impacto en pastos naturales altoandinos para ganadería de camélidos.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Medio ambiente", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Limitada diversificación productiva fuera de la minería y servicios básicos", tituloCorto: "Baja diversificación", resumen: "Escasa presencia de industrias secundarias o tecnología avanzada.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Estructura productiva", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Rotación frecuente de autoridades y técnicos en gobiernos locales", tituloCorto: "Inestabilidad institucional", resumen: "Retrasos en la ejecución de proyectos de inversión pública.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Migración de jóvenes talentos hacia otras regiones por falta de empleo especializado", tituloCorto: "Fuga de talentos", resumen: "Emigración de profesionales universitarios ante opciones limitadas.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Demografía", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad de vías de comunicación ante deslizamientos en época de lluvias", tituloCorto: "Vías vulnerables", resumen: "Interrupción de carreteras por huaicos en quebradas andinas.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Ambiental", periodo: "2023-2030" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Desarrollo del corredor logístico portuario hacia Brasil y Bolivia", tituloCorto: "Corredor bioceánico Ilo", resumen: "Potenciamiento del puerto de Ilo como salida comercial estratégica del sur.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio internacional", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso a la acuicultura en costa y embalses andinos", tituloCorto: "Acuicultura moqueguana", resumen: "Producción de especies hidrobiológicas para consumo local y regional.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Pesca y acuicultura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Promoción del turismo arqueológico y vivencial en el circuito del cobre y valle", tituloCorto: "Turismo regional Moquegua", resumen: "Valorización de rutas históricas, petroglifos de Chen Chen y tradición vitivinícola.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Uso de recursos de canon minero para investigación y desarrollo tecnológico", tituloCorto: "Canon para I+D", resumen: "Inversión de excedentes mineros en innovación y becas de posgrado.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Implementación de agricultura de precisión en valles frutícolas", tituloCorto: "Agricultura de precisión", resumen: "Uso de sensores de humedad y riego tecnificado en paltos y olivos.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroecología", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de energías renovables solares y eólicas a gran escala", tituloCorto: "Energías limpias Moquegua", resumen: "Instalación de centrales de generación limpia aprovechando geografía regional.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía verde", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Fortalecimiento de la educación técnica superior dual", tituloCorto: "Educación dual", resumen: "Alianzas entre centros de formación técnica y grandes empresas mineras.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación técnica", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Digitalización de servicios ciudadanos con plataformas de gobierno abierto", tituloCorto: "Gobierno abierto Moquegua", resumen: "Transparencia total en el uso de recursos públicos y presupuesto participativo.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Uso de inteligencia artificial para modelado predictivo de actividad volcánica", tituloCorto: "IA volcánica", resumen: "Algoritmos avanzados para anticipar erupciones del Ubinas con semanas de margen.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología predictiva", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Implementación de minería robótica subterránea y automatizada", tituloCorto: "Minería robótica", resumen: "Operación remota de maquinaria pesada sin exposición humana en zonas de riesgo.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Automatización minera", tematica: "Tecnológica", periodo: "2040-2050" },
+        { titulo: "Desalinización impulsada por energía solar directa para consumo rural", tituloCorto: "Desalación solar rural", resumen: "Plantas autónomas de purificación de agua de mar para caletas de pescadores.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Creación de laboratorios descentralizados de biotecnología andina", tituloCorto: "Biotecnología andina", resumen: "Investigación de cultivos nativos adaptados a condiciones de altura y radiación.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Biotecnología", tematica: "Tecnológica", periodo: "2030-2040" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Erupción volcánica extrema del Ubinas que paralice la economía regional y minera", tituloCorto: "Erupción extrema Ubinas", resumen: "Escenario crítico de evacuación masiva y paralización de operaciones cupríferas.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Catástrofe volcánica", tematica: "Ambiental", periodo: "2040-2050" },
+        { titulo: "Colapso repentino de reservas internacionales de cobre por sustitución tecnológica global", tituloCorto: "Sustitución del cobre", resumen: "Aparición de materiales alternativos que reduzcan drásticamente la demanda mundial de cobre.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis económica", tematica: "Económica", periodo: "2040-2050" },
+        { titulo: "Megasequía andina que extinga fuentes hídricas superficiales para la agricultura", tituloCorto: "Megasequía andina", resumen: "Desaparición acelerada de bofedales y fuentes de agua en la cordillera.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Contaminación masiva transfronteriza de cuencas por pasivos ambientales ocultos", tituloCorto: "Pasivos ambientales críticos", resumen: "Activación imprevista de relaves mineros antiguos por eventos climáticos extremos.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre ambiental", tematica: "Ambiental", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Moquegua%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Crecimiento minero sostenido con tensiones hídricas moderadas", tituloCorto: "Escenario Tendencial", resumen: "Desarrollo inercial impulsado por la minería y con buenos indicadores educativos.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Moquegua, región modelo de diversificación productiva e innovación", tituloCorto: "Escenario Óptimo", resumen: "Uso estratégico del canon en tecnología, agroexportación avanzada y turismo sostenible.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Crisis volcánica y agotamiento hídrico que desestabilice la región", tituloCorto: "Escenario Crítico", resumen: "Eventos naturales extremos combinados con conflictos por agua que paralizan la economía.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_mq", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Huancavelica": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Reducción progresiva de la pobreza rural mediante programas productivos", tituloCorto: "Reducción de pobreza", resumen: "Intervenciones articuladas de desarrollo rural y proyectos productivos altoandinos.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo social", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Mejora en la conectividad vial de integración con la costa central", tituloCorto: "Conectividad vial sierra", resumen: "Pavimentación de corredores viales hacia Chincha y Pisco.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso a la producción y mejoramiento genético de camélidos sudamericanos", tituloCorto: "Mejoramiento alpaquero", resumen: "Programas de tecnificación para productores de fibra de alpaca y vicuña.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Ganadería andina", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión de la electrificación rural mediante sistemas fotovoltaicos", tituloCorto: "Electrificación rural", resumen: "Dotación de energía solar a comunidades altoandinas aisladas.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía rural", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Promoción de la agricultura orgánica de altura (papa nativa, quinua, maca)", tituloCorto: "Agricultura andina orgánica", resumen: "Valorización de cultivos nativos con denominación de origen y comercio justo.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de infraestructura de riego tecnificado en andenes y cuencas altas", tituloCorto: "Riego andino", resumen: "Recuperación de andenería prehispánica y construcción de qochas para siembra de agua.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Aumento de la cobertura de internet en instituciones educativas rurales", tituloCorto: "Internet rural educativo", resumen: "Conectividad satelital para escuelas unidocentes y polidocentes.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación digital", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Valorización del turismo vivencial y comunitario en comunidades altoandinas", tituloCorto: "Turismo vivencial Huancavelica", resumen: "Experiencias de turismo rural en paisajes de puna y lagunas altoandinas.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo rural", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de medicina intercultural y bilingüe en centros de salud", tituloCorto: "Salud intercultural", resumen: "Articulación entre medicina tradicional andina y servicios de salud pública.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Digitalización de trámites y gestión transparente en municipios provinciales", tituloCorto: "Gobierno digital Huancavelica", resumen: "Adopción gradual de sistemas electrónicos para la administración local.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Alta incidencia de pobreza y vulnerabilidad social en zonas rurales", tituloCorto: "Pobreza rural crónica", resumen: "Persistencia de carencias estructurales en nutrición infantil y saneamiento básico.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo social", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante heladas y friajes extremos en comunidades altoandinas", tituloCorto: "Heladas y friajes", resumen: "Impacto severo en ganado, cultivos y salud respiratoria de pobladores rurales.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Degradación de pastos naturales y erosión de suelos por sobrepastoreo", tituloCorto: "Erosión de suelos andinos", resumen: "Pérdida de capacidad productiva en praderas de altura por presión ganadera.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos y praderas", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Deserción escolar y limitada calidad educativa en zonas rurales dispersas", tituloCorto: "Deserción escolar rural", resumen: "Dificultades de acceso a centros educativos secundarios en comunidades alejadas.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Migración de población joven hacia ciudades de la costa en busca de empleo", tituloCorto: "Migración juvenil", resumen: "Despoblamiento paulatino de comunidades rurales por falta de oportunidades.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Demografía", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Baja ejecución presupuestal e insuficiente capacidad técnica en gobiernos locales", tituloCorto: "Baja ejecución pública", resumen: "Limitaciones en municipalidades provinciales y distritales para formular proyectos.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Pasivos ambientales mineros históricos sin remediación en cuencas altas", tituloCorto: "Pasivos mineros", resumen: "Contaminación de ríos por drenaje ácido de minas abandonadas.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Contaminación minera", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad de carreteras ante deslizamientos por temporada de lluvias", tituloCorto: "Vías interrumpidas", resumen: "Aislamiento temporal de distritos por huaicos y colapsos de plataformas viales.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Brecha tecnológica y analfabetismo digital en adultos mayores rurales", tituloCorto: "Brecha digital rural", resumen: "Exclusión de servicios financieros y estatales digitales por falta de capacitación.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Inclusión digital", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Escasa diversificación económica regional centrada en agricultura de subsistencia", tituloCorto: "Economía de subsistencia", resumen: "Alta dependencia de actividades agropecuarias de bajo rendimiento comercial.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Potencial para la ejecución de proyectos de siembra y cosecha de agua", tituloCorto: "Siembra y cosecha de agua", resumen: "Construcción masiva de qochas y zanjas de infiltración para recarga de acuíferos andinos.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad hídrica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Desarrollo de ecoturismo de aventura y rutas termomedicinales", tituloCorto: "Turismo termal", resumen: "Valorización de aguas termominerales y paisajes altoandinos para visitantes.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso a la industrialización de fibra de alpaca y textiles artesanales", tituloCorto: "Textil artesanal", resumen: "Fortalecimiento de asociaciones de tejedoras con estándares de exportación.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Artesanía e industria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Aprovechamiento de energía hidroeléctrica descentralizada en cuencas", tituloCorto: "Microcentrales hidroeléctricas", resumen: "Instalación de pequeñas plantas para abastecer energía limpia a comunidades rurales.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía renovable", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Promoción de la gastronomía andina basada en biodiversidad nativa", tituloCorto: "Gastronomía andina", resumen: "Puesta en valor de ingredientes milenarios en mercados nacionales e internacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Identidad cultural", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Creación de cooperativas agrarias tecnificadas para venta directa", tituloCorto: "Cooperativas agrarias", resumen: "Asociatividad de pequeños agricultores para acceder a mercados mayoristas sin intermediarios.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura familiar", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de programas de bilingüismo y preservación de lenguas originarias", tituloCorto: "Preservación quechua", resumen: "Fortalecimiento de la identidad cultural en escuelas y espacios públicos.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cultura", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Uso de tecnologías móviles para extensión agraria y clima en comunidades", tituloCorto: "Extensión agraria móvil", resumen: "Aplicaciones y alertas tempranas en quechua para agricultores y ganaderos.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación digital", tematica: "Tecnológica", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Adopción de fitotoldos inteligentes con sensores solares IoT", tituloCorto: "Fitotoldos IoT", resumen: "Invernaderos andinos automatizados para proteger cultivos contra heladas severas.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología agrícola", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Creación de mercados virtuales comunitarios basados en trueque digital", tituloCorto: "Trueque digital andino", resumen: "Plataformas de intercambio comercial entre comunidades de altura y valles interandinos.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía comunitaria", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Uso de drones para reforestación nativa en laderas altoandinas inaccesibles", tituloCorto: "Drones de reforestación", resumen: "Dispersión aérea de semillas nativas para restaurar cobertura vegetal de altura.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Restauración ecológica", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Redes comunitarias de internet satelital autogestionadas por comuneros", tituloCorto: "Redes comunitarias satelitales", resumen: "Conectividad de bajo costo operada por las propias organizaciones comunales.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conectividad social", tematica: "Social", periodo: "2023-2030" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Heladas anómalas prolongadas que destruyan por completo la ganadería de altura", tituloCorto: "Helada extrema catastrófica", resumen: "Evento climático extremo que cause la pérdida masiva de camélidos y ovinos.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Catástrofe climática", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Colapso masivo de diques de relaves mineros antiguos por sismo severo", tituloCorto: "Colapso de relaves altoandinos", resumen: "Contaminación irreversible de cuencas hidrográficas que descienden hacia la costa.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre ambiental", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Despoblamiento rural acelerado por migración masiva ante crisis climática agraria", tituloCorto: "Éxodo rural extremo", resumen: "Abandono de comunidades altoandinas por inviabilidad de la agricultura de secano.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis demográfica", tematica: "Social", periodo: "2040-2050" },
+        { titulo: "Descubrimiento de acuíferos subterráneos fósiles gigantes en zonas volcánicas andinas", tituloCorto: "Acuíferos fósiles andinos", resumen: "Hallazgo de reservas hídricas subterráneas que transformen el potencial agrícola regional.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Hallazgo hídrico", tematica: "Tecnológica", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Huancavelica%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Pobreza rural persistente con avances lentos en infraestructura", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento inercial con limitada superación de brechas sociales y alta vulnerabilidad.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Huancavelica, referente de seguridad hídrica, orgánica y turismo andino", tituloCorto: "Escenario Óptimo", resumen: "Desarrollo basado en siembra de agua, agricultura ecológica y revalorización cultural.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Crisis climática severa y éxodo rural masivo en comunidades", tituloCorto: "Escenario Crítico", resumen: "Impacto de heladas extremas y sequías que agudizan la pobreza y el despoblamiento.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_hv", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Tacna": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Consolidación de la actividad comercial y zona franca (ZofraTacna)", tituloCorto: "ZofraTacna comercial", resumen: "Dinamización del comercio fronterizo y servicios logísticos especializados.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio internacional", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de la minería cuprífera tecnificada en la región", tituloCorto: "Minería tacneña", resumen: "Operación eficiente de yacimientos mineros con estándares ambientales.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión del turismo receptivo y de salud desde el norte de Chile", tituloCorto: "Turismo fronterizo", resumen: "Llegada constante de visitantes para servicios médicos, gastronómicos y de ocio.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Optimización del uso de recursos hídricos superficiales y subterráneos", tituloCorto: "Gestión hídrica Tacna", resumen: "Mejoras en infraestructura de canales y pozos para mitigar escasez desértica.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Aumento de cobertura de saneamiento básico en zonas urbanas y periurbanas", tituloCorto: "Saneamiento Tacna", resumen: "Ampliación de redes de agua potable y alcantarillado en expansión urbana.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Desarrollo de la agricultura de olivos y vid en valles costeros", tituloCorto: "Olivicultura tacneña", resumen: "Producción y exportación de aceitunas y aceite de oliva de alta calidad.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mejora en la conectividad vial fronteriza con Chile y Bolivia", tituloCorto: "Conectividad fronteriza", resumen: "Modernización de complejos fronterizos y carreteras internacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Implementación de energía solar fotovoltaica en zonas desérticas", tituloCorto: "Energía solar Tacna", resumen: "Aprovechamiento de la alta radiación para generación eléctrica limpia.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía verde", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Digitalización de trámites y servicios en el Gobierno Regional de Tacna", tituloCorto: "Gobierno digital Tacna", resumen: "Adopción de expediente electrónico y simplificación administrativa.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la educación técnica superior y tecnológica regional", tituloCorto: "Educación técnica Tacna", resumen: "Articulación entre institutos y demandas del mercado fronterizo.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Escasez hídrica estructural por escasez de fuentes superficiales en la costa", tituloCorto: "Escasez hídrica costera", resumen: "Tensiones por la disponibilidad de agua entre la agricultura y la población urbana.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante sismos de gran magnitud en el sur del país", tituloCorto: "Vulnerabilidad sísmica", resumen: "Riesgo de daños estructurales en edificaciones e infraestructura regional.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Alta dependencia de la economía tacneña del flujo comercial y de turistas de Chile", tituloCorto: "Dependencia fronteriza", resumen: "Vulnerabilidad ante cambios económicos o normativos en el país vecino.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía fronteriza", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Informalidad en el comercio menor y servicios de transporte fronterizo", tituloCorto: "Comercio informal fronterizo", resumen: "Retos en la fiscalización y seguridad en zonas de tránsito vecinal.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Conflictos socioambientales por uso de recursos hídricos en cuencas compartidas", tituloCorto: "Conflictos hídricos", resumen: "Disputas por el agua entre minería, agricultura y consumo humano.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflictos sociales", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Degradación de suelos agrícolas por salinización en valles costeros", tituloCorto: "Salinización de suelos", resumen: "Pérdida de rendimiento en cultivos por prácticas de riego inadecuadas.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Rotación frecuente de autoridades regionales y retrasos en proyectos", tituloCorto: "Inestabilidad institucional Tacna", resumen: "Impacto en la continuidad de planes de desarrollo estratégico.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Inseguridad ciudadana asociada al tránsito fronterizo y crimen organizado", tituloCorto: "Inseguridad fronteriza", resumen: "Retos de control policial y migratorio en pasos limítrofes.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Contaminación por residuos sólidos en áreas periféricas urbanas", tituloCorto: "Residuos urbanos", resumen: "Deficiencias en la disposición final de desechos municipales.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Medio ambiente", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Limitada diversificación de exportaciones fuera de minerales y agro", tituloCorto: "Baja diversificación exportadora", resumen: "Concentración en pocos rubros productivos hacia el mercado externo.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Exportaciones", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Potenciamiento de Tacna como hub de servicios médicos y de salud en la macrorregión", tituloCorto: "Hub médico fronterizo", resumen: "Atracción de pacientes del sur de Perú y norte de Chile con infraestructura especializada.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud especializada", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de proyectos de desalinización de agua de mar para uso agrario y poblacional", tituloCorto: "Desalación Tacna", resumen: "Inversiones en plantas desalinizadoras para garantizar seguridad hídrica regional.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología hídrica", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Impulso al turismo patriótico, histórico y de playas en el litoral tacneño", tituloCorto: "Turismo patriótico y playero", resumen: "Promoción de circuitos turísticos integrados en la heroica ciudad.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Ampliación de operaciones logísticas en ZofraTacna hacia mercados de Bolivia y Brasil", tituloCorto: "Expansión ZofraTacna", resumen: "Uso de franquicias comerciales para exportación de manufactura ligera.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística comercial", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de energías renovables solares a gran escala en pampas desérticas", tituloCorto: "Energía solar Tacna", resumen: "Instalación de parques fotovoltaicos conectados al sistema interconectado.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Implementación de agricultura orgánica tecnificada en valles de Locumba y Sama", tituloCorto: "Agricultura tecnificada Sama", resumen: "Cultivos de exportación con riego eficiente y optimización de recursos.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroecología", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Creación de centros de innovación tecnológica para la industria vitivinícola", tituloCorto: "CITE vino Tacna", resumen: "Apoyo técnico para estandarización y calidad de piscos y vinos locales.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación vitivinícola", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Uso de plataformas digitales binacionales para facilitación aduanera", tituloCorto: "Aduana digital binacional", resumen: "Reducción de tiempos de tránsito fronterizo mediante interoperabilidad.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobierno digital", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Uso de nanotecnología en filtros para desalinización doméstica de bajo costo", tituloCorto: "Nanofiltros de agua", resumen: "Dispositivos portátiles para purificar agua salobre en zonas rurales de la región.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología hídrica", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Ciudades inteligentes fronterizas con biometría integrada para comercio y seguridad", tituloCorto: "Smart city fronteriza", resumen: "Sistemas automatizados de control de flujo peatonal y vehicular en complejos.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación urbana", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Granjas hidropónicas verticales en zonas desérticas con agua reciclada", tituloCorto: "Hidroponía desértica", resumen: "Producción intensiva de hortalizas con mínimo consumo hídrico en arenales.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura tecnológica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Moneda digital transfronteriza experimental para comercio vecinal", tituloCorto: "Moneda digital vecinal", resumen: "Sistemas de pago electrónico descentralizado en la frontera sur.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Fintech fronteriza", tematica: "Económica", periodo: "2040-2050" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Cierre temporal de fronteras prolongado por crisis geopolítica regional", tituloCorto: "Cierre de frontera", resumen: "Escenario crítico que paralice el comercio y turismo binacional afectando la economía local.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Geopolítica", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Megasequía costera extrema con agotamiento total de pozos de extracción subterránea", tituloCorto: "Megasequía tacneña", resumen: "Colapso del suministro hídrico para la ciudad de Tacna y valles circundantes.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Sismo de gran magnitud con epicentro en la zona fronteriza y daños masivos", tituloCorto: "Sismo fronterizo severo", resumen: "Evento telúrico que colapse la infraestructura comercial y urbana de Tacna.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre natural", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Reforma tributaria radical en países vecinos que elimine las ventajas de ZofraTacna", tituloCorto: "Reforma tributaria externa", resumen: "Pérdida de competitividad comercial por cambios normativos internacionales.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Economía internacional", tematica: "Económica", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Tacna%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Comercio fronterizo dinámico con persistente estrés hídrico", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento inercial sostenido por la relación comercial con Chile y minería.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Tacna como hub tecnológico, médico y comercial de la frontera sur", tituloCorto: "Escenario Óptimo", resumen: "Modelo diversificado con desalinización hídrica, zona franca ampliada y turismo de salud.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Crisis hídrica severa y restricciones comerciales fronterizas", tituloCorto: "Escenario Crítico", resumen: "Escasez extrema de agua y tensiones geopolíticas que deprimen la economía regional.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_tc", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Áncash": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Desarrollo de la minería metálica y reinversión de canon minero en obras", tituloCorto: "Minería y canon Áncash", resumen: "Operación de grandes yacimientos y ejecución de proyectos de infraestructura regional.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Crecimiento del turismo de montaña y andinismo en la Cordillera Blanca", tituloCorto: "Turismo Cordillera Blanca", resumen: "Aumento de visitantes nacionales y extranjeros en el Parque Nacional Huascarán.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo de aventura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Expansión de la agroexportación en el valle de Nepeña y costa ancashina", tituloCorto: "Agroexportación costera Áncash", resumen: "Cultivos de exportación de alto rendimiento con riego tecnificado.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mejora en la conectividad vial entre la sierra (Huaraz) y la costa (Chimbote)", tituloCorto: "Conectividad sierra-costa", resumen: "Modernización de carreteras transversales para dinamizar el intercambio regional.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura vial", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Consolidación de la actividad pesquera e industrial en el puerto de Chimbote", tituloCorto: "Pesca industrial Chimbote", resumen: "Procesamiento de harina y aceite de pescado con normativas ambientales.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Pesca", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Ampliación de servicios de saneamiento básico en capitales provinciales", tituloCorto: "Saneamiento Áncash", resumen: "Inversiones en agua potable y tratamiento de aguas residuales urbanas.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Implementación de proyectos de energía hidroeléctrica y solar descentralizada", tituloCorto: "Energía renovable Áncash", resumen: "Aprovechamiento del potencial hídrico en cuencas andinas.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Digitalización de trámites y gestión en el Gobierno Regional de Áncash", tituloCorto: "Gobierno digital Áncash", resumen: "Adopción de herramientas electrónicas para transparencia y eficiencia.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Valorización de la cultura Chavín y patrimonio arqueológico regional", tituloCorto: "Patrimonio Chavín", resumen: "Promoción de circuitos culturales y arqueológicos para el turismo global.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cultura y turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la educación técnica e universitaria regional", tituloCorto: "Educación superior Áncash", resumen: "Alianzas estratégicas con universidades nacionales y centros tecnológicos.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Retroceso acelerado de glaciares en la Cordillera Blanca y riesgo de aluviones", tituloCorto: "Retroceso glaciar y aluviones", resumen: "Amenaza de desborde de lagunas altoandinas afectando poblaciones en quebradas.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cambio climático", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Conflictos socioambientales vinculados a la actividad minera e hídrica", tituloCorto: "Conflictos mineros Áncash", resumen: "Tensiones por gestión ambiental, distribución de canon y afectación de pastos.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Conflictos sociales", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante fenómenos climáticos extremos (El Niño y lluvias intensas)", tituloCorto: "Riesgo climático Áncash", resumen: "Deslizamientos y huaicos en carreteras y zonas urbanas de la costa y sierra.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Alta informalidad laboral y precarización en sectores comercio y pesca artesanal", tituloCorto: "Informalidad laboral Áncash", resumen: "Trabajadores sin seguridad social ni estabilidad en actividades económicas.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Inestabilidad política regional y frecuente rotación de autoridades", tituloCorto: "Inestabilidad política", resumen: "Antecedentes de gobernanza frágil que retrasan la ejecución de obras de inversión.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Contaminación marina en la bahía de Chimbote por descargas industriales y urbanas", tituloCorto: "Contaminación bahía Chimbote", resumen: "Impacto ambiental en ecosistemas marinos por efluentes no tratados.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Contaminación ambiental", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Vulnerabilidad sísmica en ciudades con alta densidad y autoconstrucción", tituloCorto: "Vulnerabilidad sísmica", resumen: "Riesgo estructural ante sismos severos en Huaraz y Chimbote.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastres naturales", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Déficit cualitativo y cuantitativo en infraestructura hospitalaria regional", tituloCorto: "Brechas en salud", resumen: "Insuficiencia de hospitales especializados en provincias altoandinas.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Degradación de suelos agrícolas en valles interandinos por erosión", tituloCorto: "Erosión andina", resumen: "Pérdida de nutrientes y tierra cultivable por malas prácticas agrícolas.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Inseguridad ciudadana y delitos patrimoniales en zonas urbanas principales", tituloCorto: "Inseguridad urbana Áncash", resumen: "Aumento de delincuencia común en Chimbote y Huaraz.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad ciudadana", tematica: "Social", periodo: "2023-2030" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Desarrollo de infraestructura de alerta temprana para lagunas glaciares", tituloCorto: "Alerta glaciar", resumen: "Sistemas tecnológicos de monitoreo y control de niveles en lagunas altoandinas.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Mitigación de riesgos", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Impulso al turismo de aventura especializado y montañismo sostenible", tituloCorto: "Montañismo sostenible", resumen: "Certificaciones ambientales para operadores turísticos en la Cordillera Blanca.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo ecológico", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Aprovechamiento del canon minero para diversificación productiva e innovación", tituloCorto: "Canon para innovación", resumen: "Inversión estratégica en centros de investigación y tecnología agroindustrial.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación regional", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Expansión de la acuicultura en lagunas y valles interandinos", tituloCorto: "Acuicultura andina Áncash", resumen: "Producción de truchas y especies nativas con estándares comerciales.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Pesca y acuicultura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de agricultura de precisión en valles costeros irrigados", tituloCorto: "Agricultura precisa costera", resumen: "Uso de drones y sensores para optimizar riego en agroexportación.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroecología", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Creación de rutas turísticas integradas costa-sierra (Mar y Cordillera)", tituloCorto: "Ruta Mar y Cordillera", resumen: "Circuitos que combinan la cultura Chavín, Huaraz y el litoral pesquero de Chimbote.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo integrado", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la gestión comunitaria de recursos hídricos en cuencas", tituloCorto: "Gestión hídrica comunitaria", resumen: "Articulación de juntas de regantes con normativas modernas de cuencas.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Uso de plataformas de gobierno abierto para transparencia presupuestal de canon", tituloCorto: "Gobierno abierto Áncash", resumen: "Plataformas digitales de fiscalización ciudadana en tiempo real.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Sistemas de energía geotérmica aprovechando actividad volcánica menor y fallas andinas", tituloCorto: "Geotermia andina Áncash", resumen: "Exploración de vapor subterráneo para generación eléctrica limpia en alta montaña.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía renovable", tematica: "Tecnológica", periodo: "2040-2050" },
+        { titulo: "Uso de inteligencia artificial para monitoreo satelital de desprendimientos glaciares", tituloCorto: "IA monitoreo glaciar", resumen: "Algoritmos predictivos detectando fracturas en masa de hielo en tiempo real.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología predictiva", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Turismo espacial y de alta altitud en picos nevados con observación astronómica", tituloCorto: "Astroturismo de altura", resumen: "Explotación de cielos limpios en cordilleras para turismo científico especializado.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo científico", tematica: "Económica", periodo: "2040-2050" },
+        { titulo: "Redes comunitarias de sensores IoT para calidad del agua en cuenca del Santa", tituloCorto: "Sensores IoT río Santa", resumen: "Comunidades midiendo en tiempo real parámetros de contaminación hídrica.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Monitoreo ambiental", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Aluvión catastrófico por colapso de laguna glaciar sobre Huaraz o valles adyacentes", tituloCorto: "Aluvión glaciar masivo", resumen: "Escenario crítico de desastre natural por vaciamiento súbito de vaso glaciar.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Catástrofe climática", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Paralización total de la gran minería por conflictos sociales insostenibles", tituloCorto: "Paralización minera total Áncash", resumen: "Bloqueo prolongado de operaciones que desplome el presupuesto regional por canon.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis económica", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Megasequía andina prolongada que extinga fuentes hídricas de la cuenca del Santa", tituloCorto: "Megasequía cuenca Santa", resumen: "Colapso del suministro de agua para la costa norte y agricultura de exportación.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2040-2050" },
+        { titulo: "Sismo de gran magnitud con destrucción de infraestructura vial en corredores mineros", tituloCorto: "Sismo severo Áncash", resumen: "Evento telúrico que aisle la sierra ancashina y dañe centrales hidroeléctricas.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre natural", tematica: "Ambiental", periodo: "2030-2040" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Ancash%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Minería activa y turismo de montaña con riesgos climáticos crecientes", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento inercial con alta dependencia del canon y vulnerabilidad glaciar.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Áncash, polo verde de turismo sostenible, minería responsable y gestión hídrica", tituloCorto: "Escenario Óptimo", resumen: "Uso transparente del canon para innovación, protección glaciar y agroexportación.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Desastres glaciares y conflictos agudos que paralicen la región", tituloCorto: "Escenario Crítico", resumen: "Colapso por aluviones, crisis hídrica y parálisis institucional que afecten el bienestar.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_an", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "La Libertad": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor digitalización de la educación en Lima Región",
-          tituloCorto: "digitalización de la educación",
-          resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-          tema: "Digitalización de la educación"
-        },
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Mayor conectividad digital en Lima Región",
-          tituloCorto: "conectividad digital",
-          resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-          tema: "Conectividad digital"
-        }
+        { titulo: "Consolidación del proyecto Chavimochic y expansión agroexportadora", tituloCorto: "Chavimochic expansión", resumen: "Liderazgo nacional en agroexportación de arándanos, espárragos y paltas.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de la minería aurífera formal e industrial en la sierra liberteña", tituloCorto: "Minería aurífera", resumen: "Operación de grandes empresas mineras en Pataz y Sánchez Carrión.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Crecimiento metropolitano de Trujillo como hub de servicios del norte peruano", tituloCorto: "Trujillo metropolitano", resumen: "Expansión del sector comercial, bancario, educativo y de salud en la metrópoli.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Urbanismo y servicios", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mejora en infraestructura de transporte vial y logístico interregional", tituloCorto: "Infraestructura vial norte", resumen: "Modernización de la Panamericana Norte y accesos hacia la sierra liberteña.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Transporte", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Promoción del turismo cultural (Chan Chan, Huacas de Moche) y de playa", tituloCorto: "Turismo cultural Trujillo", resumen: "Puesta en valor del patrimonio arqueológico chimú y moche para visitantes.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Ampliación de servicios de saneamiento básico en Trujillo metropolitano", tituloCorto: "Saneamiento La Libertad", resumen: "Inversiones en plantas de tratamiento de aguas residuales y redes de agua.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Implementación de energías renovables en fundos agroindustriales", tituloCorto: "Energía solar agro", resumen: "Uso de paneles fotovoltaicos para autoconsumo en plantas de empaque.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Digitalización de trámites y servicios en el Gobierno Regional de La Libertad", tituloCorto: "Gobierno digital La Libertad", resumen: "Adopción de expediente electrónico y simplificación administrativa.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Desarrollo de la industria del calzado y manufactura ligera en Trujillo", tituloCorto: "Industria del calzado", resumen: "Fortalecimiento de micro y pequeñas empresas zapateras con innovación técnica.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Manufactura", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la educación técnica y superior universitaria", tituloCorto: "Educación superior norte", resumen: "Alianzas entre universidades de prestigio y el sector productivo privado.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2030-2040" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Persistencia de los conflictos sociales",
-          tituloCorto: "conflictos sociales",
-          resumen: "Los conflictos sociales se refieren a las tensiones y disputas entre diversos grupos dentro de una sociedad, originadas por múltiples factores como desigualdades económicas, diferencias culturales, disputas territoriales y competencia por recursos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t5_lr",
-          tema: "Conflictos sociales"
-        }
+        { titulo: "Alta incidencia de inseguridad ciudadana, extorsiones y crimen organizado", tituloCorto: "Inseguridad y extorsión", resumen: "Problema crítico que afecta la tranquilidad social y la inversión comercial.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad ciudadana", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Minería informal e ilegal en provincias altoandinas (Pataz)", tituloCorto: "Minería ilegal Pataz", resumen: "Conflictos armados, socavones ilegales y delitos conexos afectando la seguridad.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad y minería", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad ante el Fenómeno El Niño (inundaciones y desbordes)", tituloCorto: "Riesgo El Niño La Libertad", resumen: "Daños en infraestructura urbana, agrícola y vial en la costa y valles.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Erosión costera severa en balnearios como Las Delicias, Buenos Aires y Huanchaco", tituloCorto: "Erosión costera", resumen: "Pérdida de playas y viviendas por desequilibrio en la dinámica marina.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Costa y medio ambiente", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Escasez hídrica estacional y sobreexplotación de fuentes en cuencas de la costa", tituloCorto: "Estrés hídrico costero", resumen: "Tensiones por la disponibilidad de agua para la agroexportación y poblaciones.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Informalidad laboral y precarización en microempresas y comercio menor", tituloCorto: "Informalidad laboral", resumen: "Alta tasa de trabajadores sin beneficios sociales ni seguridad laboral.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Deficiencias en gestión de residuos sólidos urbanos en Trujillo metropolitano", tituloCorto: "Residuos sólidos Trujillo", resumen: "Acumulación de basura y colapso de rellenos sanitarios autorizados.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento ambiental", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Inestabilidad institucional y baja ejecución presupuestal en municipalidades", tituloCorto: "Inestabilidad municipal", resumen: "Limitaciones en la capacidad técnica para ejecutar proyectos de inversión pública.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Brechas de calidad en salud pública frente al crecimiento demográfico", tituloCorto: "Brechas en salud", resumen: "Sobrecarga en hospitales principales y déficit de especialistas médicos.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Contaminación de suelos agrícolas por uso excesivo de agroquímicos", tituloCorto: "Contaminación por agroquímicos", resumen: "Deterioro de la calidad de tierra cultivable en valles agroexportadores.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos", tematica: "Ambiental", periodo: "2030-2040" }
       ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Menor participación electoral",
-          tituloCorto: "participación electoral",
-          resumen: "La base fundamental de cualquier democracia radica en la participación electoral, ya que, mediante el acto de votar, los ciudadanos ejercen su derecho y responsabilidad de elegir a sus representantes en los distintos niveles de gobierno.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t11_lr",
-          tema: "Participación electoral"
-        }
+        { titulo: "Consolidación de la agroexportación con tecnología de punta y agricultura de precisión", tituloCorto: "Agroexportación avanzada", resumen: "Uso de inteligencia artificial, drones y riego inteligente en grandes fundos.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología agrícola", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Desarrollo del puerto de Salaverry como terminal logístico internacional", tituloCorto: "Puerto de Salaverry", resumen: "Optimización de operaciones de carga para agroexportación y minerales.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística portuaria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso al turismo arqueológico y de congresos (MICE) en Trujillo", tituloCorto: "Turismo MICE Trujillo", resumen: "Posicionamiento de la ciudad como sede de eventos empresariales del norte.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo especializado", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de economía circular en plantas agroindustriales y pesqueras", tituloCorto: "Economía circular norte", resumen: "Transformación de subproductos en abono orgánico y energía limpia.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Sostenibilidad", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Creación de centros de innovación tecnológica para manufactura y calzado", tituloCorto: "CITE calzado Trujillo", resumen: "Apoyo técnico en diseño, calzado y procesos industriales modernos.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación industrial", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Desarrollo de energías renovables solares en valles costeros", tituloCorto: "Energía solar costera", resumen: "Instalación de parques solares para abastecer industrias y ciudades.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía verde", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Fortalecimiento de la educación técnica dual vinculada al clúster agroexportador", tituloCorto: "Educación dual agro", resumen: "Formación de especialistas técnicos requeridos por las empresas exportadoras.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación técnica", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Uso de plataformas digitales de seguridad ciudadana con cámaras de reconocimiento", tituloCorto: "Seguridad inteligente Trujillo", resumen: "Sistemas integrados de vigilancia municipal para combatir la criminalidad.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Smart cities", tematica: "Tecnológica", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Uso de nanotecnología para tratamiento de aguas residuales en riego agroindustrial", tituloCorto: "Nanotecnología hídrica", resumen: "Depuración avanzada de efluentes para reutilización segura en cultivos de exportación.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación hídrica", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Sistemas autónomos submarinos para mitigación de erosión costera", tituloCorto: "Bpyectos submarinos anticosteros", resumen: "Instalación de arrecifes artificiales sumergidos para disipar energía de olas.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Ingeniería costera", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Granjas agrícolas totalmente automatizadas con robótica guiada por IA", tituloCorto: "Robótica agrícola norte", resumen: "Cosecha mecanizada autónoma en fundos de arándanos de gran escala.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agro-robótica", tematica: "Tecnológica", periodo: "2040-2050" },
+        { titulo: "Moneda local digital comunitaria para comercio justo en provincias andinas", tituloCorto: "Moneda digital andina", resumen: "Sistemas de pago electrónico descentralizado para productores rurales de Pataz.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Fintech rural", tematica: "Económica", periodo: "2040-2050" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Fenómeno El Niño extraordinario con destrucción total de canales de Chavimochic", tituloCorto: "Colapso Chavimochic El Niño", resumen: "Escenario extremo que paralice la agroexportación norteña por daños masivos en infraestructura.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre climático", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Escalada incontrolable de criminalidad y extorsión que paralice el comercio metropolitano", tituloCorto: "Crisis de seguridad extrema", resumen: "Paralización generalizada de actividades comerciales en Trujillo por crimen organizado.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis de seguridad", tematica: "Social", periodo: "2030-2040" },
+        { titulo: "Plaga biológica mundial que afecte severamente los cultivos de arándanos de exportación", tituloCorto: "Plaga arandanera global", resumen: "Patógeno agresivo que diezme las principales plantaciones de agroexportación del norte.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis fitosanitaria", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Erosión costera extrema que inunde el puerto de Salaverry y vías de la costa", tituloCorto: "Inundación costera severa", resumen: "Pérdida total de la franja costera urbana e industrial por aumento del nivel del mar.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cambio climático", tematica: "Ambiental", periodo: "2040-2050" }
       ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: [{
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-        tituloCorto: "agua y saneamiento",
-        resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-        tema: "Acceso a agua y saneamiento"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor digitalización de la educación en Lima Región",
-        tituloCorto: "digitalización de la educación",
-        resumen: "La digitalización de la educación en Lima Región puede entenderse como un proceso que va más allá de disponer de internet en las escuelas, porque también supone integrar recursos digitales al aprendizaje, ampliar las posibilidades de acceso de estudiantes y docentes, y fortalecer capacidades para un uso pedagógico más pertinente.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t9_lr",
-        tema: "Digitalización de la educación"
-      },
-      {
-        imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-        titulo: "Mayor conectividad digital en Lima Región",
-        tituloCorto: "conectividad digital",
-        resumen: "La conectividad digital puede entenderse como un proceso de ampliación del acceso y uso de internet que no depende únicamente de la infraestructura, sino también de la posibilidad real de que hogares y personas se conecten en condiciones adecuadas, seguras y útiles para sus actividades cotidianas.",
-        url: "https://observatorio.ceplan.gob.pe/ficha/t10_lr",
-        tema: "Conectividad digital"
-      }]
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20La%20Libertad%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Agroexportación líder con persistentes problemas de seguridad y erosión", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento económico sostenido con alta conflictividad social e inseguridad.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: La Libertad, potencia agroexportadora segura, innovadora y sostenible", tituloCorto: "Escenario Óptimo", resumen: "Modelo articulado de agricultura avanzada, seguridad ciudadana y protección costera.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Crisis climática y desborde del crimen que colapsen la economía norteña", tituloCorto: "Escenario Crítico", resumen: "Efectos combinados de El Niño extremo, erosión costera e inseguridad incontrolable.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_ll", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   },
+
   "Lambayeque": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
     "Tendencias": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
       articulos: [
-        {
-          imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png",
-          titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región",
-          tituloCorto: "agua y saneamiento",
-          resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento en Lima Región continúe creciendo de manera moderada. Este contexto sugiere una mejora progresiva, aunque sin eliminar del todo la distancia entre Lima Región y los otros ámbitos de comparación.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr",
-          tema: "Acceso a agua y saneamiento"
-        }
+        { titulo: "Expansión de proyectos de irrigación y agroexportación (Olmos)", tituloCorto: "Olmos agroexportación", resumen: "Consolidación de tierras ganadas al desierto con producción frutícola y caña de azúcar.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Crecimiento de Chiclayo como centro comercial y financiero del norte", tituloCorto: "Chiclayo metropolitano", resumen: "Dinamización del comercio minorista, mayorista y servicios de salud.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Comercio y servicios", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Promoción del turismo cultural y arqueológico (Tumbas Reales, Sipán, Sicán)", tituloCorto: "Turismo cultural Lambayeque", resumen: "Puesta en valor de museos y complejos arqueológicos de la cultura moche y lambayeque.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Mejora en la conectividad vial y aeroportuaria regional", tituloCorto: "Conectividad Lambayeque", resumen: "Modernización del aeropuerto de Chiclayo y carreteras de integración nororiental.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Ampliación de cobertura de saneamiento básico en Chiclayo y provincias", tituloCorto: "Saneamiento Lambayeque", resumen: "Inversiones en redes de agua potable y plantas de tratamiento de aguas residuales.", url: "https://observatorio.ceplan.gob.pe/ficha/t5_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Implementación de energía solar fotovoltaica en proyectos agrícolas de Olmos", tituloCorto: "Energía solar Olmos", resumen: "Uso de paneles para autoconsumo en instalaciones de riego tecnificado.", url: "https://observatorio.ceplan.gob.pe/ficha/t6_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Desarrollo de la industria del calzado y confecciones artesanales en Monsefú y Eten", tituloCorto: "Artesanía y manufactura", resumen: "Fortalecimiento de microempresas textiles y de tejido de paja toquilla.", url: "https://observatorio.ceplan.gob.pe/ficha/t7_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Industria artesanal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Digitalización de trámites y servicios en el Gobierno Regional de Lambayeque", tituloCorto: "Gobierno digital Lambayeque", resumen: "Adopción de herramientas electrónicas para simplificación administrativa.", url: "https://observatorio.ceplan.gob.pe/ficha/t8_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión pública", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la educación superior universitaria y técnica regional", tituloCorto: "Educación superior Lambayeque", resumen: "Convenios entre universidades locales y sectores productivos agroindustriales.", url: "https://observatorio.ceplan.gob.pe/ficha/t9_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2030-2040" },
+        { titulo: "Promoción de la gastronomía norteña y turismo culinario", tituloCorto: "Turismo gastronómico", resumen: "Puesta en valor de la cocina típica lambayecana como atractivo turístico internacional.", url: "https://observatorio.ceplan.gob.pe/ficha/t10_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Cultura y turismo", tematica: "Económica", periodo: "2023-2030" }
       ]
     },
     "Riesgos": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: []
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Vulnerabilidad extrema ante inundaciones por desborde del río La Leche y Reque", tituloCorto: "Inundaciones recurrentes", resumen: "Impacto severo del Fenómeno El Niño en zonas urbanas y agrícolas de Chiclayo y Ferreñafe.", url: "https://observatorio.ceplan.gob.pe/ficha/r1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gestión de riesgos", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Colapso crónico de sistemas de desagüe y acumulación de aguas servidas en Chiclayo", tituloCorto: "Colapso de desagües Chiclayo", resumen: "Problema sanitario grave por obsolescencia de redes de alcantarillado urbano.", url: "https://observatorio.ceplan.gob.pe/ficha/r2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salubridad urbana", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Inestabilidad institucional y antecedentes de corrupción en gestiones municipales", tituloCorto: "Inestabilidad municipal Lambayeque", resumen: "Debilidad en la gobernanza local que frena la ejecución de obras públicas.", url: "https://observatorio.ceplan.gob.pe/ficha/r3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" },
+        { titulo: "Escasez hídrica estacional en cuencas altas y regulación insuficiente para Olmos", tituloCorto: "Estrés hídrico Olmos", resumen: "Dependencia de trasvases y riesgo de menor disponibilidad de agua en periodos secos.", url: "https://observatorio.ceplan.gob.pe/ficha/r4_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Recursos hídricos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Informalidad laboral y precarización en comercio minorista y servicios", tituloCorto: "Informalidad comercial", resumen: "Alta proporción de trabajadores sin seguridad social ni estabilidad económica.", url: "https://observatorio.ceplan.gob.pe/ficha/r5_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Empleo informal", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Inseguridad ciudadana y delitos patrimoniales en áreas urbanas de Chiclayo", tituloCorto: "Inseguridad Chiclayo", resumen: "Aumento de delincuencia común y extorsiones en el casco urbano.", url: "https://observatorio.ceplan.gob.pe/ficha/r6_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Seguridad ciudadana", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Degradación de suelos por salinización en valles agrícolas irrigados", tituloCorto: "Salinización lambayecana", resumen: "Pérdida de fertilidad de tierras cultivables por malas prácticas de drenaje.", url: "https://observatorio.ceplan.gob.pe/ficha/r7_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Suelos", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Deficiencia en la gestión de residuos sólidos urbanos en Chiclayo metropolitano", tituloCorto: "Residuos sólidos Chiclayo", resumen: "Acumulación prolongada de basura en calles por limitaciones operativas municipales.", url: "https://observatorio.ceplan.gob.pe/ficha/r8_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Saneamiento ambiental", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Vulnerabilidad de infraestructura vial ante huaicos en la ruta nororiental", tituloCorto: "Vías vulnerables Lambayeque", resumen: "Interrupción temporal de carreteras hacia Cajamarca y Amazonas.", url: "https://observatorio.ceplan.gob.pe/ficha/r9_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Infraestructura", tematica: "Ambiental", periodo: "2023-2030" },
+        { titulo: "Brechas persistentes en calidad y acceso a salud pública regional", tituloCorto: "Brechas en salud Lambayeque", resumen: "Sobrecarga en hospitales de referencia en Chiclayo y déficit de equipamiento.", url: "https://observatorio.ceplan.gob.pe/ficha/r10_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Salud pública", tematica: "Social", periodo: "2023-2030" }
+      ]
     },
     "Oportunidades": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: []
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Desarrollo del proyecto del Terminal Portuario Eten para dinamizar exportaciones", tituloCorto: "Puerto Eten", resumen: "Construcción de infraestructura portuaria propia en la región para salida directa de carga.", url: "https://observatorio.ceplan.gob.pe/ficha/o1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Logística portuaria", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Ampliación de la agroexportación con tecnología de riego tecnificado en Olmos", tituloCorto: "Agroexportación Olmos avanzada", resumen: "Incorporación de cultivos de alto valor comercial con manejo sostenible de suelos.", url: "https://observatorio.ceplan.gob.pe/ficha/o2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agroindustria", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Impulso al turismo arqueológico y cultural mediante circuitos integrados del norte", tituloCorto: "Circuito arqueológico norte", resumen: "Articulación de museos de Lambayeque, La Libertad y Piura para atraer turismo global.", url: "https://observatorio.ceplan.gob.pe/ficha/o3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Turismo cultural", tematica: "Económica", periodo: "2023-2030" },
+        { titulo: "Implementación de economía circular en plantas agroindustriales y empacadoras", tituloCorto: "Economía circular Lambayeque", resumen: "Reutilización de residuos orgánicos para generación de abono y biomasa.", url: "https://observatorio.ceplan.gob.pe/ficha/o4_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Sostenibilidad", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Desarrollo de energías renovables solares aprovechando la radiación costera", tituloCorto: "Energía solar Lambayeque", resumen: "Instalación de plantas fotovoltaicas para abastecimiento industrial y residencial.", url: "https://observatorio.ceplan.gob.pe/ficha/o5_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Energía limpia", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Creación de centros de innovación tecnológica para agroindustria y calzado", tituloCorto: "CITE Lambayeque", resumen: "Apoyo técnico especializado para mejora de productividad y calidad exportadora.", url: "https://observatorio.ceplan.gob.pe/ficha/o6_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Fortalecimiento de la educación técnica dual para sectores agroexportador y comercial", tituloCorto: "Educación técnica dual", resumen: "Alianzas estratégicas entre institutos y empresas agroindustriales locales.", url: "https://observatorio.ceplan.gob.pe/ficha/o7_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Educación", tematica: "Social", periodo: "2023-2030" },
+        { titulo: "Uso de plataformas digitales de gobierno abierto para transparencia administrativa", tituloCorto: "Gobierno abierto Lambayeque", resumen: "Herramientas electrónicas para participación ciudadana y rendición de cuentas.", url: "https://observatorio.ceplan.gob.pe/ficha/o8_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Gobernanza", tematica: "Política", periodo: "2023-2030" }
+      ]
+    },
+    "Señal débil": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Uso de nanotecnología para remediación de suelos agrícolas salinizados en Olmos", tituloCorto: "Nanotecnología suelos Olmos", resumen: "Aplicación experimental de nanopartículas para restaurar fertilidad en tierras áridas.", url: "https://observatorio.ceplan.gob.pe/ficha/s1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Innovación agrícola", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Sistemas automatizados de alerta temprana para desbordes de ríos con inteligencia artificial", tituloCorto: "IA alerta inundaciones", resumen: "Redes de sensores hidrológicos y algoritmos predictivos para prevenir desastres por El Niño.", url: "https://observatorio.ceplan.gob.pe/ficha/s2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología predictiva", tematica: "Tecnológica", periodo: "2030-2040" },
+        { titulo: "Turismo virtual inmersivo en complejos arqueológicos cerrados para conservación", tituloCorto: "Turismo virtual arqueológico", resumen: "Experiencias de realidad aumentada para visitar tumbas reales sin riesgo de deterioro.", url: "https://observatorio.ceplan.gob.pe/ficha/s3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Tecnología cultural", tematica: "Tecnológica", periodo: "2023-2030" },
+        { titulo: "Granjas agrícolas verticales hidropónicas urbanas en Chiclayo", tituloCorto: "Agricultura vertical urbana Chiclayo", resumen: "Cultivos intensivos en espacios cerrados para suministro local de hortalizas frescas.", url: "https://observatorio.ceplan.gob.pe/ficha/s4_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Agricultura urbana", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
+    },
+    "Carta salvaje": {
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Fenómeno El Niño extraordinario con colapso total del sistema de drenaje y saneamiento de Chiclayo", tituloCorto: "Colapso sanitario El Niño", resumen: "Escenario crítico de crisis sanitaria e inundación urbana masiva en la capital regional.", url: "https://observatorio.ceplan.gob.pe/ficha/c1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desastre natural y sanitario", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Megasequía prolongada que interrumpa el trasvase de agua del proyecto Olmos", tituloCorto: "Crisis hídrica Olmos", resumen: "Escasez severa de recursos hídricos en la cordillera que paralice la agroexportación de Olmos.", url: "https://observatorio.ceplan.gob.pe/ficha/c2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis hídrica", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Plaga fitosanitaria devastadora que afecte los cultivos extensivos de caña y frutales", tituloCorto: "Plaga agrícola masiva", resumen: "Patógeno agresivo resistente a controles que diezme la producción agrícola regional.", url: "https://observatorio.ceplan.gob.pe/ficha/c3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis fitosanitaria", tematica: "Ambiental", periodo: "2030-2040" },
+        { titulo: "Colapso institucional municipal prolongado con intervención estatal centralizada", tituloCorto: "Intervención municipal total", resumen: "Crisis de gobernanza en Chiclayo que paralice la inversión pública por varios años.", url: "https://observatorio.ceplan.gob.pe/ficha/c4_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Crisis institucional", tematica: "Política", periodo: "2030-2040" }
+      ]
     },
     "Escenarios": {
-      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-      articulos: []
+      descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lambayeque%20-%20Tendencias%20territoriales.pdf",
+      articulos: [
+        { titulo: "Escenario Tendencial: Agroexportación boyante con crisis sanitarias y de drenaje urbano", tituloCorto: "Escenario Tendencial", resumen: "Crecimiento económico impulsado por Olmos pero con persistentes problemas urbanos y de saneamiento.", url: "https://observatorio.ceplan.gob.pe/ficha/e1_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Prospectiva regional", tematica: "Política", periodo: "2030-2040" },
+        { titulo: "Escenario Óptimo: Lambayeque, hub agroexportador, portuario y cultural sostenible del norte", tituloCorto: "Escenario Óptimo", resumen: "Desarrollo articulado con puerto propio, solución de saneamiento y gestión hídrica eficiente.", url: "https://observatorio.ceplan.gob.pe/ficha/e2_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Desarrollo sostenible", tematica: "Económica", periodo: "2030-2040" },
+        { titulo: "Escenario Crítico: Inundaciones recurrentes por El Niño y colapso sanitario severo", tituloCorto: "Escenario Crítico", resumen: "Desastres climáticos y crisis institucional que frenen el desarrollo regional y afecten la calidad de vida.", url: "https://observatorio.ceplan.gob.pe/ficha/e3_lb", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Riesgo sistémico", tematica: "Ambiental", periodo: "2030-2040" }
+      ]
     }
   }
 };

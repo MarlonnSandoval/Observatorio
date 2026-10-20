@@ -45,7 +45,7 @@ export class ActualidadComponent {
       // 1. Filtro por Select: si hay select seleccionado, debe coincidir estrictamente con el tema del artículo
       const cumpleFuente = !fuenteSelect || articulo.institucion === fuenteSelect;
       const cumpleAnio = !anioSelect || articulo.anio === anioSelect;
-      const cumpleTipo = !tipoSelect || articulo.tipo === tipoSelect;
+      const cumpleTipo = !tipoSelect || articulo.tematica === tipoSelect;
 
       // 2. Filtro por Texto: evalúa título, institución, autor o tema (solo si el usuario escribió algo)
       const cumpleTexto = !busqueda ||

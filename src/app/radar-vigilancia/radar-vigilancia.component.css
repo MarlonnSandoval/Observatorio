@@ -783,3 +783,131 @@ button.vig-nodo { cursor: pointer; }
 
 .vig-detalle .form-control { width: 100%; }
 .modal-body .form-control { width: 100%; }
+
+
+/* ===================================================
+   Fase 1 y 2 · etapas, asistente de búsqueda y captación
+   =================================================== */
+.vig-etapas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.vig-etapa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+button.vig-etapa { cursor: pointer; }
+
+.vig-etapa-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.vig-etapa.completa { border-color: #0f766e; color: #0f766e; }
+.vig-etapa.completa .vig-etapa-num { background: #0f766e; color: #ffffff; }
+.vig-etapa.activa { border-color: #416BAE; background: #e8eef8; color: #0f3a6b; }
+.vig-etapa.activa .vig-etapa-num { background: #416BAE; color: #ffffff; }
+
+.vig-seccion {
+  padding: 14px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.vig-seccion-titulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.vig-flecha { margin: 2px 0 6px 4px; font-size: 0.85rem; color: #64748b; }
+
+.vig-link {
+  padding: 0;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  color: #416BAE;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.vig-razon {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  font-size: 0.85rem;
+}
+
+/* Asistente */
+.p2-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  margin-bottom: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.p2-item input { margin-top: 4px; flex-shrink: 0; }
+.p2-nivel { margin-right: 12px; font-size: 0.85rem; }
+
+.p2-form { display: flex; flex-direction: column; gap: 6px; }
+.p2-form > label { margin-top: 8px; font-size: 0.82rem; font-weight: 600; color: #64748b; }
+.p2-form .form-control { width: 100%; }
+.p2-form .p2-item { font-weight: 400; color: inherit; margin-top: 0; }
+
+/* Captación */
+.p2-traza {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.p2-balance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+/* Evaluación de señales */
+.vig-eval {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}

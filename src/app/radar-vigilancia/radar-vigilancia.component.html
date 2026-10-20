@@ -63,7 +63,8 @@
               <div *ngIf="senalEnRevision" class="vig-aviso mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
                   <strong>Señal en revisión:</strong> {{ senalEnRevision.titulo }}.
-                  Analiza si se vincula a un escenario y si corresponde incorporarla como hecho precursor.
+                  Analiza su relación con los escenarios y define si corresponde incorporarla como elemento de vigilancia o hecho precursor
+                  (con su indicador y umbral).
                 </div>
                 <button type="button" class="btn btn-outline-primary" (click)="senalEnRevision = null">Entendido</button>
               </div>
@@ -80,7 +81,10 @@
 
               <ng-container *ngIf="hasSelection && hasData">
                 <h5 class="fw-bold mb-1">{{ selectedRegion }}</h5>
-                <p class="small text-muted mb-3">Casos existentes en el Observatorio. Elige qué vigilar.</p>
+                <p class="small text-muted mb-3">
+                  Casos existentes en el Observatorio. La vigilancia se diseña e inicia desde un <strong>escenario</strong>;
+                  tendencias, riesgos y oportunidades son los elementos que explican por qué se vigila.
+                </p>
 
                 <!-- Categorías -->
                 <div class="vig-tabs mb-3">
@@ -95,9 +99,7 @@
                   <div class="col-12 col-md-6" *ngFor="let f of getFichas(categoriaActiva)">
                     <button type="button" class="vig-ficha w-100 text-start" [ngClass]="getClaseCategoria(f.categoria)"
                       [class.active]="f === fichaActiva" (click)="seleccionarFicha(f)">
-                      <span class="vig-tag" [ngClass]="tieneDiseno(f) ? 'hecho-observable' : 'sin-diseno'">
-                        {{ tieneDiseno(f) ? 'Con vigilancia' : 'Sin diseño' }}
-                      </span>
+                      <span class="vig-tag" [ngClass]="getClaseDiseno(f)">{{ getEtiquetaDiseno(f) }}</span>
                       <span class="vig-tag" *ngIf="f.periodo">{{ f.periodo }}</span>
                       <strong class="d-block mt-1">{{ f.titulo }}</strong>
                     </button>
@@ -120,83 +122,172 @@
                     <h4 class="fw-bold mt-2 mb-1">{{ f.titulo }}</h4>
                     <p class="text-secondary">{{ f.resumen }}</p>
 
-                    <div *ngIf="!tieneDiseno(f)" class="vig-aviso">
-                      Este caso aún no tiene hechos precursores definidos. El Ceplan los diseñará a partir de la ficha.
-                    </div>
+                    <!-- ===== ESCENARIO: las 4 etapas de la Fase 1 ===== -->
+                    <ng-container *ngIf="f.categoria === 'Escenarios'">
+                      <ng-container *ngIf="getDisenoEscenario(f) as d; else sinDisenoEscenario">
+                        <p class="small text-muted">{{ d.instrumento }} · Horizonte {{ d.horizonte }}</p>
 
-                    <ng-container *ngIf="tieneDiseno(f)">
-                      <div class="row g-3 my-1">
-                        <div class="col-12 col-lg-6">
-                          <ng-container *ngIf="f.categoria === 'Escenarios'; else relacionados">
-                            <h6 class="vig-subtitulo">Elementos de futuro del escenario</h6>
+                        <!-- Avance -->
+                        <div class="vig-etapas">
+                          <div class="vig-etapa" *ngFor="let n of etapasPaso1; let i = index" [class.completa]="getEtapasCompletas(f)[i]">
+                            <span class="vig-etapa-num">{{ getEtapasCompletas(f)[i] ? '✓' : i + 1 }}</span>
+                            <span>{{ n }}</span>
+                          </div>
+                        </div>
+
+                        <!-- Etapa 1 -->
+                        <section class="vig-seccion">
+                          <h6 class="vig-seccion-titulo">
+                            Etapa 1 · Recuperar los insumos del plan
+                            <span class="vig-tag" [ngClass]="getEtapasCompletas(f)[0] ? 'hecho-observable' : 'sin-diseno'">
+                              {{ getEtapasCompletas(f)[0] ? 'Completa' : 'Pendiente' }}</span>
+                          </h6>
+                          <p class="small text-muted">Se reutiliza lo que ya existe en el plan aprobado; no se repite el análisis prospectivo.</p>
+                          <div class="table-responsive" *ngIf="d.insumos.length > 0">
+                            <table class="table table-sm vig-tabla">
+                              <thead><tr><th style="width: 30%">Tipo de insumo</th><th>Información recuperada del plan</th></tr></thead>
+                              <tbody>
+                                <tr *ngFor="let i of d.insumos"><td><strong>{{ i.tipo }}</strong></td><td>{{ i.informacion }}</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div *ngIf="d.insumos.length === 0" class="vig-aviso">Aún no se recuperaron los insumos del plan.</div>
+                        </section>
+
+                        <!-- Etapa 2 -->
+                        <section class="vig-seccion">
+                          <h6 class="vig-seccion-titulo">
+                            Etapa 2 · Reconstruir la secuencia lógica del escenario
+                            <span class="vig-tag" [ngClass]="getEtapasCompletas(f)[1] ? 'hecho-observable' : 'sin-diseno'">
+                              {{ getEtapasCompletas(f)[1] ? 'Completa' : 'Pendiente' }}</span>
+                          </h6>
+                          <p class="small text-muted">
+                            Solo se vinculan los elementos de futuro que aportan para anticipar cambios en la trayectoria del escenario.
+                            Selecciona uno para ver los hechos que se derivan de él.
+                          </p>
+                          <ng-container *ngIf="d.elementos.length > 0; else sinElementos">
                             <button type="button" class="vig-nodo w-100 text-start" *ngFor="let e of getElementosEscenario(f)"
                               [ngClass]="getClaseCategoria(e.ficha.categoria)" [class.active]="elementoResaltado === e.ficha.id"
                               [class.atenuado]="estaAtenuado(e.ficha.id)" (click)="alternarElemento(e.ficha.id)">
                               <span class="vig-tag">{{ getEtiquetaCategoria(e.ficha.categoria) }}</span>
                               <strong class="d-block">{{ e.ficha.titulo }}</strong>
-                              <small class="text-muted">{{ e.justificacion }}</small>
+                              <small class="text-muted">Por qué es pertinente: {{ e.justificacion }}</small>
                             </button>
+                            <div class="vig-flecha">↓ configuran el escenario «{{ f.titulo }}»</div>
                           </ng-container>
-                          <ng-template #relacionados>
-                            <h6 class="vig-subtitulo">Escenarios que lo utilizan</h6>
-                            <button type="button" class="vig-nodo w-100 text-start cat-escenarios"
-                              *ngFor="let s of getEscenariosDeElemento(f)" (click)="irAFicha(s)">
-                              <span class="vig-tag">Escenario</span>
-                              <strong class="d-block">{{ s.titulo }}</strong>
-                            </button>
-                            <p *ngIf="getEscenariosDeElemento(f).length === 0" class="small text-muted">
-                              Aún no está vinculado a un escenario con diseño de vigilancia.
-                            </p>
+                          <ng-template #sinElementos>
+                            <div class="vig-aviso">Aún no se vincularon elementos de futuro a este escenario.</div>
                           </ng-template>
-                        </div>
+                        </section>
 
-                        <div class="col-12 col-lg-6">
-                          <h6 class="vig-subtitulo">Hechos precursores que se vigilan</h6>
-                          <div class="vig-nodo vig-hecho" *ngFor="let h of getHechos(f)"
-                            [class.atenuado]="estaAtenuado(h.elementoId)">
+                        <!-- Etapa 3 -->
+                        <section class="vig-seccion">
+                          <h6 class="vig-seccion-titulo">
+                            Etapa 3 · Identificar hechos precursores
+                            <span class="vig-tag" [ngClass]="getEtapasCompletas(f)[2] ? 'hecho-observable' : 'sin-diseno'">
+                              {{ getEtapasCompletas(f)[2] ? 'Completa' : 'Pendiente' }}</span>
+                          </h6>
+                          <p class="small text-muted">
+                            El hecho precursor no repite la tendencia o el riesgo: expresa qué tendría que empezar a ocurrir.
+                            <strong>Observable</strong>: ya hay evidencia verificable. <strong>Potencial</strong>: aún sin evidencia suficiente;
+                            puede pasar a observable.
+                          </p>
+                          <div class="vig-nodo vig-hecho" *ngFor="let h of getHechos(f)" [class.atenuado]="estaAtenuado(h.elementoId)">
                             <strong>{{ h.id }}</strong>
                             <span class="vig-tag" [ngClass]="getClaseTipoHecho(h.tipo)">{{ h.tipo | titlecase }}</span>
                             <div>{{ h.descripcion }}</div>
-                            <small class="text-muted" *ngIf="f.categoria === 'Escenarios'">Deriva de: {{ getTituloElemento(h.elementoId) }}</small>
+                            <small class="text-muted d-block">Deriva de: {{ getTituloElemento(h.elementoId) }}</small>
+                            <button type="button" class="vig-link" (click)="alternarRazonamiento(h.id)">
+                              {{ hechoRazonamiento === h.id ? 'Ocultar razonamiento' : 'Ver razonamiento' }}
+                            </button>
+                            <ol class="vig-razon" *ngIf="hechoRazonamiento === h.id">
+                              <li><strong>Aspecto relevante:</strong> {{ h.razonamiento.aspecto }}</li>
+                              <li><strong>Cambio de trayectoria:</strong> {{ h.razonamiento.cambio }}</li>
+                              <li><strong>Manifestación anticipatoria:</strong> {{ h.razonamiento.manifestacion }}</li>
+                              <li><strong>Hecho precursor:</strong> {{ h.descripcion }}</li>
+                            </ol>
+                          </div>
+                          <div *ngIf="getHechos(f).length === 0" class="vig-aviso">Aún no se identificaron hechos precursores.</div>
+                        </section>
+
+                        <!-- Etapa 4 -->
+                        <section class="vig-seccion">
+                          <h6 class="vig-seccion-titulo">
+                            Etapa 4 · Definir indicadores, fuentes, periodicidad y umbrales
+                            <span class="vig-tag" [ngClass]="getEtapasCompletas(f)[3] ? 'hecho-observable' : 'sin-diseno'">
+                              {{ getEtapasCompletas(f)[3] ? 'Completa' : 'Pendiente' }}</span>
+                          </h6>
+                          <p class="small text-muted">
+                            El indicador se elige por su capacidad de observar el hecho, no por su disponibilidad.
+                            En hechos potenciales el umbral puede ser una condición cualitativa verificable.
+                          </p>
+                          <div class="table-responsive" *ngIf="getHechos(f).length > 0">
+                            <table class="table table-sm vig-tabla">
+                              <thead>
+                                <tr>
+                                  <th>Hecho</th><th>Indicador o proxy</th><th>Línea base</th><th>Fuente</th>
+                                  <th>Periodicidad</th><th>Tipo de umbral</th><th>Umbral o condición de alerta</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let h of getHechos(f)" [class.atenuado]="estaAtenuado(h.elementoId)">
+                                  <td><strong>{{ h.id }}</strong></td>
+                                  <td>{{ h.indicador }}</td>
+                                  <td>{{ h.lineaBase }}</td>
+                                  <td>{{ h.fuente }}</td>
+                                  <td>{{ h.periodicidad }}</td>
+                                  <td>{{ getEtiquetaUmbral(h.tipoUmbral) }}</td>
+                                  <td>{{ h.umbral }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div *ngIf="getHechos(f).length === 0" class="vig-aviso">Primero se necesitan los hechos precursores (etapa 3).</div>
+                        </section>
+
+                        <div class="vig-acciones">
+                          <span class="small text-muted">Escenario → elemento de futuro → hecho precursor → indicador → umbral</span>
+                          <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-primary" [disabled]="getHechos(f).length === 0"
+                              (click)="descargarFicha()">Descargar matriz de diseño</button>
+                            <button type="button" class="btn btn-primary" [disabled]="!puedeIniciar"
+                              (click)="iniciarVigilancia()">Iniciar vigilancia (Paso 2)</button>
                           </div>
                         </div>
-                      </div>
-                      <p class="small text-muted" *ngIf="f.categoria === 'Escenarios'">
-                        Selecciona un elemento de futuro para ver solo los hechos que se derivan de él.
-                        Un hecho potencial pasa a observable cuando existe evidencia suficiente.
-                      </p>
-
-                      <h5 class="fw-bold mt-4 mb-2">Indicadores, fuentes y umbrales</h5>
-                      <div class="table-responsive">
-                        <table class="table table-sm align-middle vig-tabla">
-                          <thead>
-                            <tr>
-                              <th>Hecho</th>
-                              <th>Indicador o proxy</th>
-                              <th>Fuente</th>
-                              <th>Periodicidad</th>
-                              <th>Umbral o condición de alerta</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let h of getHechos(f)" [class.atenuado]="estaAtenuado(h.elementoId)">
-                              <td><strong>{{ h.id }}</strong></td>
-                              <td>{{ h.indicador }}</td>
-                              <td>{{ h.fuente }}</td>
-                              <td>{{ h.periodicidad }}</td>
-                              <td>{{ h.umbral }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <div class="vig-acciones">
-                        <span class="small text-muted">Escenario → elemento de futuro → hecho precursor → indicador → umbral</span>
-                        <div class="d-flex gap-2">
-                          <button type="button" class="btn btn-outline-primary" (click)="descargarFicha()">Descargar ficha de diseño</button>
-                          <button type="button" class="btn btn-primary" (click)="iniciarVigilancia()">Iniciar vigilancia (Paso 2)</button>
+                        <p *ngIf="!puedeIniciar" class="small text-muted text-end mt-2 mb-0">
+                          Completa las 4 etapas para iniciar la vigilancia ({{ getAvance(f) }} de 4).
+                        </p>
+                      </ng-container>
+                      <ng-template #sinDisenoEscenario>
+                        <div class="vig-aviso">
+                          Este escenario aún no tiene diseño de vigilancia. El Ceplan lo iniciará recuperando los insumos del plan.
                         </div>
+                      </ng-template>
+                    </ng-container>
+
+                    <!-- ===== TENDENCIA / RIESGO / OPORTUNIDAD ===== -->
+                    <ng-container *ngIf="f.categoria !== 'Escenarios'">
+                      <h6 class="vig-subtitulo">Escenarios que lo utilizan</h6>
+                      <button type="button" class="vig-nodo w-100 text-start cat-escenarios"
+                        *ngFor="let s of getEscenariosDeElemento(f)" (click)="irAFicha(s)">
+                        <span class="vig-tag">Escenario</span>
+                        <strong class="d-block">{{ s.titulo }}</strong>
+                      </button>
+                      <p *ngIf="getEscenariosDeElemento(f).length === 0" class="small text-muted">
+                        Aún no está vinculado a un escenario con diseño de vigilancia.
+                      </p>
+                      <div class="vig-aviso">
+                        Un elemento de futuro no se vigila por sí solo: se vigila el escenario del que forma parte.
+                        Sus hechos precursores se gestionan desde el escenario.
                       </div>
+                      <ng-container *ngIf="getHechos(f).length > 0">
+                        <h6 class="vig-subtitulo mt-3">Hechos precursores derivados</h6>
+                        <div class="vig-nodo vig-hecho" *ngFor="let h of getHechos(f)">
+                          <strong>{{ h.id }}</strong>
+                          <span class="vig-tag" [ngClass]="getClaseTipoHecho(h.tipo)">{{ h.tipo | titlecase }}</span>
+                          <div>{{ h.descripcion }}</div>
+                        </div>
+                      </ng-container>
                     </ng-container>
                   </div>
                 </ng-container>
@@ -256,74 +347,254 @@
                 </button>
               </div>
 
-              <!-- Estrategia de búsqueda -->
+              <!-- ===== ETAPA 1: ESTRATEGIA DE BÚSQUEDA ===== -->
               <ng-container *ngIf="pestanaPaso2 === 'ESTRATEGIA'">
-                <dl class="p2-dl" *ngIf="getPerfil(ha.id) as p; else sinPerfil">
-                  <div class="p2-row">
-                    <dt>Modalidad</dt>
-                    <dd><span class="vig-tag">{{ p.modalidad === 'DIRIGIDA' ? 'Búsqueda dirigida' : 'Búsqueda exploratoria' }}</span></dd>
+
+                <!-- Asistente de 4 pasos -->
+                <ng-container *ngIf="asistente as a; else perfilVista">
+                  <div class="vig-etapas">
+                    <button type="button" class="vig-etapa" *ngFor="let n of pasosBusqueda; let i = index"
+                      [class.activa]="a.paso === i + 1" [class.completa]="a.paso > i + 1" (click)="irAPasoBusqueda(i + 1)">
+                      <span class="vig-etapa-num">{{ a.paso > i + 1 ? '✓' : i + 1 }}</span>
+                      <span>{{ n }}</span>
+                    </button>
                   </div>
-                  <div class="p2-row">
-                    <dt>Información requerida</dt>
-                    <dd>{{ p.informacionRequerida }}</dd>
-                  </div>
-                  <div class="p2-row">
-                    <dt>Fuentes</dt>
-                    <dd>
-                      <div *ngFor="let f of p.fuentes" class="mb-1">
-                        <span class="vig-tag" [ngClass]="getClaseNivel(f.nivel)">{{ getEtiquetaNivel(f.nivel) }}</span>
-                        {{ f.nombre }} <small class="text-muted">({{ f.principal ? 'principal' : 'complementaria' }})</small>
+
+                  <ng-container *ngIf="getMaterial(ha.id) as m">
+
+                    <!-- Paso 1: insumos del plan -->
+                    <div *ngIf="a.paso === 1">
+                      <h6 class="fw-bold">Paso 1 · Revisión de insumos del instrumento (búsqueda interna)</h6>
+                      <p class="small text-muted">
+                        El elemento de futuro y el escenario ya se analizaron al formular el plan. Se rescatan las fuentes, bases de datos
+                        y referencias documentadas en <strong>{{ fv.titulo }}</strong> y su instrumento aprobado.
+                      </p>
+                      <label class="p2-item" *ngFor="let r of m.referenciasPlan">
+                        <input type="checkbox" [checked]="estaSeleccionado('planIds', r.id)" (change)="alternarSeleccion('planIds', r.id)">
+                        <span>
+                          <span class="vig-tag">{{ r.tipo }}</span>
+                          <span class="vig-tag" [ngClass]="getClaseNivel(r.nivel)">{{ getEtiquetaNivel(r.nivel) }}</span>
+                          {{ r.descripcion }}
+                        </span>
+                      </label>
+                    </div>
+
+                    <!-- Paso 2: búsqueda interna en el ONP -->
+                    <div *ngIf="a.paso === 2">
+                      <h6 class="fw-bold">Paso 2 · Búsqueda interna en el Observatorio Nacional de Prospectiva</h6>
+                      <p class="small text-muted">
+                        Antecedentes que el ONP ya tiene sobre el hecho precursor y sus elementos prospectivos, analizados por los especialistas.
+                        Se reutilizan los que sirvan.
+                      </p>
+                      <label class="p2-item" *ngFor="let o of m.antecedentesOnp">
+                        <input type="checkbox" [checked]="estaSeleccionado('onpIds', o.id)" (change)="alternarSeleccion('onpIds', o.id)">
+                        <span>
+                          <span class="vig-tag">{{ o.tipo }}</span> <strong>{{ o.titulo }}</strong>
+                          <small class="d-block text-muted">{{ o.detalle }}</small>
+                        </span>
+                      </label>
+                    </div>
+
+                    <!-- Paso 3: búsqueda abierta -->
+                    <div *ngIf="a.paso === 3">
+                      <h6 class="fw-bold">Paso 3 · Búsqueda abierta y complementaria</h6>
+                      <p class="small text-muted">
+                        Búsqueda en entornos externos (bases académicas, repositorios oficiales, portales de noticias, publicaciones
+                        especializadas) conectados directa o indirectamente con el hecho.
+                      </p>
+                      <div class="row g-2">
+                        <div class="col-12 col-md-6">
+                          <label class="form-label small mb-1">Palabras clave (separadas por coma)</label>
+                          <input type="text" class="form-control" placeholder="IRAG inusitada, Callao" [(ngModel)]="a.terminos">
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label class="form-label small mb-1">Ecuación de búsqueda (Y, O, NO)</label>
+                          <input type="text" class="form-control" placeholder='"IRAG inusitada" Y Callao' [(ngModel)]="a.ecuacion">
+                        </div>
                       </div>
-                    </dd>
+                      <div class="mt-2">
+                        <span class="small text-muted me-2">Tipo de fuente:</span>
+                        <label class="p2-nivel" *ngFor="let n of nivelesFuente">
+                          <input type="checkbox" [checked]="a.niveles.includes(n)" (change)="alternarNivel(n)">
+                          {{ getEtiquetaNivel(n) }}
+                        </label>
+                        <button type="button" class="btn btn-primary ms-2" (click)="buscar()">Buscar</button>
+                      </div>
+
+                      <div class="mt-3" *ngIf="a.buscado">
+                        <p class="small text-muted">Resultados de ejemplo (búsqueda simulada). Marca los que se incorporan como fuente.</p>
+                        <label class="p2-item" *ngFor="let r of getResultadosFiltrados(ha.id)">
+                          <input type="checkbox" [checked]="estaSeleccionado('externosIds', r.id)" (change)="alternarSeleccion('externosIds', r.id)">
+                          <span>
+                            <span class="vig-tag" [ngClass]="getClaseNivel(r.nivel)">{{ getEtiquetaNivel(r.nivel) }}</span>
+                            <small class="text-muted">{{ r.fecha | date:'dd/MM/yyyy' }} · {{ r.fuente }}</small>
+                            <strong class="d-block">{{ r.titulo }}</strong>
+                            <small class="text-muted">{{ r.fragmento }}</small>
+                            <small class="d-block text-warning-emphasis" *ngIf="r.nivel === 'ABIERTA'">
+                              Corroborar con fuente oficial antes de usarla como sustento de una alerta.
+                            </small>
+                          </span>
+                        </label>
+                        <p *ngIf="getResultadosFiltrados(ha.id).length === 0" class="small text-muted">
+                          No hay resultados para los tipos de fuente seleccionados.
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Paso 4: traducción y configuración en el ONP -->
+                    <div *ngIf="a.paso === 4">
+                      <h6 class="fw-bold">Paso 4 · Traducción y configuración en el ONP</h6>
+                      <p class="small text-muted">
+                        La estrategia final se convierte en parámetros de consulta y seguimiento para automatizar y estandarizar la captación.
+                        Insumos usados: {{ a.planIds.length }} del plan · {{ a.onpIds.length }} del ONP · {{ a.externosIds.length }} externos.
+                      </p>
+
+                      <div class="p2-form">
+                        <label>Modalidad</label>
+                        <select class="form-control" [(ngModel)]="a.modalidad">
+                          <option value="DIRIGIDA">Búsqueda dirigida (indicadores y fuentes definidos)</option>
+                          <option value="EXPLORATORIA">Búsqueda exploratoria (señales no previstas)</option>
+                        </select>
+
+                        <label>Qué información se requiere</label>
+                        <textarea rows="2" class="form-control" [(ngModel)]="a.informacionRequerida"></textarea>
+
+                        <label>Dónde se buscará (marca la fuente principal)</label>
+                        <div>
+                          <label class="p2-item" *ngFor="let f of a.fuentes">
+                            <input type="radio" name="fuentePrincipal" [checked]="f.principal" (change)="marcarPrincipal(f)">
+                            <span>
+                              <span class="vig-tag" [ngClass]="getClaseNivel(f.nivel)">{{ getEtiquetaNivel(f.nivel) }}</span>
+                              {{ f.nombre }} <small class="text-muted">({{ f.principal ? 'principal' : 'complementaria' }})</small>
+                            </span>
+                          </label>
+                          <p *ngIf="a.fuentes.length === 0" class="small text-muted">
+                            Selecciona al menos una fuente en los pasos 1 o 3.
+                          </p>
+                        </div>
+
+                        <label>Cómo se accederá a la información</label>
+                        <textarea rows="2" class="form-control" placeholder="Base de datos, registro administrativo, publicación, alerta, consulta web..."
+                          [(ngModel)]="a.acceso"></textarea>
+
+                        <label>Criterios de búsqueda: palabras clave y ecuación</label>
+                        <input type="text" class="form-control mb-1" placeholder="Palabras clave, separadas por coma" [(ngModel)]="a.terminos">
+                        <input type="text" class="form-control" placeholder='Ecuación: "IRAG inusitada" Y Callao' [(ngModel)]="a.ecuacion">
+
+                        <label>Filtros temáticos, territoriales y temporales</label>
+                        <input type="text" class="form-control" [(ngModel)]="a.filtros">
+
+                        <label>Mecanismo de captación</label>
+                        <select class="form-control" [(ngModel)]="a.mecanismo">
+                          <option value="AUTOMATIZADA">Automatizada (API, bases estructuradas, feeds)</option>
+                          <option value="SEMIAUTOMATIZADA">Semiautomatizada (requiere revisión humana)</option>
+                          <option value="MANUAL">Manual (lectura y registro por el equipo técnico)</option>
+                        </select>
+
+                        <label>Frecuencia de actualización</label>
+                        <input type="text" class="form-control" [(ngModel)]="a.frecuencia">
+
+                        <label>Criterio de pertinencia (correspondencia con el hecho, el territorio, el periodo y el escenario)</label>
+                        <textarea rows="2" class="form-control" [(ngModel)]="a.pertinencia"></textarea>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <div class="vig-acciones">
+                    <button type="button" class="btn btn-outline-primary" (click)="cerrarAsistente()">Cancelar</button>
+                    <div class="d-flex gap-2">
+                      <button type="button" class="btn btn-outline-primary" *ngIf="a.paso > 1" (click)="anteriorPaso()">Anterior</button>
+                      <button type="button" class="btn btn-primary" *ngIf="a.paso < 4" (click)="siguientePaso()">Siguiente</button>
+                      <button type="button" class="btn btn-primary" *ngIf="a.paso === 4" [disabled]="!puedeConfigurar"
+                        (click)="configurarEnOnp()">Configurar en el ONP</button>
+                    </div>
                   </div>
-                  <div class="p2-row">
-                    <dt>Mecanismo de captación</dt>
-                    <dd>{{ getEtiquetaMecanismo(p.mecanismo) }}</dd>
-                  </div>
-                  <div class="p2-row">
-                    <dt>Términos de búsqueda</dt>
-                    <dd><span class="p2-chip" *ngFor="let t of p.terminos">{{ t }}</span></dd>
-                  </div>
-                  <div class="p2-row">
-                    <dt>Frecuencia</dt>
-                    <dd>{{ p.frecuencia }}</dd>
-                  </div>
-                  <div class="p2-row">
-                    <dt>Criterio de pertinencia</dt>
-                    <dd>{{ p.pertinencia }}</dd>
-                  </div>
-                </dl>
-                <ng-template #sinPerfil>
-                  <div class="vig-aviso">
-                    El perfil de búsqueda de este hecho aún no está configurado en el ONP. El Ceplan debe definir fuentes,
-                    mecanismo y frecuencia antes de captar evidencia.
-                  </div>
+                </ng-container>
+
+                <!-- Perfil ya configurado -->
+                <ng-template #perfilVista>
+                  <dl class="p2-dl" *ngIf="getPerfil(ha.id) as p; else sinPerfil">
+                    <div class="p2-row">
+                      <dt>Modalidad</dt>
+                      <dd><span class="vig-tag">{{ p.modalidad === 'DIRIGIDA' ? 'Búsqueda dirigida' : 'Búsqueda exploratoria' }}</span></dd>
+                    </div>
+                    <div class="p2-row"><dt>Qué información se requiere</dt><dd>{{ p.informacionRequerida }}</dd></div>
+                    <div class="p2-row">
+                      <dt>Dónde se buscará</dt>
+                      <dd>
+                        <div *ngFor="let f of p.fuentes" class="mb-1">
+                          <span class="vig-tag" [ngClass]="getClaseNivel(f.nivel)">{{ getEtiquetaNivel(f.nivel) }}</span>
+                          {{ f.nombre }} <small class="text-muted">({{ f.principal ? 'principal' : 'complementaria' }})</small>
+                        </div>
+                      </dd>
+                    </div>
+                    <div class="p2-row"><dt>Cómo se accederá</dt><dd>{{ p.acceso }}</dd></div>
+                    <div class="p2-row">
+                      <dt>Criterios de búsqueda</dt>
+                      <dd>
+                        <div><span class="p2-chip" *ngFor="let t of p.terminos">{{ t }}</span></div>
+                        <div class="small"><strong>Ecuación:</strong> {{ p.ecuacion }}</div>
+                        <div class="small" *ngIf="p.filtros"><strong>Filtros:</strong> {{ p.filtros }}</div>
+                      </dd>
+                    </div>
+                    <div class="p2-row"><dt>Mecanismo de captación</dt><dd>{{ getEtiquetaMecanismo(p.mecanismo) }}</dd></div>
+                    <div class="p2-row"><dt>Frecuencia</dt><dd>{{ p.frecuencia }}</dd></div>
+                    <div class="p2-row"><dt>Criterio de pertinencia</dt><dd>{{ p.pertinencia }}</dd></div>
+                    <div class="p2-row">
+                      <dt>Insumos usados</dt>
+                      <dd>{{ p.planIds.length }} del plan · {{ p.onpIds.length }} del ONP · {{ p.externosIds.length }} externos</dd>
+                    </div>
+                    <div class="p2-row">
+                      <dt></dt>
+                      <dd><button type="button" class="btn btn-outline-primary" (click)="abrirAsistente(ha.id)">Editar estrategia</button></dd>
+                    </div>
+                  </dl>
+                  <ng-template #sinPerfil>
+                    <div class="vig-aviso">
+                      El perfil de búsqueda de este hecho aún no está configurado en el ONP. Define las fuentes, el acceso y los criterios
+                      antes de captar evidencia.
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" (click)="abrirAsistente(ha.id)">Diseñar estrategia de búsqueda</button>
+                  </ng-template>
                 </ng-template>
-                <p class="small text-muted mt-3 mb-0" *ngIf="getPerfil(ha.id)">
-                  {{ ha.id }} → {{ ha.indicador }} → información requerida → fuente → mecanismo → frecuencia
-                </p>
               </ng-container>
 
-              <!-- Evidencia captada -->
+              <!-- ===== ETAPA 2: EVIDENCIA CAPTADA ===== -->
               <ng-container *ngIf="pestanaPaso2 === 'EVIDENCIA'">
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
-                  <p class="small text-muted mb-0">
-                    Lo captado es un insumo de trabajo. No es evidencia validada ni alerta: eso se analiza en el Paso 3.
-                  </p>
-                  <button type="button" class="btn btn-primary" (click)="abrirModalEvidencia()">Registrar evidencia</button>
+                <div class="p2-traza">
+                  <span><strong>Escenario:</strong> {{ fv.titulo }}</span>
+                  <span><strong>Elemento de futuro:</strong> {{ getTituloElemento(ha.elementoId) }}</span>
+                  <span><strong>Hecho:</strong> {{ ha.id }} ({{ ha.tipo | titlecase }})</span>
+                  <span><strong>Indicador:</strong> {{ ha.indicador }}</span>
                 </div>
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 my-2">
+                  <p class="small text-muted mb-0">
+                    Lo captado es un insumo de trabajo: no es evidencia validada ni alerta (eso se analiza en el Paso 3).
+                    Se registra tanto lo que confirma la trayectoria del escenario como lo que la contradice.
+                  </p>
+                  <button type="button" class="btn btn-primary" [disabled]="!getPerfil(ha.id)"
+                    (click)="abrirModalEvidencia()">Registrar evidencia</button>
+                </div>
+                <div class="vig-aviso mb-2" *ngIf="!getPerfil(ha.id)">
+                  Configura primero la estrategia de búsqueda de este hecho.
+                </div>
+
+                <div class="p2-balance" *ngIf="getEvidencias(ha.id).length > 0">
+                  <span class="vig-tag" *ngFor="let d of direcciones" [ngClass]="getClaseDireccion(d)">
+                    {{ getEtiquetaDireccion(d) }}: {{ contarDireccion(ha.id, d) }}
+                  </span>
+                  <small class="text-muted">
+                    · Fuentes independientes: {{ contarIndependientes(ha.id) }} de {{ getEvidencias(ha.id).length }}
+                  </small>
+                </div>
+
                 <div class="table-responsive" *ngIf="getEvidencias(ha.id).length > 0; else sinEvidencia">
                   <table class="table table-sm align-top vig-tabla">
                     <thead>
                       <tr>
-                        <th>Captada</th>
-                        <th>Periodo</th>
-                        <th>Hallazgo</th>
-                        <th>Valor</th>
-                        <th>Fuente</th>
-                        <th>Mecanismo</th>
-                        <th>Señal</th>
-                        <th>Estado</th>
+                        <th>Captada</th><th>Periodo</th><th>Hallazgo</th><th>Valor</th><th>Fuente</th>
+                        <th>Origen</th><th>Mecanismo</th><th>Señal</th><th>Estado</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -333,8 +604,15 @@
                         <td>{{ e.hallazgo }}</td>
                         <td>{{ e.valorIndicador || '—' }}</td>
                         <td>
+                          <span class="vig-tag" [ngClass]="getClaseNivel(e.nivelFuente)">{{ getEtiquetaNivel(e.nivelFuente) }}</span>
                           <a *ngIf="e.enlace; else fuenteSinEnlace" [href]="e.enlace" target="_blank">{{ e.fuente }}</a>
                           <ng-template #fuenteSinEnlace>{{ e.fuente }}</ng-template>
+                          <small class="d-block text-warning-emphasis" *ngIf="e.nivelFuente === 'ABIERTA'">Corroborar antes de sustentar una alerta</small>
+                        </td>
+                        <td>
+                          <span class="vig-tag" [ngClass]="e.origen === 'PRIMARIA' ? 'hecho-observable' : 'hecho-potencial'">
+                            {{ e.origen === 'PRIMARIA' ? 'Fuente primaria' : 'Reproduce otra fuente' }}
+                          </span>
                         </td>
                         <td>{{ getEtiquetaMecanismo(e.mecanismo) }}</td>
                         <td><span class="vig-tag" [ngClass]="getClaseDireccion(e.direccion)">{{ getEtiquetaDireccion(e.direccion) }}</span></td>
@@ -344,7 +622,7 @@
                   </table>
                 </div>
                 <ng-template #sinEvidencia>
-                  <div class="vig-aviso">Aún no hay evidencia captada para {{ ha.id }}. Usa «Registrar evidencia» para agregar la primera.</div>
+                  <div class="vig-aviso" *ngIf="getPerfil(ha.id)">Aún no hay evidencia captada para {{ ha.id }}.</div>
                 </ng-template>
               </ng-container>
             </div>
@@ -355,20 +633,51 @@
         <div class="vig-detalle p2-tabs mt-4">
           <h5 class="fw-bold mb-1">Escaneo del horizonte</h5>
           <p class="small text-muted">
-            Señales nuevas que no estaban en el diseño. Si una señal es relevante, se propone como hecho precursor y se vuelve al Paso 1.
+            Señales nuevas que no estaban en el diseño. Primero se evalúan (relevancia, persistencia y potencial de impacto);
+            solo si requieren seguimiento sistemático se proponen al Paso 1.
           </p>
           <div class="vig-nodo" *ngFor="let s of getSenales()">
             <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
               <div>
-                <span class="vig-tag" [ngClass]="s.estado === 'PROPUESTA' ? 'estado-configurado' : 'sin-diseno'">
-                  {{ s.estado === 'PROPUESTA' ? 'Enviada al Paso 1' : 'Nueva' }}
-                </span>
+                <span class="vig-tag" [ngClass]="s.estado === 'PROPUESTA' ? 'estado-configurado' : 'sin-diseno'">{{ getEtiquetaEstadoSenal(s) }}</span>
                 <small class="text-muted">{{ s.fecha | date:'dd/MM/yyyy' }} · {{ s.fuente }}</small>
                 <strong class="d-block">{{ s.titulo }}</strong>
-                <small class="text-muted" *ngIf="s.descripcion">{{ s.descripcion }}</small>
+                <small class="text-muted d-block" *ngIf="s.descripcion">{{ s.descripcion }}</small>
+                <small class="d-block" *ngIf="s.evaluacion">
+                  Relevancia {{ s.evaluacion.relevancia | titlecase }} · Persistencia {{ s.evaluacion.persistencia | titlecase }} ·
+                  Impacto {{ s.evaluacion.impacto | titlecase }}
+                </small>
               </div>
-              <button type="button" class="btn btn-outline-primary" *ngIf="s.estado === 'NUEVA'"
-                (click)="proponerSenal(s)">Proponer como hecho precursor</button>
+              <button type="button" class="btn btn-outline-primary" *ngIf="s.estado !== 'PROPUESTA'"
+                (click)="abrirEvaluacion(s)">{{ s.evaluacion ? 'Reevaluar' : 'Evaluar' }}</button>
+            </div>
+
+            <div class="vig-eval" *ngIf="senalEvaluando === s">
+              <div class="row g-2">
+                <div class="col-12 col-md-4">
+                  <label class="form-label small mb-1">Relevancia</label>
+                  <select class="form-control" [(ngModel)]="evalDraft.relevancia">
+                    <option value="ALTA">Alta</option><option value="MEDIA">Media</option><option value="BAJA">Baja</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label small mb-1">Persistencia</label>
+                  <select class="form-control" [(ngModel)]="evalDraft.persistencia">
+                    <option value="ALTA">Alta</option><option value="MEDIA">Media</option><option value="BAJA">Baja</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label small mb-1">Potencial de impacto</label>
+                  <select class="form-control" [(ngModel)]="evalDraft.impacto">
+                    <option value="ALTA">Alta</option><option value="MEDIA">Media</option><option value="BAJA">Baja</option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end gap-2 mt-2 flex-wrap">
+                <button type="button" class="btn btn-outline-primary" (click)="cancelarEvaluacion()">Cancelar</button>
+                <button type="button" class="btn btn-outline-primary" (click)="guardarEvaluacion(false)">Mantener en observación</button>
+                <button type="button" class="btn btn-primary" (click)="guardarEvaluacion(true)">Proponer al Paso 1</button>
+              </div>
             </div>
           </div>
           <p *ngIf="getSenales().length === 0" class="small text-muted">No hay señales registradas.</p>
@@ -409,6 +718,22 @@
               <div class="form-group">
                 <label>Fuente</label>
                 <input type="text" class="form-control" [(ngModel)]="nuevaEvidencia.fuente">
+              </div>
+              <div class="form-group">
+                <label>Tipo de fuente</label>
+                <select class="form-control" [(ngModel)]="nuevaEvidencia.nivelFuente">
+                  <option value="OFICIAL">Oficial</option>
+                  <option value="CIENTIFICA">Científica</option>
+                  <option value="SENAL_TEMPRANA">Señal temprana</option>
+                  <option value="ABIERTA">Abierta (prensa, medios)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>¿Es una fuente primaria o reproduce otra?</label>
+                <select class="form-control" [(ngModel)]="nuevaEvidencia.origen">
+                  <option value="PRIMARIA">Fuente primaria independiente</option>
+                  <option value="REPRODUCCION">Reproduce otra fuente ya captada</option>
+                </select>
               </div>
               <div class="form-group">
                 <label>Enlace a la evidencia original</label>

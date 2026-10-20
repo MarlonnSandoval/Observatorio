@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { ArticuloRadar, SECTOR_DATABASE, ContenidoSector, CategoriaSectorDetalle } from './sector-articulos';
 
@@ -20,17 +20,45 @@ interface SectorConfig {
 export interface ConoItem {
   titulo: string;
   shortLabel: string;
-  categoriaNombre: string;
+  categoria: string;
   horizonte: string;
   url: string;
   icono: string; // id del símbolo SVG (ver sprite en el HTML)
   color: string;
-} 
+}
+
+export interface ConoGroup {
+  categoria: string;
+  items: ConoItem[];
+}
 
 export interface ConoColumn {
-  key: 'PRESENTE-2030' | '2030-2040' | '2040-2050';
+  key: 'presente' | 'medio' | 'lejano';
   label: string;
-  items: ConoItem[];
+  totalCount: number;
+  groups: ConoGroup[];
+}
+
+/** Fila de las tablas (Elementos futuros / Escenarios). Los campos extra son opcionales según el dato. */
+export type FilaArticulo = ArticuloRadar & {
+  categoria: string;
+  resumen?: string;
+  imagenUrl?: string;
+  tematica?: string;
+  tema?: string;
+};
+
+export interface FiltroElementos {
+  texto: string;
+  tipo: string;
+  tema: string;
+  periodo: string;
+}
+
+export interface FiltroEscenarios {
+  texto: string;
+  tema: string;
+  periodo: string;
 }
 
 export interface RadarItem {
@@ -43,6 +71,8 @@ export interface RadarNodo {
   articulo: ArticuloRadar;
   numero: number;
   icono: string;
+  categoria: string;
+  color: string;
   x: number;
   y: number;
 }
@@ -67,15 +97,38 @@ const RADIO_CENTRO = 40;
   templateUrl: './sectorial.component.html',
   styleUrls: ['./sectorial.component.css']
 })
-export class SectorialComponent implements AfterViewInit {
+export class SectorialComponent implements AfterViewInit, OnChanges {
 
   @Input() selectedSector: string | null = null;
   @Input() sectorData: ContenidoSector | null = null;
 
   // Estado de la vista activa: 'radar' o 'cono'
-  vistaActual: 'radar' | 'cono' = 'radar';
+  vistaActual: 'radar' | 'cono' = 'cono';
 
   readonly categoriesBase: (keyof ContenidoSector)[] = ['Tendencias', 'Riesgos', 'Oportunidades'];
+
+  /** Categorías de "elementos futuros" (todas menos Escenarios), en el orden de la leyenda. */
+  readonly categoriasElementos: string[] = ['Tendencias', 'Riesgos', 'Oportunidades', 'Señal débil', 'Carta salvaje'];
+
+  private readonly horizontes: string[] = ['PRESENTE-2030', '2030-2040', '2040-2050'];
+
+  // ---- Tablas (pestañas "Elementos futuros" y "Escenarios") ----
+  filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+  filtroEscenarios: FiltroEscenarios = { texto: '', tema: '', periodo: '' };
+
+  filasElementos: FilaArticulo[] = [];
+  filasElementosFiltradas: FilaArticulo[] = [];
+  filasEscenarios: FilaArticulo[] = [];
+  filasEscenariosFiltradas: FilaArticulo[] = [];
+
+  tiposElementos: string[] = [];
+  temasElementos: string[] = [];
+  periodosElementos: string[] = [];
+  temasEscenarios: string[] = [];
+  periodosEscenarios: string[] = [];
+
+  primeraFilaElementos = 0;
+  primeraFilaEscenarios = 0;
 
   @ViewChild('svgContainer', { static: false })
   private svgContainer!: ElementRef<HTMLDivElement>;
@@ -142,6 +195,10 @@ export class SectorialComponent implements AfterViewInit {
         this.sectoresPorAnillo.set(sector.anillo, [sector]);
       }
     }
+  }
+
+  ngOnChanges(): void {
+    this.construirTablas();
   }
 
   ngAfterViewInit(): void {
@@ -458,11 +515,10 @@ export class SectorialComponent implements AfterViewInit {
 
   /* ------------------- RADAR DE PROSPECTIVA ------------------- */
 
-  readonly radarCenter = 190;
-  readonly radarRadius = 160;
-  readonly radarR1 = this.radarRadius * 0.35;
-  readonly radarR2 = this.radarRadius * 0.70;
-  readonly radarR3 = this.radarRadius * 1.00;
+  readonly radarCenter = 250;
+  readonly radarR1 = 85;
+  readonly radarR2 = 155;
+  readonly radarR3 = 225;
 
   private puntoRadar(anguloGrados: number, radio: number): string {
     const rad = (anguloGrados * Math.PI) / 180;
@@ -513,11 +569,10 @@ export class SectorialComponent implements AfterViewInit {
     const margenSeguridad = angleStepCuadrante * 0.12;
     const nodos: RadarNodo[] = [];
 
-    // Categoría de cada artículo (para elegir su ícono)
-    const iconoPorArticulo = new Map<ArticuloRadar, string>();
-    this.categoriesBase.forEach((cat) => {
-      const nombre = String(cat);
-      this.getArticulos(nombre).forEach((a) => iconoPorArticulo.set(a, this.iconoCategoria(nombre)));
+    // Categoría de cada artículo (para elegir su ícono y su color)
+    const categoriaPorArticulo = new Map<ArticuloRadar, string>();
+    this.categoriasElementos.forEach((nombre) => {
+      this.getArticulos(nombre).forEach((a) => categoriaPorArticulo.set(a, nombre));
     });
 
     porCuadrante.forEach((lista, cuadrante) => {
@@ -536,7 +591,9 @@ export class SectorialComponent implements AfterViewInit {
         nodos.push({
           articulo: item.art,
           numero: item.numero,
-          icono: iconoPorArticulo.get(item.art) ?? this.iconoCategoria(''),
+          icono: this.iconoCategoria(categoriaPorArticulo.get(item.art) ?? ''),
+          categoria: categoriaPorArticulo.get(item.art) ?? '',
+          color: this.getCategoryColorData(categoriaPorArticulo.get(item.art) ?? '').border,
           x: this.radarCenter + finalRadius * Math.cos(finalAngle),
           y: this.radarCenter + finalRadius * Math.sin(finalAngle)
         });
@@ -553,6 +610,7 @@ export class SectorialComponent implements AfterViewInit {
     if (c.includes('oportun')) return '#ico-oportunidad';
     if (c.includes('señal') || c.includes('senal')) return '#ico-senal-debil';
     if (c.includes('carta') || c.includes('salvaje')) return '#ico-carta-salvaje';
+    if (c.includes('escenario')) return '#ico-escenario';
     return '#ico-tendencia';
   }
 
@@ -571,17 +629,7 @@ export class SectorialComponent implements AfterViewInit {
   }
 
   get articulosCompletos(): ArticuloRadar[] {
-    const sectorNombre = this.sectorSeleccionado || this.selectedSector;
-    if (!sectorNombre) return [];
-
-    const sector = this.sectorData || SECTOR_DATABASE[sectorNombre];
-    if (!sector) return [];
-
-    return [
-      ...(sector["Tendencias"]?.articulos || []),
-      ...(sector["Riesgos"]?.articulos || []),
-      ...(sector["Oportunidades"]?.articulos || [])
-    ];
+    return this.categoriasElementos.flatMap((cat) => this.getArticulos(cat));
   }
 
   /**
@@ -632,11 +680,14 @@ export class SectorialComponent implements AfterViewInit {
     }
 
     this.sectorSeleccionado = sector;
+    this.vistaActual = 'cono';
+    this.construirTablas();
     this.actualizarEstilosGrafico();
   }
 
   cerrarPanel(): void {
     this.sectorSeleccionado = null;
+    this.construirTablas();
     this.actualizarEstilosGrafico();
   }
 
@@ -660,37 +711,73 @@ export class SectorialComponent implements AfterViewInit {
     return item.articulo.titulo;
   }
 
+  private getConoColumnKey(horizonte?: string): 'presente' | 'medio' | 'lejano' {
+    switch (horizonte) {
+      case 'PRESENTE-2030':
+        return 'presente';
+      case '2040-2050':
+        return 'lejano';
+      case '2030-2040':
+      default:
+        return 'medio';
+    }
+  }
+
   get conoColumns(): ConoColumn[] {
-    const columnas: ConoColumn[] = [
-      { key: 'PRESENTE-2030', label: 'PRESENTE – 2030', items: [] },
-      { key: '2030-2040', label: '2030 – 2040', items: [] },
-      { key: '2040-2050', label: '2040 – 2050', items: [] },
+    const rawData: { key: 'presente' | 'medio' | 'lejano'; label: string; items: ConoItem[] }[] = [
+      { key: 'presente', label: 'Presente – 2030', items: [] },
+      { key: 'medio', label: '2030 – 2040', items: [] },
+      { key: 'lejano', label: '2040 – 2050', items: [] },
     ];
 
-    const sectorNombre = this.sectorSeleccionado || this.selectedSector;
-    if (!sectorNombre) return columnas;
+    this.categoriasElementos.forEach((cat) => {
+      const colorData = this.getCategoryColorData(cat);
+      this.getArticulos(cat).forEach((art) => {
+        const columna = rawData.find((c) => c.key === this.getConoColumnKey(art.horizonte));
+        if (!columna) return;
 
-    this.categoriesBase.forEach((catNombre) => {
-      if (typeof catNombre !== 'string') return;
-
-      const articulos = this.getArticulos(catNombre);
-
-      articulos.forEach((art) => {
-        const columna = columnas.find((c) => c.key === art.horizonte) || columnas[0];
+        const shortLabel = art.tituloCorto
+          ? art.tituloCorto
+          : art.titulo.length > 38
+            ? art.titulo.substring(0, 38) + '…'
+            : art.titulo;
 
         columna.items.push({
           titulo: art.titulo,
-          shortLabel: art.tituloCorto,
-          categoriaNombre: catNombre,
+          shortLabel,
+          categoria: cat,
           horizonte: art.horizonte,
           url: art.url,
-          icono: this.iconoCategoria(catNombre),
-          color: art.colorBadge || '#3b82f6',
+          icono: this.iconoCategoria(cat),
+          color: colorData.border,
         });
       });
     });
 
-    return columnas;
+    return rawData.map((col) => {
+      const groupsMap = new Map<string, ConoItem[]>();
+      col.items.forEach((item) => {
+        if (!groupsMap.has(item.categoria)) {
+          groupsMap.set(item.categoria, []);
+        }
+        groupsMap.get(item.categoria)!.push(item);
+      });
+
+      const groups: ConoGroup[] = Array.from(groupsMap.entries()).map(([categoria, items]) => ({
+        categoria,
+        items,
+      }));
+
+      return { key: col.key, label: col.label, totalCount: col.items.length, groups };
+    });
+  }
+
+  get conoEscenarios(): ArticuloRadar[] {
+    return this.getArticulos('Escenarios');
+  }
+
+  get tieneEscenariosCono(): boolean {
+    return this.conoEscenarios.length > 0;
   }
 
   getCategoryColorData(categoriaName: string) {
@@ -703,9 +790,156 @@ export class SectorialComponent implements AfterViewInit {
     if (categoriaName.includes('Oportunidades')) {
       return { border: '#10B981', badgeBg: '#D1FAE5', badgeText: '#047857' };
     }
+    if (categoriaName.includes('Señal')) {
+      return { border: '#0E7490', badgeBg: '#CFFAFE', badgeText: '#155E75' };
+    }
+    if (categoriaName.includes('Carta')) {
+      return { border: '#7A5AA6', badgeBg: '#EDE7F6', badgeText: '#5B3F86' };
+    }
     if (categoriaName.includes('Escenarios')) {
       return { border: '#8B5CF6', badgeBg: '#EDE9FE', badgeText: '#6D28D9' };
     }
     return { border: '#0d6efd', badgeBg: '#e7f1ff', badgeText: '#0d6efd' };
+  }
+
+  getTematicaColorData(tematicaName?: string | null) {
+    const nombre = tematicaName ?? '';
+    if (nombre.includes('Social')) {
+      return { border: 'rgb(255, 85, 51)', badgeBg: 'rgb(255, 234, 230)', badgeText: 'rgb(255, 85, 51)' };
+    }
+    if (nombre.includes('Ambiental')) {
+      return { border: 'rgb(5, 145, 65)', badgeBg: 'rgb(221, 255, 236)', badgeText: 'rgb(5, 145, 65)' };
+    }
+    if (nombre.includes('Económica')) {
+      return { border: 'rgb(239, 197, 20)', badgeBg: 'rgb(255, 247, 216)', badgeText: 'rgb(239, 197, 20)' };
+    }
+    if (nombre.includes('Tecnológica')) {
+      return { border: 'rgb(78, 135, 198)', badgeBg: 'rgb(225, 239, 255)', badgeText: 'rgb(78, 135, 198)' };
+    }
+    if (nombre.includes('Política')) {
+      return { border: 'rgb(154, 32, 226)', badgeBg: 'rgb(243, 223, 255)', badgeText: 'rgb(154, 32, 226)' };
+    }
+    if (nombre.includes('Actitud, valores y ética')) {
+      return { border: 'rgb(131, 183, 221)', badgeBg: 'rgb(227, 243, 255)', badgeText: 'rgb(131, 183, 221)' };
+    }
+    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#bababa' };
+  }
+
+  getCount(categoria: string): number {
+    return this.getArticulos(categoria).length;
+  }
+
+  /** URL del reporte descargable de una categoría (si el dato la trae). */
+  getDescargaUrl(categoria: string): string | null {
+    const sectorNombre = this.sectorSeleccionado || this.selectedSector;
+    if (!sectorNombre) return null;
+    const sector = this.sectorData || SECTOR_DATABASE[sectorNombre];
+    return (sector as any)?.[categoria]?.descargaUrl || null;
+  }
+
+  // ===================================================
+  //  TABLAS: Elementos futuros / Escenarios
+  // ===================================================
+
+  etiquetaHorizonte(horizonte?: string): string {
+    switch (horizonte) {
+      case 'PRESENTE-2030':
+        return 'Presente – 2030';
+      case '2030-2040':
+        return '2030 – 2040';
+      case '2040-2050':
+        return '2040 – 2050';
+      default:
+        return horizonte || '—';
+    }
+  }
+
+  private unicos(valores: (string | undefined)[]): string[] {
+    return Array.from(new Set(valores.filter((v): v is string => !!v))).sort((a, b) =>
+      a.localeCompare(b, 'es')
+    );
+  }
+
+  /** Horizontes presentes en las filas, en orden cronológico. */
+  private periodosDe(filas: FilaArticulo[]): string[] {
+    const presentes = new Set(filas.map((f) => f.horizonte as string).filter(Boolean));
+    const ordenados = this.horizontes.filter((h) => presentes.has(h));
+    const otros = Array.from(presentes).filter((h) => !this.horizontes.includes(h)).sort();
+    return [...ordenados, ...otros];
+  }
+
+  private coincideTexto(art: FilaArticulo, texto: string): boolean {
+    const q = texto.toLowerCase().trim();
+    if (!q) return true;
+    return (
+      (art.titulo || '').toLowerCase().includes(q) ||
+      (art.resumen || '').toLowerCase().includes(q) ||
+      (art.tema || '').toLowerCase().includes(q) ||
+      (art.tematica || '').toLowerCase().includes(q)
+    );
+  }
+
+  /** Reconstruye las filas base de ambas tablas y reinicia sus filtros. */
+  private construirTablas(): void {
+    this.filasElementos = this.categoriasElementos.flatMap((cat) =>
+      this.getArticulos(cat).map((a) => ({ ...a, categoria: cat } as FilaArticulo))
+    );
+    this.filasEscenarios = this.getArticulos('Escenarios').map(
+      (a) => ({ ...a, categoria: 'Escenarios' } as FilaArticulo)
+    );
+
+    this.tiposElementos = this.categoriasElementos.filter((c) => this.getCount(c) > 0);
+    this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
+    this.periodosElementos = this.periodosDe(this.filasElementos);
+    this.temasEscenarios = this.unicos(this.filasEscenarios.map((f) => f.tematica));
+    this.periodosEscenarios = this.periodosDe(this.filasEscenarios);
+
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
+    this.aplicarFiltroElementos();
+    this.aplicarFiltroEscenarios();
+  }
+
+  aplicarFiltroElementos(): void {
+    const f = this.filtroElementos;
+    this.filasElementosFiltradas = this.filasElementos.filter(
+      (a) =>
+        this.coincideTexto(a, f.texto) &&
+        (!f.tipo || a.categoria === f.tipo) &&
+        (!f.tema || a.tematica === f.tema) &&
+        (!f.periodo || a.horizonte === f.periodo)
+    );
+    this.primeraFilaElementos = 0;
+  }
+
+  aplicarFiltroEscenarios(): void {
+    const f = this.filtroEscenarios;
+    this.filasEscenariosFiltradas = this.filasEscenarios.filter(
+      (a) =>
+        this.coincideTexto(a, f.texto) &&
+        (!f.tema || a.tematica === f.tema) &&
+        (!f.periodo || a.horizonte === f.periodo)
+    );
+    this.primeraFilaEscenarios = 0;
+  }
+
+  get hayFiltroElementos(): boolean {
+    const f = this.filtroElementos;
+    return !!(f.texto || f.tipo || f.tema || f.periodo);
+  }
+
+  get hayFiltroEscenarios(): boolean {
+    const f = this.filtroEscenarios;
+    return !!(f.texto || f.tema || f.periodo);
+  }
+
+  limpiarFiltroElementos(): void {
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.aplicarFiltroElementos();
+  }
+
+  limpiarFiltroEscenarios(): void {
+    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
+    this.aplicarFiltroEscenarios();
   }
 }
