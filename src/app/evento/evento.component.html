@@ -955,8 +955,7 @@
                                     <path _ngcontent-ng-c564720133=""
                                         d="M12.001 3C16.2854 3 20.2201 4.49683 23.3108 6.99607L22.4994 8H18.001L18.0004 13.571L12.001 21L0.69043 6.99671C3.78127 4.49709 7.71632 3 12.001 3ZM22.001 19V21H20.001V19H22.001ZM22.001 10V17H20.001V10H22.001Z">
                                     </path>
-                                </svg><span _ngcontent-ng-c564720133="">Señal débil (SD) / Ruptura o disrupción
-                                    (RD)</span></div>
+                                </svg><span _ngcontent-ng-c564720133="">Señal débil (SD)</span></div>
                             <div _ngcontent-ng-c564720133=""><svg _ngcontent-ng-c564720133=""
                                     enable-background="new 0 0 24 24" height="24px" viewBox="0 0 27 27" width="24px"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1081,7 +1080,7 @@
 
         <!-- Solo se renderiza la pestaña activa -->
         <ng-container *ngFor="let tab of pestanas">
-            <section *ngIf="tabActiva === tab.id">
+            <section *ngIf="tabActiva === tab.id" class="contenido">
 
                 <!-- Descripción -->
                 <div class="row mb-4 pt-3 align-items-center">
@@ -1110,7 +1109,7 @@
                     <div class="col-12 col-md-2">
                         <select class="form-select filter-select" [ngModel]="estado[tab.id].tema"
                             (ngModelChange)="onTema(tab.id, $event)">
-                            <option value="">Todas las temáticas</option>
+                            <option value="">Temáticas</option>
                             <option *ngFor="let t of opcionesTematica" [value]="t.value">{{ t.label }}</option>
                         </select>
                     </div>
@@ -1118,18 +1117,10 @@
                     <div class="col-12 col-md-2" *ngIf="tab.opcionesTipo.length">
                         <select class="form-select filter-select" [ngModel]="estado[tab.id].tipo"
                             (ngModelChange)="onTipo(tab.id, $event)">
-                            <option value="">Todas las categorías</option>
+                            <option value="">Periodos</option>
                             <option *ngFor="let o of tab.opcionesTipo" [value]="o.value">{{ o.label }}</option>
                         </select>
                     </div>
-
-                    <!-- <div class="col-12 col-md-2">
-                        <select class="form-select filter-select" [ngModel]="estado[tab.id].tema"
-                            (ngModelChange)="onTema(tab.id, $event)">
-                            <option value="">Todas las temáticas</option>
-                            <option *ngFor="let t of opcionesTematica" [value]="t.value">{{ t.label }}</option>
-                        </select>
-                    </div> -->
 
                     <div class="col-12 col-md-2">
                         <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar"
@@ -1154,7 +1145,7 @@
                                     Temática <span class="sort-icon">{{ flecha(tab.id, 'tematica') }}</span>
                                 </th>
                                 <th class="sortable" style="width: 160px;" (click)="ordenarPor(tab.id, 'tematica')">
-                                    Periodo <span class="sort-icon">{{ flecha(tab.id, 'tematica') }}</span>
+                                    Período <span class="sort-icon">{{ flecha(tab.id, 'tematica') }}</span>
                                 </th>
                                 <th class="sortable" style="width: 150px;"
                                     (click)="ordenarPor(tab.id, 'fechaActualizacion')">
