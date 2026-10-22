@@ -1138,15 +1138,17 @@
                     <p-table [value]="estado[tab.id].filtrados" dataKey="id" [sortField]="estado[tab.id].sortField"
                         [sortOrder]="estado[tab.id].sortOrder" (onSort)="onSort(tab.id, $event)" [paginator]="true"
                         [rows]="filasPorPagina" [(first)]="estado[tab.id].primera" [showFirstLastIcon]="false"
-                        [responsiveLayout]="'scroll'" styleClass="p-datatable-sm p-datatable-striped eventos-table">
+                        [responsiveLayout]="'scroll'"
+                        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines eventos-table">
 
                         <ng-template pTemplate="header">
                             <tr>
+                                <th class="text-center" style="width: 90px;">Imágen</th>
                                 <th pSortableColumn="nombre" style="min-width: 200px;">
                                     Nombre <p-sortIcon field="nombre"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="sumilla" style="min-width: 220px;">
-                                    Sumilla <p-sortIcon field="sumilla"></p-sortIcon>
+                                <th style="min-width: 220px;">
+                                    Sumilla
                                 </th>
                                 <th pSortableColumn="tematica" style="width: 160px;">
                                     Temática <p-sortIcon field="tematica"></p-sortIcon>
@@ -1157,36 +1159,41 @@
                                 <th pSortableColumn="fechaActualizacion" style="width: 150px;">
                                     Actualización <p-sortIcon field="fechaActualizacion"></p-sortIcon>
                                 </th>
-                                <th class="text-center" style="width: 90px;">Ficha</th>
+
                             </tr>
+
                         </ng-template>
 
                         <ng-template pTemplate="body" let-evento>
                             <tr>
+                                <td class="text-center">
+                                    <img *ngIf="evento.img" [src]="evento.img" [alt]="evento.nombre"
+                                        class="table-thumb">
+                                    <span *ngIf="!evento.img" class="table-thumb table-thumb-empty"><i
+                                            class="pi pi-image"></i></span>
+                                </td>
                                 <td class="fw-medium">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" class="me-1">
-                                        <path [attr.d]="obtenerSvgPath(evento)"
-                                            [attr.fill]="obtenerColorIcono(evento.tematica)" />
-                                    </svg>
-                                    {{ evento.nombre }}
+                                    <a class="evento-link" [href]="evento.urlFicha" target="_blank" rel="noopener noreferrer"
+                                        [attr.title]="evento.nombre">
+                                        <span class="evento-link-text">{{ evento.nombre }}</span>
+                                        <i class="pi pi-external-link evento-link-icon" aria-hidden="true"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <p class="sumilla" [attr.title]="evento.sumilla">{{ evento.sumilla }}</p>
                                 </td>
                                 <td>
                                     <span class="tema-tag" [ngClass]="claseTema(evento.tematica)">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" class="me-1">
+                                            <path [attr.d]="obtenerSvgPath(evento)"
+                                                [attr.fill]="obtenerColorIcono(evento.tematica)" />
+                                        </svg>
                                         {{ evento.tematica || 'General' }}
                                     </span>
                                 </td>
                                 <td class="text-muted">{{ evento.horizonte }}</td>
                                 <td class="text-muted">{{ evento.fechaActualizacion | date:'d MMM yyyy' }}</td>
-                                <td class="text-center">
-                                    <a *ngIf="evento.urlFicha" [href]="evento.urlFicha" target="_blank"
-                                        rel="noopener noreferrer" class="btn btn-sm btn-link" title="Abrir ficha"
-                                        aria-label="Abrir ficha">
-                                        <i class="pi pi-external-link"></i>
-                                    </a>
-                                </td>
+
                             </tr>
                         </ng-template>
 

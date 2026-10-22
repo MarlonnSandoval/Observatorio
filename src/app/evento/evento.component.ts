@@ -301,22 +301,79 @@ export class EventoComponent implements OnInit {
   // ---------------------------------------------------------------------------
 
   descargarLista(id: CategoriaPestana): void {
-    const filas = this.estado[id].filtrados.map(e => {
+    const tabConfig = this.pestanas.find(t => t.id === id);
+    const tituloTab = tabConfig ? tabConfig.titulo : 'Lista de Eventos';
+    const filas = this.estado[id].filtrados;
+
+    const ventanaImpresion = window.open('', '_blank');
+    if (!ventanaImpresion) {
+      alert('Por favor, permita las ventanas emergentes para descargar el PDF.');
+      return;
+    }
+
+    const htmlFilas = filas.map(e => {
       const fecha = e.fechaActualizacion ? new Date(e.fechaActualizacion).toLocaleDateString('es-PE') : '';
-      return [e.nombre, e.tematica || 'General', e.horizonte, fecha].map(csv).join(',');
-    });
+      return `
+        <tr>
+          <td><strong>${e.nombre || ''}</strong></td>
+          <td>${e.sumilla || ''}</td>
+          <td>${e.tematica || 'General'}</td>
+          <td>${e.horizonte || ''}</td>
+          <td>${fecha}</td>
+        </tr>
+      `;
+    }).join('');
 
-    const contenido = ['Nombre,Temática,Período,Fecha Actualización', ...filas].join('\n');
-    // BOM para que Excel respete las tildes; Blob para que '#' u otros caracteres no rompan el archivo
-    const blob = new Blob(['\uFEFF' + contenido], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+    const contenidoHtml = `
+      <!DOCTYPE html>
+      <html lang="es">
+        <head>
+          <meta charset="UTF-8">
+          <title>Reporte de Eventos - ${tituloTab}</title>
+          <style>
+            body { font-family: Roboto, Arial, sans-serif; color: #333; margin: 30px; }
+            h2 { color: #2A68A2; margin-bottom: 5px; font-size: 22px; }
+            .meta { color: #666; font-size: 13px; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
+            th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; vertical-align: top; }
+            th { background-color: #f8f9fa; color: #1e293b; font-weight: bold; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; }
+            tr:nth-child(even) { background-color: #f8fafc; }
+            @media print {
+              body { margin: 15px; }
+            }
+          </style>
+        </head>
+        <body>
+          <h2>Radar de Eventos - ${tituloTab}</h2>
+          <div class="meta">
+            Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de eventos filtrados: ${filas.length}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 25%;">Nombre</th>
+                <th style="width: 35%;">Sumilla</th>
+                <th style="width: 15%;">Temática</th>
+                <th style="width: 12%;">Período</th>
+                <th style="width: 13%;">Actualización</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${htmlFilas}
+            </tbody>
+          </table>
+          <script>
+            window.onload = function() {
+              setTimeout(() => {
+                window.print();
+              }, 300);
+            };
+          </script>
+        </body>
+      </html>
+    `;
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `lista_eventos_${id}_${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    ventanaImpresion.document.write(contenidoHtml);
+    ventanaImpresion.document.close();
   }
 }

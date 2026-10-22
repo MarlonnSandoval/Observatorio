@@ -52,7 +52,7 @@
   <div class="row g-4 mb-5">
 
     <!-- COLUMNA IZQUIERDA: LISTA DE SECTORES / ANILLO CENTRAL -->
-    <div [class]="sectorSeleccionado ? 'col-12 col-xl-4' : 'col-12'" class="layout-transition">
+    <div [class]="sectorSeleccionado ? 'd-none' : 'col-12'" class="layout-transition">
       <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
         <h5 class="fw-bold mb-3" style="color: #2a68a2; font-size: 3rem;" [class.d-none]="sectorSeleccionado">Seleccione
           un sector</h5>
@@ -65,27 +65,38 @@
           </div>
         </div>
 
-        <!-- VISTA DETALLE: LISTA LATERAL DE BOTONES (Solo se muestra si SÍ hay sector) -->
-        <div class="w-100 h-100" *ngIf="sectorSeleccionado">
-
-          <div class="d-flex flex-column gap-2 h-100 overflow-auto sticky-top "
-            style="max-height: 95vh; padding-right: 5px;">
-            <h6 class="fw-bold text-secondary text-uppercase mb-3 small mt-3" style="letter-spacing: 0.5px;">Sectores
-              Disponibles</h6>
-            <button *ngFor="let sector of sectoresDisponibles; trackBy: trackBySector" type="button"
-              class="btn btn-sector text-start rounded-pill shadow-sm py-2 px-3 d-flex align-items-center"
-              [class.active-sector]="sectorSeleccionado === sector" (click)="toggleSector(sector)">
-              <span class="color-dot me-3 flex-shrink-0" [style.backgroundColor]="obtenerColorSector(sector)"></span>
-              <span class="fw-semibold text-truncate" style="font-size: 0.85rem;">{{ sector }}</span>
-            </button>
-          </div>
-        </div>
-
       </div>
     </div>
 
     <!-- COLUMNA DERECHA: PANEL PRINCIPAL CON PRIMENG ACCORDION Y RADAR/CONO -->
-    <div class="col-12 col-xl-8 layout-transition" *ngIf="sectorSeleccionado">
+    <div class="col-12 layout-transition" *ngIf="sectorSeleccionado">
+
+      <!-- LISTA DESLIZABLE DE SECTORES -->
+      <div class="sector-strip card border-0 shadow-sm bg-white mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="sector-strip-title">Sectores disponibles</span>
+          <div class="d-flex gap-2">
+            <button type="button" class="sector-strip-arrow" aria-label="Anterior"
+              (click)="sectorScroller.scrollBy({ left: -320, behavior: 'smooth' })">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button type="button" class="sector-strip-arrow" aria-label="Siguiente"
+              (click)="sectorScroller.scrollBy({ left: 320, behavior: 'smooth' })">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div #sectorScroller class="sector-strip-scroller">
+          <button *ngFor="let sector of sectoresDisponibles; trackBy: trackBySector" type="button"
+            class="sector-chip" [class.active]="sectorSeleccionado === sector" [attr.aria-pressed]="sectorSeleccionado === sector"
+            (click)="toggleSector(sector)">
+            <span class="color-dot flex-shrink-0" [style.backgroundColor]="obtenerColorSector(sector)"></span>
+            {{ sector }}
+          </button>
+        </div>
+      </div>
+
       <div id="panelResultados" class="card shadow-sm border-0 rounded-4 sticky-results-panel bg-light p-3">
 
         <!-- SPRITE DE ÍCONOS: compartido por radar y cono (se usan con use href="#ico-..."; el color lo da currentColor) -->
