@@ -108,7 +108,7 @@
   font-size: 0.8rem;
   line-height: 1.45;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -118,36 +118,19 @@
    está en un elemento de p-table (fuera del scope de este componente). */
 .evento-link {
   display: inline-flex;
-  align-items: flex-start;
   gap: 0.4rem;
-  color: #1e293b;
+  color: #000000;
   font-weight: 600;
   line-height: 1.35;
   text-decoration: none;
-  transition: color 0.2s ease;
+  align-items: center;
 }
 
 .evento-link-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1.5px;
-  transition: background-size 0.25s ease;
 }
 
-.evento-link-icon {
-  flex-shrink: 0;
-  margin-top: 0.25rem;
-  font-size: 0.7rem;
-  color: #94a3b8;
-  opacity: 0;
-  transform: translate(-3px, 3px);
-  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
-}
 
 .evento-link:hover,
 .evento-link:focus-visible {
@@ -161,12 +144,11 @@
   background-size: 100% 1.5px;
 }
 
-.evento-link:hover .evento-link-icon,
-.evento-link:focus-visible .evento-link-icon {
-  opacity: 1;
+.evento-link-icon {
   color: #2A68A2;
-  transform: translate(0, 0);
+  font-size: 0.9rem;
 }
+
 
 .evento-link:focus-visible {
   outline: 2px solid #2A68A2;
