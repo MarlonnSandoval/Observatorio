@@ -1,0 +1,43 @@
+/* ---- Hero / carrusel ---- */
+.hero-img {
+    height: 300px;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    max-width: 480px;
+    background: linear-gradient(90deg,
+            rgba(15, 58, 107, 0.94) 0%,
+            rgba(15, 58, 107, 0.88) 45%,
+            rgba(15, 58, 107, 0.15) 85%,
+            rgba(15, 58, 107, 0) 100%);
+}
+
+.hero-indicators [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+}
+
+.btn-foi {
+    display: inline-block;
+    background-color: #3b69ae;
+    color: #fff !important;
+    border: 1px #3b69ae solid;
+    padding: .2rem .6rem;
+    text-decoration: none;
+}
+.fa-regular, .far {
+    font-weight: 400;
+}
+
+button {
+    background-color: #3b69ae;
+    border-color: #3b69ae;
+    padding: 4px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}

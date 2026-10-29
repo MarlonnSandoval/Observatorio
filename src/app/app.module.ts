@@ -56,6 +56,9 @@ import { GlobalNacionalComponent } from './global-nacional/global-nacional.compo
 import { MetodosComponent } from './guia-interactiva/pages/metodos/metodos.component';
 import { RadarVigilanciaComponent } from './radar-vigilancia/radar-vigilancia.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { PEDNComponent } from './escenarios/pages/pedn/pedn.component';
+import { LargoPlazoComponent } from './escenarios/pages/largo-plazo/largo-plazo.component';
+import { TerritorialesComponent } from './escenarios/pages/territoriales/territoriales.component';
 
 
 
@@ -82,7 +85,10 @@ registerLocaleData(localeEsPe);
     FichaComponent,
     GlobalNacionalComponent,
     MetodosComponent,
-    RadarVigilanciaComponent
+    RadarVigilanciaComponent,
+    PEDNComponent,
+    LargoPlazoComponent,
+    TerritorialesComponent
   ],
   imports: [
     BrowserModule,

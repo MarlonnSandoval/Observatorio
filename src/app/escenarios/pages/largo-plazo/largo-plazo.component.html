@@ -1,0 +1,391 @@
+<div _ngcontent-ng-c1248554773="" class="container mt-4">
+    <h1 class="fw-bold text-primary mb-3">Escenarios a largo plazo</h1>
+    <p class="text-secondary">
+        Los escenarios se formulan con el propósito de explorar y analizar sistemáticamente distintos futuros que
+        abarquen un conjunto más amplio de condiciones que se pueden presentar en el país, a fin de reducir la
+        incertidumbre, prever posibles entornos y prepararse antes de que las circunstancias ameriten medidas urgentes
+        y drásticas escasamente analizadas. A continuación, seleccione algún escenario para obtener mayor información.
+    </p>
+
+    <!-- HERO / CARRUSEL (Bootstrap Carousel nativo) -->
+    <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+        data-bs-interval="6000">
+        <div class="carousel-inner">
+            <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index"
+                [class.active]="i === 0">
+                <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+                <div class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column
+                    justify-content-center text-white p-4 p-md-5">
+                    <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+                    <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-indicators hero-indicators">
+            <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+                [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Diapositiva ' + (i + 1)">
+            </button>
+        </div>
+    </div>
+
+
+    <div _ngcontent-ng-c1248554773="" class="container-button">
+        <div _ngcontent-ng-c1248554773="" class="row">
+            <div _ngcontent-ng-c1248554773="" class="col-md-6 mb-3 mb-md-0"><a _ngcontent-ng-c1248554773=""
+                    target="_blank" class="btn-foi"
+                    href="https://observatorio.ceplan.gob.pe/uploads/listado_metodologico/Listado-escenarios-mediano-largo-plazo.pdf"><i
+                        _ngcontent-ng-c1248554773="" class="fa-regular fa-file-pdf icon-pdf"></i>Listado de escenarios
+                </a><!----></div>
+            <div _ngcontent-ng-c1248554773="" class="col-sm-6">
+                <div _ngcontent-ng-c4037158948="" class="input-group"><input _ngcontent-ng-c4037158948=""
+                        autocomplete="off" type="text" id="searchInput1" name="query" minlength="3" maxlength="40"
+                        pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s]+$"
+                        class="form-control select-custom ng-untouched ng-pristine ng-valid"
+                        placeholder="Buscar en escenarios">
+                    <div _ngcontent-ng-c4037158948="" class="input-group-append"><button _ngcontent-ng-c4037158948=""
+                            data-bs-toggle="modal" data-bs-target="#results-search" class="search-button"><i
+                                _ngcontent-ng-c4037158948="" class="fa fa-search"
+                                style="color: aliceblue;"></i></button></div>
+                </div>
+                <div _ngcontent-ng-c4037158948="" class="row">
+                    <div _ngcontent-ng-c4037158948="" class="col"><!----></div>
+                </div>
+                <div _ngcontent-ng-c4037158948="" id="results-search" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+                    <div _ngcontent-ng-c4037158948="" role="document"
+                        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div _ngcontent-ng-c4037158948="" class="modal-content">
+                            <div _ngcontent-ng-c4037158948="" class="modal-header">
+                                <div _ngcontent-ng-c4037158948="" class="col-sm-8">
+                                    <div _ngcontent-ng-c4037158948="" class="input-group"><input
+                                            _ngcontent-ng-c4037158948="" placeholder="Buscar" autocomplete="off"
+                                            type="text" id="searchInput2" name="query"
+                                            pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s]+$"
+                                            class="form-control select-custom ng-untouched ng-pristine ng-valid">
+                                        <div _ngcontent-ng-c4037158948="" class="input-group-append"><button
+                                                _ngcontent-ng-c4037158948="" class="search-button"><i
+                                                    _ngcontent-ng-c4037158948="" class="fa fa-search"
+                                                    style="color: aliceblue;"></i></button></div>
+                                    </div>
+                                    <div _ngcontent-ng-c4037158948="" class="row">
+                                        <div _ngcontent-ng-c4037158948="" class="col"><!----></div>
+                                    </div>
+                                </div><a _ngcontent-ng-c4037158948="" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close" class="btn-close"></a>
+                            </div>
+                            <div _ngcontent-ng-c4037158948="" class="modal-body"><br _ngcontent-ng-c4037158948="">
+                                <div _ngcontent-ng-c4037158948="" class="col-sm-12"><!----><!----></div>
+                                <div _ngcontent-ng-c4037158948="" class="jumbotron jumbotron-fluid">
+                                    <div _ngcontent-ng-c4037158948="" class="container">
+                                        <h1 _ngcontent-ng-c4037158948="" class="display-4">CEPLAN</h1>
+                                        <p _ngcontent-ng-c4037158948="" class="lead">No se encontraron coincidencias
+                                            para la búsqueda realizada. </p>
+                                    </div>
+                                </div><!----><!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br _ngcontent-ng-c1248554773="">
+    <hr _ngcontent-ng-c1248554773=""><!---->
+    <div _ngcontent-ng-c1248554773="" class="row">
+        <div _ngcontent-ng-c1248554773="" class="col-12">
+            <h4 _ngcontent-ng-c1248554773="">Escenarios del Perú al 2050</h4>
+            <p _ngcontent-ng-c1248554773="" class="esc_descrip">Los escenarios de mediano y largo plazo se fundamentan
+                en narrativas construidas sobre la base de futuros alternativos, sustentados por diferentes visiones que
+                facilitan la identificación de posibles problemas u oportunidades y que hacen más fácil el planeamiento
+                de respuestas estratégicas.</p><br _ngcontent-ng-c1248554773="">
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/tI3mtpWdF9KQ-vp-JGW3Eizx.jpg"
+                            alt="Escenario &quot;Un horizonte radiante&quot;"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario "Un horizonte radiante"</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En 2050, como resultado de la cooperación
+                            público - privada para impulsar la educación, investigación e innovación, la gran mayoría de
+                            peruanos y peruanas ha alcanzado el desarrollo pleno de sus capacidades, y tienen acceso
+                            garantizado a servicios básicos de calidad. Contar con capital humano altamente calificado,
+                            junto a la adopción de avances tecnológicos, ha permitido un desarrollo económico
+                            sostenible, reflejado en altos niveles de PBI per cápita. Por otro lado, gracias a la
+                            transición hacia energías renovables, el uso eficiente de los recursos escasos y la
+                            educación ambiental se ha logrado disminuir considerablemente la contaminación ambiental y
+                            el deterioro de los ecosistemas. </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e7_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/44LvcRkYZqYuxzzKSao0VwgN.jpg"
+                            alt="Punto de quiebre ambiental"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de punto de quiebre ambiental</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Para el año 2050, el mundo enfrenta una
+                            grave crisis de salud y medioambiental debido al aumento de la temperatura global, que ha
+                            superado el límite de 1,5°C establecido en acuerdos internacionales. Este incremento ha
+                            intensificado la frecuencia y gravedad de fenómenos naturales, dañando infraestructura y
+                            servicios esenciales, además de agravar el estrés hídrico, la deforestación y la
+                            contaminación. En realidad, se perpetúa un círculo vicioso entre estos fenómenos, ya que, la
+                            fragmentación de los bosques y la alteración en la superficie de éstos exacerba los
+                            fenómenos extremos que generan temperaturas altas y reducen las precipitaciones. Aunque
+                            algunos países han avanzado en tecnología para anticipar efectos climáticos, la mayoría aún
+                            no alcanza un nivel de sostenibilidad adecuado, lo que denota la necesidad de reforzar las
+                            acciones y compromisos de todos los países para alcanzar mejores resultados.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e8_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/gxZ7SPQlWhwdUixC3w2OSWTU.jpg"
+                            alt="Escenario &quot;Gobernanza tambaleante&quot;"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario "Gobernanza tambaleante"</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En 2050, el Perú enfrenta problemas
+                            estructurales profundos que afectan su gobernanza; la corrupción, la debilidad de las
+                            instituciones y las desigualdades sociales se constituyen como sus desafíos más críticos. La
+                            falta de participación efectiva, el limitado pluralismo político y la baja transparencia de
+                            las instituciones han incrementado la polarización y el descontento social, acumulado desde
+                            2024. Esta situación llegó a un punto crítico alrededor de 2040, con manifestaciones masivas
+                            y demandas de reformas radicales, como una nueva Constitución, penas severas para combatir
+                            la inseguridad y el restablecimiento del servicio militar obligatorio. La tecnología, que
+                            pudo haber facilitado el diálogo y la participación ciudadana, no se implementó de manera
+                            inclusiva ni eficiente, lo que reforzó la percepción de impunidad y la fragmentación social.
+                        </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/elp9_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/iy-QSCe13pL8-wGHhoFjh88A.jpg"
+                            alt="Escenario &quot;Costos de la restauración ecológica forzada&quot;"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario "Costos de la restauración ecológica forzada"</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Al año 2050, Perú ha progresado en sus
+                            principales indicadores vinculados al cambio climático y ha logrado desacelerar las
+                            emisiones de GEI; la implementación de restricciones ambientales establecidas por el
+                            gobierno enfocadas en la reducción de la contaminación industrial ha jugado un papel
+                            importante en este contexto. Por otro lado, a nivel mundial se realizan esfuerzos para
+                            detener el aumento del nivel del mar y su grado de acidificación, lo que ha permitido ver
+                            hoy avances importantes a nivel ambiental; estas mejoras son resultado del cumplimiento
+                            general de los compromisos internacionales de los cuales el país es partícipe. </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e10_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/sozvQ3XbSFihYvpc17Bx9yto.jpg"
+                            alt="Escenario &quot;Transición hacia vidas virtuales e innovadoras&quot;"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario "Transición hacia vidas virtuales e innovadoras"</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Al 2050, Perú ha alcanzado un estatus de
+                            país innovador y competitivo, gracias a una visión estratégica y a un proceso de
+                            transformación digital que consistentemente ha sido impulsado en el tiempo. Los planes y
+                            políticas de largo alcance han trascendido los mandatos políticos conforme a la expectativa
+                            de desarrollo; al mismo tiempo, la población ha tenido un involucramiento sistemático en los
+                            diversos mecanismos de participación ciudadana en el diseño de los planes y políticas, y en
+                            los grandes proyectos de desarrollo, lo que ha garantizado que la planificación e
+                            implementación de estos se condujera conforme a lo programado. Cabe destacar que, desde 2025
+                            el sector privado en sus diferentes niveles ha aprovechado el potencial de la tecnología
+                            para revolucionar sus procesos, lo que ha posicionado al país, principalmente en los
+                            subsectores de la minería, la manufactura, el comercio, la construcción y el sector
+                            agropecuario.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e11_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/hZE4L3Ay-WPEFDtiukh2NmI7.jpg"
+                            alt="Escenario &quot;Oportunidades perdidas&quot;"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario "Oportunidades perdidas"</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En 2050, el Perú enfrenta una grave
+                            situación de inestabilidad política, marcada por la persistencia de la corrupción y la falta
+                            de transparencia en las instituciones públicas. A pesar de los intentos de reforma a lo
+                            largo de las décadas previas, las profundas divisiones políticas y sociales han debilitado
+                            la democracia y la gobernanza del país. Esto se refleja en un constante cambio de
+                            funcionarios en cargos clave, lo que ha impedido la implementación sostenida de políticas y
+                            planes estratégicos, especialmente en áreas críticas como el cuidado del medio ambiente, la
+                            adaptación a la crisis climática y la promoción de la transformación digital.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a noviembre 2024</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e12_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/HIDcg5-epqmPIaAOEsTYKKOe.jpg"
+                            alt="Desafíos Tecnológicos y Ambientales: retos para el futuro del Perú"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Desafíos Tecnológicos y Ambientales: retos para el futuro del
+                            Perú</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En la actualidad existe una notable
+                            disparidad entre los indicadores establecidos originalmente en el Plan Estratégico de
+                            Desarrollo Nacional (PEDN) para este año 2050 y los logros alcanzados hasta la fecha,
+                            evidenciada en las metas parcialmente cumplidas. Esta situación demanda un análisis sobre
+                            las decisiones públicas tomadas décadas atrás y la identificación de las acciones que no se
+                            llevaron a cabo.
+                            Es necesario comenzar el análisis, precisamente, en torno a las diversas aplicaciones de la
+                            inteligencia artificial (IA) y los riesgos que esto ha traído para el Perú, debido
+                            principalmente a la deficiente anticipación para contar con especialistas, sistemas de
+                            control y alarma, entre otras funcionalidades que de esta misma tecnología pudieron haberse
+                            implementado para evitar los elevados costos sociales, materiales y económicos que se han
+                            experimentado a la fecha. </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a mayo 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e13_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/He97PKhgioL6qt_RuQTzfDfU.jpg"
+                            alt="Avances Tecnológicos y Retos Ambientales: encrucijada de la innovación y la sostenibilidad en el Perú">
+                    </div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Avances Tecnológicos y Retos Ambientales: encrucijada de la
+                            innovación y la sostenibilidad en el Perú</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En el Perú del año 2050, el Foro Nacional
+                            sobre Tecnología y Cambio Climático ha sido un espacio crucial para evaluar los avances
+                            tecnológicos y los desafíos ambientales en el marco del Plan Estratégico de Desarrollo
+                            Nacional al 2050. El país ha logrado un progreso significativo en áreas como la educación,
+                            la salud y la energía, impulsado por tecnologías avanzadas como la inteligencia artificial y
+                            la computación cuántica; sin embargo, estos avances no han logrado mitigar el impacto
+                            ambiental asociado al crecimiento urbano, la agricultura intensiva y los sistemas de
+                            transporte insostenibles que aún mantiene el país. La deforestación, la contaminación y el
+                            aumento de emisiones de gases de efecto invernadero reflejan una brecha entre el crecimiento
+                            económico y el desarrollo sostenible, evidenciando la necesidad de fortalecer los marcos
+                            regulatorios, mejorar el planeamiento estratégico y fomentar políticas que integren la
+                            innovación tecnológica con la conservación ambiental a largo plazo.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a abril 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e14_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/7hNa2DAV5I2cViBVDSxdM_j1.jpeg"
+                            alt="Horizonte Brillante: transformación tecnológica e innovación sostenible en el futuro deseable del Perú">
+                    </div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Horizonte Brillante: transformación tecnológica e innovación
+                            sostenible en el futuro deseable del Perú</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En 2050, el Perú se ha consolidado como un
+                            modelo de desarrollo inclusivo, impulsado por la convergencia entre tecnología y
+                            sostenibilidad. La transformación educativa, basada en una inversión sostenida,
+                            digitalización equitativa y desarrollo de competencias integrales, ha reducido las brechas
+                            de aprendizaje y ha fomentado una cultura de innovación. Iniciativas como hackatones y el
+                            uso de la tecnología blockchain han potenciado la investigación, posicionando al país como
+                            referente regional. En la salud, la tecnología ha mejorado el acceso y la calidad de los
+                            servicios, con sistemas de diagnóstico basados en inteligencia artificial y monitoreo
+                            remoto, garantizando atención oportuna, incluso en zonas remotas. El desarrollo urbano ha
+                            sido sostenible, con redes inteligentes de agua y transporte; mientras que las políticas
+                            públicas han abordado la equidad entre hombres y mujeres y la inclusión digital. Este Perú
+                            al 2050, logra ser líder regional en innovación tecnológica con un firme compromiso con la
+                            sostenibilidad ambiental y el desarrollo social.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a julio 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e16_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/8_dHoqIu4E6VzUKA2Iq-KmrA.jpg"
+                            alt="“Entre la brecha digital y la sostenibilidad en el Perú”"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">“Entre la brecha digital y la sostenibilidad en el Perú”</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En el 2050, el Perú se consolida como
+                            referente mundial en sostenibilidad ambiental gracias a políticas consistentes y alianzas
+                            internacionales con tecnología avanzada, logrando la protección de ecosistemas clave, la
+                            conservación de especies emblemáticas, y avances en energías renovables y gestión de
+                            residuos. Sin embargo, este progreso contrasta con el desarrollo desigual en sectores como
+                            educación, salud e infraestructura, afectado por inestabilidad política y corrupción. Es por
+                            ello que, a pesar que se destacan logros en agroindustria sostenible y mega infraestructuras
+                            logísticas, el foro del 2050 resalta la necesidad de un enfoque más inclusivo para integrar
+                            los beneficios del desarrollo en todas las regiones y sectores.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a abril 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e15_lp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div><!---->
+        </div>
+    </div><!----><!----><!----><br _ngcontent-ng-c1248554773="">
+    <div _ngcontent-ng-c1248554773="" class="row">
+        <div _ngcontent-ng-c1248554773="" class="col-12 text-Blue"> * Revisar documento metodológico sobre escenarios <a
+                _ngcontent-ng-c1248554773="" target="_blank"
+                href="https://observatorio.ceplan.gob.pe/uploads/listado_metodologico/Anexo-metodologico-escenarios-2021.pdf">aquí</a><!---->
+        </div>
+    </div>
+</div>

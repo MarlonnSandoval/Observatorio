@@ -1,0 +1,27 @@
+.submenu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: #404040;
+    padding: 10px;
+    width: max-content;
+    margin-top: 1px;
+}
+
+.nav-link span:hover{
+    font-weight: bold;
+}
+
+.custom-menu .navbar-nav .nav-item:hover .nav-link,
+.custom-menu .navbar-nav .nav-item.active .nav-link {
+    background-color: #404040;
+    border-radius: .25rem;
+}
+
+.nav-item:hover .submenu {
+    display: block;
+}
+
+.nav-item {
+    position: relative;
+}

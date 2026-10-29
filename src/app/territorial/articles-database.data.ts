@@ -6,7 +6,7 @@ export interface Articulo {
   imagenUrl?: string;
   tema?: string;
   tematica: string; // Obligatoria para evitar errores de undefined en includes()
-  periodo?: '2023-2030' | '2030-2040' | '2040-2050';
+  periodo?: '2023-2030' | '2030-2040' | '2040-2050'; 
 }
 
 export interface CategoriaDetalle {

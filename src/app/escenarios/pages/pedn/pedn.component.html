@@ -1,0 +1,296 @@
+<div _ngcontent-ng-c1248554773="" class="container mt-4">
+
+    <h1 class="fw-bold text-primary mb-3">Escenarios de la PEDN</h1>
+    <p class="text-secondary">
+        Los escenarios se formulan con el propósito de explorar y analizar sistemáticamente distintos futuros que
+        abarquen un conjunto más amplio de condiciones que se pueden presentar en el país, a fin de reducir la
+        incertidumbre, prever posibles entornos y prepararse antes de que las circunstancias ameriten medidas urgentes
+        y drásticas escasamente analizadas. A continuación, seleccione algún escenario para obtener mayor información.
+    </p>
+
+    <!-- HERO / CARRUSEL (Bootstrap Carousel nativo) -->
+    <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+        data-bs-interval="6000">
+        <div class="carousel-inner">
+            <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index"
+                [class.active]="i === 0">
+                <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+                <div class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column
+                    justify-content-center text-white p-4 p-md-5">
+                    <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+                    <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-indicators hero-indicators">
+            <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+                [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Diapositiva ' + (i + 1)">
+            </button>
+        </div>
+    </div>
+
+    <div _ngcontent-ng-c1248554773="" class="container-button">
+        <div _ngcontent-ng-c1248554773="" class="row">
+            <div _ngcontent-ng-c1248554773="" class="col-md-6 mb-3 mb-md-0"><a _ngcontent-ng-c1248554773=""
+                    target="_blank" class="btn-foi"
+                    href="https://observatorio.ceplan.gob.pe/uploads/listado_metodologico/Listado-escenarios-mediano-largo-plazo.pdf"><i
+                        class="fa-regular bi bi-filetype-pdf"></i>Listado de escenarios
+
+                </a><!----></div>
+            <div _ngcontent-ng-c1248554773="" class="col-sm-6">
+                <div _ngcontent-ng-c4037158948="" class="input-group"><input _ngcontent-ng-c4037158948=""
+                        autocomplete="off" type="text" id="searchInput1" name="query" minlength="3" maxlength="40"
+                        pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s]+$"
+                        class="form-control select-custom ng-untouched ng-pristine ng-valid"
+                        placeholder="Buscar en escenarios">
+                    <div _ngcontent-ng-c4037158948="" class="input-group-append"><button _ngcontent-ng-c4037158948=""
+                            data-bs-toggle="modal" data-bs-target="#results-search" class="search-button"><i
+                                _ngcontent-ng-c4037158948="" class="fa fa-search"
+                                style="color: aliceblue;"></i></button></div>
+                </div>
+                <div _ngcontent-ng-c4037158948="" class="row">
+                    <div _ngcontent-ng-c4037158948="" class="col"><!----></div>
+                </div>
+                <div _ngcontent-ng-c4037158948="" id="results-search" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+                    <div _ngcontent-ng-c4037158948="" role="document"
+                        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div _ngcontent-ng-c4037158948="" class="modal-content">
+                            <div _ngcontent-ng-c4037158948="" class="modal-header">
+                                <div _ngcontent-ng-c4037158948="" class="col-sm-8">
+                                    <div _ngcontent-ng-c4037158948="" class="input-group"><input
+                                            _ngcontent-ng-c4037158948="" placeholder="Buscar" autocomplete="off"
+                                            type="text" id="searchInput2" name="query"
+                                            pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s]+$"
+                                            class="form-control select-custom ng-untouched ng-pristine ng-valid">
+                                        <div _ngcontent-ng-c4037158948="" class="input-group-append"><button
+                                                _ngcontent-ng-c4037158948="" class="search-button"><i
+                                                    _ngcontent-ng-c4037158948="" class="fa fa-search"
+                                                    style="color: aliceblue;"></i></button></div>
+                                    </div>
+                                    <div _ngcontent-ng-c4037158948="" class="row">
+                                        <div _ngcontent-ng-c4037158948="" class="col"><!----></div>
+                                    </div>
+                                </div><a _ngcontent-ng-c4037158948="" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close" class="btn-close"></a>
+                            </div>
+                            <div _ngcontent-ng-c4037158948="" class="modal-body"><br _ngcontent-ng-c4037158948="">
+                                <div _ngcontent-ng-c4037158948="" class="col-sm-12"><!----><!----></div>
+                                <div _ngcontent-ng-c4037158948="" class="jumbotron jumbotron-fluid">
+                                    <div _ngcontent-ng-c4037158948="" class="container">
+                                        <h1 _ngcontent-ng-c4037158948="" class="display-4">CEPLAN</h1>
+                                        <p _ngcontent-ng-c4037158948="" class="lead">No se encontraron coincidencias
+                                            para la búsqueda realizada. </p>
+                                    </div>
+                                </div><!----><!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br _ngcontent-ng-c1248554773="">
+
+    <hr _ngcontent-ng-c1248554773="">
+    <div _ngcontent-ng-c1248554773="" class="row">
+        <div _ngcontent-ng-c1248554773="" class="col-12">
+            <h4 _ngcontent-ng-c1248554773="">Escenarios del Plan Estratégico de Desarrollo Nacional</h4>
+            <p _ngcontent-ng-c1248554773="" class="esc_descrip">La incertidumbre en el corto y mediano plazo hace
+                compleja la tarea de proyectarse a futuro. A pesar de ello, es necesario analizar y anticiparse a
+                posibles contextos que representen desafíos para el desarrollo sostenible del país. En ese sentido, el
+                Plan Estratégico de Desarrollo Nacional al 2050 plantea cinco escenarios alternativos centrados en la
+                ocurrencia de eventos futuros relevantes para el Perú, y un escenario normativo que constituye la imagen
+                futura deseada del territorio.</p><br _ngcontent-ng-c1248554773="">
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/nlc7w_v7yoj4U7WYhktI8ehW.png"
+                            alt="Escenario de crisis social"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de crisis social</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Para el año 2050, el Perú enfrenta las
+                            profundas y persistentes secuelas de una crisis social multidimensional que se gestó
+                            progresivamente desde mediados de la década de 2020. Un contexto inicial de deterioro
+                            económico, desconfianza institucional generalizada, conflictos socioambientales latentes y
+                            marcadas desigualdades creó un caldo de cultivo para el estallido social. El punto de
+                            inflexión ocurrió en 2026, cuando protestas masivas a nivel nacional, impulsadas por la
+                            percepción de injusticia y la incapacidad estatal para responder a las demandas ciudadanas,
+                            desencadenaron un ciclo prolongado de violencia, represión gubernamental y descomposición
+                            del orden público.
+
+                            Esta crisis no solo paralizó la economía y colapsó servicios básicos, sino que también
+                            desató una grave crisis constitucional, con movimientos autonomistas y separatistas que
+                            fracturaron la unidad nacional. La inversión se desplomó, la pobreza se incrementó
+                            sustancialmente y los indicadores de desarrollo humano sufrieron un severo retroceso. A
+                            pesar de los esfuerzos de recuperación emprendidos en las décadas siguientes, para 2050 el
+                            país arrastra una sociedad polarizada y desconfiada, con instituciones debilitadas y una
+                            gobernabilidad frágil que ha impedido el cumplimiento de los objetivos estratégicos de
+                            desarrollo nacional, dejando una huella profunda en la cohesión social y la estabilidad del
+                            Perú.
+                        </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e4_cp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/KN-EJzGJiccrsLuixU_PjJpk.png"
+                            alt="Escenario de desastre mayor"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de desastre mayor</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">El sismo de 8.8 Mw seguido de un devastador
+                            tsunami en 2026 en la costa central del país marcó un punto de inflexión trágico. La
+                            catástrofe causó más de 115,000 muertes, colapsó infraestructura crítica y dejó a 3.47
+                            millones de habitantes urbanos sin acceso a agua potable.
+                            Este evento expuso la profunda fragilidad estructural del Estado, exacerbada por la
+                            corrupción, la escasa preparación ante desastres y la inestabilidad política previa, lo que
+                            superó la capacidad de respuesta y retrasó la ayuda.
+                            En los años siguientes, la reconstrucción fue desigual: se priorizaron las zonas urbanas de
+                            mayor valor económico, lo que profundizó las desigualdades regionales y provocó una
+                            migración masiva hacia las ciudades, intensificando la presión social y los disturbios.
+                            Mirando hacia 2050, el Perú logró una recuperación parcial, pero arrastra secuelas. Persiste
+                            una desconfianza estructural hacia las instituciones públicas y una vulnerabilidad
+                            territorial latente, limitando el avance sostenido del desarrollo nacional y el cumplimiento
+                            de las metas del PEDN.
+                        </p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e2_cp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/Tl5ghXELpBb0wMGh1652vF3a.png"
+                            alt="Escenario de disrupción tecnológica"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de disrupción tecnológica</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Para el año 2050, el Perú ha experimentado
+                            una transformación profunda impulsada por la disrupción tecnológica, marcada por la
+                            integración masiva de inteligencia artificial, automatización y biotecnología en todos los
+                            sectores. Si bien estas innovaciones generaron un crecimiento económico significativo,
+                            mejoras en productividad, reducción de la pobreza y avances en sostenibilidad ambiental,
+                            también introdujeron desafíos críticos como la reestructuración del mercado laboral, el
+                            desplazamiento de trabajadores en sectores tradicionales y el aumento de la desigualdad por
+                            el acceso dispar a la tecnología. Aunque se lograron mejoras notables en educación, salud e
+                            infraestructura digital, en 2050 persisten brechas regionales y sociales que exigen
+                            políticas activas de inclusión y adaptación para asegurar que los beneficios del progreso
+                            tecnológico sean distribuidos de manera equitativa y sostenible.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e6_cp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/FXjp4gtQrShfksN_YBR_loKs.png"
+                            alt="Escenario de crisis económica"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de crisis económica</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Entre 2026 y 2028, el Perú sufrió una crisis
+                            económica de carácter estructural provocada por una caída sostenida de los precios
+                            internacionales de las materias primas y una recesión simultánea en sus socios comerciales.
+                            La combinación de menores ingresos por exportaciones, fuerte depreciación cambiaria e
+                            inflación elevada se manifestó sobre un entramado productivo con alta informalidad y una
+                            base fiscal estrecha. El evento produjo una contracción acumulada del PIB de alrededor de 9
+                            % en el periodo antes mencionado, aumentos significativos del desempleo y un incremento de
+                            la pobreza de alrededor de 3 %. Más allá de los efectos macro, la crisis acentuó brechas
+                            territoriales y puso a prueba la gobernanza fiscal y social del país, haciendo evidente la
+                            necesidad de una estrategia de diversificación productiva, ampliación de la base tributaria
+                            y mayor resiliencia financiera.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e3_cp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/6nBbMJBBZ-vDX_UTAB-KvKOA.png"
+                            alt="Escenario de disrupción ambiental"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de disrupción ambiental</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">Para el año 2050, el Perú ha consolidado un
+                            crecimiento económico sostenido, aunque anclado en la persistencia de un modelo lineal y
+                            extractivista. Esta dinámica, caracterizada por la intensificación del uso del territorio y
+                            una demanda creciente de combustibles fósiles, permitió elevar el PBI y dinamizar la
+                            inversión a corto plazo. Sin embargo, este auge se ha logrado a costa de una presión crítica
+                            sobre los ecosistemas y un incremento sustancial en la huella de carbono. Si bien los
+                            impactos más catastróficos aún no son plenamente visibles, las proyecciones al 2050 alertan
+                            que la postergación de la transición sostenible ha acumulado pasivos ambientales y riesgos
+                            sistémicos, como la pérdida de biodiversidad y estrés hídrico, que comprometerán severamente
+                            la resiliencia del país en las décadas venideras.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/e5_cp">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div>
+            <div _ngcontent-ng-c1248554773="">
+                <div _ngcontent-ng-c1248554773="" class="row row-scene" tabindex="0">
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-3"><img _ngcontent-ng-c1248554773=""
+                            class="img-fluid img-scene"
+                            src="https://observatorio.ceplan.gob.pe/uploads/PF-hLQN3-JG87Z_0HrMBAjtH.PNG"
+                            alt="Escenario de desarrollo nacional"></div>
+                    <div _ngcontent-ng-c1248554773="" class="col-sm-9">
+                        <h4 _ngcontent-ng-c1248554773="">Escenario de desarrollo nacional</h4>
+                        <p _ngcontent-ng-c1248554773="" class="esc_descrip">En el año 2050, el Perú se distingue en la
+                            región por su modelo de desarrollo sostenible, estabilidad económica y cohesión social,
+                            resultado de transformaciones profundas iniciadas a mediados de la década de 2020. Las
+                            inversiones en infraestructura moderna, la diversificación de la economía, el impulso a la
+                            ciencia y la tecnología, y la expansión de políticas de inclusión han permitido un
+                            crecimiento sostenido y una notable reducción de la pobreza, que hoy se mantiene por debajo
+                            del 4 %. El fortalecimiento institucional ha garantizado acceso equitativo a la educación,
+                            la salud y la justicia, consolidando una ciudadanía más participativa y comprometida. La
+                            seguridad ciudadana y la transparencia en la gestión pública han contribuido a un clima de
+                            paz social duradero. Aunque aún enfrenta desafíos ambientales, el país avanza firmemente
+                            hacia la neutralidad de carbono y la gestión responsable de su territorio, consolidándose
+                            como un ejemplo de desarrollo equilibrado y resiliente en América Latina.</p>
+                        <div _ngcontent-ng-c1248554773="" class="row">
+                            <div _ngcontent-ng-c1248554773="" class="col-6"><small _ngcontent-ng-c1248554773=""
+                                    class="date-scene">Actualizado a diciembre 2025</small></div>
+                            <div _ngcontent-ng-c1248554773="" class="col-6 text-right"><a _ngcontent-ng-c1248554773=""
+                                    class="a-scene" href="/ficha/raw6">Leer más</a></div>
+                        </div>
+                    </div>
+                </div><br _ngcontent-ng-c1248554773="">
+            </div><!---->
+        </div>
+    </div><!----><!----><!----><!----><br _ngcontent-ng-c1248554773="">
+    <div _ngcontent-ng-c1248554773="" class="row">
+        <div _ngcontent-ng-c1248554773="" class="col-12 text-Blue"> * Revisar documento metodológico sobre escenarios <a
+                _ngcontent-ng-c1248554773="" target="_blank"
+                href="https://observatorio.ceplan.gob.pe/uploads/listado_metodologico/Anexo-metodologico-escenarios-2021.pdf">aquí</a><!---->
+        </div>
+    </div>
+</div>

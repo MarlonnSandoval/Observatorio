@@ -37,232 +37,28 @@
 
     <p class="text-secondary mb-3">A continuación, seleccione algún escenario para obtener mayor información.</p>
 
-    <!-- TOGGLE DE CATEGORÍAS -->
-    <div class="d-flex gap-3 mb-3 justify-content-center">
-        <button type="button" class="btn fw-medium"
-            [ngClass]="selectedCategory === 'pedn' ? 'bg-toggle-active' : 'bg-toggle-inactive'"
-            (click)="selectCategory('pedn')">
-            Escenarios del PEDN
-        </button>
-        <button type="button" class="btn fw-medium"
-            [ngClass]="selectedCategory === 'largo-plazo' ? 'bg-toggle-active' : 'bg-toggle-inactive'"
-            (click)="selectCategory('largo-plazo')">
-            Escenarios de largo plazo
-        </button>
-        <button type="button" class="btn fw-medium"
-            [ngClass]="selectedCategory === 'territorial' ? 'bg-toggle-active' : 'bg-toggle-inactive'"
-            (click)="selectCategory('territorial')">
-            Escenarios territoriales
-        </button>
+    <div class="row text-center mb-5" style="display: flex; flex-direction: row; justify-content: center;">
+        <a routerlink="../oportunidad-global" class="col-6 col-sm-6 col-md-3 link-trends" routerLink="/escenarios-PEDN">
+            <img src="assets/img/tg-w.jpg" alt="" class="img-trends tg"><br>
+            Escenarios de la PEDN
+        </a>
+        <a routerlink="../oportunidad-territorial" class="col-6 col-sm-6 col-md-3 link-trends"
+            routerLink="/escenarios-largo_plazo">
+            <img src="assets/img/tn-w.jpg" alt="" class="img-trends tt"><br>
+            Escenarios a largo plazo
+        </a>
+        <a routerlink="../oportunidad-territorial" class="col-6 col-sm-6 col-md-3 link-trends"
+            routerLink="/escenarios-territoriales">
+            <img src="assets/img/tt-w.jpg" alt="" class="img-trends tt"><br>
+            Escenarios Territoriales
+        </a>
     </div>
 
-    <hr class="my-4">
 
-    <!-- CONTENIDO SEGÚN CATEGORÍA SELECCIONADA -->
-    <ng-container *ngIf="selectedCategory === 'territorial'; else scenarioSection">
+    <div class="row text-Blue"> * Revisar documento metodológico sobre oportunidades
+        <a target="_blank"
+            href="https://observatorio.ceplan.gob.pe/uploads/listado_metodologico/Anexo-metodologico-oportunidades-2021.pdf">aquí
+        </a>
+    </div>
 
-        <div class="container mt-4">
-            <div class="row">
-
-                <!-- Columna Izquierda: Selector y Mapa SVG -->
-                <div class="col-12 col-sm-4 col-md-4 mt-2">
-                    <div class="map-ut sticky-top">
-
-                        <!-- Desplegable para regiones pequeñas/accesibilidad -->
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                <label for="regionSelect" class="form-label font-weight-bold">Seleccionar
-                                    Región:</label>
-                                <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
-                                    (ngModelChange)="onRegionChange($event)">
-                                    <option [ngValue]="null">Selecciona una región</option>
-                                    <option *ngFor="let region of availableRegions">
-                                        {{ region.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Mapa SVG -->
-                        <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox">
-                            <g>
-                                <path *ngFor="let region of regions" class="map-region"
-                                    [class.noData]="!hasDataForRegion(region.name)"
-                                    [class.active]="selectedRegion === region.name" [attr.data-region]="region.name"
-                                    [attr.d]="region.d" (click)="selectRegion(region.name)">
-                                </path>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Columna Derecha: Vista de Tarjetas y Filtros -->
-                <div class="col-12 col-md-8">
-                    <div class="card shadow-sm h-100 bg-white">
-                        <div class="card-body p-4">
-
-                            <!-- Cabecera -->
-                            <div class="d-flex flex-row justify-content-between align-items-center mb-4">
-                                <h2 class="fw-bold text-dark mb-0">
-                                    {{ hasSelection ? ('Escenarios de ' + selectedRegion) : 'Escenarios territoriales'
-                                    }}
-                                </h2>
-
-                                <!-- Botones de acción dinámicos -->
-                                <div class="d-flex gap-2" *ngIf="hasSelection">
-                                    <!-- Botón de PDRC dinámico -->
-                                    <a *ngIf="urlPdrcRegion" [href]="urlPdrcRegion" target="_blank"
-                                        class="btn btn-outline-primary btn-sm rounded-pill d-inline-flex align-items-center">
-                                        <i class="pi pi-external-link me-1"></i> Ver PDRC
-                                    </a>
-                                    <!-- Botón de regresar -->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary btn-sm rounded-pill d-inline-flex align-items-center"
-                                        (click)="resetearFiltroGlobal()">
-                                        <i class="pi pi-arrow-left me-1"></i> Regresar al buscador
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="animate__animated animate__fadeIn">
-
-                                <!-- Vista General (Sin región seleccionada) -->
-                                <ng-container *ngIf="!hasSelection">
-                                    <div class="filter-bar row g-2 mb-3">
-                                        <div class="col-12 p-input-icon-left">
-                                            <i class="pi pi-search"></i>
-                                            <input type="text" placeholder="Buscar por título o región" pInputText
-                                                [(ngModel)]="textoBusqueda" class="filter-input w-100" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Lista de Resultados Globales / Estado Vacío -->
-                                    <div class="theme-articles-container d-flex flex-column gap-3">
-                                        <div *ngIf="(textoBusqueda || temaSeleccionadoSelect) && articulosPorTemaGlobal.length === 0"
-                                            class="text-center py-4 text-muted">
-                                            No se encontraron escenarios que coincidan con tu búsqueda
-                                        </div>
-
-                                        <div *ngIf="!textoBusqueda && !temaSeleccionadoSelect"
-                                            class="text-center py-4 text-muted">
-                                            <h4><strong>Seleccione un departamento</strong></h4>
-                                            <p class="mb-0">Las carpetas de escenarios aparecerán en este espacio.</p>
-                                        </div>
-
-                                        <a *ngFor="let articulo of articulosPorTemaGlobal" [href]="articulo.url"
-                                            target="_blank"
-                                            class="article-link-card p-3 bg-light border-start border-primary border-3 rounded text-decoration-none text-dark d-block">
-                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <span
-                                                    class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small fw-semibold">
-                                                    {{ articulo.regionOriginaria }}
-                                                </span>
-                                                <i class="pi pi-arrow-right text-muted small"></i>
-                                            </div>
-                                            <h6 class="fw-bold text-dark mb-1 mt-1">{{ articulo.titulo }}</h6>
-                                            <p class="text-secondary small mb-0">{{ articulo.resumen }}</p>
-                                        </a>
-                                    </div>
-                                </ng-container>
-
-                                <!-- Mensaje cuando la región seleccionada NO tiene datos -->
-                                <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted">
-                                    No hay escenarios registrados para la región <strong>{{ selectedRegion }}</strong>.
-                                </p>
-
-                                <!-- Acordeón de Categorías / Tarjetas con datos -->
-                                <p-accordion *ngIf="hasSelection && hasData" 
-                                    styleClass="territorial-accordion">
-                                    <p-accordionTab *ngFor="let categoria of categories">
-                                        <ng-template pTemplate="header">
-                                            <span class="header-label me-2">{{ categoria }}</span>
-                                        </ng-template>
-
-                                        <ng-template pTemplate="content">
-                                            <div class="d-flex flex-column gap-3">
-                                                <a *ngFor="let articulo of getArticulos(categoria)"
-                                                    [href]="articulo.url" target="_blank" rel="noopener"
-                                                    class="escenario-card">
-                                                    <h6 class="escenario-card-title">{{ articulo.titulo }}</h6>
-                                                    <p class="escenario-card-text">{{ articulo.resumen }}</p>
-                                                    <span class="escenario-card-link">
-                                                        Leer más <i class="pi pi-arrow-right"></i>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </ng-template>
-
-                                        <div *ngIf="getReporteUrl(categoria)" class="my-2">
-                                            <p class="mb-0">
-                                                Descargue el
-                                                <a [href]="getReporteUrl(categoria)" target="_blank">reporte</a>
-                                            </p>
-                                        </div>
-                                    </p-accordionTab>
-                                </p-accordion>
-
-                                <!-- Escenario deseado y factible (síntesis del PDRC) -->
-                                <div *ngIf="hasSelection && hasData && escenarioDeseadoRegion as ed"
-                                    class="escenario-deseado mt-3">
-                                    <h5 class="fw-bold mb-2">Escenario deseado y factible</h5>
-                                    <p class="small text-secondary fw-semibold mb-1" *ngIf="ed.titulo">{{ ed.titulo }}
-                                    </p>
-                                    <p class="mb-3">{{ ed.sintesis }}</p>
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <!-- <a *ngIf="ed.urlMapa" [href]="ed.urlMapa" target="_blank" download
-                                            class="btn btn-outline-primary btn-sm rounded-pill">
-                                            <i class="pi pi-download me-1"></i> Descargar mapa del futuro deseado
-                                        </a> -->
-                                        <a *ngIf="urlPdrcDescargaRegion" [href]="urlPdrcDescargaRegion" target="_blank"
-                                            class="btn btn-outline-secondary btn-sm rounded-pill">
-                                            <i class="pi pi-file-pdf me-1"></i> Descargar PDRC
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div *ngIf="hasSelection && hasData && urlReporteRegion"
-                                    class="mt-3 p-3 bg-light rounded">
-                                    <p class="mb-0">
-                                        Descargue la
-                                        <a [href]="urlReporteRegion" target="_blank" class="fw-bold text-primary">
-                                            lista completa
-                                        </a>
-                                    </p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </ng-container>
-
-    <ng-template #scenarioSection>
-        <ng-container *ngIf="currentSection as section">
-            <h3 class="fw-bold mb-2">{{ section.title }}</h3>
-            <p class="text-secondary mb-4">{{ section.description }}</p>
-
-            <div class="d-flex flex-column gap-4">
-                <div class="d-flex flex-column flex-sm-row gap-3" *ngFor="let scenario of section.scenarios">
-                    <img [src]="scenario.image" [alt]="scenario.title" class="rounded flex-shrink-0"
-                        style="width: 160px; height: 110px; object-fit: cover;">
-                    <div class="flex-fill">
-                        <h4 class="fw-bold text-primary fs-6 mb-2">{{ scenario.title }}</h4>
-                        <p class="text-secondary small mb-2">{{ scenario.description }}</p>
-                        <div class="d-flex justify-content-between align-items-center small">
-                            <span class="text-muted fst-italic" *ngIf="scenario.updatedAt">
-                                Actualizado a {{ scenario.updatedAt }}
-                            </span>
-                            <a class="text-primary fw-semibold text-decoration-none"
-                                [routerLink]="['/escenario', scenario.slug]">
-                                Leer más
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-    </ng-template>
 </main>

@@ -16,6 +16,9 @@ import { MetodosComponent } from './guia-interactiva/pages/metodos/metodos.compo
 import { FichaComponent } from './ficha/ficha.component';
 import { GlobalNacionalComponent } from './global-nacional/global-nacional.component';
 import { RadarVigilanciaComponent } from './radar-vigilancia/radar-vigilancia.component';
+import { LargoPlazoComponent } from './escenarios/pages/largo-plazo/largo-plazo.component';
+import { PEDNComponent } from './escenarios/pages/pedn/pedn.component';
+import { TerritorialesComponent } from './escenarios/pages/territoriales/territoriales.component';
 
 const routes: Routes = [
   // Rutas con Header y Footer
@@ -30,6 +33,12 @@ const routes: Routes = [
       { path: 'evento', component: EventoComponent },
       { path: 'actualidad', component: ActualidadComponent },
       { path: 'escenarios', component: EscenariosComponent },
+
+      { path: 'escenarios-largo_plazo', component: LargoPlazoComponent },
+      { path: 'escenarios-PEDN', component: PEDNComponent },
+      { path: 'escenarios-territoriales', component: TerritorialesComponent },
+
+
       { path: 'riesgo', component: RiesgoComponent },
       { path: 'guia-interactiva', component: GuiaInteractivaComponent },
       { path: 'encuentros', component: EncuentrosComponent },
