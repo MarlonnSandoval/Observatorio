@@ -467,7 +467,7 @@
                               {{ fila.categoria }}
                             </span>
                           </td>
-                          <td class="cell-tema">
+                          <td class="cell-tema"> 
                             <span class="tipo-badge"
                               [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
                               [style.color]="getTematicaColorData(fila.tematica).badgeText">
@@ -482,9 +482,10 @@
                             <p class="table-summary">{{ fila.resumen }}</p>
                           </td>
                           <td class="text-center">
-                            <img  src="https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png" [alt]="fila.titulo" class="table-thumb">
-                            <!--  *ngIf="fila.imagenUrl" <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty"><i
-                                class="pi pi-image"></i></span> -->
+                            <!-- *ngIf="fila.imagenUrl"  src="https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png" -->
+                            <img *ngIf="fila.imagenUrl" [src]="fila.imagenUrl" [alt]="fila.titulo" class="table-thumb">
+                            <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty"><i
+                                class="pi pi-image"></i></span>
                           </td>
                           <td class="text-center">
                             <a [href]="fila.url" target="_blank" rel="noopener noreferrer" class="btn-ficha btn-ficha-icon"

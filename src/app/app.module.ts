@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { registerLocaleData, CommonModule } from '@angular/common';
+import { registerLocaleData, CommonModule, NgOptimizedImage } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import localeEsPe from '@angular/common/locales/es-PE';
 
@@ -118,8 +118,9 @@ registerLocaleData(localeEsPe);
     SelectButtonModule,
     ChipModule,
     DialogModule,
-    ChartComponent
-  ],
+    ChartComponent,
+    NgOptimizedImage
+],
   providers: [{ provide: LOCALE_ID, useValue: 'es-PE' }],
   bootstrap: [AppComponent]
 })

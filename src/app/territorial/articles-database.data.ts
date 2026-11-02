@@ -31,7 +31,7 @@ export interface ArticlesDatabase {
 export const ARTICLES_DATABASE: ArticlesDatabase = {
   "Lima": {
     "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "Tendencias": {
+    "Tendencias": { 
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
       articulos: [
         { titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región", tituloCorto: "Agua y saneamiento", resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento continúe creciendo.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr", imagenUrl: "https://cdn.statcdn.com/Statistic/375000/379046-blank-355.png", tema: "Acceso a agua y saneamiento", tematica: "Social", periodo: "2023-2030" },

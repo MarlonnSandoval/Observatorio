@@ -933,7 +933,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return !!(f.texto || f.tema || f.periodo);
   }
 
-  limpiarFiltroElementos(): void {
+  limpiarFiltroElementos(): void { 
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
   }
