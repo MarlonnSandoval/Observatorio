@@ -1,6 +1,27 @@
 <div class="container mt-4" style="padding: 0 100px;">
 
-    <h1 class="fw-bold text-primary mb-3">Escenarios Territoriales</h1>
+    <div>
+        <div class="row">
+            <div class="col-sm-7 col-12 title-trends">
+                <h1 class="fw-bold mb-3 title-trends">Escenarios Territoriales</h1>
+            </div>
+            <div class="col-sm-5 col-12">
+                <div class="row justify-content-end">
+                    <a class="col-3" routerlink="/escenarios-PEDN" href="/escenarios-PEDN">
+                        <img class="icon-trends" src="assets/img/tg-w.jpg" alt="Tendencia global">
+                    </a>
+                    <a class="col-3" routerlink="/escenarios-largo_plazo" href="/escenarios-largo_plazo">
+                        <img class="icon-trends" src="assets/img/tn-w.jpg" alt="Tendencia nacional">
+                    </a>
+                    <a class="col-3" routerlink="/escenarios-territoriales" href="/escenarios-territoriales">
+                        <img class="icon-trends" src="assets/img/tt-w.jpg" alt="Tendencia territorial">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
     <p class="text-secondary">
         Los escenarios se formulan con el propósito de explorar y analizar sistemáticamente distintos futuros que
         abarquen un conjunto más amplio de condiciones que se pueden presentar en el país, a fin de reducir la
@@ -146,10 +167,11 @@
                                             target="_blank" rel="noopener" class="escenario-card">
                                             <h6 class="escenario-card-title">{{ articulo.titulo }}</h6>
                                             <p class="escenario-card-text">{{ articulo.resumen }}</p>
-                                            <p class="escenario-card-text"><strong>Tema:</strong> {{ articulo.tema }}
+                                            <p class="escenario-card-text"><strong>Palabras Clave:</strong> {{
+                                                articulo.tema }}
                                             </p>
                                             <span class="escenario-card-link">
-                                                Leer más <i class="pi pi-arrow-right"></i>  
+                                                Leer más <i class="pi pi-arrow-right"></i>
                                             </span>
                                         </a>
                                     </div>

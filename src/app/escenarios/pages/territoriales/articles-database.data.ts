@@ -22,7 +22,7 @@ export interface RegionArticulos {
   "Oportunidades territoriales"?: CategoriaDetalle;
   "Escenarios territoriales"?: CategoriaDetalle;
   "Escenario Deseado": CategoriaDetalle;
-  url: string;
+  url?: string;
   urlPdrc?: string;
   urlPdrcDescarga?: string;
   escenarioDeseado?: EscenarioDeseado;
@@ -34,46 +34,41 @@ export interface ArticlesDatabase {
 
 export const ARTICLES_DATABASE: ArticlesDatabase = {
   "Callao": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "En el 2034, la Provincia Constitucional del Callao va camino a ser un puerto-ciudad que se desarrolla de forma sostenible, atractivo culturalmente que impregna de maritimidad a la ciudad, foco de conocimiento y talento en el sector náutico, referente en innovación y nítidamente inclusivo.",
-    //   urlMapa: "https://ejemplo.gob.pe/mapa-futuro-callao.jpg"
-    // },
+    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=1",
 
     "Escenario Deseado": {
       articulos: [
         {
-          titulo: "Optimización de la movilidad urbana",
-          resumen: "Para 2030, la integración de la Línea 2 del Metro y nuevas vías de acceso al puerto reducirán los tiempos de tránsito de carga y pasajeros.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
-          tema: "Transporte"
+          titulo: "Callao seguro, inclusivo y con bienestar social",
+          resumen: "Al 2034, el Callao busca consolidarse como un territorio más seguro e inclusivo, con menores niveles de inseguridad ciudadana, pobreza y violencia familiar. Se proyecta mejorar los servicios de salud y educación, fortalecer la protección de las poblaciones vulnerables y ampliar las oportunidades para el bienestar de la ciudadanía.",
+          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=12",
+          tema: "Social"
         },
         {
-          titulo: "Optimización de la movilidad urbana",
-          resumen: "Para 2030, la integración de la Línea 2 del Metro y nuevas vías de acceso al puerto reducirán los tiempos de tránsito de carga y pasajeros.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
-          tema: "Transporte"
+          titulo: "Callao como centro logístico, industrial y económico competitivo",
+          resumen: "El Callao se proyecta como un centro estratégico de servicios portuarios, aeroportuarios, industriales y logísticos, impulsado por megaproyectos e inversión privada. Se plantea un crecimiento anual del PBI regional del 5 %, acompañado de una mayor formalización laboral, fortalecimiento empresarial y generación de oportunidades económicas.",
+          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=12",
+          tema: "Económico"
         },
         {
-          titulo: "Optimización de la movilidad urbana",
-          resumen: "Para 2030, la integración de la Línea 2 del Metro y nuevas vías de acceso al puerto reducirán los tiempos de tránsito de carga y pasajeros.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
-          tema: "Transporte"
+          titulo: "Callao sostenible, resiliente y ambientalmente recuperado",
+          resumen: "Al 2034, el Callao aspira a contar con un territorio ambientalmente sostenible, mediante la recuperación de ecosistemas costeros, humedales, playas y riberas de los ríos Rímac y Chillón. Asimismo, se busca reducir la contaminación, proteger la biodiversidad y fortalecer la prevención y respuesta ante sismos, tsunamis y otros desastres.",
+          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=13",
+          tema: "Ambiental"
         },
         {
-          titulo: "Optimización de la movilidad urbana",
-          resumen: "Para 2030, la integración de la Línea 2 del Metro y nuevas vías de acceso al puerto reducirán los tiempos de tránsito de carga y pasajeros.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
-          tema: "Transporte"
+          titulo: "Callao integrado, moderno y con movilidad urbana sostenible",
+          resumen: "Se proyecta una ciudad mejor conectada e integrada territorialmente, con infraestructura vial, transporte público eficiente y mayor accesibilidad. El escenario contempla el fortalecimiento de la movilidad sostenible, la integración entre las actividades logísticas y urbanas, la recuperación de espacios públicos y la mejora de las condiciones de habitabilidad.",
+          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=13",
+          tema: "General"
         }
       ]
     }
   },
   "Lima Metropolitana": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
     // "escenarioDeseado": {
@@ -93,14 +88,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Apurímac": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Apurímac es una región integrada y competitiva que aprovecha sosteniblemente sus recursos mineros y agropecuarios, con cierre de brechas sociales en zonas rurales y una sólida gestión de conflictos socioambientales.",
-    // },
-    
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -113,13 +104,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Loreto": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Loreto es una región amazónica conectada y próspera, que basa su desarrollo en la bioeconomía, el turismo sostenible y la conservación de sus bosques, garantizando el bienestar y los derechos de las comunidades originarias.",
-    // },
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -132,13 +120,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Tumbes": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Tumbes es el principal destino ecoturístico de la costa norte, con una frontera dinámica, segura e integrada comercialmente, y un sector agroindustrial resiliente a los fenómenos climáticos.",
-    // },
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -151,13 +136,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Tacna": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Tacna es un polo de desarrollo comercial, tecnológico y de servicios médicos en el sur del país, con una gestión hídrica eficiente que asegura el recurso para la agroexportación y el consumo humano.",
-    // },
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -170,13 +152,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Puno": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Puno es el articulador comercial y turístico del Eje Andino, destacando por su cadena productiva de camélidos, el saneamiento integral del Lago Titicaca y la erradicación del contrabando a favor del comercio formal.",
-    // },
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -189,13 +168,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Lima": {
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, el Gobierno Regional de Lima (Provincias) ha consolidado sus corredores agroexportadores y turísticos, reduciendo su dependencia administrativa de la metrópoli y garantizando infraestructura segura frente a desastres naturales.",
-    // },
+
     "Escenario Deseado": {
       articulos: [
         {
@@ -208,14 +184,10 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     }
   },
   "Ucayali": {
-    
-    "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+
+    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
     "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
-    // "escenarioDeseado": {
-    //   titulo: "Imagen del territorio deseado al 2034",
-    //   sintesis: "Al 2034, Ucayali es un clúster de innovación forestal y agroindustrial responsable, libre de deforestación ilegal y con servicios básicos interculturales garantizados para sus comunidades nativas.",
-    // },
     "Escenario Deseado": {
       articulos: [
         {

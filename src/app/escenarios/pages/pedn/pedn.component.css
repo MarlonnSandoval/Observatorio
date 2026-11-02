@@ -21,23 +21,36 @@
 }
 
 .btn-foi {
-    display: inline-block;
-    background-color: #3b69ae;
-    color: #fff !important;
-    border: 1px #3b69ae solid;
-    padding: .2rem .6rem;
-    text-decoration: none;
+  display: inline-block;
+  background-color: #3b69ae;
+  color: #fff !important;
+  border: 1px #3b69ae solid;
+  padding: .2rem .6rem;
+  text-decoration: none;
 }
-.fa-regular, .far {
-    font-weight: 400;
+
+.fa-regular,
+.far {
+  font-weight: 400;
 }
 
 button {
-    background-color: #3b69ae;
-    border-color: #3b69ae;
-    padding: 4px 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
+  background-color: #3b69ae;
+  border-color: #3b69ae;
+  padding: 4px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.icon-trends {
+  max-width: 45px;
+  height: auto;
+}
+
+.title-trends {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2a68a2;
 }

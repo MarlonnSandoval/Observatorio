@@ -32,7 +32,7 @@
 /* ---- Toggle de categorías ---- */
 .bg-toggle-active {
   background-color: #f7e9df;
-  
+
 }
 
 .bg-toggle-inactive {
@@ -122,7 +122,7 @@
   font-size: 0.8rem;
 }
 
-.map-text i { 
+.map-text i {
   font-size: 0.7rem;
 }
 
@@ -197,7 +197,7 @@
   text-decoration: none;
 }
 
-.escenario-card:hover{
+.escenario-card:hover {
   background-color: #c1e1ff;
 }
 
@@ -229,7 +229,7 @@
 .escenario-card-link i {
   font-size: 0.7rem;
   transition: transform 0.2s ease;
-  
+
 }
 
 .escenario-card-link:hover i {
@@ -242,6 +242,16 @@
   border-radius: 8px;
   background-color: #DEEBF7;
   /* border: 2px solid #3b69ae; */
+}
+
+
+
+.link-trends {
+  cursor: pointer;
+  color: #2a68a2;
+  padding: 1rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 
