@@ -37,6 +37,7 @@ export class TerritorialesComponent {
     // 'Tendencias territoriales',
     // 'Riesgos territoriales',
     // 'Oportunidades territoriales',
+    'Escenarios territoriales',
     'Escenario Deseado'
   ];
 

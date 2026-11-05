@@ -35,33 +35,35 @@ export interface ArticlesDatabase {
 export const ARTICLES_DATABASE: ArticlesDatabase = {
   "Callao": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=1",
 
     "Escenario Deseado": {
       articulos: [
         {
-          titulo: "Callao seguro, inclusivo y con bienestar social",
-          resumen: "Al 2034, el Callao busca consolidarse como un territorio más seguro e inclusivo, con menores niveles de inseguridad ciudadana, pobreza y violencia familiar. Se proyecta mejorar los servicios de salud y educación, fortalecer la protección de las poblaciones vulnerables y ampliar las oportunidades para el bienestar de la ciudadanía.",
-          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=12",
-          tema: "Social"
-        },
+          titulo: "Callao 2034: ciudad portuaria sostenible, competitiva, segura e inclusiva",
+          resumen: "Al 2034, el Callao avanza hacia su consolidación como una ciudad-puerto sostenible, innovadora e integrada territorialmente, aprovechando su posición estratégica en el comercio y la logística internacional. Se proyecta una economía regional con crecimiento anual del 5 %, mayor formalización laboral y reducción de la pobreza, la inseguridad ciudadana y la corrupción. Asimismo, se busca fortalecer la educación, la salud y la inclusión social, mejorar la movilidad urbana y la infraestructura de servicios, reducir la vulnerabilidad ante desastres y recuperar los ecosistemas costeros. Todo ello mediante una gestión pública participativa y una mayor articulación institucional.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
+          tema: "económica"
+        }
+      ]
+    },
+    "Escenarios territoriales": {
+      articulos: [
         {
-          titulo: "Callao como centro logístico, industrial y económico competitivo",
-          resumen: "El Callao se proyecta como un centro estratégico de servicios portuarios, aeroportuarios, industriales y logísticos, impulsado por megaproyectos e inversión privada. Se plantea un crecimiento anual del PBI regional del 5 %, acompañado de una mayor formalización laboral, fortalecimiento empresarial y generación de oportunidades económicas.",
-          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=12",
+          titulo: "Sismo y tsunami de gran magnitud",
+          resumen: "Un terremoto de magnitud entre 8,8 y 9 Mw, seguido de un tsunami en la costa central del Perú, ocasionaría graves pérdidas humanas y daños en viviendas, establecimientos de salud, instituciones educativas e infraestructura estratégica del Callao. Ventanilla, Callao Cercado y La Punta figuran entre los territorios más afectados. La interrupción de servicios básicos, transporte y actividades económicas provocaría un incremento de la pobreza, el desempleo y la inseguridad ciudadana. Este escenario evidencia la necesidad de fortalecer la gestión del riesgo de desastres, la preparación de la población y las capacidades de respuesta, rehabilitación y reconstrucción.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
           tema: "Económico"
         },
         {
-          titulo: "Callao sostenible, resiliente y ambientalmente recuperado",
-          resumen: "Al 2034, el Callao aspira a contar con un territorio ambientalmente sostenible, mediante la recuperación de ecosistemas costeros, humedales, playas y riberas de los ríos Rímac y Chillón. Asimismo, se busca reducir la contaminación, proteger la biodiversidad y fortalecer la prevención y respuesta ante sismos, tsunamis y otros desastres.",
-          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=13",
+          titulo: "Nueva cepa COVID-19 y crisis sanitaria",
+          resumen: "La aparición de una nueva cepa del COVID-19, con elevados niveles de contagio, generaría una emergencia sanitaria que podría sobrepasar la capacidad de atención de los establecimientos de salud del Callao. Las medidas de contención, el aislamiento social y las restricciones a las actividades económicas afectarían el empleo, los ingresos familiares, la educación y la prestación de servicios públicos. Además, la reasignación de recursos para atender la emergencia podría retrasar inversiones y profundizar las desigualdades sociales. Este escenario resalta la importancia de fortalecer la vigilancia epidemiológica, la capacidad hospitalaria, la protección social y la continuidad de los servicios esenciales.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
           tema: "Ambiental"
         },
         {
-          titulo: "Callao integrado, moderno y con movilidad urbana sostenible",
-          resumen: "Se proyecta una ciudad mejor conectada e integrada territorialmente, con infraestructura vial, transporte público eficiente y mayor accesibilidad. El escenario contempla el fortalecimiento de la movilidad sostenible, la integración entre las actividades logísticas y urbanas, la recuperación de espacios públicos y la mejora de las condiciones de habitabilidad.",
-          url: "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138#page=13",
+          titulo: "Ejecución de megaproyectos públicos y privados",
+          resumen: "La ejecución articulada de megaproyectos de infraestructura portuaria, aeroportuaria, vial, logística y urbana impulsaría la transformación económica y territorial del Callao. Estas inversiones favorecerían la generación de empleo, la modernización de los servicios públicos, la conectividad y la competitividad regional, contribuyendo a reducir la pobreza y mejorar la habitabilidad urbana. Asimismo, permitirían recuperar espacios degradados, desarrollar nuevas actividades productivas y fortalecer el posicionamiento del Callao como nodo estratégico del comercio nacional e internacional. Para aprovechar estos beneficios, resulta fundamental alinear las inversiones con los instrumentos de planificación territorial y promover la sostenibilidad ambiental y la inclusión social.",
+          url: "https://observatorio.ceplan.gob.pe/ficha/e7_lp",
           tema: "General"
         }
       ]

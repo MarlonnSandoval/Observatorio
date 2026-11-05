@@ -376,6 +376,20 @@
   text-decoration: none;
 }
 
+.evento-link {
+  display: block;
+  color: #000000;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.evento-link:hover {
+  background-color: #ddeaff;
+  color: #1b365d;
+}
+
 .table-summary {
   margin: 0;
   color: #64748b;
@@ -519,18 +533,17 @@
 .cono-categories-rows {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 }
 
 .cono-cat-row {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   background: #ffffff;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #3B69AE;
-  gap: 15px;
+  gap: 6px;
 }
 
 .cono-cat-label {
@@ -543,9 +556,10 @@
 
 .cono-cat-items {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
+  gap: 6px;
+  align-items: flex-start;
 }
 
 .cono-right-sidebar {
@@ -621,19 +635,29 @@
 
 .cono-node-card {
   display: inline-flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  gap: 5px;
+  max-width: 160px;
+  height: auto;
+  padding: 5px 10px;
+  border-radius: 999px;
   color: #ffffff;
   text-decoration: none;
-  transition: transform 0.15s ease;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: normal;
+  line-height: 1.2;
+  word-break: break-word;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .cono-node-card:hover,
 .cono-node-card:focus-visible {
-  transform: scale(1.10);
+  transform: scale(1.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   color: #ffffff;
   outline: 0;
 }

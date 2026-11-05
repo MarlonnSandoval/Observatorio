@@ -71,39 +71,6 @@ export const DATABASE: Evento[] = [
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Uso generalizado de implantes neuronales', tematica: 'Tecnológica', fechaActualizacion: '22 dec 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/sd49', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Despegue de la minería espacial', tematica: 'Tecnológica', fechaActualizacion: '31 dec 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/sd58', categoria: 'Señal Débil', ejeEstrategico: 'Competitividad e innovación', horizonte: '2040-2050', tipoEvento: 'SD', categoriaPertenencia: 'SD/RD' },
 
-  // SD -
-  // SD -
-  // SD -
-  // SD -
-  // RD -
-  // SD -
-  // SD -
-  // SD -
-  // SD -
-  // SD -
-  // SD -
-  // RD -
-  // RD -
-  // SD -
-  // RD -
-  // RD -
-  // RD -
-  // SD -
-  // RD -
-  // RD -
-  // SD -
-  // SD -
-  // SD -
-  // SD -
-  // RD -
-  // SD -
-  // RD -
-  // RD -
-  // RD -
-  // SD -
-  // SD -
-  // SD -
-
 
   // --- CARTAS SALVAJES (CS) / EVENTOS CATASTRÓFICOS (EC) ---
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Extraordinario Fenómeno de El Niño', tematica: 'Ambiental', fechaActualizacion: '6 jul 2026', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/S24', categoria: 'Evento catastrófico', ejeEstrategico: 'Territorio sostenible', horizonte: 'PRESENTE-2030', tipoEvento: 'EC', categoriaPertenencia: 'CS/EC' },
@@ -135,34 +102,6 @@ export const DATABASE: Evento[] = [
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Ascenso del caos geopolítico global', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/EC7', categoria: 'Carta Salvaje', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'EC', categoriaPertenencia: 'CS/EC' },
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Tercera Guerra Mundial', tematica: 'Política', fechaActualizacion: '3 nov 2025', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/EC8', categoria: 'Carta Salvaje', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040', tipoEvento: 'EC', categoriaPertenencia: 'CS/EC' },
 
-  // EC -
-  // EC -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // CS -
-  // EC -
-  // EC -
-  // EC -
-  // EC -
-  // EC -
-  // EC -
-  // EC -
 
   // --- Tecnología emergente ---
   { img: 'assets/img/XpNM9CbsbzOXTwPMK9LhAhI4.jpg', sumilla: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo nihil perferendis deleniti laudantium, nobis numquam. Corporis delectus, quidem labore iusto laborum molestias animi nulla nostrum pariatur quis ut tempora ab?',nombre: 'Aplicaciones inteligentes: el futuro de la tecnología móvil', tematica: 'Tecnológica', fechaActualizacion: '14 aug 2023', urlFicha: 'https://observatorio.ceplan.gob.pe/ficha/TE_01', categoria: 'Tecnología Emergente', ejeEstrategico: 'Desarrollo de las personas', horizonte: '2030-2040' },

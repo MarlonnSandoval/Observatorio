@@ -15,6 +15,14 @@
     color: #2a68a2;
 }
 
+.link-trends {
+    cursor: pointer;
+    color: #2a68a2;
+    padding: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
 .hero-overlay {
     max-width: 480px;
     background: linear-gradient(90deg,
@@ -257,6 +265,12 @@ button {
     font-size: 16px;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+}
+
+.row-scene:hover {
+    cursor: pointer;
+    background-color: #fff8dc;
+    transition: .3s ease-out;
 }
 
 

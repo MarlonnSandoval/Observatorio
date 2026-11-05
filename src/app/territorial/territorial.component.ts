@@ -180,13 +180,13 @@ export class TerritorialComponent {
       switch (periodo) {
         case '2023-2030':
         case '2030':
-          return 80;
+          return 70;
         case '2030-2040':
-          return 150;
+          return 140;
         case '2040-2050':
-          return 210;
+          return 205;
         default:
-          return 150;
+          return 140;
       }
     };
 
@@ -220,28 +220,22 @@ export class TerritorialComponent {
         const baseRadius = getRadiusByPeriod(periodoKey);
         const countInPeriod = artList.length;
 
-        // Apertura angular más amplia para distribuir nodos a lo largo del arco (aprox. 30° a 40°)
-        const angularSpread = Math.min(0.52, 0.15 * countInPeriod);
+        // Spread angular escalado: mínimo 0.4 rad, máximo 1.1 rad (~63°) para muchos nodos
+        const angularSpread = Math.min(1.1, Math.max(0.4, 0.18 * countInPeriod));
 
         artList.forEach((art, index) => {
           numeroGlobal++;
 
-          // Cálculo del ángulo individual distribuido simétricamente
+          // Ángulo individual distribuido simétricamente alrededor del ángulo base
           const angleOffset = countInPeriod > 1
             ? -angularSpread / 2 + (angularSpread / (countInPeriod - 1)) * index
             : 0;
 
           const finalAngle = baseAngle + angleOffset;
 
-          // Desplazamiento radial zig-zag (+14px / -14px) para evitar superposición en una misma línea
-          let radialJitter = 0;
-          if (countInPeriod > 1) {
-            radialJitter = (index % 2 === 0) ? 14 : -14;
-            // Si hay más de 3 elementos, añadimos una variación intermedia
-            if (countInPeriod > 3 && index % 3 === 0) {
-              radialJitter = 0;
-            }
-          }
+          // Jitter radial en 3 niveles para evitar superposición cuando hay muchos nodos
+          const jitterValues = [0, 18, -18, 30, -30];
+          const radialJitter = countInPeriod > 1 ? (jitterValues[index % jitterValues.length] ?? 0) : 0;
 
           const radius = baseRadius + radialJitter;
 

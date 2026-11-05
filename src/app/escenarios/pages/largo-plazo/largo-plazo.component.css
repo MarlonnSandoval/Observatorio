@@ -54,3 +54,11 @@ button {
     font-weight: 700;
     color: #2a68a2;
 }
+
+.link-trends {
+    cursor: pointer;
+    color: #2a68a2;
+    padding: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
