@@ -1,6 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
-import { ArticuloRadar, SECTOR_DATABASE, ContenidoSector, CategoriaSectorDetalle } from './sector-articulos';
+import { ArticuloRadar, SECTOR_DATABASE, ContenidoSector, CategoriaSectorDetalle } from './articles-database.data';
 
 type SvgRootSelection = d3.Selection<HTMLDivElement, unknown, null, undefined>;
 
@@ -560,9 +560,10 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     const porCuadrante = new Map<string, { art: ArticuloRadar; numero: number }[]>();
 
     articulos.forEach((art, index) => {
-      const lista = porCuadrante.get(art.cuadrante) ?? [];
+      const cuadrante = art.cuadrante ?? 'Sin cuadrante'; 
+      const lista = porCuadrante.get(cuadrante) ?? [];
       lista.push({ art, numero: index + 1 });
-      porCuadrante.set(art.cuadrante, lista);
+      porCuadrante.set(cuadrante, lista);
     });
 
     const angleStepCuadrante = Math.PI / 2;
@@ -746,7 +747,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
           titulo: art.titulo,
           shortLabel,
           categoria: cat,
-          horizonte: art.horizonte,
+          horizonte: art.horizonte ?? 'PRESENTE-2030',
           url: art.url,
           icono: this.iconoCategoria(cat),
           color: colorData.border,
