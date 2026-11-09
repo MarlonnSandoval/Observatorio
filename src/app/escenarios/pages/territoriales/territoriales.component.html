@@ -3,7 +3,7 @@
     <div>
         <div class="row">
             <div class="col-sm-7 col-12 title-trends">
-                <h1 class="fw-bold mb-3 title-trends">Escenarios a largo plazo</h1>
+                <h1 class="fw-bold mb-3 title-trends">Escenarios Territoriales</h1>
             </div>
             <div class="col-sm-5 col-12">
                 <div class="row justify-content-end">
@@ -131,7 +131,7 @@
                                     <p class="mb-0">Las carpetas de escenarios aparecerán en este espacio.</p>
                                 </div>
                                 <a *ngFor="let articulo of articulosPorTemaGlobal" [href]="articulo.url" target="_blank"
-                                    class="article-link-card p-3 bg-light border-start border-primary border-3 rounded text-decoration-none text-dark d-block">
+                                    class="article-link-card">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <span
                                             class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small fw-semibold">
@@ -167,8 +167,7 @@
 
                                 <div class="d-flex flex-column gap-3">
                                     <div *ngFor="let articulo of getArticulos('Escenario Deseado')"
-                                        class="escenario-deseado-card rounded-3 overflow-hidden"
-                                        style="border: 1.5px solid #1a56db; background: #f8faff;">
+                                        class="escenario-deseado-card rounded-3">
 
                                         <!-- Cuerpo de la tarjeta -->
                                         <a [href]="articulo.url" style="text-decoration: none;" target="_blank"
@@ -209,7 +208,7 @@
                                         <div class="d-flex flex-column gap-3">
                                             <div *ngFor="let articulo of getArticulos(categoria)"
                                                 class="rounded-3 overflow-hidden"
-                                                style="border: 1px solid #e2e8f0; background: #fff;">
+                                                style="border: 1px solid #1a56db; background: #fff;">
                                                 <a [href]="articulo.url" target="_blank" style="text-decoration: none;"
                                                     rel="noopener noreferrer">
                                                     <!-- Cuerpo -->

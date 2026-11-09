@@ -15,7 +15,7 @@ interface SectorConfig {
   nombre: string;
   color: string;
   anillo: string;
-  icono: string; // <-- Nuevo campo para el icono de Bootstrap
+  icono: string;
 }
 
 export interface ConoItem {
@@ -24,7 +24,7 @@ export interface ConoItem {
   categoria: string;
   horizonte: string;
   url: string;
-  icono: string; // id del símbolo SVG (ver sprite en el HTML)
+  icono: string;
   color: string;
 }
 
@@ -40,7 +40,6 @@ export interface ConoColumn {
   groups: ConoGroup[];
 }
 
-/** Fila de las tablas (Elementos futuros / Escenarios). Los campos extra son opcionales según el dato. */
 export type FilaArticulo = ArticuloRadar & {
   categoria: string;
   resumen?: string;
@@ -56,18 +55,6 @@ export interface FiltroElementos {
   periodo: string;
 }
 
-export interface FiltroEscenarios {
-  texto: string;
-  tema: string;
-  periodo: string;
-}
-
-export interface RadarItem {
-  articulo: ArticuloRadar;
-  numero: number;
-  icono: string; // id del símbolo SVG (ver sprite en el HTML)
-}
-
 export interface RadarNodo {
   articulo: ArticuloRadar;
   numero: number;
@@ -77,21 +64,6 @@ export interface RadarNodo {
   x: number;
   y: number;
 }
-
-export interface RadarColumna {
-  nombre: string;
-  border: string;
-  badgeBg: string;
-  badgeText: string;
-  items: RadarItem[];
-}
-
-const DEFINICION_ANILLOS: { id: string; inner: number; outer: number; modoTexto: 'curvo' | 'radial' }[] = [
-  { id: 'interior', inner: 45, outer: 100, modoTexto: 'radial' },
-  { id: 'exterior', inner: 102, outer: 145, modoTexto: 'curvo' },
-  { id: 'exterior_2', inner: 148, outer: 190, modoTexto: 'curvo' }
-];
-const RADIO_CENTRO = 40;
 
 @Component({
   selector: 'app-explorador-sectorial',
@@ -103,33 +75,19 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   @Input() selectedSector: string | null = null;
   @Input() sectorData: ContenidoSector | null = null;
 
-  // Estado de la vista activa: 'radar' o 'cono'
   vistaActual: 'radar' | 'cono' = 'cono';
 
   readonly categoriesBase: (keyof ContenidoSector)[] = ['Tendencias', 'Riesgos', 'Oportunidades'];
-
-  /** Categorías de "elementos futuros" (todas menos Escenarios), en el orden de la leyenda. */
   readonly categoriasElementos: string[] = ['Tendencias', 'Riesgos', 'Oportunidades', 'Señal débil', 'Carta salvaje'];
-
   private readonly horizontes: string[] = ['PRESENTE-2030', '2030-2040', '2040-2050'];
 
-  // ---- Tablas (pestañas "Elementos futuros" y "Escenarios") ----
   filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
-  filtroEscenarios: FiltroEscenarios = { texto: '', tema: '', periodo: '' };
-
   filasElementos: FilaArticulo[] = [];
   filasElementosFiltradas: FilaArticulo[] = [];
-  filasEscenarios: FilaArticulo[] = [];
-  filasEscenariosFiltradas: FilaArticulo[] = [];
 
-  tiposElementos: string[] = [];
   temasElementos: string[] = [];
   periodosElementos: string[] = [];
-  temasEscenarios: string[] = [];
-  periodosEscenarios: string[] = [];
-
   primeraFilaElementos = 0;
-  primeraFilaEscenarios = 0;
 
   @ViewChild('svgContainer', { static: false })
   private svgContainer!: ElementRef<HTMLDivElement>;
@@ -139,7 +97,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   private svgRoot: SvgRootSelection | null = null;
 
   private readonly colorPorSector = new Map<string, string>();
-  private readonly sectoresPorAnillo = new Map<string, SectorConfig[]>();
 
   private readonly configSectores: SectorConfig[] = [
     { nombre: 'Comercio Exterior y Turismo', color: 'rgb(44, 194, 177)', anillo: 'exterior_2', icono: 'bi-airplane' },
@@ -189,12 +146,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   constructor() {
     for (const sector of this.configSectores) {
       this.colorPorSector.set(sector.nombre, sector.color);
-      const grupo = this.sectoresPorAnillo.get(sector.anillo);
-      if (grupo) {
-        grupo.push(sector);
-      } else {
-        this.sectoresPorAnillo.set(sector.anillo, [sector]);
-      }
     }
   }
 
@@ -211,13 +162,12 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     this.svgRoot = d3.select(this.svgContainer.nativeElement);
     this.svgRoot.selectAll('svg').remove();
 
-    // viewBox más ajustado: así el gráfico se escala ~1:1 y se ve grande
     const width = 1180;
     const height = 640;
     const innerRadius = 80;
-    const radius = 235;          // Tamaño del donut (antes 190)
-    const labelX = radius * 1.22; // Distancia hacia las columnas de texto
-    const minGap = 26;           // Separación vertical entre textos
+    const radius = 235;
+    const labelX = radius * 1.22;
+    const minGap = 26;
 
     const svg = this.svgRoot
       .append('svg')
@@ -326,7 +276,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
     slices.append('title').text(d => d.data.nombre);
 
-    // 2. Íconos mejorados (mayor tamaño y mejor contraste con drop-shadow)
+    // 2. Íconos
     g.selectAll('foreignObject.sector-icon')
       .data(pieData)
       .enter()
@@ -403,117 +353,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       .style('pointer-events', 'none');
   }
 
-  private dibujarAnillo(
-    g: d3.Selection<SVGGElement, unknown, null, undefined>,
-    datos: SectorConfig[],
-    anillo: { id: string; inner: number; outer: number; modoTexto: 'curvo' | 'radial' }
-  ): void {
-    const radios = { inner: anillo.inner, outer: anillo.outer };
-    const modoTexto = anillo.modoTexto;
-    const pie = d3.pie<SectorConfig>().value(1).sort(null).padAngle(0.012);
-    const pieData = pie(datos);
-
-    const arcGenerator = d3.arc<d3.PieArcDatum<SectorConfig>>()
-      .innerRadius(radios.inner)
-      .outerRadius(radios.outer)
-      .cornerRadius(3);
-
-    g.selectAll(`path.sector-${anillo.id}`)
-      .data(pieData)
-      .enter()
-      .append('path')
-      .attr('class', `sector-path sector-${anillo.id}`)
-      .attr('id', d => `d3-sector-${d.data.nombre.replace(/\s+/g, '-')}`)
-      .attr('d', d => arcGenerator(d))
-      .attr('fill', d => d.data.color)
-      .attr('stroke', '#ffffff')
-      .attr('stroke-width', 1.5)
-      .style('filter', 'url(#sombra-sector)')
-      .style('cursor', 'pointer')
-      .style('transition', 'opacity 0.25s ease, transform 0.25s ease')
-      .style('transform-origin', 'center')
-      .on('click', (event, d) => this.toggleSector(d.data.nombre))
-      .append('title')
-      .text(d => d.data.nombre);
-
-    if (modoTexto === 'curvo') {
-      const midRadio = (radios.inner + radios.outer) / 2;
-
-      g.selectAll(`path.label-path-${anillo.id}`)
-        .data(pieData)
-        .enter()
-        .append('path')
-        .attr('class', `label-path-${anillo.id}`)
-        .attr('id', (_d, i) => `label-arc-${anillo.id}-${i}`)
-        .attr('d', d => {
-          const midAngle = (d.startAngle + d.endAngle) / 2;
-          const esMitadInferior = midAngle > Math.PI / 2 && midAngle < (3 * Math.PI) / 2;
-
-          let startA = d.startAngle;
-          let endA = d.endAngle;
-
-          if (esMitadInferior) {
-            startA = d.endAngle;
-            endA = d.startAngle;
-          }
-
-          const arcPath = d3.arc<d3.PieArcDatum<SectorConfig>>()
-            .innerRadius(midRadio)
-            .outerRadius(midRadio)
-            .startAngle(startA)
-            .endAngle(endA);
-
-          return arcPath(d);
-        });
-
-      g.selectAll(`text.label-curvo-${anillo.id}`)
-        .data(pieData)
-        .enter()
-        .append('text')
-        .attr('class', `label-curvo-${anillo.id}`)
-        .attr('dy', d => {
-          const midAngle = (d.startAngle + d.endAngle) / 2;
-          const esMitadInferior = midAngle > Math.PI / 2 && midAngle < (3 * Math.PI) / 2;
-          return esMitadInferior ? -2 : 3;
-        })
-        .style('font-size', '9.5px')
-        .style('font-weight', 600)
-        .style('fill', '#ffffff')
-        .style('pointer-events', 'none')
-        .append('textPath')
-        .attr('href', (_d, i) => `#label-arc-${anillo.id}-${i}`)
-        .attr('startOffset', '25%')
-        .style('text-anchor', 'middle')
-        .text(d => d.data.nombre);
-
-    } else {
-      const midRadio = (radios.inner + radios.outer) / 2;
-      g.selectAll(`text.label-radial-${anillo.id}`)
-        .data(pieData)
-        .enter()
-        .append('text')
-        .attr('class', `label-radial-${anillo.id}`)
-        .attr('transform', d => {
-          const midAngle = (d.startAngle + d.endAngle) / 2;
-          const anguloGrados = (midAngle * 180) / Math.PI;
-          const x = midRadio * Math.sin(midAngle);
-          const y = -midRadio * Math.cos(midAngle);
-
-          let rotacion = anguloGrados - 90;
-          if (midAngle > Math.PI) rotacion += 180;
-
-          return `translate(${x}, ${y}) rotate(${rotacion})`;
-        })
-        .attr('text-anchor', 'middle')
-        .attr('dy', 3)
-        .style('font-size', '9px')
-        .style('font-weight', 600)
-        .style('fill', '#ffffff')
-        .style('pointer-events', 'none')
-        .text(d => d.data.nombre);
-    }
-  }
-
   /* ------------------- RADAR DE PROSPECTIVA ------------------- */
 
   readonly radarCenter = 250;
@@ -571,7 +410,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     const margenSeguridad = angleStepCuadrante * 0.12;
     const nodos: RadarNodo[] = [];
 
-    // Categoría de cada artículo (para elegir su ícono y su color)
     const categoriaPorArticulo = new Map<ArticuloRadar, string>();
     this.categoriasElementos.forEach((nombre) => {
       this.getArticulos(nombre).forEach((a) => categoriaPorArticulo.set(a, nombre));
@@ -605,7 +443,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return nodos;
   }
 
-  /** Devuelve el id del símbolo SVG según la categoría (Tendencia, Riesgo, Oportunidad, Señal débil, Carta salvaje). */
   iconoCategoria(categoria: string): string {
     const c = (categoria || '').toLowerCase();
     if (c.includes('riesg')) return '#ico-riesgo';
@@ -632,36 +469,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
   get articulosCompletos(): ArticuloRadar[] {
     return this.categoriasElementos.flatMap((cat) => this.getArticulos(cat));
-  }
-
-  /**
-   * Artículos del radar agrupados por categoría (una columna por categoría).
-   * La numeración es correlativa entre columnas y coincide con la de `radarNodes`,
-   * ya que `articulosCompletos` concatena las categorías en el mismo orden.
-   */
-  get radarColumnas(): RadarColumna[] {
-    let offset = 0;
-
-    return this.categoriesBase.map((cat) => {
-      const nombre = String(cat);
-      const articulos = this.getArticulos(nombre);
-      const colores = this.getCategoryColorData(nombre);
-
-      const items: RadarItem[] = articulos.map((articulo, i) => ({
-        articulo,
-        numero: offset + i + 1,
-        icono: this.iconoCategoria(nombre),
-      }));
-      offset += articulos.length;
-
-      return {
-        nombre,
-        border: colores.border,
-        badgeBg: colores.badgeBg,
-        badgeText: colores.badgeText,
-        items,
-      };
-    });
   }
 
   getArticulos(categoriaNombre: string): ArticuloRadar[] {
@@ -699,18 +506,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
   trackBySector(_index: number, sector: string): string {
     return sector;
-  }
-
-  trackByArticulo(_index: number, articulo: ArticuloRadar): string {
-    return articulo.titulo;
-  }
-
-  trackByColumna(_index: number, col: RadarColumna): string {
-    return col.nombre;
-  }
-
-  trackByItemRadar(_index: number, item: RadarItem): string {
-    return item.articulo.titulo;
   }
 
   private getConoColumnKey(horizonte?: string): 'presente' | 'medio' | 'lejano' {
@@ -774,14 +569,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  get conoEscenarios(): ArticuloRadar[] {
-    return this.getArticulos('Escenarios');
-  }
-
-  get tieneEscenariosCono(): boolean {
-    return this.conoEscenarios.length > 0;
-  }
-
   getCategoryColorData(categoriaName: string) {
     if (categoriaName.includes('Tendencias')) {
       return { border: '#3B82F6', badgeBg: '#E0F2FE', badgeText: '#0369A1' };
@@ -827,19 +614,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#bababa' };
   }
 
-  getCount(categoria: string): number {
-    return this.getArticulos(categoria).length;
-  }
-
-  /** URL del reporte descargable de una categoría (si el dato la trae). */
-  getDescargaUrl(categoria: string): string | null {
-    const sectorNombre = this.sectorSeleccionado || this.selectedSector;
-    if (!sectorNombre) return null;
-    const sector = this.sectorData || SECTOR_DATABASE[sectorNombre];
-    return (sector as any)?.[categoria]?.descargaUrl || null;
-  }
-
-  /** Abre o descarga el reporte completo en PDF del sector seleccionado. */
   descargarListaCompletaPDF(): void {
     if (!this.sectorSeleccionado) return;
 
@@ -859,7 +633,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     </div>
     `;
 
-    // Combinamos las categorías de elementos futuros y los escenarios para el reporte
     const categoriasParaReporte = [...this.categoriasElementos, 'Escenarios'];
 
     categoriasParaReporte.forEach((categoria: string) => {
@@ -930,10 +703,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     html2pdf().set(opciones).from(reporteContenedor).save();
   }
 
-  // ===================================================
-  //  TABLAS: Elementos futuros / Escenarios
-  // ===================================================
-
   etiquetaHorizonte(horizonte?: string): string {
     switch (horizonte) {
       case 'PRESENTE-2030':
@@ -953,7 +722,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     );
   }
 
-  /** Horizontes presentes en las filas, en orden cronológico. */
   private periodosDe(filas: FilaArticulo[]): string[] {
     const presentes = new Set(filas.map((f) => f.horizonte as string).filter(Boolean));
     const ordenados = this.horizontes.filter((h) => presentes.has(h));
@@ -972,25 +740,16 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     );
   }
 
-  /** Reconstruye las filas base de ambas tablas y reinicia sus filtros. */
   private construirTablas(): void {
     this.filasElementos = this.categoriasElementos.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat } as FilaArticulo))
     );
-    this.filasEscenarios = this.getArticulos('Escenarios').map(
-      (a) => ({ ...a, categoria: 'Escenarios' } as FilaArticulo)
-    );
 
-    this.tiposElementos = this.categoriasElementos.filter((c) => this.getCount(c) > 0);
     this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
     this.periodosElementos = this.periodosDe(this.filasElementos);
-    this.temasEscenarios = this.unicos(this.filasEscenarios.map((f) => f.tematica));
-    this.periodosEscenarios = this.periodosDe(this.filasEscenarios);
 
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
-    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
-    this.aplicarFiltroEscenarios();
   }
 
   aplicarFiltroElementos(): void {
@@ -1005,34 +764,13 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     this.primeraFilaElementos = 0;
   }
 
-  aplicarFiltroEscenarios(): void {
-    const f = this.filtroEscenarios;
-    this.filasEscenariosFiltradas = this.filasEscenarios.filter(
-      (a) =>
-        this.coincideTexto(a, f.texto) &&
-        (!f.tema || a.tematica === f.tema) &&
-        (!f.periodo || a.horizonte === f.periodo)
-    );
-    this.primeraFilaEscenarios = 0;
-  }
-
   get hayFiltroElementos(): boolean {
     const f = this.filtroElementos;
     return !!(f.texto || f.tipo || f.tema || f.periodo);
   }
 
-  get hayFiltroEscenarios(): boolean {
-    const f = this.filtroEscenarios;
-    return !!(f.texto || f.tema || f.periodo);
-  }
-
   limpiarFiltroElementos(): void {
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
-  }
-
-  limpiarFiltroEscenarios(): void {
-    this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
-    this.aplicarFiltroEscenarios();
   }
 }
