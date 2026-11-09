@@ -9,6 +9,7 @@ export interface ArticuloRadar {
   horizonte?: 'PRESENTE-2030' | '2030-2040' | '2040-2050';
   clave?: string;
   cuadrante?: string;
+  fechaActualizacion?: String;
 }
 
 export interface CategoriaSectorDetalle {
@@ -43,9 +44,11 @@ export const SECTOR_DATABASE: SectorDatabase = {
           resumen: "Implementación de tecnologías de fabricación aditiva en plantas de ensamblaje y componentes.",
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_prod",
           tematica: "Tecnológica",
-          horizonte: "PRESENTE-2030",
+          // horizonte: "PRESENTE-2030",
           clave: "manufactura avanzada",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Transición hacia fábricas inteligentes conectadas mediante redes 5G",
@@ -55,7 +58,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
           clave: "iot industrial",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Implementación generalizada de la economía circular en cadenas de valor",
@@ -65,7 +70,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           tematica: "Ambiental",
           horizonte: "2030-2040",
           clave: "circularidad",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Automatización robótica colaborativa (cobots) en líneas de empaque",
@@ -74,7 +81,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t4_prod",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Descarbonización profunda de procesos térmicos en la industria pesada",
@@ -84,7 +93,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           tematica: "Ambiental",
           horizonte: "2040-2050",
           clave: "hidrógeno verde",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Trazabilidad de la cadena de suministro basada en gemelos digitales",
@@ -93,7 +104,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t6_prod",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -106,7 +119,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_prod",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Obsolescencia acelerada del parque industrial frente a la automatización global",
@@ -115,7 +130,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r2_prod",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Escasez de talento humano especializado en mecatrónica y analítica de datos",
@@ -124,7 +141,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r3_prod",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Incremento de restricciones arancelarias por normativas ambientales estrictas",
@@ -133,7 +152,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r4_prod",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -146,7 +167,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_prod",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Desarrollo de proveedores locales para industrias tecnológicas avanzadas",
@@ -155,7 +178,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o2_prod",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Exportación de bienes industriales con certificación de huella hídrica cero",
@@ -164,7 +189,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o3_prod",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Digitalización de trámites de habilitación industrial mediante ventanilla única",
@@ -173,7 +200,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o4_prod",
           tematica: "Política",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -186,7 +215,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/s1_prod",
           tematica: "Tecnológica",
           horizonte: "2040-2050",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Fábricas totalmente autónomas operadas por inteligencia artificial general",
@@ -195,7 +226,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/s2_prod",
           tematica: "Tecnológica",
           horizonte: "2040-2050",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Surgimiento de sindicatos y gobernanza algorítmica para trabajadores de cobots",
@@ -204,7 +237,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/s3_prod",
           tematica: "Social",
           horizonte: "2030-2040",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -217,7 +252,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/c1_prod",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Descubrimiento imprevisto de yacimientos masivos de tierras raras nacionales",
@@ -226,7 +263,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/c2_prod",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -239,7 +278,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/e1_prod",
           tematica: "Económica",
           horizonte: "2040-2050",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Escenario 2: Estancamiento industrial por dependencia de materias primas",
@@ -248,7 +289,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/e2_prod",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Escenario 3: Descentralización industrial basada en microrredes de manufactura local",
@@ -257,7 +300,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/e3_prod",
           tematica: "Social",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Escenario 4: Industria circular automatizada y resiliente al cambio climático",
@@ -266,7 +311,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/e4_prod",
           tematica: "Ambiental",
           horizonte: "2040-2050",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         },
         {
           titulo: "Escenario 5: Alianza estratégica regional para cadenas de valor bio-tecnológicas",
@@ -275,7 +322,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/e5_prod",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     }
@@ -293,7 +342,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_edu",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -306,7 +357,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_edu",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -319,7 +372,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_edu",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -340,7 +395,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_sal",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -353,7 +410,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_sal",
           tematica: "Social",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -366,7 +425,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_sal",
           tematica: "Tecnológica",
           horizonte: "2040-2050",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -387,7 +448,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_amb",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -400,7 +463,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_amb",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -413,7 +478,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_amb",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -434,7 +501,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_cul",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -447,7 +516,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_cul",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -460,7 +531,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_cul",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -481,7 +554,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_int",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -494,7 +569,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_int",
           tematica: "Política",
           horizonte: "2030-2040",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -507,7 +584,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_int",
           tematica: "Política",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -528,7 +607,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_jus",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -541,7 +622,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_jus",
           tematica: "Política",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -554,7 +637,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_jus",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -575,7 +660,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_def",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -588,7 +675,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_def",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -601,7 +690,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_def",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -622,7 +713,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_eco",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -635,7 +728,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_eco",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -648,7 +743,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_eco",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -669,7 +766,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_rel",
           tematica: "Política",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -682,7 +781,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_rel",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -695,7 +796,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_rel",
           tematica: "Política",
           horizonte: "2030-2040",
-          cuadrante: "Democracia y paz"
+          cuadrante: "Democracia y paz",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -716,7 +819,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_ene",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -729,7 +834,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_ene",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -742,7 +849,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_ene",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -763,7 +872,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_tra",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -776,7 +887,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_tra",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -789,7 +902,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_tra",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -810,7 +925,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_tra_com",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -823,7 +940,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_tra_com",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -836,7 +955,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_tra_com",
           tematica: "Tecnológica",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -857,7 +978,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_mpv",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -870,7 +993,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_mpv",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -883,7 +1008,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_mpv",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -904,7 +1031,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_dis",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -917,7 +1046,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_dis",
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -930,7 +1061,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_dis",
           tematica: "Social",
           horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas"
+          cuadrante: "Desarrollo de las personas",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -951,7 +1084,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_cet",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -964,7 +1099,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_cet",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -977,7 +1114,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_cet",
           tematica: "Económica",
           horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -998,7 +1137,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_agr",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -1011,7 +1152,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_agr",
           tematica: "Ambiental",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -1024,7 +1167,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_agr",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -1045,7 +1190,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/t1_viv",
           tematica: "Tecnológica",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Competitividad e innovación"
+          cuadrante: "Competitividad e innovación",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -1058,7 +1205,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/r1_viv",
           tematica: "Social",
           horizonte: "PRESENTE-2030",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },
@@ -1071,7 +1220,9 @@ export const SECTOR_DATABASE: SectorDatabase = {
           url: "https://observatorio.ceplan.gob.pe/ficha/o1_viv",
           tematica: "Ambiental",
           horizonte: "2030-2040",
-          cuadrante: "Territorio sostenible"
+          cuadrante: "Territorio sostenible",
+          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
+          fechaActualizacion: "20/05/2026"
         }
       ]
     },

@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4"  style="padding: 0 100px;">
 
   <!-- ENCABEZADO -->
   <div>
@@ -172,7 +172,7 @@
 
           <div class="row g-3">
             <div class="col-12">
-              <div class="chart-wrapper" style="width: 100%; max-width: 900px; margin: 0 auto; position: relative;">
+              <div class="chart-wrapper" style="width: 100%; max-width: 1030px; margin: 0 auto; position: relative;">
                 <svg viewBox="0 0 500 500" class="w-100 h-auto">
                   <defs>
                     <path id="pathTerritorio" d="M 45,250 A 205,205 0 0,1 250,45" />
@@ -296,6 +296,11 @@
                         Político
                       </span>
                     </span>
+                    <span class="d-flex align-items-center gap-1">
+                      <span class="tipo-badge" style="background-color: rgb(227, 243, 255); color: rgb(131, 183, 221);">
+                        Actitud, valores y ética
+                      </span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -360,7 +365,7 @@
               <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
               <span><strong>Nota:</strong> La posición de la tendencia en radar es el tiempo donde tiene mayor
                 relevancia; sin embargo el comportamiento se presenta en todo el periodo.</span>
-            </div> 
+            </div>
 
             <div class="d-flex gap-3">
               <div class="cono-legend-box p-3 rounded flex-grow-1">
@@ -421,6 +426,11 @@
                       Político
                     </span>
                   </span>
+                  <span class="d-flex align-items-center gap-1">
+                    <span class="tipo-badge" style="background-color: rgb(227, 243, 255); color: rgb(131, 183, 221);">
+                      Actitud, valores y ética
+                    </span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -452,8 +462,8 @@
                   <div class="col-12 col-md-5">
                     <span class="p-input-icon-left w-100">
                       <i class="pi pi-search"></i>
-                      <input type="text" pInputText class="w-100 filter-custom-input" placeholder="Buscar señal o ruptura..."
-                        [ngModel]="filtroElementos.texto"
+                      <input type="text" pInputText class="w-100 filter-custom-input"
+                        placeholder="Buscar señal o ruptura..." [ngModel]="filtroElementos.texto"
                         (ngModelChange)="filtroElementos.texto = $event; aplicarFiltroElementos()" />
                     </span>
                   </div>
@@ -482,7 +492,8 @@
 
               <!-- METADATOS Y BOTÓN DESCARGAR -->
               <div class="result-meta d-flex justify-content-between align-items-center">
-                <span class="text-muted fw-semibold small">{{ filasElementosFiltradas.length }} de {{ filasElementos.length }} eventos</span>
+                <span class="text-muted fw-semibold small">{{ filasElementosFiltradas.length }} de {{
+                  filasElementos.length }} eventos</span>
                 <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3"
                   (click)="descargarListaCompletaPDF()">
                   <i class="bi bi-download me-1"></i> Descargue la lista completa

@@ -1,6 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { ArticuloRadar, SECTOR_DATABASE, ContenidoSector, CategoriaSectorDetalle } from './articles-database.data';
+import html2pdf from 'html2pdf.js';
 
 type SvgRootSelection = d3.Selection<HTMLDivElement, unknown, null, undefined>;
 
@@ -840,11 +841,95 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
   /** Abre o descarga el reporte completo en PDF del sector seleccionado. */
   descargarListaCompletaPDF(): void {
-    const url = this.getDescargaUrl('Escenarios') || this.getDescargaUrl('Tendencias');
-    if (url) {
-      window.open(url, '_blank');
-    }
+    if (!this.sectorSeleccionado) return;
+
+    const reporteContenedor = document.createElement('div');
+    reporteContenedor.style.padding = '30px';
+    reporteContenedor.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
+    reporteContenedor.style.backgroundColor = '#ffffff';
+
+    let contenidoHtml = `
+    <div style="border-bottom: 2px solid #0d6efd; padding-bottom: 15px; margin-bottom: 25px;">
+      <h1 style="color: #0c4a6e; font-size: 22px; margin: 0; font-weight: bold;">
+        Reporte: ${this.sectorSeleccionado}
+      </h1>
+      <p style="color: #6c757d; font-size: 13px; margin-top: 5px; margin-bottom: 0;">
+        Fichas explicativas e información territorial consolidada.
+      </p>
+    </div>
+    `;
+
+    // Combinamos las categorías de elementos futuros y los escenarios para el reporte
+    const categoriasParaReporte = [...this.categoriasElementos, 'Escenarios'];
+
+    categoriasParaReporte.forEach((categoria: string) => {
+      const articulos = this.getArticulos(categoria);
+      const colorData = this.getCategoryColorData(categoria);
+
+      if (articulos.length > 0) {
+        contenidoHtml += `
+        <div style="margin-bottom: 15px;">
+          <h3 style="color: ${colorData.border}; font-size: 16px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">
+            ${categoria}
+          </h3>
+      `;
+
+        articulos.forEach((articulo) => {
+          contenidoHtml += `
+          <div style="
+            background-color: #f8fafc;
+            border: 1px solid ${colorData.border};
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+          ">
+            <span style="
+              background-color: ${colorData.badgeBg};
+              color: ${colorData.badgeText};
+              padding: 3px 10px;
+              border-radius: 12px;
+              font-size: 11px;
+              font-weight: bold;
+              display: inline-block;
+              margin-bottom: 8px;
+            ">
+              ${articulo.tema || categoria} (${articulo.horizonte || '2030-2040'})
+            </span>
+            <h4 style="color: #0f172a; font-size: 14px; margin: 0 0 6px 0; font-weight: bold;">
+              ${articulo.titulo}
+            </h4>
+            <p style="color: #475569; font-size: 12px; margin: 0 0 8px 0; line-height: 1.5;">
+              ${articulo.resumen}
+            </p>
+            <p style="color: #0e0f11; font-size: 12px; margin: 0; line-height: 1.5;">
+              Enlace a la ficha: 
+              <a href="${articulo.url}" target="_blank" style="color: #0d6efd; text-decoration: underline;">
+                ${articulo.url}
+              </a>
+            </p> 
+          </div>
+        `;
+        });
+
+        contenidoHtml += `</div>`;
+      }
+    });
+
+    reporteContenedor.innerHTML = contenidoHtml;
+
+    const opciones = {
+      margin: 10,
+      filename: `Reporte_${this.sectorSeleccionado.replace(/\s+/g, '_')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    } as const;
+
+    html2pdf().set(opciones).from(reporteContenedor).save();
   }
+
   // ===================================================
   //  TABLAS: Elementos futuros / Escenarios
   // ===================================================
@@ -858,7 +943,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       case '2040-2050':
         return '2040 – 2050';
       default:
-        return horizonte || '—';
+        return horizonte || 'Sin Período';
     }
   }
 

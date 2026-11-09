@@ -484,7 +484,7 @@ export class TerritorialComponent {
   getTematicaColorData(tematicaName?: string | null) {
     const nombre = tematicaName ?? '';
     if (nombre.includes('Social')) {
-      return { border: 'rgb(255, 85, 51)', badgeBg: 'rgb(255, 234, 230)', badgeText: 'rgb(255, 85, 51)' };
+      return { border: 'rgb(255, 85, 51)', badgeBg: 'rgb(255, 234, 230)', badgeText: 'rgb(255, 85, 51)' }; 
     }
     if (nombre.includes('Ambiental')) {
       return { border: 'rgb(5, 145, 65)', badgeBg: 'rgb(221, 255, 236)', badgeText: 'rgb(5, 145, 65)' };

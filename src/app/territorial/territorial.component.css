@@ -421,7 +421,7 @@
 }
 
 .evento-link:hover {
-  background-color: #f3f4f6;
+  background-color: #cedeff;
   color: #2563eb;
 }
 
@@ -438,9 +438,8 @@
 
 .table-thumb {
   display: inline-block;
-  width: 80px;
-  height: 48px;
-  object-fit: cover;
+  width: 155px;
+  height: 100px;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
 }
@@ -486,7 +485,7 @@
   position: absolute;
   inset: 0;
   background: #cce1ff;
-  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  clip-path: polygon(-40% 50%, 100% 0%, 100% 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -696,6 +695,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .cono-node-card,
   .cono-scenario-card,
   .btn-ficha,
