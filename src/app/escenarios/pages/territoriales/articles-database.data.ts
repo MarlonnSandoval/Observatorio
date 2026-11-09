@@ -34,7 +34,7 @@ export interface ArticlesDatabase {
 
 export const ARTICLES_DATABASE: ArticlesDatabase = {
   "Callao": {
-    // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -71,8 +71,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Lima Metropolitana": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    // "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
     // "escenarioDeseado": {
     //   titulo: "Imagen del territorio deseado al 2034",
     //   sintesis: "Al 2034, Lima Metropolitana es una metrópoli moderna, policéntrica y resiliente, con un sistema de transporte público integrado y masivo, espacios públicos recuperados, y un desarrollo urbano que respeta sus cuencas hídricas y promueve la equidad social.",
@@ -91,8 +91,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Apurímac": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -107,8 +107,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Loreto": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -123,8 +123,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Tumbes": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -139,8 +139,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Tacna": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -155,8 +155,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Puno": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -171,8 +171,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   },
   "Lima": {
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
 
     "Escenario Deseado": {
       articulos: [
@@ -188,8 +188,8 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
   "Ucayali": {
 
     // "url": "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
-    "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
-    "urlPdrcDescarga": "https://cdn.www.gob.pe/uploads/document/file/7123625/6118781-plan-de-desarrollo-regional-concertado-2025-2034.pdf?v=1729715138",
+    // "urlPdrc": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
+    "urlPdrcDescarga": "https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781",
     "Escenario Deseado": {
       articulos: [
         {
