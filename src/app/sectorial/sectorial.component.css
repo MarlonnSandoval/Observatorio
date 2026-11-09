@@ -45,6 +45,24 @@
   position: relative;
 }
 
+/* ESTILO NOTA SOBRE LEYENDAS (Destacado) */
+.legend-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background-color: #eef4fb;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  color: #1b365d;
+  line-height: 1.45;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.legend-note strong {
+  color: #0f172a;
+}
+
 /* ===================================================
    Estilos Radar SVG e Iconos
    =================================================== */
@@ -151,58 +169,80 @@
    FILTROS DE TABLA
    =================================================== */
 .filter-toolbar {
-  padding: 0.75rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  padding: 0.25rem 0;
+  background: transparent;
+  border: none;
 }
 
-.filter-toolbar .p-inputtext {
-  border-color: #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.875rem;
+.filter-custom-input,
+.filter-custom-select {
+  border: 1px solid #d1d5db;
+  border-radius: 8px !important;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.9rem;
+  color: #374151;
   background-color: #ffffff;
+  box-shadow: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.filter-toolbar .p-inputtext:focus {
-  border-color: #2a68a2;
-  box-shadow: 0 0 0 3px rgba(42, 104, 162, 0.15);
-  outline: 0;
+.filter-custom-input:focus,
+.filter-custom-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+.btn-limpiar-filter {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #6b7280;
+  background-color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.55rem 0.85rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-limpiar-filter:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
 }
 
 .result-meta {
-  color: #64748b;
-  min-height: 24px;
+  color: #4b5563;
+  min-height: 32px;
 }
 
 /* ===================================================
    TABLA (PrimeNG Table)
    =================================================== */
 ::ng-deep .territorial-table .p-datatable-wrapper {
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   overflow: auto;
 }
 
 ::ng-deep .territorial-table .p-datatable-table {
-  min-width: 760px;
+  min-width: 820px;
 }
 
 ::ng-deep .territorial-table .p-datatable-thead>tr>th {
-  background: #eef4fb;
-  color: #1b365d;
-  font-size: 0.8rem;
+  background: #f9fafb;
+  color: #4b5563;
+  font-size: 0.85rem;
   font-weight: 700;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   border: 0;
-  border-bottom: 2px solid #c7d7ea;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 ::ng-deep .territorial-table .p-datatable-tbody>tr>td {
-  padding: 0.9rem 1rem;
+  padding: 0.85rem 1rem;
   vertical-align: middle;
   border: 0;
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid #f3f4f6;
 }
 
 ::ng-deep .territorial-table .p-datatable-tbody>tr:last-child>td {
@@ -210,7 +250,7 @@
 }
 
 ::ng-deep .territorial-table .p-datatable-tbody>tr:hover>td {
-  background: #f6faff;
+  background: #f9fafb;
 }
 
 ::ng-deep .territorial-table .p-paginator {
@@ -218,7 +258,7 @@
   padding: 0.6rem;
   background: #ffffff;
   border: 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #e5e7eb;
 }
 
 ::ng-deep .territorial-table .p-paginator .p-paginator-pages .p-paginator-page,
@@ -226,12 +266,12 @@
 ::ng-deep .territorial-table .p-paginator .p-paginator-prev,
 ::ng-deep .territorial-table .p-paginator .p-paginator-next,
 ::ng-deep .territorial-table .p-paginator .p-paginator-last {
-  border-radius: 8px;
-  color: #475569;
+  border-radius: 6px;
+  color: #4b5563;
 }
 
 ::ng-deep .territorial-table .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background: #2a68a2;
+  background: #2563eb;
   color: #ffffff;
 }
 
@@ -268,31 +308,29 @@
 
 .table-title {
   display: block;
-  margin-bottom: 0.25rem;
-  color: #0f172a;
-  font-size: 0.92rem;
+  color: #111827;
+  font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.3;
-  text-decoration: none;
 }
 
 .evento-link {
-  display: block;
+  display: flex;
   color: #000000;
   text-decoration: none;
-  padding: 6px 8px;
+  padding: 4px 6px;
   border-radius: 6px;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .evento-link:hover {
-  background-color: #ddeaff;
-  color: #1b365d;
+  background-color: #f3f4f6;
+  color: #2563eb;
 }
 
 .table-summary {
   margin: 0;
-  color: #64748b;
+  color: #6b7280;
   font-size: 0.8rem;
   line-height: 1.45;
   display: -webkit-box;
@@ -303,31 +341,31 @@
 
 .table-thumb {
   display: inline-block;
-  width: 96px;
-  height: 56px;
+  width: 80px;
+  height: 48px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e5e7eb;
 }
 
 .table-thumb-empty {
-  line-height: 56px;
-  background: #f1f5f9;
-  color: #94a3b8;
+  line-height: 48px;
+  background: #f3f4f6;
+  color: #9ca3af;
   font-size: 1.1rem;
 }
 
 .table-empty {
   padding: 2rem 1rem !important;
   text-align: center;
-  color: #64748b;
+  color: #6b7280;
 }
 
 .table-empty i {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1.4rem;
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
 /* ===================================================
@@ -351,7 +389,7 @@
   position: absolute;
   inset: 0;
   background: #cce1ff;
-  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  clip-path: polygon(-40% 50%, 100% 0%, 100% 100%);
   z-index: 0;
   pointer-events: none;
 }

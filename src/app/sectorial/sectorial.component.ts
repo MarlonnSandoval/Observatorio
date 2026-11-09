@@ -560,7 +560,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     const porCuadrante = new Map<string, { art: ArticuloRadar; numero: number }[]>();
 
     articulos.forEach((art, index) => {
-      const cuadrante = art.cuadrante ?? 'Sin cuadrante'; 
+      const cuadrante = art.cuadrante ?? 'Sin cuadrante';
       const lista = porCuadrante.get(cuadrante) ?? [];
       lista.push({ art, numero: index + 1 });
       porCuadrante.set(cuadrante, lista);
@@ -838,6 +838,13 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return (sector as any)?.[categoria]?.descargaUrl || null;
   }
 
+  /** Abre o descarga el reporte completo en PDF del sector seleccionado. */
+  descargarListaCompletaPDF(): void {
+    const url = this.getDescargaUrl('Escenarios') || this.getDescargaUrl('Tendencias');
+    if (url) {
+      window.open(url, '_blank');
+    }
+  }
   // ===================================================
   //  TABLAS: Elementos futuros / Escenarios
   // ===================================================
@@ -934,7 +941,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return !!(f.texto || f.tema || f.periodo);
   }
 
-  limpiarFiltroElementos(): void { 
+  limpiarFiltroElementos(): void {
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
   }

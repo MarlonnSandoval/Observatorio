@@ -297,7 +297,7 @@ export class EventoComponent implements OnInit {
   }
 
   // ---------------------------------------------------------------------------
-  // Descarga de la lista (CSV de lo que está filtrado)
+  // Descarga de la lista
   // ---------------------------------------------------------------------------
 
   descargarLista(id: CategoriaPestana): void {
