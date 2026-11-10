@@ -1,3 +1,23 @@
+/* ---- Estilo global para texto justificado ---- */
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* ---- Ajuste y tamaño de imágenes en los escenarios ---- */
+.img-scene {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ---- Centrado vertical opcional para alinear imagen y texto en pantallas medianas/grandes ---- */
+.row-scene {
+  display: flex;
+  align-items: center;
+}
+
 /* ---- Hero / carrusel ---- */
 .hero-img {
   height: 300px;
