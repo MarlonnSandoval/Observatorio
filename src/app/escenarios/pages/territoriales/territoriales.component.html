@@ -3,7 +3,7 @@
     <div>
         <div class="row">
             <div class="col-sm-7 col-12 title-trends">
-                <h1 class="fw-bold mb-3 title-trends">Escenarios Territoriales</h1>
+                <h1 class="fw-bold mb-3 title-trends">Escenarios alternativos</h1>
             </div>
             <div class="col-sm-5 col-12">
                 <div class="row justify-content-end">
@@ -84,7 +84,7 @@
                     <!-- Cabecera -->
                     <div class="d-flex flex-row justify-content-between align-items-center mb-3">
                         <h5 class="fw-bold text-dark mb-0">
-                            {{ hasSelection ? ('Escenarios esperados de ' + selectedRegion) : 'Escenarios territoriales'
+                            {{ hasSelection ? ('Escenarios de ' + selectedRegion) : 'Escenarios alternativos'
                             }}
                         </h5>
                         <div class="d-flex gap-2" *ngIf="hasSelection">
@@ -100,7 +100,7 @@
                     <div *ngIf="hasSelection" class="mt-3 small text-muted ps-1">
                         <i class="pi pi-info-circle me-1"></i>
                         Los escenarios de este apartado provienen del PDRC de {{ selectedRegion }}.
-                        <a [href]="urlPdrcDescargaRegion" href="https://www.gob.pe/institucion/regioncallao/informes-publicaciones/6118781"
+                        <a [href]="urlPdrcDescargaRegion"
                             target="_blank" class="text-primary ms-1">
                             Ver documento de referencia <i class="pi pi-external-link"
                                 style="font-size: 0.7rem; margin-bottom: 20px;"></i>
@@ -200,7 +200,7 @@
                                         <div class="d-flex align-items-center gap-2 mb-3">
                                             <span class="badge rounded-pill px-3 py-2 fw-semibold"
                                                 style="background-color: #64748b; font-size: 0.8rem; letter-spacing: 0.03em;">
-                                                <i class="pi pi-sitemap me-1"></i> {{ categoria }}
+                                                <i class="pi pi-sitemap me-1"></i>  Escenarios alternativos
                                             </span>
                                         </div>
 
