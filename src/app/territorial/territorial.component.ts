@@ -525,7 +525,7 @@ export class TerritorialComponent {
     this.selectedRegion = regionName;
     this.textoBusqueda = '';
     this.temaSeleccionadoSelect = '';
-    this.vistaVisualizacion = 'radar';
+    this.vistaVisualizacion = 'cono';
 
     this.regionData = this.articlesDatabase[regionName] || null;
     this.categories = this.regionData
