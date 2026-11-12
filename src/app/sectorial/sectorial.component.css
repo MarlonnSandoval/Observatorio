@@ -45,7 +45,6 @@
   position: relative;
 }
 
-/* ESTILO NOTA SOBRE LEYENDAS (Destacado) */
 .legend-note {
   display: flex;
   align-items: flex-start;
@@ -184,6 +183,10 @@
   background-color: #ffffff;
   box-shadow: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-custom-input {
+  padding: 0.55rem 1.85rem;
 }
 
 .filter-custom-input:focus,
@@ -637,4 +640,49 @@
   background: #212529;
   border-color: #212529;
   color: #ffffff;
+}
+
+/* ===================================================
+   ONBOARDING SECTORIAL (estado inicial)
+   =================================================== */
+.sectorial-onboarding-header {
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  background-color: #eef4fb;
+  border-radius: 0 10px 10px 0;
+}
+
+.sectorial-onboarding-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2a68a2;
+  margin-bottom: 8px;
+}
+
+.sectorial-onboarding-badge i {
+  font-size: 0.8rem;
+}
+
+.sectorial-onboarding-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1b365d;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.sectorial-onboarding-desc {
+  font-size: 1rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.65;
+}
+
+.sectorial-onboarding-desc strong {
+  color: #1b365d;
 }

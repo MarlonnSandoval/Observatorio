@@ -1,52 +1,82 @@
+/* ---- Estilo global para texto justificado ---- */
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.text-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: justify;
+  white-space: normal !important;
+  font-size: 1.2rem;
+}
+
+/* ---- Ajuste y tamaño de imágenes en los escenarios ---- */
+.img-scene {
+  width: 100%;
+  max-width: 80%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ---- Centrado vertical opcional para alinear imagen y texto en pantallas medianas/grandes ---- */
+.row-scene {
+  display: flex;
+  align-items: center;
+}
+
 /* ---- Hero / carrusel ---- */
 .hero-img {
-    height: 300px;
-    object-fit: cover;
+  height: 300px;
+  object-fit: cover;
 }
 
 .hero-overlay {
-    max-width: 480px;
-    background: linear-gradient(90deg,
-            rgba(15, 58, 107, 0.94) 0%,
-            rgba(15, 58, 107, 0.88) 45%,
-            rgba(15, 58, 107, 0.15) 85%,
-            rgba(15, 58, 107, 0) 100%);
+  max-width: 480px;
+  background: linear-gradient(90deg,
+      rgba(15, 58, 107, 0.94) 0%,
+      rgba(15, 58, 107, 0.88) 45%,
+      rgba(15, 58, 107, 0.15) 85%,
+      rgba(15, 58, 107, 0) 100%);
 }
 
 .hero-indicators [data-bs-target] {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
 }
 
 .btn-foi {
-    display: inline-block;
-    background-color: #3b69ae;
-    color: #fff !important;
-    border: 1px #3b69ae solid;
-    padding: .2rem .6rem;
-    text-decoration: none;
+  display: inline-block;
+  background-color: #3b69ae;
+  color: #fff !important;
+  border: 1px #3b69ae solid;
+  padding: .2rem .6rem;
+  text-decoration: none;
 }
 
 .fa-regular,
 .far {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 button {
-    background-color: #3b69ae;
-    border-color: #3b69ae;
-    padding: 4px 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
+  background-color: #3b69ae;
+  border-color: #3b69ae;
+  padding: 4px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
 }
 
 .icon-trends {
-    max-width: 45px;
-    height: auto;
+  max-width: 45px;
+  height: auto;
 }
 
 .title-trends {

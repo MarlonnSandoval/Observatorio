@@ -1,4 +1,4 @@
-export interface Articulo {
+export interface Articulo { 
   titulo: string;
   tituloCorto?: string; // Propiedad opcional para títulos cortos
   resumen: string;
@@ -36,7 +36,7 @@ export const ARTICLES_DATABASE: ArticlesDatabase = {
     "Tendencias": { 
       descargaUrl: "https://observatorio.ceplan.gob.pe/uploads/reporte/Gobierno%20Regional%20de%20Lima%20-%20Tendencias%20territoriales%20para%20el%20an%C3%A1lisis%20prospectivo_2024.pdf",
       articulos: [
-        { titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región", tituloCorto: "Agua y saneamiento", resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento continúe creciendo.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr", imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/TUKzrWqjyEro35bSHJL_oX7V.png", tema: "Acceso a agua y saneamiento", tematica: "Social", periodo: "2023-2030", clave: "agua saneamiento infraestructura urbano", fechaActualizacion:"20/05/2026" },
+        { titulo: "Aumento del acceso seguro a agua y saneamiento en Lima Región", tituloCorto: "Agua y saneamiento", resumen: "Para 2030, se espera que el acceso seguro a agua y saneamiento continúe creciendo.", url: "https://observatorio.ceplan.gob.pe/ficha/t1_lr", imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/TUKzrWqjyEro35bSHJL_oX7V.png", tema: "Acceso a agua y saneamiento", tematica: "General", periodo: "2023-2030", clave: "agua saneamiento infraestructura urbano", fechaActualizacion:"20/05/2026" },
         { titulo: "Mayor digitalización de la educación en Lima Región", tituloCorto: "Digitalización educativa", resumen: "Integración de recursos digitales al aprendizaje y fortalecimiento de capacidades.", url: "https://observatorio.ceplan.gob.pe/ficha/t2_lr", imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/TUKzrWqjyEro35bSHJL_oX7V.png", tema: "Educación digital", tematica: "Social", periodo: "2023-2030", clave: "educación digital tecnología aprendizaje", fechaActualizacion:"20/05/2026" },
         { titulo: "Mayor conectividad digital y fibra óptica", tituloCorto: "Conectividad digital", resumen: "Ampliación del acceso y uso de internet en hogares y zonas periféricas.", url: "https://observatorio.ceplan.gob.pe/ficha/t3_lr", imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/TUKzrWqjyEro35bSHJL_oX7V.png", tema: "Infraestructura digital", tematica: "Tecnológica", periodo: "2023-2030", clave: "conectividad internet fibra redes", fechaActualizacion:"20/05/2026" },
         { titulo: "Crecimiento del empleo formal en servicios y comercio", tituloCorto: "Empleo formal", resumen: "Expansión de actividades económicas terciarias en centros urbanos.", url: "https://observatorio.ceplan.gob.pe/ficha/t4_lr", imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/TUKzrWqjyEro35bSHJL_oX7V.png", tema: "Empleo y economía", tematica: "Económica", periodo: "2023-2030", clave: "empleo comercio servicios economía", fechaActualizacion:"20/05/2026" },

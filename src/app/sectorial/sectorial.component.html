@@ -1,4 +1,4 @@
-<div class="container mt-4"  style="padding: 0 100px;">
+<div class="container mt-4" style="padding: 0 100px;">
 
   <!-- ENCABEZADO -->
   <div>
@@ -50,20 +50,35 @@
   <!-- SECCIÓN PRINCIPAL: SECTORES Y RADAR DE FUTUROS -->
   <div class="row g-4 mb-5">
 
+
     <!-- COLUMNA IZQUIERDA: LISTA DE SECTORES / ANILLO CENTRAL -->
-    <div [class]="sectorSeleccionado ? 'd-none' : 'col-12'" class="layout-transition">
-      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-        <h5 class="fw-bold mb-3" style="color: #2a68a2; font-size: 3rem;" [class.d-none]="sectorSeleccionado">
-          Seleccione un sector
+    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+
+      <!-- ENCABEZADO CON INSTRUCCIÓN -->
+      <div class="sectorial-onboarding-header" [class.d-none]="sectorSeleccionado">
+        <div class="sectorial-onboarding-badge">
+          <i class="bi bi-cursor-fill" aria-hidden="true"></i>
+          Elige un sector para comenzar
+        </div>
+        <h5 class="sectorial-onboarding-title">
+          ¿Qué sectores marcarán el Perú al 2050?
         </h5>
-        <!-- VISTA INICIAL: GRÁFICO SVG ESTILO DONUT -->
-        <div class="w-100 d-flex flex-column justify-content-center align-items-center"
-          [class.d-none]="sectorSeleccionado">
-          <div id="megas-draw" class="w-100 position-relative" style="max-width: 1200px;">
-            <div #svgContainer class="w-100 position-relative"></div>
-          </div>
+        <p class="sectorial-onboarding-desc">
+          Haz clic en cualquier sector del gráfico para activar su análisis prospectivo: verás su
+          <strong>Cono de futuros</strong> con los escenarios posibles al 2050,
+          su <strong>Radar prospectivo</strong> con tendencias, riesgos y oportunidades,
+          y los <strong>elementos futuros</strong> que definirán su evolución.
+        </p>
+      </div>
+
+      <!-- GRÁFICO SVG -->
+      <div class="w-100 d-flex flex-column justify-content-center align-items-center"
+        [class.d-none]="sectorSeleccionado">
+        <div id="megas-draw" class="w-100 position-relative" style="max-width: 1200px;">
+          <div #svgContainer class="w-100 position-relative"></div>
         </div>
       </div>
+
     </div>
 
     <!-- COLUMNA DERECHA: PANEL PRINCIPAL CON PRIMENG ACCORDION Y RADAR/CONO -->
@@ -233,8 +248,8 @@
             <div class="col-12 mt-4">
               <div class="legend-note mb-2">
                 <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-                <span><strong>Nota:</strong> La posición de la tendencia en radar es el tiempo donde tiene mayor
-                  relevancia; sin embargo, el comportamiento se presenta en todo el periodo.</span>
+                <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
+                  posición señala el punto de mayor relevancia.</span>
               </div>
 
               <div class="d-flex gap-3">
@@ -363,8 +378,8 @@
           <div class="mt-4 mx-3">
             <div class="legend-note mb-2">
               <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-              <span><strong>Nota:</strong> La posición de la tendencia en radar es el tiempo donde tiene mayor
-                relevancia; sin embargo, el comportamiento se presenta en todo el periodo.</span>
+              <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
+                posición señala el punto de mayor relevancia.</span>
             </div>
 
             <div class="d-flex gap-3">

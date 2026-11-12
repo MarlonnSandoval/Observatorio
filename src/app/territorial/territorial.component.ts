@@ -139,8 +139,8 @@ interface PeriodoConfig {
 }
 
 const PERIODO_CONFIG: Record<string, PeriodoConfig> = {
-  '2023-2030': { radius: 70,  conoKey: 'presente' },
-  '2030':      { radius: 70,  conoKey: 'presente' },
+  '2023-2030': { radius: 70, conoKey: 'presente' },
+  '2030': { radius: 70, conoKey: 'presente' },
   '2030-2040': { radius: 140, conoKey: 'medio' },
   '2040-2050': { radius: 205, conoKey: 'lejano' },
 };
@@ -248,7 +248,58 @@ export class TerritorialComponent {
   // ─────────────────────────────────────────
   // Getters de categorías (evita repetir el filtro)
   // ─────────────────────────────────────────
+  getOpcionesUnicas(campo: keyof Articulo): string[] {
+    if (!this.articlesDatabase) return [];
 
+    // 1. Recolectar todos los artículos de todas las regiones y categorías de la base de datos
+    const todosLosArticulos: Articulo[] = [];
+    Object.keys(this.articlesDatabase).forEach((regionKey) => {
+      const regionData = this.articlesDatabase[regionKey];
+      if (!regionData) return;
+
+      Object.keys(regionData).forEach((catKey) => {
+        if (catKey === 'url') return;
+        const categoriaObj = (regionData as any)[catKey];
+        if (categoriaObj && Array.isArray(categoriaObj.articulos)) {
+          todosLosArticulos.push(...categoriaObj.articulos);
+        }
+      });
+    });
+
+    // 2. Mapear extrayendo el campo solicitado (si es 'titulo', prioriza 'tituloCorto')
+    const lista = todosLosArticulos
+      .map(articulo => {
+        if (campo === 'titulo') {
+          return articulo.tituloCorto || articulo.titulo; //
+        }
+        return articulo[campo];
+      })
+      .filter((valor): valor is string => typeof valor === 'string' && Boolean(valor.trim()));
+
+    // 3. Set elimina duplicados y sort() los ordena alfabéticamente en español
+    return [...new Set(lista)].sort((a, b) => a.localeCompare(b, 'es'));
+  }
+
+  // ─────────────────────────────────────────
+  // Total global de artículos para el contador
+  // ─────────────────────────────────────────
+  get totalArticulosGlobalCount(): number {
+    let total = 0;
+    Object.keys(this.articlesDatabase).forEach((region) => {
+      const dataRegion = this.articlesDatabase[region] as any;
+      if (!dataRegion) return;
+
+      Object.keys(dataRegion)
+        .filter((key) => key !== 'urlRegion')
+        .forEach((cat) => {
+          const categoriaObj = dataRegion[cat];
+          if (categoriaObj && Array.isArray(categoriaObj.articulos)) {
+            total += categoriaObj.articulos.length;
+          }
+        });
+    });
+    return total;
+  }
   get categoriasElementos(): string[] {
     return this.categories.filter((c) => !c.includes('Escenarios'));
   }
@@ -316,7 +367,7 @@ export class TerritorialComponent {
       return { border: 'rgb(154, 32, 226)', badgeBg: 'rgb(243, 223, 255)', badgeText: 'rgb(154, 32, 226)' };
     if (nombre.includes('Actitud, valores y ética'))
       return { border: 'rgb(131, 183, 221)', badgeBg: 'rgb(227, 243, 255)', badgeText: 'rgb(131, 183, 221)' };
-    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#bababa' };
+    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#000000' };
   }
 
   // ─────────────────────────────────────────
@@ -348,10 +399,10 @@ export class TerritorialComponent {
     const getCategoryBaseAngle = (catName: string): number => {
       const c = catName.toLowerCase();
       if (c.includes('tendencia')) return -Math.PI * 0.70;
-      if (c.includes('riesgo'))    return -Math.PI * 0.30;
-      if (c.includes('oportun'))   return  Math.PI * 0.20;
+      if (c.includes('riesgo')) return -Math.PI * 0.30;
+      if (c.includes('oportun')) return Math.PI * 0.20;
       if (c.includes('señal') || c.includes('senal')) return Math.PI * 0.42;
-      if (c.includes('carta'))     return  Math.PI * 0.75;
+      if (c.includes('carta')) return Math.PI * 0.75;
       return -Math.PI * 0.5;
     };
 
@@ -414,8 +465,8 @@ export class TerritorialComponent {
   get conoColumns(): ConoColumn[] {
     const rawData: { key: 'presente' | 'medio' | 'lejano'; label: string; items: ConoItem[] }[] = [
       { key: 'presente', label: 'Presente – 2030', items: [] },
-      { key: 'medio',    label: '2030 – 2040',     items: [] },
-      { key: 'lejano',   label: '2040 – 2050',     items: [] },
+      { key: 'medio', label: '2030 – 2040', items: [] },
+      { key: 'lejano', label: '2040 – 2050', items: [] },
     ];
 
     if (!this.selectedRegion || !this.regionData) {
@@ -474,7 +525,7 @@ export class TerritorialComponent {
     this.selectedRegion = regionName;
     this.textoBusqueda = '';
     this.temaSeleccionadoSelect = '';
-    this.vistaVisualizacion = 'cono';
+    this.vistaVisualizacion = 'radar';
 
     this.regionData = this.articlesDatabase[regionName] || null;
     this.categories = this.regionData
@@ -505,7 +556,7 @@ export class TerritorialComponent {
   // Búsqueda global (sin región)
   // ─────────────────────────────────────────
 
-  get articulosPorTemaGlobal(): ArticuloConRegion[] {
+ get articulosPorTemaGlobal(): ArticuloConRegion[] {
     const query = this.textoBusqueda.toLowerCase().trim();
     const tema = this.temaSeleccionadoSelect;
 
@@ -518,7 +569,7 @@ export class TerritorialComponent {
       if (!dataRegion) return;
 
       Object.keys(dataRegion)
-        .filter((key) => key !== 'urlRegion')
+        .filter((key) => key !== 'url' && key !== 'urlRegion')
         .forEach((cat) => {
           const categoriaObj = dataRegion[cat];
           if (!categoriaObj || !Array.isArray(categoriaObj.articulos)) return;
@@ -527,9 +578,17 @@ export class TerritorialComponent {
             const matchQuery =
               !query ||
               articulo.titulo.toLowerCase().includes(query) ||
+              (articulo.tituloCorto && articulo.tituloCorto.toLowerCase().includes(query)) ||
               articulo.resumen.toLowerCase().includes(query) ||
               region.toLowerCase().includes(query);
-            const matchTema = !tema || articulo.tema === tema;
+
+            // ✅ Ahora valida contra tituloCorto, titulo o tema
+            const matchTema =
+              !tema ||
+              articulo.tituloCorto === tema ||
+              articulo.titulo === tema ||
+              articulo.tema === tema ||
+              articulo.tematica === tema;
 
             if (matchQuery && matchTema) {
               resultados.push({ ...articulo, regionOriginaria: region });
@@ -559,9 +618,9 @@ export class TerritorialComponent {
     const q = texto.toLowerCase().trim();
     if (!q) return true;
     return (
-      (art.titulo   || '').toLowerCase().includes(q) ||
-      (art.resumen  || '').toLowerCase().includes(q) ||
-      (art.tema     || '').toLowerCase().includes(q) ||
+      (art.titulo || '').toLowerCase().includes(q) ||
+      (art.resumen || '').toLowerCase().includes(q) ||
+      (art.tema || '').toLowerCase().includes(q) ||
       (art.tematica || '').toLowerCase().includes(q)
     );
   }
@@ -569,20 +628,20 @@ export class TerritorialComponent {
   private construirTablas(): void {
     const elemCats = this.categoriasElementos;
 
-    this.filasElementos  = elemCats.flatMap((cat) =>
+    this.filasElementos = elemCats.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
     );
     this.filasEscenarios = this.categoriasEscenarios.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
     );
 
-    this.tiposElementos    = elemCats.filter((c) => this.getCount(c) > 0);
-    this.temasElementos    = this.unicos(this.filasElementos.map((f) => f.tematica));
+    this.tiposElementos = elemCats.filter((c) => this.getCount(c) > 0);
+    this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
     this.periodosElementos = this.unicos(this.filasElementos.map((f) => this.periodoDe(f)));
-    this.temasEscenarios   = this.unicos(this.filasEscenarios.map((f) => f.tematica));
+    this.temasEscenarios = this.unicos(this.filasEscenarios.map((f) => f.tematica));
     this.periodosEscenarios = this.unicos(this.filasEscenarios.map((f) => this.periodoDe(f)));
 
-    this.filtroElementos  = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
     this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
     this.aplicarFiltroEscenarios();
@@ -593,8 +652,8 @@ export class TerritorialComponent {
     this.filasElementosFiltradas = this.filasElementos.filter(
       (a) =>
         this.coincideTexto(a, f.texto) &&
-        (!f.tipo   || a.categoria   === f.tipo)   &&
-        (!f.tema   || a.tematica    === f.tema)   &&
+        (!f.tipo || a.categoria === f.tipo) &&
+        (!f.tema || a.tematica === f.tema) &&
         (!f.periodo || this.periodoDe(a) === f.periodo)
     );
     this.primeraFilaElementos = 0;
@@ -605,7 +664,7 @@ export class TerritorialComponent {
     this.filasEscenariosFiltradas = this.filasEscenarios.filter(
       (a) =>
         this.coincideTexto(a, f.texto) &&
-        (!f.tema    || a.tematica    === f.tema)   &&
+        (!f.tema || a.tematica === f.tema) &&
         (!f.periodo || this.periodoDe(a) === f.periodo)
     );
     this.primeraFilaEscenarios = 0;
@@ -619,6 +678,11 @@ export class TerritorialComponent {
   get hayFiltroEscenarios(): boolean {
     const f = this.filtroEscenarios;
     return !!(f.texto || f.tema || f.periodo);
+  }
+
+  limpiarFiltroMapa(): void {
+    this.textoBusqueda = '';
+    this.temaSeleccionadoSelect = '';
   }
 
   limpiarFiltroElementos(): void {
@@ -695,6 +759,71 @@ export class TerritorialComponent {
       .set({
         margin: 10,
         filename: `Reporte_${this.selectedRegion.replace(/\s+/g, '_')}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      })
+      .from(reporteContenedor)
+      .save();
+  }
+
+  // ─────────────────────────────────────────
+  // Exportar PDF de Búsqueda Global
+  // ─────────────────────────────────────────
+
+  descargarListaBusquedaPDF(): void {
+    const articulos = this.articulosPorTemaGlobal;
+    if (!articulos.length) return;
+
+    const reporteContenedor = document.createElement('div');
+    reporteContenedor.style.cssText =
+      'padding:30px;font-family:"Helvetica Neue",Arial,sans-serif;background-color:#ffffff;';
+
+    let contenidoHtml = `
+      <div style="border-bottom:2px solid #0d6efd;padding-bottom:15px;margin-bottom:25px;">
+        <h1 style="color:#0c4a6e;font-size:22px;margin:0;font-weight:bold;">
+          Reporte de Resultados de Búsqueda
+        </h1>
+        <p style="color:#6c757d;font-size:13px;margin-top:5px;margin-bottom:0;">
+          Elementos filtrados en pantalla (${articulos.length} registros encontrados).
+        </p>
+      </div>
+      <div style="margin-bottom:15px;">
+    `;
+
+    articulos.forEach((articulo) => {
+      contenidoHtml += `
+        <div style="background-color:#f8fafc;border:1px solid #3B82F6;border-radius:8px;padding:16px;
+                    margin-bottom:12px;page-break-inside:avoid;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          <div style="margin-bottom:8px;">
+            <span style="background-color:#E0F2FE;color:#0369A1;padding:3px 10px;border-radius:12px;
+                         font-size:11px;font-weight:bold;display:inline-block;margin-right:6px;">
+              ${articulo.regionOriginaria}
+            </span>
+            <span style="background-color:#f1f5f9;color:#475569;padding:3px 10px;border-radius:12px;
+                         font-size:11px;font-weight:bold;display:inline-block;">
+              ${articulo.tema || 'General'} (${articulo.periodo || '2030-2040'})
+            </span>
+          </div>
+          <h4 style="color:#0f172a;font-size:14px;margin:0 0 6px 0;font-weight:bold;">${articulo.titulo}</h4>
+          <p style="color:#475569;font-size:12px;margin:0 0 8px 0;line-height:1.5;">${articulo.resumen}</p>
+          <p style="color:#0e0f11;font-size:12px;margin:0;line-height:1.5;">
+            Enlace:
+            <a href="${articulo.url}" target="_blank" style="color:#0d6efd;text-decoration:underline;">
+              ${articulo.url}
+            </a>
+          </p>
+        </div>
+      `;
+    });
+
+    contenidoHtml += `</div>`;
+    reporteContenedor.innerHTML = contenidoHtml;
+
+    html2pdf()
+      .set({
+        margin: 10,
+        filename: `Reporte_Busqueda.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },

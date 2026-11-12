@@ -256,6 +256,7 @@
   border: none;
 }
 
+
 .filter-custom-input,
 .filter-custom-select {
   border: 1px solid #d1d5db;
@@ -266,6 +267,10 @@
   background-color: #ffffff;
   box-shadow: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-custom-input {
+  padding: 0.55rem 1.85rem;
 }
 
 .filter-custom-input:focus,
@@ -786,4 +791,116 @@
   background: #2a68a2;
   border-color: #2a68a2;
   color: #ffffff;
+}
+
+/* ===================================================
+   PANEL DE ONBOARDING (estado inicial sin selección)
+   =================================================== */
+.onboarding-panel {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.onboarding-intro {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1b365d;
+  margin-bottom: 12px;
+}
+
+.onboarding-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.onboarding-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.onboarding-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 24px;
+  text-align: center;
+}
+
+.onboarding-item-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1b365d;
+  margin: 0 0 3px;
+}
+
+.onboarding-item-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.onboarding-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.onboarding-divider::before,
+.onboarding-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.onboarding-search-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.onboarding-search-hint i {
+  font-size: 1rem;
+  color: #2a68a2;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.onboarding-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #EEF4FB;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: #185FA5;
+  font-weight: 600;
+  border: 1px dashed #85B7EB;
+}
+
+.onboarding-cta i {
+  font-size: 1rem;
 }

@@ -23,7 +23,7 @@ export interface ContenidoSector {
   "Oportunidades": CategoriaSectorDetalle;
   "Señal débil": CategoriaSectorDetalle;
   "Carta salvaje": CategoriaSectorDetalle;
-  "Escenarios": CategoriaSectorDetalle;
+  "Escenarios"?: CategoriaSectorDetalle;
   url?: string;
 }
 
@@ -264,65 +264,6 @@ export const SECTOR_DATABASE: SectorDatabase = {
           tematica: "Económica",
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
-          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
-        }
-      ]
-    },
-    "Escenarios": {
-      articulos: [
-        {
-          titulo: "Escenario 1: Perú como potencia exportadora de manufactura verde avanzada al 2050",
-          tituloCorto: "Manuf. Verde 2050",
-          resumen: "Crecimiento industrial impulsado por energías limpias y automatización sostenible.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e1_prod",
-          tematica: "Económica",
-          horizonte: "2040-2050",
-          cuadrante: "Territorio sostenible",
-          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
-        },
-        {
-          titulo: "Escenario 2: Estancamiento industrial por dependencia de materias primas",
-          tituloCorto: "Estancamiento industrial",
-          resumen: "Falta de diversificación productiva y rezago tecnológico frente al bloque regional.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e2_prod",
-          tematica: "Económica",
-          horizonte: "2030-2040",
-          cuadrante: "Competitividad e innovación",
-          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
-        },
-        {
-          titulo: "Escenario 3: Descentralización industrial basada en microrredes de manufactura local",
-          tituloCorto: "Microrredes industriales",
-          resumen: "Redes autónomas de producción regional orientadas al autoconsumo y soberanía.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e3_prod",
-          tematica: "Social",
-          horizonte: "2030-2040",
-          cuadrante: "Desarrollo de las personas",
-          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
-        },
-        {
-          titulo: "Escenario 4: Industria circular automatizada y resiliente al cambio climático",
-          tituloCorto: "Industria Resiliente",
-          resumen: "Modelo productivo totalmente adaptado a eventos climáticos extremos y escasez hídrica.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e4_prod",
-          tematica: "Ambiental",
-          horizonte: "2040-2050",
-          cuadrante: "Territorio sostenible",
-          imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
-        },
-        {
-          titulo: "Escenario 5: Alianza estratégica regional para cadenas de valor bio-tecnológicas",
-          tituloCorto: "Bio-industria regional",
-          resumen: "Integración productiva andina enfocada en la transformación de recursos amazónicos.",
-          url: "https://observatorio.ceplan.gob.pe/ficha/e5_prod",
-          tematica: "Tecnológica",
-          horizonte: "2030-2040",
-          cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
           fechaActualizacion: "20/05/2026"
         }

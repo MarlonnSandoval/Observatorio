@@ -60,7 +60,7 @@ export class EncuentrosComponent {
 
   // Retorna un array con nombres de instituciones ÚNICAS
   // Método genérico para obtener valores únicos de cualquier campo
-  getOpcionesUnicas(campo: keyof Actualidad): string[] {
+  getOpcionesUnicas(campo: keyof Actualidad): string[] { 
     if (!this.articlesDatabase?.actualidad) return [];
 
     const lista = this.articlesDatabase.actualidad

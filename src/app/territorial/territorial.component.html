@@ -112,10 +112,17 @@
       <div class="card shadow-sm bg-white" [class.h-100]="!hasSelection">
         <div class="card-body p-4">
 
-          <div class="d-flex flex-row justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold text-dark mb-0">
-              {{ hasSelection ? selectedRegion : '¿Cómo queremos vivir?' }}
-            </h2>
+          <!-- ENCABEZADO DINÁMICO -->
+          <div class="d-flex flex-row justify-content-between align-items-center mb-3">
+            <div>
+              <h2 class="fw-bold text-dark mb-1">
+                {{ hasSelection ? selectedRegion : 'Explora el futuro de los territorios al 2050' }}
+              </h2>
+              <p *ngIf="!hasSelection" class="text-muted mb-0">
+                Cada región tiene su propio análisis: escenarios al 2050, radar de riesgos y reporte descargable. Elige
+                un territorio o busca por temática.
+              </p>
+            </div>
 
             <button *ngIf="hasSelection" type="button" class="btn btn-outline-secondary btn-sm rounded-pill"
               (click)="resetearFiltroGlobal()" style="font-size: 1.1rem;">
@@ -128,7 +135,7 @@
             <!-- VISTA BÚSQUEDA GLOBAL -->
             <ng-container *ngIf="!hasSelection">
               <div class="filter-bar row g-2 mb-3">
-                <div class="col-7 p-input-icon-left">
+                <div class="col-5 p-input-icon-left">
                   <i class="pi pi-search"></i>
                   <input type="text" placeholder="Buscar en territorios" pInputText [(ngModel)]="textoBusqueda"
                     class="filter-input w-100" />
@@ -139,12 +146,17 @@
                   <select [(ngModel)]="temaSeleccionadoSelect" class="p-inputtext w-100 filter-select pe-5"
                     style="appearance: none;">
                     <option value="">Seleccionar temática</option>
-                    <option value="Acceso a agua y saneamiento">Acceso a agua y saneamiento</option>
-                    <option value="Digitalización de la educación">Digitalización de la educación</option>
-                    <option value="Conectividad digital">Conectividad digital</option>
-                    <option value="Conflictos sociales">Conflictos sociales</option>
-                    <option value="Participación electoral">Participación electoral</option>
+                    <option *ngFor="let docs of getOpcionesUnicas('tematica')" [value]="docs">
+                      {{docs}}
+                    </option>
                   </select>
+
+                </div>
+                <div class="col-12 col-md-2">
+                  <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar" style="padding:12px;"
+                    (click)="limpiarFiltroMapa()">
+                    <i class="pi pi-filter-slash me-1"></i> Limpiar
+                  </button>
                 </div>
               </div>
 
@@ -154,19 +166,85 @@
                   No se encontraron artículos que coincidan con tu búsqueda.
                 </div>
 
-                <div *ngIf="!textoBusqueda && !temaSeleccionadoSelect" class="text-center py-4 text-muted">
-                  <h4 style="color: #2a68a2;"><strong>Seleccione un territorio en el mapa</strong></h4>
+                <!-- ESTADO INICIAL: GUÍA DE HERRAMIENTAS -->
+                <div *ngIf="!textoBusqueda && !temaSeleccionadoSelect" class="onboarding-panel rounded-3 p-4 mt-3">
+
+
+                  <div class="onboarding-search-hint">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <span>Usa el <strong>buscador y los filtros</strong> de arriba para explorar eventos, tendencias o
+                      riesgos a nivel nacional, sin seleccionar una región.</span>
+                  </div>
+
+
+
+                  <div class="onboarding-divider">
+                    <span>o también puedes</span>
+                  </div>
+
+                  <p class="onboarding-intro">Seleccionar una región en el mapa, con el cual obtendrás:</p>
+
+                  <div class="onboarding-benefits">
+
+                    <div class="onboarding-item">
+                      <i class="bi bi-funnel onboarding-icon" style="color:#185FA5" aria-hidden="true"></i>
+                      <div>
+                        <h6 class="onboarding-item-title">Cono de futuros</h6>
+                        <p class="onboarding-item-desc">Los posibles caminos del territorio al 2050: escenarios
+                          optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
+                      </div>
+                    </div>
+
+                    <div class="onboarding-item">
+                      <i class="bi bi-radar onboarding-icon" style="color:#3B6D11" aria-hidden="true"></i>
+                      <div>
+                        <h6 class="onboarding-item-title">Radar prospectivo</h6>
+                        <p class="onboarding-item-desc">Vista panorámica de tendencias, riesgos y oportunidades.
+                          Identifica qué dimensiones son más críticas o prometedoras.</p>
+                      </div>
+                    </div>
+
+                    <div class="onboarding-item">
+                      <i class="bi bi-file-earmark-arrow-down onboarding-icon" style="color:#854F0B"
+                        aria-hidden="true"></i>
+                      <div>
+                        <h6 class="onboarding-item-title">Reporte descargable en PDF</h6>
+                        <p class="onboarding-item-desc">El análisis completo del territorio para compartir, presentar o
+                          archivar.</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="onboarding-cta">
+                    <i class="bi bi-hand-index" aria-hidden="true"></i>
+                    Selecciona cualquier región del mapa para comenzar
+                  </div>
+
+                </div>
+
+                <div *ngIf="(textoBusqueda || temaSeleccionadoSelect) && articulosPorTemaGlobal.length != 0"
+                  class="result-meta d-flex justify-content-between align-items-center">
+                  <span class="text-muted fw-semibold small">{{ articulosPorTemaGlobal.length }} de {{
+                    totalArticulosGlobalCount }} eventos</span>
+                  <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                    (click)="descargarListaBusquedaPDF()">
+                    <i class="bi bi-download me-1"></i> Descargue la lista completa
+                  </button>
                 </div>
 
                 <a *ngFor="let articulo of articulosPorTemaGlobal" [href]="articulo.url" target="_blank"
                   class="article-link-card p-3 bg-light rounded text-decoration-none text-dark d-flex justify-content-between align-items-center gap-3">
                   <div class="article-info flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                      <span
-                        class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small fw-semibold">
+                    <div class="d-flex align-items-center mb-1 gap-2">
+                      <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 small fw-semibold">
                         {{ articulo.regionOriginaria }}
                       </span>
-                      <i class="pi pi-arrow-right text-muted small"></i>
+                      <span class="tipo-badge"
+                        [style.background-color]="getTematicaColorData(articulo.tematica).badgeBg"
+                        [style.color]="getTematicaColorData(articulo.tematica).badgeText">
+                        {{ articulo.tematica }}
+                      </span>
                     </div>
                     <h6 class="fw-bold text-dark mb-1 mt-1">{{ articulo.titulo }}</h6>
                     <p class="text-secondary small mb-0">{{ articulo.resumen }}</p>
@@ -318,8 +396,8 @@
                   <div class="col-12 mt-4">
                     <div class="legend-note mb-2">
                       <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-                      <span><strong>Nota:</strong> La posición de la tendencia en radar es el tiempo donde tiene mayor
-                        relevancia; sin embargo, el comportamiento se presenta en todo el periodo.</span>
+                      <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
+                        posición señala el punto de mayor relevancia.</span>
                     </div>
                     <div class="d-flex gap-3">
                       <div class="cono-legend-box p-3 rounded flex-fill">
@@ -471,8 +549,8 @@
                 <div class="mt-4 mx-3">
                   <div class="legend-note mb-2">
                     <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-                    <span><strong>Nota:</strong> La posición de la tendencia en radar es el tiempo donde tiene mayor
-                      relevancia; sin embargo, el comportamiento se presenta en todo el periodo.</span>
+                    <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
+                      posición señala el punto de mayor relevancia.</span>
                   </div>
                   <div class="d-flex gap-3">
                     <div class="cono-legend-box p-3 rounded flex-fill">

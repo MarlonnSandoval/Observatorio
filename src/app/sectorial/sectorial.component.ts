@@ -611,7 +611,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     if (nombre.includes('Actitud, valores y ética')) {
       return { border: 'rgb(131, 183, 221)', badgeBg: 'rgb(227, 243, 255)', badgeText: 'rgb(131, 183, 221)' };
     }
-    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#bababa' };
+    return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#000000' };
   }
 
   descargarListaCompletaPDF(): void {

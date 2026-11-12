@@ -53,10 +53,10 @@
                 <!-- Desplegable accesibilidad -->
                 <div class="row mb-3">
                     <div class="col-12">
-                        <label for="regionSelect" class="form-label font-weight-bold">Seleccionar Región:</label>
+                        <label for="regionSelect" class="form-label font-weight-bold">Seleccionar Territorio:</label>
                         <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
                             (ngModelChange)="onRegionChange($event)">
-                            <option [ngValue]="null">Selecciona una región</option>
+                            <option [ngValue]="null">Selecciona un territorio</option>
                             <option *ngFor="let region of availableRegions">{{ region.name }}</option>
                         </select>
                     </div>
