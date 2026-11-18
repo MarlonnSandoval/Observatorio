@@ -47,40 +47,87 @@
     </div>
   </div>
 
-  <div class="row">
+  <!-- Vista inicial: explicación arriba + mapa centrado (sin buscador) -->
+  <div class="territory-landing mb-4" *ngIf="!hasSelection">
 
-    <!-- Mapa Selector (Columna Izquierda) -->
-    <div class="col-12 col-sm-4 col-md-4 mt-2" *ngIf="!hasSelection">
-      <div class="map-ut sticky-top">
-        <div class="row mb-3">
-          <div class="col-12">
-            <label for="regionSelect" class="form-label font-weight-bold">Seleccionar territorio:</label>
-            <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
-              (ngModelChange)="onRegionChange($event)">
-              <option [ngValue]="null">Selecciona un territorio</option>
-              <option *ngFor="let region of regions" [value]="region.name">
-                {{ region.name }}
-              </option>
-            </select>
-          </div>
+    <div class="landing-intro">
+      <h2 class="fw-bold text-dark mb-2">Explora el futuro de los territorios al 2050</h2>
+      <p class="text-muted mb-0">
+        Cada región tiene su propio análisis: escenarios al 2050, radar de riesgos y reporte descargable.
+        Pasa el mouse por el mapa para ver el nombre del territorio y haz clic para elegirlo.
+      </p>
+    </div>
+
+    <div class="tool-explainer-panel tool-explainer-panel--row">
+      <div class="tool-explainer-item">
+        <i class="bi bi-funnel tool-explainer-icon" style="color:#185FA5" aria-hidden="true"></i>
+        <div>
+          <h6 class="tool-explainer-title">Cono de futuros</h6>
+          <p class="tool-explainer-desc">Los posibles caminos del territorio al 2050: escenarios optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
         </div>
-        <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox">
-          <g>
-            <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
-              [attr.data-region]="region.name" [attr.d]="region.d" (click)="selectRegion(region.name)"
-              [style.fill]="region.name === 'Zoom Lines' ? 'none' : null"
-              [style.stroke]="region.name === 'Zoom Lines' ? '#DC2626' : null"
-              [style.stroke-width]="region.name === 'Zoom Lines' ? '0.8px' : null"
-              [style.stroke-dasharray]="region.name === 'Zoom Lines' ? '1.5,1.5' : 'none'"
-              [style.pointer-events]="region.name === 'Zoom Lines' ? 'none' : 'auto'">
-            </path>
-          </g>
-        </svg>
+      </div>
+      <div class="tool-explainer-item">
+        <i class="bi bi-radar tool-explainer-icon" style="color:#3B6D11" aria-hidden="true"></i>
+        <div>
+          <h6 class="tool-explainer-title">Radar prospectivo</h6>
+          <p class="tool-explainer-desc">Vista panorámica de <span class="tool-explainer-link">tendencias</span>, riesgos y oportunidades. Identifica qué dimensiones son más <span class="tool-explainer-link">críticas</span> o <span class="tool-explainer-link">prometedoras</span>.</p>
+        </div>
+      </div>
+      <div class="tool-explainer-item">
+        <i class="bi bi-file-earmark-arrow-down tool-explainer-icon" style="color:#854F0B" aria-hidden="true"></i>
+        <div>
+          <h6 class="tool-explainer-title">Reporte descargable en PDF</h6>
+          <p class="tool-explainer-desc">El análisis completo del territorio para <span class="tool-explainer-link">compartir</span>, presentar o archivar.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Contenido Principal (Columna Derecha) -->
-    <div class="col-12" [class.col-md-8]="!hasSelection">
+    <!-- Mapa centrado -->
+    <div class="map-ut">
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="regionSelect" class="form-label font-weight-bold">Seleccionar territorio:</label>
+          <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
+            (ngModelChange)="onRegionChange($event)">
+            <option [ngValue]="null">Selecciona un territorio</option>
+            <option *ngFor="let region of regions" [value]="region.name">
+              {{ region.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Tooltip flotante -->
+      <div class="map-tooltip" *ngIf="tooltipRegion"
+        [style.top.px]="tooltipY" [style.left.px]="tooltipX">
+        {{ tooltipRegion }}
+      </div>
+
+      <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox"
+        #mapSvg
+        (mousemove)="onMapMouseMove($event)"
+        (mouseleave)="tooltipRegion = null">
+        <g>
+          <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
+            [attr.data-region]="region.name" [attr.d]="region.d" (click)="selectRegion(region.name)"
+            [style.fill]="region.name === 'Zoom Lines' ? 'none' : null"
+            [style.stroke]="region.name === 'Zoom Lines' ? '#DC2626' : null"
+            [style.stroke-width]="region.name === 'Zoom Lines' ? '0.8px' : null"
+            [style.stroke-dasharray]="region.name === 'Zoom Lines' ? '1.5,1.5' : 'none'"
+            [style.pointer-events]="region.name === 'Zoom Lines' ? 'none' : 'auto'"
+            (mouseenter)="onRegionHover($event, region.name)"
+            (mouseleave)="tooltipRegion = null">
+            <title *ngIf="region.name !== 'Zoom Lines'">{{ region.name }}</title>
+          </path>
+        </g>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <!-- Contenido Principal (Fila Inferior, ancho completo) -->
+    <div class="col-12">
 
       <!-- Lista deslizable de territorios (solo con una región seleccionada) -->
       <div class="region-strip card shadow-sm bg-white mb-3" *ngIf="hasSelection">
@@ -109,19 +156,14 @@
         </div>
       </div>
 
-      <div class="card shadow-sm bg-white" [class.h-100]="!hasSelection">
+      <div class="card shadow-sm bg-white" *ngIf="hasSelection">
         <div class="card-body p-4">
 
-          <!-- ENCABEZADO DINÁMICO -->
           <div class="d-flex flex-row justify-content-between align-items-center mb-3">
             <div>
               <h2 class="fw-bold text-dark mb-1">
-                {{ hasSelection ? selectedRegion : 'Explora el futuro de los territorios al 2050' }}
+                {{ selectedRegion }}
               </h2>
-              <p *ngIf="!hasSelection" class="text-muted mb-0">
-                Cada región tiene su propio análisis: escenarios al 2050, radar de riesgos y reporte descargable. Elige
-                un territorio o busca por temática.
-              </p>
             </div>
 
             <button *ngIf="hasSelection" type="button" class="btn btn-outline-secondary btn-sm rounded-pill"
@@ -131,132 +173,6 @@
           </div>
 
           <div class="animate__animated animate__fadeIn">
-
-            <!-- VISTA BÚSQUEDA GLOBAL -->
-            <ng-container *ngIf="!hasSelection">
-              <div class="filter-bar row g-2 mb-3">
-                <div class="col-5 p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <input type="text" placeholder="Buscar en territorios" pInputText [(ngModel)]="textoBusqueda"
-                    class="filter-input w-100" />
-                </div>
-
-                <div class="col-12 col-md-5 p-input-icon-right">
-                  <i class="pi pi-chevron-down text-muted" style="pointer-events: none;"></i>
-                  <select [(ngModel)]="temaSeleccionadoSelect" class="p-inputtext w-100 filter-select pe-5"
-                    style="appearance: none;">
-                    <option value="">Seleccionar temática</option>
-                    <option *ngFor="let docs of getOpcionesUnicas('tematica')" [value]="docs">
-                      {{docs}}
-                    </option>
-                  </select>
-
-                </div>
-                <div class="col-12 col-md-2">
-                  <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar" style="padding:12px;"
-                    (click)="limpiarFiltroMapa()">
-                    <i class="pi pi-filter-slash me-1"></i> Limpiar
-                  </button>
-                </div>
-              </div>
-
-              <div class="theme-articles-container d-flex flex-column gap-3">
-                <div *ngIf="(textoBusqueda || temaSeleccionadoSelect) && articulosPorTemaGlobal.length === 0"
-                  class="text-center py-4 text-muted">
-                  No se encontraron artículos que coincidan con tu búsqueda.
-                </div>
-
-                <!-- ESTADO INICIAL: GUÍA DE HERRAMIENTAS -->
-                <div *ngIf="!textoBusqueda && !temaSeleccionadoSelect" class="onboarding-panel rounded-3 p-4 mt-3">
-
-
-                  <div class="onboarding-search-hint">
-                    <i class="bi bi-search" aria-hidden="true"></i>
-                    <span>Usa el <strong>buscador y los filtros</strong> de arriba para explorar eventos, tendencias o
-                      riesgos a nivel nacional, sin seleccionar una región.</span>
-                  </div>
-
-
-
-                  <div class="onboarding-divider">
-                    <span>o también puedes</span>
-                  </div>
-
-                  <p class="onboarding-intro">Seleccionar una región en el mapa, con el cual obtendrás:</p>
-
-                  <div class="onboarding-benefits">
-
-                    <div class="onboarding-item">
-                      <i class="bi bi-funnel onboarding-icon" style="color:#185FA5" aria-hidden="true"></i>
-                      <div>
-                        <h6 class="onboarding-item-title">Cono de futuros</h6>
-                        <p class="onboarding-item-desc">Los posibles caminos del territorio al 2050: escenarios
-                          optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
-                      </div>
-                    </div>
-
-                    <div class="onboarding-item">
-                      <i class="bi bi-radar onboarding-icon" style="color:#3B6D11" aria-hidden="true"></i>
-                      <div>
-                        <h6 class="onboarding-item-title">Radar prospectivo</h6>
-                        <p class="onboarding-item-desc">Vista panorámica de tendencias, riesgos y oportunidades.
-                          Identifica qué dimensiones son más críticas o prometedoras.</p>
-                      </div>
-                    </div>
-
-                    <div class="onboarding-item">
-                      <i class="bi bi-file-earmark-arrow-down onboarding-icon" style="color:#854F0B"
-                        aria-hidden="true"></i>
-                      <div>
-                        <h6 class="onboarding-item-title">Reporte descargable en PDF</h6>
-                        <p class="onboarding-item-desc">El análisis completo del territorio para compartir, presentar o
-                          archivar.</p>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div class="onboarding-cta">
-                    <i class="bi bi-hand-index" aria-hidden="true"></i>
-                    Selecciona cualquier región del mapa para comenzar
-                  </div>
-
-                </div>
-
-                <div *ngIf="(textoBusqueda || temaSeleccionadoSelect) && articulosPorTemaGlobal.length != 0"
-                  class="result-meta d-flex justify-content-between align-items-center">
-                  <span class="text-muted fw-semibold small">{{ articulosPorTemaGlobal.length }} de {{
-                    totalArticulosGlobalCount }} eventos</span>
-                  <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3"
-                    (click)="descargarListaBusquedaPDF()">
-                    <i class="bi bi-download me-1"></i> Descargue la lista completa
-                  </button>
-                </div>
-
-                <a *ngFor="let articulo of articulosPorTemaGlobal" [href]="articulo.url" target="_blank"
-                  class="article-link-card p-3 bg-light rounded text-decoration-none text-dark d-flex justify-content-between align-items-center gap-3">
-                  <div class="article-info flex-grow-1">
-                    <div class="d-flex align-items-center mb-1 gap-2">
-                      <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 small fw-semibold">
-                        {{ articulo.regionOriginaria }}
-                      </span>
-                      <span class="tipo-badge"
-                        [style.background-color]="getTematicaColorData(articulo.tematica).badgeBg"
-                        [style.color]="getTematicaColorData(articulo.tematica).badgeText">
-                        {{ articulo.tematica }}
-                      </span>
-                    </div>
-                    <h6 class="fw-bold text-dark mb-1 mt-1">{{ articulo.titulo }}</h6>
-                    <p class="text-secondary small mb-0">{{ articulo.resumen }}</p>
-                    <strong class="fst-italic text-primary small">ver más &rarr;</strong>
-                  </div>
-
-                  <div *ngIf="articulo.imagenUrl" class="article-image-container flex-shrink-0">
-                    <img [src]="articulo.imagenUrl" [alt]="articulo.titulo" class="article-image rounded">
-                  </div>
-                </a>
-              </div>
-            </ng-container>
 
             <!-- REGIÓN SIN DATOS -->
             <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted text-center py-5">
@@ -307,6 +223,24 @@
                   </symbol>
                 </defs>
               </svg>
+
+              <!-- Explicación compacta encima del radar/cono -->
+              <div class="tool-explainer-panel tool-explainer-panel--compact mb-3">
+                <div class="tool-explainer-item">
+                  <i class="bi bi-funnel tool-explainer-icon" style="color:#185FA5" aria-hidden="true"></i>
+                  <div>
+                    <h6 class="tool-explainer-title">Cono de futuros</h6>
+                    <p class="tool-explainer-desc">Los posibles caminos del territorio al 2050: escenarios optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
+                  </div>
+                </div>
+                <div class="tool-explainer-item">
+                  <i class="bi bi-radar tool-explainer-icon" style="color:#3B6D11" aria-hidden="true"></i>
+                  <div>
+                    <h6 class="tool-explainer-title">Radar prospectivo</h6>
+                    <p class="tool-explainer-desc">Vista panorámica de <span class="tool-explainer-link">tendencias</span>, riesgos y oportunidades. Identifica qué dimensiones son más <span class="tool-explainer-link">críticas</span> o <span class="tool-explainer-link">prometedoras</span>.</p>
+                  </div>
+                </div>
+              </div>
 
               <!-- Selector de vista -->
               <div class="d-flex justify-content-center gap-2 my-4">
@@ -488,6 +422,30 @@
                 </div>
 
                 <div class="cono-layout-grid">
+                  <div class="cono-main">
+                  <!-- SVG Cono de fondo: se abre hacia la derecha y termina detrás del óvalo "Futuros posibles" -->
+                  <svg class="cono-bg-svg-obs" viewBox="0 0 1000 1000" preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="coneBodyGradObs" x1="0%" y1="50%" x2="100%" y2="50%">
+                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.14" />
+                        <stop offset="40%" stop-color="#38bdf8" stop-opacity="0.24" />
+                        <stop offset="75%" stop-color="#2dd4bf" stop-opacity="0.32" />
+                        <stop offset="100%" stop-color="#0284c7" stop-opacity="0.52" />
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Cuerpo del cono (punta izquierda truncada, se abre hacia la derecha) -->
+                    <path d="M 0,420 L 1000,20 L 1000,980 L 0,580 Z" fill="url(#coneBodyGradObs)" />
+                    <path d="M 0,460 L 1000,180 L 1000,820 L 0,540 Z" fill="rgba(56,189,248,0.07)" />
+                    <path d="M 0,480 L 1000,340 L 1000,660 L 0,520 Z" fill="rgba(45,212,191,0.08)" />
+
+                    <!-- Líneas divisoras de horizontes 2030-2040 y 2040-2050 -->
+                    <ellipse cx="380" cy="500" rx="18" ry="260" fill="none" stroke="rgba(56, 189, 248, 0.75)"
+                      stroke-width="2.5" stroke-dasharray="8 6" />
+                    <ellipse cx="710" cy="500" rx="28" ry="410" fill="none" stroke="rgba(56, 189, 248, 0.8)"
+                      stroke-width="2.5" stroke-dasharray="8 6" />
+                  </svg>
                   <div class="cono-time-blocks-stack">
                     <div class="cono-time-block" *ngFor="let col of conoColumns">
                       <div class="cono-time-block-header">
@@ -518,15 +476,16 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="cono-right-sidebar">
-                    <div class="cono-oval-container">
-                      <div class="cono-oval-outer">
-                        <div class="cono-oval-inner">
-                          <span>Futuros posibles</span>
-                        </div>
+                  <div class="cono-oval-container">
+                    <div class="cono-oval-outer">
+                      <div class="cono-oval-inner">
+                        <span>Futuros posibles</span>
                       </div>
                     </div>
+                  </div>
+                  </div>
+                  <div class="cono-right-sidebar">
+
 
                     <div class="cono-scenarios-box">
                       <div class="cono-scenarios-header">Escenarios</div>
@@ -694,19 +653,16 @@
                       <ng-template pTemplate="header">
                         <tr>
                           <th style="width: 12%;" class="text-center">Imágen</th>
-                          <th style="width: 20%;" pSortableColumn="titulo">
-                            Nombre <p-sortIcon field="titulo"></p-sortIcon>
+                          <th style="width: 45%;" pSortableColumn="titulo">
+                            Nombre y Sumilla <p-sortIcon field="titulo"></p-sortIcon>
                           </th>
-                          <th style="width: 32%;">Sumilla</th>
-                          <th style="width: 13%;" pSortableColumn="tematica">
+                          <th style="width: 15%;" pSortableColumn="tematica">
                             Temática <p-sortIcon field="tematica"></p-sortIcon>
                           </th>
-                          <th style="width: 11%;" pSortableColumn="periodo">
+                          <th style="width: 14%;" pSortableColumn="periodo">
                             Período <p-sortIcon field="periodo"></p-sortIcon>
                           </th>
-                          <th style="width: 12%;" pSortableColumn="actualizacion">
-                            Actualización <p-sortIcon field="actualizacion"></p-sortIcon>
-                          </th>
+                          <th style="width: 14%;">Fuerza de cambio</th>
                         </tr>
                       </ng-template>
 
@@ -719,24 +675,23 @@
                                 class="pi pi-image"></i></span>
                           </td>
 
-                          <!-- 2. Nombre -->
+                          <!-- 2. Nombre y Sumilla (Uno debajo del otro) -->
                           <td>
-                            <a [href]="fila.url" target="_blank" class="text-decoration-none">
-                              <div class="evento-link d-flex justify-content-between align-items-center">
-                                <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
-                                  {{ fila.tituloCorto || fila.titulo }}
-                                </span>
-                                <i class="pi pi-external-link evento-link-icon text-muted small" aria-hidden="true"></i>
-                              </div>
-                            </a>
+                            <div class="d-flex flex-column gap-1">
+                              <a [href]="fila.url" target="_blank" class="text-decoration-none">
+                                <div class="evento-link d-flex justify-content-between align-items-center">
+                                  <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
+                                    {{ fila.tituloCorto || fila.titulo }}
+                                  </span>
+                                  <i class="pi pi-external-link evento-link-icon text-muted small"
+                                    aria-hidden="true"></i>
+                                </div>
+                              </a>
+                              <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
+                            </div>
                           </td>
 
-                          <!-- 3. Sumilla -->
-                          <td>
-                            <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
-                          </td>
-
-                          <!-- 4. Temática -->
+                          <!-- 3. Temática -->
                           <td class="cell-tema">
                             <span class="tipo-badge"
                               [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
@@ -745,22 +700,21 @@
                             </span>
                           </td>
 
-                          <!-- 5. Período -->
+                          <!-- 4. Período -->
                           <td>
                             <span class="periodo-chip">{{ fila.periodo || '2030-2040' }}</span>
                           </td>
 
-                          <!-- 6. Actualización -->
+                          <!-- 5. Fuerza de cambio (ajusta según la propiedad de tu modelo, ej. fila.fuerzaCambio) -->
                           <td>
-                            <span class="text-muted small">{{ fila.fechaActualizacion || fila.fecha || 'Sin fecha'
-                              }}</span>
+                            <span class="text-dark small fw-semibold">{{ fila.fuerzaCambio || '—' }}</span>
                           </td>
                         </tr>
                       </ng-template>
 
                       <ng-template pTemplate="emptymessage">
                         <tr>
-                          <td colspan="6" class="table-empty">
+                          <td colspan="5" class="table-empty">
                             <i class="pi pi-search"></i>
                             No se encontraron elementos futuros con los filtros seleccionados.
                           </td>
@@ -827,25 +781,22 @@
                     </div>
 
                     <!-- TABLA CON LAS 6 COLUMNAS -->
-                    <p-table [value]="filasEscenariosFiltradas" [paginator]="true" [rows]="5"
-                      [(first)]="primeraFilaEscenarios" styleClass="p-datatable-sm territorial-table">
+                    <p-table [value]="filasElementosFiltradas" [paginator]="true" [rows]="5"
+                      [(first)]="primeraFilaElementos" styleClass="p-datatable-sm territorial-table">
 
                       <ng-template pTemplate="header">
                         <tr>
                           <th style="width: 12%;" class="text-center">Imágen</th>
-                          <th style="width: 20%;" pSortableColumn="titulo">
-                            Nombre <p-sortIcon field="titulo"></p-sortIcon>
+                          <th style="width: 45%;" pSortableColumn="titulo">
+                            Nombre y Sumilla <p-sortIcon field="titulo"></p-sortIcon>
                           </th>
-                          <th style="width: 32%;">Sumilla</th>
-                          <th style="width: 13%;" pSortableColumn="tematica">
+                          <th style="width: 15%;" pSortableColumn="tematica">
                             Temática <p-sortIcon field="tematica"></p-sortIcon>
                           </th>
-                          <th style="width: 11%;" pSortableColumn="periodo">
+                          <th style="width: 14%;" pSortableColumn="periodo">
                             Período <p-sortIcon field="periodo"></p-sortIcon>
                           </th>
-                          <th style="width: 12%;" pSortableColumn="actualizacion">
-                            Actualización <p-sortIcon field="actualizacion"></p-sortIcon>
-                          </th>
+                          <th style="width: 14%;">Fuerza de cambio</th>
                         </tr>
                       </ng-template>
 
@@ -858,24 +809,23 @@
                                 class="pi pi-image"></i></span>
                           </td>
 
-                          <!-- 2. Nombre -->
+                          <!-- 2. Nombre y Sumilla (Uno debajo del otro) -->
                           <td>
-                            <a [href]="fila.url" target="_blank" class="text-decoration-none">
-                              <div class="evento-link d-flex justify-content-between align-items-center">
-                                <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
-                                  {{ fila.tituloCorto || fila.titulo }}
-                                </span>
-                                <i class="pi pi-external-link evento-link-icon text-muted small" aria-hidden="true"></i>
-                              </div>
-                            </a>
+                            <div class="d-flex flex-column gap-1">
+                              <a [href]="fila.url" target="_blank" class="text-decoration-none">
+                                <div class="evento-link d-flex justify-content-between align-items-center">
+                                  <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
+                                    {{ fila.tituloCorto || fila.titulo }}
+                                  </span>
+                                  <i class="pi pi-external-link evento-link-icon text-muted small"
+                                    aria-hidden="true"></i>
+                                </div>
+                              </a>
+                              <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
+                            </div>
                           </td>
 
-                          <!-- 3. Sumilla -->
-                          <td>
-                            <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
-                          </td>
-
-                          <!-- 4. Temática -->
+                          <!-- 3. Temática -->
                           <td class="cell-tema">
                             <span class="tipo-badge"
                               [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
@@ -884,24 +834,23 @@
                             </span>
                           </td>
 
-                          <!-- 5. Período -->
+                          <!-- 4. Período -->
                           <td>
                             <span class="periodo-chip">{{ fila.periodo || '2030-2040' }}</span>
                           </td>
 
-                          <!-- 6. Actualización -->
+                          <!-- 5. Fuerza de cambio (ajusta según la propiedad de tu modelo, ej. fila.fuerzaCambio) -->
                           <td>
-                            <span class="text-muted small">{{ fila.fechaActualizacion || fila.fecha || 'Sin fecha'
-                              }}</span>
+                            <span class="text-dark small fw-semibold">{{ fila.fuerzaCambio || '—' }}</span>
                           </td>
                         </tr>
                       </ng-template>
 
                       <ng-template pTemplate="emptymessage">
                         <tr>
-                          <td colspan="6" class="table-empty">
+                          <td colspan="5" class="table-empty">
                             <i class="pi pi-search"></i>
-                            No se encontraron escenarios con los filtros seleccionados.
+                            No se encontraron elementos futuros con los filtros seleccionados.
                           </td>
                         </tr>
                       </ng-template>

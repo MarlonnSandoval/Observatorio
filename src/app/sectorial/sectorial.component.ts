@@ -99,25 +99,25 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   private readonly colorPorSector = new Map<string, string>();
 
   private readonly configSectores: SectorConfig[] = [
-    { nombre: 'Comercio Exterior y Turismo', color: 'rgb(44, 194, 177)', anillo: 'exterior_2', icono: 'bi-airplane' },
-    { nombre: 'Desarrollo e Inclusión Social', color: 'rgb(101, 161, 169)', anillo: 'exterior_2', icono: 'bi-people' },
-    { nombre: 'Competitividad Institucional', color: 'rgb(84, 203, 51)', anillo: 'exterior_2', icono: 'bi-building' },
-    { nombre: 'Mujer y poblaciones vulnerables', color: 'rgb(193, 202, 51)', anillo: 'exterior_2', icono: 'bi-person-hearts' },
-    { nombre: 'Transporte y Comunicaciones', color: 'rgb(97, 149, 131)', anillo: 'exterior_2', icono: 'bi-truck' },
-    { nombre: 'Trabajo y Promoción de Empleo', color: 'rgb(142, 68, 173)', anillo: 'exterior_2', icono: 'bi-briefcase' },
-    { nombre: 'Energía y Minas', color: 'rgb(211, 84, 0)', anillo: 'exterior_2', icono: 'bi-lightning' },
-    { nombre: 'Relaciones exteriores', color: 'rgb(35, 158, 215)', anillo: 'exterior', icono: 'bi-globe2' },
-    { nombre: 'Economía y Finanzas', color: 'rgb(243, 120, 24)', anillo: 'exterior', icono: 'bi-graph-up-arrow' },
-    { nombre: 'Agrario y de Riesgo', color: 'rgb(146, 24, 47)', anillo: 'exterior', icono: 'bi-tree' },
-    { nombre: 'Vivienda, construcción y saneamiento', color: 'rgb(108, 117, 125)', anillo: 'exterior', icono: 'bi-house' },
-    { nombre: 'Salud', color: 'rgb(247, 182, 26)', anillo: 'interior', icono: 'bi-heart-pulse' },
-    { nombre: 'Defensa', color: 'rgb(214, 53, 68)', anillo: 'interior', icono: 'bi-shield-shaded' },
-    { nombre: 'Justicia', color: 'rgb(63, 93, 122)', anillo: 'interior', icono: 'bi-duffle' },
-    { nombre: 'Interior', color: 'rgb(12, 86, 165)', anillo: 'interior', icono: 'bi-shield-lock' },
-    { nombre: 'Educación', color: 'rgb(127, 179, 69)', anillo: 'interior', icono: 'bi-book' },
-    { nombre: 'Ambiental', color: 'rgb(24, 175, 158)', anillo: 'interior', icono: 'bi-leaf' },
-    { nombre: 'Producción', color: 'rgb(235, 154, 161)', anillo: 'interior', icono: 'bi-gear' },
-    { nombre: 'Cultura', color: 'rgb(15, 148, 165)', anillo: 'interior', icono: 'bi-palette' },
+    { nombre: 'Comercio Exterior y Turismo', color: '#572365', anillo: 'exterior_2', icono: 'bi-airplane' },
+    { nombre: 'Desarrollo e Inclusión Social', color: '#D43790', anillo: 'exterior_2', icono: 'bi-people' },
+    { nombre: 'Competitividad Institucional', color: '#008081', anillo: 'exterior_2', icono: 'bi-building' },
+    { nombre: 'Mujer y poblaciones vulnerables', color: '#70259B', anillo: 'exterior_2', icono: 'bi-person-hearts' },
+    { nombre: 'Transporte y Comunicaciones', color: '#FFDD00', anillo: 'exterior_2', icono: 'bi-truck' },
+    { nombre: 'Trabajo y Promoción de Empleo', color: '#E61E29', anillo: 'exterior_2', icono: 'bi-briefcase' },
+    { nombre: 'Energía y Minas', color: '#E94F36', anillo: 'exterior_2', icono: 'bi-lightning' },
+    { nombre: 'Relaciones exteriores', color: '#FEE0BC', anillo: 'exterior', icono: 'bi-globe2' },
+    { nombre: 'Economía y Finanzas', color: '#C6C6C6', anillo: 'exterior', icono: 'bi-graph-up-arrow' },
+    { nombre: 'Agrario y de Riesgo', color: '#83BB26', anillo: 'exterior', icono: 'bi-tree' },
+    { nombre: 'Vivienda, construcción y saneamiento', color: '#0B4D90', anillo: 'exterior', icono: 'bi-house' },
+    { nombre: 'Salud', color: '#009AFE', anillo: 'interior', icono: 'bi-heart-pulse' },
+    { nombre: 'Defensa', color: '#8CA3A0', anillo: 'interior', icono: 'bi-shield-shaded' },
+    { nombre: 'Justicia', color: '#000000', anillo: 'interior', icono: 'bi-duffle' },
+    { nombre: 'Interior', color: '#9E4523', anillo: 'interior', icono: 'bi-shield-lock' },
+    { nombre: 'Educación', color: '#810016', anillo: 'interior', icono: 'bi-book' },
+    { nombre: 'Ambiental', color: '#00774F', anillo: 'interior', icono: 'bi-leaf' },
+    { nombre: 'Producción', color: '#7F8000', anillo: 'interior', icono: 'bi-gear' },
+    { nombre: 'Cultura', color: '#572365', anillo: 'interior', icono: 'bi-palette' },
   ];
 
   readonly sectoresDisponibles: string[] = [
@@ -344,12 +344,23 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       .text(d => d.data.nombre)
       .on('click', (_event, d) => this.toggleSector(d.data.nombre));
 
-    // 6. Centro blanco
+    // 6. Centro: círculo blanco + logo Perú 2050
     g.append('circle')
       .attr('r', innerRadius)
       .attr('fill', '#ffffff')
       .attr('stroke', '#cbd5e1')
       .attr('stroke-width', 2)
+      .style('pointer-events', 'none');
+
+    // Logo centrado sobre el círculo interior
+    const logoSize = innerRadius * 1.55; // ocupa ~155% del radio para que llene bien el espacio
+    g.append('image')
+      .attr('href', 'assets/img/peru2050-logo.png')
+      .attr('x', -logoSize / 2)
+      .attr('y', -logoSize / 2)
+      .attr('width', logoSize)
+      .attr('height', logoSize)
+      .attr('clip-path', `circle(${innerRadius - 4}px at center)`)
       .style('pointer-events', 'none');
   }
 
@@ -668,7 +679,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
               display: inline-block;
               margin-bottom: 8px;
             ">
-              ${articulo.tema || categoria} (${articulo.horizonte || '2030-2040'})
+              ${articulo.fuerzaCambio || categoria} (${articulo.horizonte || '2030-2040'})
             </span>
             <h4 style="color: #0f172a; font-size: 14px; margin: 0 0 6px 0; font-weight: bold;">
               ${articulo.titulo}
@@ -712,7 +723,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       case '2040-2050':
         return '2040 – 2050';
       default:
-        return horizonte || 'Sin Período';
+        return horizonte || '-';
     }
   }
 

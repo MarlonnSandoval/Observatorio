@@ -52,7 +52,7 @@
 
 
     <!-- COLUMNA IZQUIERDA: LISTA DE SECTORES / ANILLO CENTRAL -->
-    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+    <div class="sectorial-landing card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
 
       <!-- ENCABEZADO CON INSTRUCCIÓN -->
       <div class="sectorial-onboarding-header" [class.d-none]="sectorSeleccionado">
@@ -61,20 +61,41 @@
           Elige un sector para comenzar
         </div>
         <h5 class="sectorial-onboarding-title">
-          ¿Qué sectores marcarán el Perú al 2050?
+          ¿Qué fuerzas de cambio marcarán en el Perú al 2050?
         </h5>
         <p class="sectorial-onboarding-desc">
-          Haz clic en cualquier sector del gráfico para activar su análisis prospectivo: verás su
-          <strong>Cono de futuros</strong> con los escenarios posibles al 2050,
-          su <strong>Radar prospectivo</strong> con tendencias, riesgos y oportunidades,
-          y los <strong>elementos futuros</strong> que definirán su evolución.
+          Haz clic en cualquier sector para activar su análisis: verás su
+          <strong>cono de futuro</strong> con los elementos y escenarios posibles al 2050, y
+          su <strong>radar</strong> con tendencias, riesgos, oportunidades, cartas salvajes y señales debiles para el
+          análisis prospectivo.
         </p>
+      </div>
+
+      <!-- Explicación compacta encima del radar/cono -->
+      <div class="tool-explainer-panel tool-explainer-panel--compact tool-explainer-panel--row mb-4">
+        <div class="tool-explainer-item">
+          <i class="bi bi-funnel tool-explainer-icon" style="color:#185FA5" aria-hidden="true"></i>
+          <div>
+            <h6 class="tool-explainer-title">Cono de futuros</h6>
+            <p class="tool-explainer-desc">Los posibles caminos del territorio al 2050: escenarios optimistas, probables
+              y críticos, organizados por horizonte de tiempo.</p>
+          </div>
+        </div>
+        <div class="tool-explainer-item">
+          <i class="bi bi-radar tool-explainer-icon" style="color:#3B6D11" aria-hidden="true"></i>
+          <div>
+            <h6 class="tool-explainer-title">Radar prospectivo</h6>
+            <p class="tool-explainer-desc">Vista panorámica de <span class="tool-explainer-link">tendencias</span>,
+              riesgos y oportunidades. Identifica qué dimensiones son más <span
+                class="tool-explainer-link">críticas</span> o <span class="tool-explainer-link">prometedoras</span>.</p>
+          </div>
+        </div>
       </div>
 
       <!-- GRÁFICO SVG -->
       <div class="w-100 d-flex flex-column justify-content-center align-items-center"
         [class.d-none]="sectorSeleccionado">
-        <div id="megas-draw" class="w-100 position-relative" style="max-width: 1200px;">
+        <div id="megas-draw" class="sectorial-wheel w-100 position-relative">
           <div #svgContainer class="w-100 position-relative"></div>
         </div>
       </div>
@@ -332,6 +353,25 @@
           </div>
 
           <div class="cono-layout-grid">
+            <!-- SVG Cono de fondo: se abre hacia la derecha y termina detrás del óvalo "Futuros posibles" -->
+            <svg class="cono-bg-svg-obs" viewBox="0 0 1000 1000" preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="coneBodyGradObs" x1="0%" y1="50%" x2="100%" y2="50%">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.14" />
+                  <stop offset="40%" stop-color="#38bdf8" stop-opacity="0.24" />
+                  <stop offset="75%" stop-color="#2dd4bf" stop-opacity="0.32" />
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0.52" />
+                </linearGradient>
+              </defs>
+              <path d="M 0,420 L 1000,20 L 1000,980 L 0,580 Z" fill="url(#coneBodyGradObs)" />
+              <path d="M 0,460 L 1000,180 L 1000,820 L 0,540 Z" fill="rgba(56,189,248,0.07)" />
+              <path d="M 0,480 L 1000,340 L 1000,660 L 0,520 Z" fill="rgba(45,212,191,0.08)" />
+              <ellipse cx="380" cy="500" rx="18" ry="260" fill="none" stroke="rgba(56, 189, 248, 0.75)"
+                stroke-width="2.5" stroke-dasharray="8 6" />
+              <ellipse cx="710" cy="500" rx="28" ry="410" fill="none" stroke="rgba(56, 189, 248, 0.8)"
+                stroke-width="2.5" stroke-dasharray="8 6" />
+            </svg>
             <div class="cono-time-blocks-stack">
               <div class="cono-time-block" *ngFor="let col of conoColumns">
                 <div class="cono-time-block-header">
@@ -363,12 +403,10 @@
               </div>
             </div>
 
-            <div class="cono-right-sidebar">
-              <div class="cono-oval-container">
-                <div class="cono-oval-outer">
-                  <div class="cono-oval-inner">
-                    <span>Futuros posibles</span>
-                  </div>
+            <div class="cono-oval-container">
+              <div class="cono-oval-outer">
+                <div class="cono-oval-inner">
+                  <span>Futuros posibles</span>
                 </div>
               </div>
             </div>
@@ -474,7 +512,7 @@
               <!-- BARRA DE FILTROS SUPERIOR -->
               <div class="filter-toolbar">
                 <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-5">
+                  <div class="col-12 col-md-3">
                     <span class="p-input-icon-left w-100">
                       <i class="pi pi-search"></i>
                       <input type="text" pInputText class="w-100 filter-custom-input"
@@ -483,6 +521,13 @@
                     </span>
                   </div>
                   <div class="col-6 col-md-3">
+                    <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.tema"
+                      (ngModelChange)="filtroElementos.tema = $event; aplicarFiltroElementos()">
+                      <option value="">Vinculos</option>
+                      <option *ngFor="let t of temasElementos" [value]="t">{{ t }}</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-2">
                     <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.tema"
                       (ngModelChange)="filtroElementos.tema = $event; aplicarFiltroElementos()">
                       <option value="">Temáticas</option>
@@ -515,26 +560,23 @@
                 </button>
               </div>
 
-              <!-- TABLA CON LAS 6 COLUMNAS -->
+              <!-- TABLA CON LAS 5 COLUMNAS -->
               <p-table [value]="filasElementosFiltradas" [paginator]="true" [rows]="5" [(first)]="primeraFilaElementos"
                 styleClass="p-datatable-sm territorial-table">
 
                 <ng-template pTemplate="header">
                   <tr>
                     <th style="width: 12%;" class="text-center">Imágen</th>
-                    <th style="width: 20%;" pSortableColumn="titulo">
-                      Nombre <p-sortIcon field="titulo"></p-sortIcon>
+                    <th style="width: 45%;" pSortableColumn="titulo">
+                      Nombre y Sumilla <p-sortIcon field="titulo"></p-sortIcon>
                     </th>
-                    <th style="width: 32%;">Sumilla</th>
-                    <th style="width: 13%;" pSortableColumn="tematica">
+                    <th style="width: 15%;" pSortableColumn="tematica">
                       Temática <p-sortIcon field="tematica"></p-sortIcon>
                     </th>
-                    <th style="width: 11%;" pSortableColumn="horizonte">
+                    <th style="width: 14%;" pSortableColumn="horizonte">
                       Período <p-sortIcon field="horizonte"></p-sortIcon>
                     </th>
-                    <th style="width: 12%;" pSortableColumn="actualizacion">
-                      Actualización <p-sortIcon field="actualizacion"></p-sortIcon>
-                    </th>
+                    <th style="width: 14%;">Fuerza de cambio</th>
                   </tr>
                 </ng-template>
 
@@ -543,29 +585,26 @@
                     <!-- 1. Imágen -->
                     <td class="text-center">
                       <img *ngIf="fila.imagenUrl" [src]="fila.imagenUrl" [alt]="fila.titulo" class="table-thumb">
-                      <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty">
-                        <i class="pi pi-image"></i>
-                      </span>
+                      <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty"><i
+                          class="pi pi-image"></i></span>
                     </td>
 
-                    <!-- 2. Nombre -->
+                    <!-- 2. Nombre y Sumilla (uno debajo del otro) -->
                     <td>
-                      <a [href]="fila.url" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                        <div class="evento-link d-flex justify-content-between align-items-center">
-                          <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
-                            {{ fila.tituloCorto || fila.titulo }}
-                          </span>
-                          <i class="pi pi-external-link evento-link-icon text-muted small" aria-hidden="true"></i>
-                        </div>
-                      </a>
+                      <div class="d-flex flex-column gap-1">
+                        <a [href]="fila.url" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                          <div class="evento-link d-flex justify-content-between align-items-center">
+                            <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
+                              {{ fila.tituloCorto || fila.titulo }}
+                            </span>
+                            <i class="pi pi-external-link evento-link-icon text-muted small" aria-hidden="true"></i>
+                          </div>
+                        </a>
+                        <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
+                      </div>
                     </td>
 
-                    <!-- 3. Sumilla -->
-                    <td>
-                      <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
-                    </td>
-
-                    <!-- 4. Temática -->
+                    <!-- 3. Temática -->
                     <td class="cell-tema">
                       <span class="tipo-badge" [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
                         [style.color]="getTematicaColorData(fila.tematica).badgeText">
@@ -573,21 +612,21 @@
                       </span>
                     </td>
 
-                    <!-- 5. Período -->
+                    <!-- 4. Período -->
                     <td>
                       <span class="periodo-chip">{{ etiquetaHorizonte(fila.horizonte) }}</span>
                     </td>
 
-                    <!-- 6. Actualización -->
+                    <!-- 5. Fuerza de cambio -->
                     <td>
-                      <span class="text-muted small">{{ fila.fechaActualizacion || fila.fecha || 'Sin fecha' }}</span>
+                      <span class="text-dark small fw-semibold">{{ fila.fuerzaCambio || '—' }}</span>
                     </td>
                   </tr>
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td colspan="6" class="table-empty">
+                    <td colspan="5" class="table-empty">
                       <i class="pi pi-search"></i>
                       No se encontraron elementos futuros con los filtros seleccionados.
                     </td>

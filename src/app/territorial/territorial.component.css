@@ -1,3 +1,54 @@
+/* ===================================================
+   Tool Explainer Panel (encima del mapa y del radar/cono)
+   =================================================== */
+.tool-explainer-panel {
+  display: flex;
+  gap: 10px; 
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.tool-explainer-panel--compact .tool-explainer-item:last-child {
+  border-bottom: none;
+}
+
+.tool-explainer-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+}
+
+.tool-explainer-item:last-child {
+  border-bottom: none;
+}
+
+.tool-explainer-icon {
+  font-size: 1.3rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.tool-explainer-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1b365d;
+  margin-bottom: 2px;
+}
+
+.tool-explainer-desc {
+  font-size: 0.8rem;
+  color: #5a7a9a;
+  margin-bottom: 0;
+  line-height: 1.45;
+}
+
+.tool-explainer-link {
+  color: #2a68a2;
+}
+
 .title-trends {
   font-size: 2rem;
   font-weight: 700;
@@ -23,8 +74,9 @@
    =================================================== */
 .map-ut {
   width: 100%;
-  max-width: 380px;
+  max-width: 500px;
   margin: auto;
+  position: relative;
 }
 
 .map-region {
@@ -41,6 +93,33 @@
 
 .map-region.active {
   fill: #003486;
+}
+
+.map-tooltip {
+  position: absolute;
+  background: #1b365d;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transform: translate(-50%, -130%);
+  z-index: 10;
+  letter-spacing: 0.01em;
+}
+
+.map-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: #1b365d transparent transparent;
 }
 
 /* ===================================================
@@ -248,14 +327,13 @@
 }
 
 /* ===================================================
-   FILTROS DE TABLA (ESTILO DE LA IMAGEN DE REFERENCIA)
+   FILTROS DE TABLA
    =================================================== */
 .filter-toolbar {
   padding: 0.25rem 0;
   background: transparent;
   border: none;
 }
-
 
 .filter-custom-input,
 .filter-custom-select {
@@ -318,7 +396,7 @@
 }
 
 /* ===================================================
-   TABLA (ESTILO DE LA IMAGEN CON 6 COLUMNAS)
+   TABLA
    =================================================== */
 ::ng-deep .territorial-table .p-datatable-wrapper {
   border: 1px solid #e5e7eb;
@@ -327,7 +405,11 @@
 }
 
 ::ng-deep .territorial-table .p-datatable-table {
-  min-width: 820px;
+  min-width: 900px;
+}
+
+td .d-flex.flex-column {
+  line-height: 1.4;
 }
 
 ::ng-deep .territorial-table .p-datatable-thead>tr>th {
@@ -470,7 +552,7 @@
 }
 
 /* ===================================================
-   CONO DE FUTUROS
+   CONO DE FUTUROS (AJUSTADO)
    =================================================== */
 .cono-container {
   overflow-x: auto;
@@ -482,22 +564,37 @@
   flex-direction: row;
   gap: 20px;
   align-items: stretch;
-  min-width: 960px;
+  min-width: 980px;
+  min-height: 540px;
+  padding: 16px 8px;
 }
 
-.cono-layout-grid::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #cce1ff;
-  clip-path: polygon(-40% 50%, 100% 18%, 100% 80%);
-  z-index: 0;
-  pointer-events: none;
+/* Cono + bloques de tiempo + óvalo (el óvalo es la "boca" del cono) */
+.cono-main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 14px;
+  min-width: 0;
 }
 
-.cono-layout-grid>* {
+.cono-main>*:not(.cono-bg-svg-obs) {
   position: relative;
   z-index: 1;
+}
+
+.cono-bg-svg-obs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 28px; /* termina en el centro del óvalo */
+  width: calc(100% - 28px);
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .cono-time-blocks-stack {
@@ -505,6 +602,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  align-self: center;
   gap: 16px;
 }
 
@@ -512,7 +610,7 @@
   flex: 1 1 0;
   min-width: 0;
   border-radius: 8px;
-  padding: 14px;
+  padding: 10px;
 }
 
 .cono-time-block-header {
@@ -537,16 +635,18 @@
 .cono-categories-rows {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 
 .cono-cat-row {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #3B69AE;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(4px);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 105, 174, 0.45);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   gap: 6px;
 }
 
@@ -566,54 +666,57 @@
   align-items: flex-start;
 }
 
+/* Sidebar derecho con stretch para que la píldora abarque todo el alto */
 .cono-right-sidebar {
-  width: 240px;
+  width: 290px;
   flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  border-radius: 8px;
-  padding: 16px;
-  align-items: center;
+  flex-direction: row;
+  align-items: stretch; /* Estira los elementos hijos al 100% de la altura */
+  gap: 14px;
+  border-radius: 12px;
+  padding: 18px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
 }
 
 .cono-oval-container {
   display: flex;
-  justify-content: center;
-  width: 26%;
-  height: 100%;
+  flex: 0 0 56px;
+  width: 56px;
+  align-self: stretch; /* ocupa toda la altura del cono */
 }
 
 .cono-oval-outer {
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: auto;
-  min-height: 56px;
-  padding: 8px;
+  height: 100%;
+  padding: 6px;
   background: #f59e0b;
-  border-radius: 50%;
+  border-radius: 50%; /* elipse alargada, puntas arriba y abajo */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cono-oval-inner {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 98%;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #38bdf8 0%, #2a68a2 100%);
+  background: linear-gradient(180deg, #38b6f0 0%, #2c6fae 100%);
   border-radius: 50%;
-  min-height: 45px;
 }
 
 .cono-oval-inner span {
   color: #ffffff;
-  font-size: 1.30rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  transform: rotate(180deg); /* se lee de abajo hacia arriba */
+  white-space: nowrap;
 }
 
 .cono-scenarios-box {
@@ -632,8 +735,8 @@
 
 .cono-scenarios-list {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .cono-node-card {
@@ -642,7 +745,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  max-width: 160px;
+  max-width: 165px;
   height: auto;
   padding: 5px 10px;
   border-radius: 999px;
@@ -650,7 +753,7 @@
   text-decoration: none;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   white-space: normal;
   line-height: 1.2;
   word-break: break-word;
@@ -659,7 +762,7 @@
 
 .cono-node-card:hover,
 .cono-node-card:focus-visible {
-  transform: scale(1.08);
+  transform: scale(1.06);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   color: #ffffff;
   outline: 0;
@@ -676,22 +779,24 @@
 }
 
 .cono-scenario-card {
-  padding: 0.6rem 0.8rem;
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
   background: #ffffff;
-  border: 2px solid #8b5cf6;
-  border-radius: 6px;
+  border: 1.5px solid #8b5cf6;
+  border-radius: 8px;
   color: #1e293b;
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.3;
   text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .cono-scenario-card:hover,
 .cono-scenario-card:focus-visible {
   background: #8b5cf6;
-  color: #ffff;
-  font-weight: bold;
+  color: #ffffff;
 }
 
 .cono-legend-box {
@@ -700,7 +805,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .cono-node-card,
   .cono-scenario-card,
   .btn-ficha,
@@ -794,7 +898,7 @@
 }
 
 /* ===================================================
-   PANEL DE ONBOARDING (estado inicial sin selección)
+   PANEL DE ONBOARDING
    =================================================== */
 .onboarding-panel {
   background-color: #f8fafc;
@@ -903,4 +1007,48 @@
 
 .onboarding-cta i {
   font-size: 1rem;
+}
+
+/* ===================================================
+   Vista inicial: explicación arriba + mapa centrado
+   =================================================== */
+.territory-landing .landing-intro {
+  max-width: 760px;
+  margin: 0 auto 1.25rem;
+  text-align: center;
+}
+
+.territory-landing .map-ut {
+  max-width: 560px;
+  margin: 1.5rem auto 0;
+}
+
+.tool-explainer-panel--row {
+  flex-direction: row;
+}
+
+.tool-explainer-panel--row .tool-explainer-item {
+  flex: 1 1 0;
+  min-width: 0;
+  border-bottom: none;
+  border-right: 1px solid #f0f4f8;
+}
+
+.tool-explainer-panel--row .tool-explainer-item:last-child {
+  border-right: none;
+}
+
+@media (max-width: 991.98px) {
+  .tool-explainer-panel--row {
+    flex-direction: column;
+  }
+
+  .tool-explainer-panel--row .tool-explainer-item {
+    border-right: none;
+    border-bottom: 1px solid #f0f4f8;
+  }
+
+  .tool-explainer-panel--row .tool-explainer-item:last-child {
+    border-bottom: none;
+  }
 }

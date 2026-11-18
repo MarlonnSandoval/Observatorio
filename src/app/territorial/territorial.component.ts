@@ -173,6 +173,23 @@ const HERO_SLIDES = [
 })
 export class TerritorialComponent {
 
+
+  tooltipRegion: string | null = null;
+  tooltipX = 0;
+  tooltipY = 0;
+
+  onRegionHover(event: MouseEvent, name: string): void {
+    if (name === 'Zoom Lines') return;
+    this.tooltipRegion = name;
+  }
+
+  onMapMouseMove(event: MouseEvent): void {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const parent = (target.parentElement as HTMLElement).getBoundingClientRect();
+    this.tooltipX = event.clientX - parent.left;
+    this.tooltipY = event.clientY - parent.top;
+  }
   // ── Estado de UI ──────────────────────────
   activeTab: string = 'teoria';
   vistaVisualizacion: VistaVisualizacion = 'cono';
@@ -484,7 +501,7 @@ export class TerritorialComponent {
           titulo: art.titulo,
           shortLabel: this.getShortLabel(art, 38),
           categoria: cat,
-          tema: art.tema,
+          tema: art.fuerzaCambio,
           periodo: art.periodo || PERIODO_FALLBACK,
           url: art.url,
           icono: colorData.icono,
@@ -556,7 +573,7 @@ export class TerritorialComponent {
   // Búsqueda global (sin región)
   // ─────────────────────────────────────────
 
- get articulosPorTemaGlobal(): ArticuloConRegion[] {
+  get articulosPorTemaGlobal(): ArticuloConRegion[] {
     const query = this.textoBusqueda.toLowerCase().trim();
     const tema = this.temaSeleccionadoSelect;
 
@@ -587,7 +604,7 @@ export class TerritorialComponent {
               !tema ||
               articulo.tituloCorto === tema ||
               articulo.titulo === tema ||
-              articulo.tema === tema ||
+              articulo.fuerzaCambio === tema ||
               articulo.tematica === tema;
 
             if (matchQuery && matchTema) {
@@ -620,7 +637,7 @@ export class TerritorialComponent {
     return (
       (art.titulo || '').toLowerCase().includes(q) ||
       (art.resumen || '').toLowerCase().includes(q) ||
-      (art.tema || '').toLowerCase().includes(q) ||
+      (art.fuerzaCambio || '').toLowerCase().includes(q) ||
       (art.tematica || '').toLowerCase().includes(q)
     );
   }
@@ -736,7 +753,7 @@ export class TerritorialComponent {
                       margin-bottom:12px;page-break-inside:avoid;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             <span style="background-color:${badgeBg};color:${badgeText};padding:3px 10px;border-radius:12px;
                          font-size:11px;font-weight:bold;display:inline-block;margin-bottom:8px;">
-              ${articulo.tema || categoria} (${articulo.periodo || PERIODO_FALLBACK})
+              ${articulo.fuerzaCambio || categoria} (${articulo.periodo || PERIODO_FALLBACK})
             </span>
             <h4 style="color:#0f172a;font-size:14px;margin:0 0 6px 0;font-weight:bold;">${articulo.titulo}</h4>
             <p style="color:#475569;font-size:12px;margin:0 0 8px 0;line-height:1.5;">${articulo.resumen}</p>
@@ -802,7 +819,7 @@ export class TerritorialComponent {
             </span>
             <span style="background-color:#f1f5f9;color:#475569;padding:3px 10px;border-radius:12px;
                          font-size:11px;font-weight:bold;display:inline-block;">
-              ${articulo.tema || 'General'} (${articulo.periodo || '2030-2040'})
+              ${articulo.fuerzaCambio || 'General'} (${articulo.periodo || '2030-2040'})
             </span>
           </div>
           <h4 style="color:#0f172a;font-size:14px;margin:0 0 6px 0;font-weight:bold;">${articulo.titulo}</h4>

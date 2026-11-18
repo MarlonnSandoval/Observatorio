@@ -64,28 +64,57 @@
     </div>
   </section>
 
-  <section class="my-5 py-4 bg-light rounded-3 p-4 border shadow-2xs">
-    <div class="row align-items-center g-4">
-      <div class="col-md-4 text-center text-md-start">
-        <h5 class="fw-bold m-0 text-secondary text-uppercase tracking-wider">Información por categoría</h5>
+  <section class="">
+    <div class="row align-items-center g-4"
+      style="margin: 0; padding: 24px; border: 1px solid #e0e0e0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);">
+      <!-- Título principal -->
+      <div class="col-12 mb-2 d-flex justify-content-between">
+        <div>
+          <h4 style="color: #0d47a1; font-weight: 700; margin-bottom: 4px; font-size: 1.25rem;">
+            Accede a información tematica
+          </h4>
+          <div style="width: 50px; height: 4px; background-color: #0d47a1; border-radius: 2px;"></div>
+        </div>
+
+        <span
+          style="background-color: #ffc107; color: #000; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          Nuevo
+        </span>
       </div>
-      <div class="col-md-8">
-        <div class="row g-3">
-          <div class="col-sm-6">
-            <button pButton routerLink="/territorial"
-              class="p-button-raised w-100 p-4 d-flex align-items-center justify-content-center gap-3 p-button-info"
-              style="min-height: 85px;">
-              <i class="pi pi-map-marker fs-2 text-white"></i>
-              <span class="fw-semibold fs-5 text-white">Ámbito Territorial</span>
-            </button>
+
+      <div>
+        Información por fuerza de cambio
+      </div>
+      <div class="col-12">
+        <div class="row g-4">
+          <!-- Botón 1: Ámbito Territorial (con etiqueta NUEVO) -->
+
+          <div class="col-md-6">
+            <div style="position: relative; width: 100%;">
+              <button pButton routerLink="/territorial"
+                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
+                style="min-height: 200px; background-color: #3B69AE; border-radius: 16px; padding: 24px; cursor: pointer; transition: background 0.2s;">
+                <i class="pi pi-map text-white" style="font-size: 4rem;"></i>
+                <span class="fw-bold text-white text-start" style="font-size: 2rem; line-height: 1.2;">
+                  Territorial
+                </span>
+              </button>
+
+            </div>
           </div>
-          <div class="col-sm-6">
-            <button pButton routerLink="/sectorial"
-              class="p-button-raised w-100 p-4 d-flex align-items-center justify-content-center gap-3 p-button-help"
-              style="min-height: 85px;">
-              <i class="pi pi-sitemap fs-2 text-white"></i>
-              <span class="fw-semibold fs-5 text-white">Ámbito Sectorial</span>
-            </button>
+
+          <!-- Botón 2: Ámbito Sectorial -->
+          <div class="col-md-6">
+            <div style="position: relative; width: 100%;">
+              <button pButton routerLink="/sectorial"
+                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
+                style="min-height: 200px; background-color: #71008e; border-radius: 16px; padding: 24px; cursor: pointer; transition: background 0.2s;">
+                <i class="pi pi-sitemap text-white" style="font-size: 4rem;"></i>
+                <span class="fw-bold text-white text-start" style="font-size: 2rem; line-height: 1.2;">
+                  Sectorial
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

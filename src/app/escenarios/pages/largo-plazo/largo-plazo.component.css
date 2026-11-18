@@ -4,15 +4,6 @@
   text-justify: inter-word;
 }
 
-.text-truncate {
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-align: justify;
-  white-space: normal !important;
-  font-size: 1.2rem;
-}
 
 /* ---- Ajuste y tamaño de imágenes en los escenarios ---- */
 .img-scene {
@@ -25,7 +16,7 @@
 /* ---- Centrado vertical opcional para alinear imagen y texto en pantallas medianas/grandes ---- */
 .row-scene {
   display: flex;
-  align-items: center;
+
 }
 
 /* ---- Hero / carrusel ---- */

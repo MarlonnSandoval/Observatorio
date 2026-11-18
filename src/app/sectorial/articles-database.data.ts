@@ -4,7 +4,7 @@ export interface ArticuloRadar {
   resumen: string;
   url: string;
   imagenUrl?: string;
-  tema?: string;
+  fuerzaCambio?: string;
   tematica: string;
   horizonte?: 'PRESENTE-2030' | '2030-2040' | '2040-2050';
   clave?: string;
@@ -48,7 +48,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           clave: "manufactura avanzada",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Transición hacia fábricas inteligentes conectadas mediante redes 5G",
@@ -60,7 +61,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           clave: "iot industrial",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Implementación generalizada de la economía circular en cadenas de valor",
@@ -72,7 +74,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           clave: "circularidad",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Automatización robótica colaborativa (cobots) en líneas de empaque",
@@ -83,7 +86,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Descarbonización profunda de procesos térmicos en la industria pesada",
@@ -95,7 +99,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           clave: "hidrógeno verde",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Trazabilidad de la cadena de suministro basada en gemelos digitales",
@@ -106,7 +111,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -121,7 +127,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Obsolescencia acelerada del parque industrial frente a la automatización global",
@@ -132,7 +139,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Escasez de talento humano especializado en mecatrónica y analítica de datos",
@@ -143,7 +151,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Incremento de restricciones arancelarias por normativas ambientales estrictas",
@@ -154,7 +163,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -169,7 +179,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Desarrollo de proveedores locales para industrias tecnológicas avanzadas",
@@ -180,7 +191,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Exportación de bienes industriales con certificación de huella hídrica cero",
@@ -191,7 +203,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Digitalización de trámites de habilitación industrial mediante ventanilla única",
@@ -202,7 +215,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -217,7 +231,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2040-2050",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Fábricas totalmente autónomas operadas por inteligencia artificial general",
@@ -228,7 +243,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2040-2050",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Surgimiento de sindicatos y gobernanza algorítmica para trabajadores de cobots",
@@ -239,7 +255,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -254,7 +271,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         },
         {
           titulo: "Descubrimiento imprevisto de yacimientos masivos de tierras raras nacionales",
@@ -265,7 +283,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     }
@@ -285,7 +304,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -300,7 +320,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -315,7 +336,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -338,7 +360,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -353,7 +376,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -368,7 +392,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2040-2050",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -391,7 +416,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -406,7 +432,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -421,7 +448,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -444,7 +472,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -459,7 +488,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -474,7 +504,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -497,7 +528,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -512,7 +544,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -527,7 +560,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -550,7 +584,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -565,7 +600,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -580,7 +616,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -603,7 +640,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -618,7 +656,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -633,7 +672,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -656,7 +696,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -671,7 +712,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -686,7 +728,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -709,7 +752,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -724,7 +768,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -739,7 +784,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Democracia y paz",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -762,7 +808,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -777,7 +824,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -792,7 +840,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -815,7 +864,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -830,7 +880,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -845,7 +896,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -868,7 +920,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -883,7 +936,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -898,7 +952,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -921,7 +976,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -936,7 +992,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -951,7 +1008,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -974,7 +1032,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -989,7 +1048,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1004,7 +1064,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Desarrollo de las personas",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1027,7 +1088,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1042,7 +1104,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1057,7 +1120,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1080,7 +1144,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1095,7 +1160,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1110,7 +1176,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1133,7 +1200,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1148,7 +1216,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "PRESENTE-2030",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
@@ -1163,7 +1232,8 @@ export const SECTOR_DATABASE: SectorDatabase = {
           horizonte: "2030-2040",
           cuadrante: "Territorio sostenible",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",
-          fechaActualizacion: "20/05/2026"
+          fechaActualizacion: "20/05/2026",
+          fuerzaCambio: "Acceso a agua y saneamiento"
         }
       ]
     },
