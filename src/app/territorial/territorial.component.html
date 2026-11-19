@@ -605,7 +605,7 @@
                     <!-- BARRA DE FILTROS SUPERIOR -->
                     <div class="filter-toolbar">
                       <div class="row g-2 align-items-center">
-                        <div class="col-12 col-md-5">
+                        <div class="col-12 col-md-4">
                           <span class="p-input-icon-left w-100">
                             <i class="pi pi-search"></i>
                             <input type="text" pInputText class="w-100 filter-custom-input"
@@ -613,7 +613,7 @@
                               (ngModelChange)="filtroElementos.texto = $event; aplicarFiltroElementos()" />
                           </span>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-2">
                           <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.tema"
                             (ngModelChange)="filtroElementos.tema = $event; aplicarFiltroElementos()">
                             <option value="">Temáticas</option>
@@ -627,7 +627,14 @@
                             <option *ngFor="let p of periodosElementos" [value]="p">{{ p }}</option>
                           </select>
                         </div>
-                        <div class="col-12 col-md-2 text-end">
+                        <div class="col-6 col-md-2">
+                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.fuerzaCambio"
+                            (ngModelChange)="filtroElementos.fuerzaCambio = $event; aplicarFiltroElementos()">
+                            <option value="">Fuerza de cambio</option>
+                            <option *ngFor="let fc of fuerzasCambioElementos" [value]="fc">{{ fc }}</option>
+                          </select>
+                        </div>
+                        <div class="col-6 col-md-2 text-end">
                           <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar-filter"
                             (click)="limpiarFiltroElementos()">
                             <i class="pi pi-filter-slash me-1"></i> Limpiar

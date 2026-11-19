@@ -75,6 +75,7 @@ export interface FiltroElementos {
   tipo: string;
   tema: string;
   periodo: string;
+  fuerzaCambio: string;
 }
 
 export interface FiltroEscenarios {
@@ -210,7 +211,7 @@ export class TerritorialComponent {
   temaSeleccionadoSelect = '';
 
   // ── Tablas ────────────────────────────────
-  filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+  filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '', fuerzaCambio: '' };
   filtroEscenarios: FiltroEscenarios = { texto: '', tema: '', periodo: '' };
 
   filasElementos: FilaArticulo[] = [];
@@ -221,6 +222,7 @@ export class TerritorialComponent {
   tiposElementos: string[] = [];
   temasElementos: string[] = [];
   periodosElementos: string[] = [];
+  fuerzasCambioElementos: string[] = [];
   temasEscenarios: string[] = [];
   periodosEscenarios: string[] = [];
 
@@ -655,10 +657,11 @@ export class TerritorialComponent {
     this.tiposElementos = elemCats.filter((c) => this.getCount(c) > 0);
     this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
     this.periodosElementos = this.unicos(this.filasElementos.map((f) => this.periodoDe(f)));
+    this.fuerzasCambioElementos = this.unicos(this.filasElementos.map((f) => f.fuerzaCambio));
     this.temasEscenarios = this.unicos(this.filasEscenarios.map((f) => f.tematica));
     this.periodosEscenarios = this.unicos(this.filasEscenarios.map((f) => this.periodoDe(f)));
 
-    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '', fuerzaCambio: '' };
     this.filtroEscenarios = { texto: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
     this.aplicarFiltroEscenarios();
@@ -671,7 +674,8 @@ export class TerritorialComponent {
         this.coincideTexto(a, f.texto) &&
         (!f.tipo || a.categoria === f.tipo) &&
         (!f.tema || a.tematica === f.tema) &&
-        (!f.periodo || this.periodoDe(a) === f.periodo)
+        (!f.periodo || this.periodoDe(a) === f.periodo) &&
+        (!f.fuerzaCambio || a.fuerzaCambio === f.fuerzaCambio)
     );
     this.primeraFilaElementos = 0;
   }
@@ -689,7 +693,7 @@ export class TerritorialComponent {
 
   get hayFiltroElementos(): boolean {
     const f = this.filtroElementos;
-    return !!(f.texto || f.tipo || f.tema || f.periodo);
+    return !!(f.texto || f.tipo || f.tema || f.periodo || f.fuerzaCambio);
   }
 
   get hayFiltroEscenarios(): boolean {
@@ -703,7 +707,7 @@ export class TerritorialComponent {
   }
 
   limpiarFiltroElementos(): void {
-    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
+    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '', fuerzaCambio: '' };
     this.aplicarFiltroElementos();
   }
 

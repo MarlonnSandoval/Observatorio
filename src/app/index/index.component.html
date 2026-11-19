@@ -64,55 +64,62 @@
     </div>
   </section>
 
-  <section class="">
+<section class="">
     <div class="row align-items-center g-4"
-      style="margin: 0; padding: 24px; border: 1px solid #e0e0e0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);">
-      <!-- Título principal -->
-      <div class="col-12 mb-2 d-flex justify-content-between">
+      style="margin: 0; padding: 28px; border: 1px solid #e0e0e0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);">
+      
+      <!-- Título principal e indicador Nuevo -->
+      <div class="col-12 mb-1 d-flex justify-content-between align-items-center">
         <div>
           <h4 style="color: #0d47a1; font-weight: 700; margin-bottom: 4px; font-size: 1.25rem;">
-            Accede a información tematica
+            Accede a información temática
           </h4>
           <div style="width: 50px; height: 4px; background-color: #0d47a1; border-radius: 2px;"></div>
         </div>
 
         <span
-          style="background-color: #ffc107; color: #000; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          style="background-color: #ffc107; color: #000; font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           Nuevo
         </span>
       </div>
 
-      <div>
+      <div class="col-12 text-secondary small fw-medium mb-1">
         Información por fuerza de cambio
       </div>
+
+      <!-- Botones de Acceso Temático -->
       <div class="col-12">
         <div class="row g-4">
-          <!-- Botón 1: Ámbito Territorial (con etiqueta NUEVO) -->
-
+          <!-- Botón 1: Ámbito Territorial -->
           <div class="col-md-6">
             <div style="position: relative; width: 100%;">
               <button pButton routerLink="/territorial"
-                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
-                style="min-height: 200px; background-color: #3B69AE; border-radius: 16px; padding: 24px; cursor: pointer; transition: background 0.2s;">
-                <i class="pi pi-map text-white" style="font-size: 4rem;"></i>
-                <span class="fw-bold text-white text-start" style="font-size: 2rem; line-height: 1.2;">
-                  Territorial
-                </span>
+                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4 transition-hover"
+                style="min-height: 180px; background: linear-gradient(135deg, #3B69AE 0%, #0d47a1 100%); border-radius: 16px; padding: 24px; cursor: pointer;">
+                <i class="bi bi-pie-chart-fill" style="font-size: 3.5rem;"></i>
+                <div class="text-start">
+                  <span class="fw-bold text-white d-block" style="font-size: 1.8rem; line-height: 1.2;">
+                    Territorial
+                  </span>
+                  <span class="text-white-50 small">Explora enfoques a escala regional y local</span>
+                </div>
               </button>
-
             </div>
           </div>
 
-          <!-- Botón 2: Ámbito Sectorial -->
+          <!-- Botón 2: Ámbito Sectorial (Con tono azul secundario del CEPLAN en lugar de morado) -->
           <div class="col-md-6">
             <div style="position: relative; width: 100%;">
               <button pButton routerLink="/sectorial"
-                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
-                style="min-height: 200px; background-color: #71008e; border-radius: 16px; padding: 24px; cursor: pointer; transition: background 0.2s;">
-                <i class="pi pi-sitemap text-white" style="font-size: 4rem;"></i>
-                <span class="fw-bold text-white text-start" style="font-size: 2rem; line-height: 1.2;">
-                  Sectorial
-                </span>
+                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4 transition-hover"
+                style="min-height: 180px; background: linear-gradient(135deg, #1976d2 0%, #0c2992 100%); border-radius: 16px; padding: 24px; cursor: pointer;">
+                <i class="bi bi-pie-chart-fill" style="font-size: 3.5rem;"></i>
+                <div class="text-start">
+                  <span class="fw-bold text-white d-block" style="font-size: 1.8rem; line-height: 1.2;">
+                    Sectorial
+                  </span>
+                  <span class="text-white-50 small">Análisis por sectores estratégicos</span>
+                </div>
               </button>
             </div>
           </div>

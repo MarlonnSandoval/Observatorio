@@ -89,6 +89,13 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   periodosElementos: string[] = [];
   primeraFilaElementos = 0;
 
+  // --- Collapse state for category blocks ---
+  categoriaColapsada: Record<string, boolean> = {};
+
+  toggleCategoria(cat: string): void {
+    this.categoriaColapsada[cat] = !this.categoriaColapsada[cat];
+  }
+
   @ViewChild('svgContainer', { static: false })
   private svgContainer!: ElementRef<HTMLDivElement>;
 
@@ -493,6 +500,12 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return catDetalle?.articulos ?? [];
   }
 
+  // INSERT before getCategoryColorData()
+  getArticulosPorCategoria(categoria: string): FilaArticulo[] {
+    return this.filasElementos.filter(f => f.categoria === categoria);
+  }
+
+
   toggleSector(sector: string): void {
     if (this.sectorSeleccionado === sector) {
       this.cerrarPanel();
@@ -582,22 +595,22 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
   getCategoryColorData(categoriaName: string) {
     if (categoriaName.includes('Tendencias')) {
-      return { border: '#3B82F6', badgeBg: '#E0F2FE', badgeText: '#0369A1' };
+      return { border: '#0369A1', badgeBg: '#0369A1', badgeText: '#ffffff' };
     }
     if (categoriaName.includes('Riesgos')) {
-      return { border: '#EF4444', badgeBg: '#FEE2E2', badgeText: '#B91C1C' };
+      return { border: '#B91C1C', badgeBg: '#B91C1C', badgeText: '#ffffff' };
     }
     if (categoriaName.includes('Oportunidades')) {
-      return { border: '#10B981', badgeBg: '#D1FAE5', badgeText: '#047857' };
+      return { border: '#047857', badgeBg: '#047857', badgeText: '#ffffff' };
     }
     if (categoriaName.includes('Señal')) {
-      return { border: '#0E7490', badgeBg: '#CFFAFE', badgeText: '#155E75' };
+      return { border: '#155E75', badgeBg: '#155E75', badgeText: '#ffffff' };
     }
     if (categoriaName.includes('Carta')) {
-      return { border: '#7A5AA6', badgeBg: '#EDE7F6', badgeText: '#5B3F86' };
+      return { border: '#5B3F86', badgeBg: '#5B3F86', badgeText: '#ffffff' };
     }
     if (categoriaName.includes('Escenarios')) {
-      return { border: '#8B5CF6', badgeBg: '#EDE9FE', badgeText: '#6D28D9' };
+      return { border: '#6D28D9', badgeBg: '#6D28D9', badgeText: '#ffffff' };
     }
     return { border: '#0d6efd', badgeBg: '#e7f1ff', badgeText: '#0d6efd' };
   }
@@ -625,93 +638,94 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#000000' };
   }
 
-  descargarListaCompletaPDF(): void {
+
+  descargarLista(): void {
     if (!this.sectorSeleccionado) return;
 
-    const reporteContenedor = document.createElement('div');
-    reporteContenedor.style.padding = '30px';
-    reporteContenedor.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
-    reporteContenedor.style.backgroundColor = '#ffffff';
+    const ventanaImpresion = window.open('', '_blank');
+    if (!ventanaImpresion) {
+      alert('Por favor, permita las ventanas emergentes para descargar el PDF.');
+      return;
+    }
 
-    let contenidoHtml = `
-    <div style="border-bottom: 2px solid #0d6efd; padding-bottom: 15px; margin-bottom: 25px;">
-      <h1 style="color: #0c4a6e; font-size: 22px; margin: 0; font-weight: bold;">
-        Reporte: ${this.sectorSeleccionado}
-      </h1>
-      <p style="color: #6c757d; font-size: 13px; margin-top: 5px; margin-bottom: 0;">
-        Fichas explicativas e información territorial consolidada.
-      </p>
-    </div>
-    `;
+    const filasBase = this.hayFiltroElementos
+      ? this.filasElementosFiltradas
+      : this.filasElementos;
 
-    const categoriasParaReporte = [...this.categoriasElementos, 'Escenarios'];
+    const seccionesHtml = this.categoriasElementos
+      .map((cat) => {
+        const itemsCat = filasBase.filter((item) => item.categoria === cat);
+        const color = this.getCategoryColorData(cat).border;
+        const tituloBloque = `${itemsCat.length} ${cat.toLowerCase()} priorizadas para ${this.sectorSeleccionado}`;
 
-    categoriasParaReporte.forEach((categoria: string) => {
-      const articulos = this.getArticulos(categoria);
-      const colorData = this.getCategoryColorData(categoria);
+        const itemsHtml =
+          itemsCat.length > 0
+            ? itemsCat
+              .map((art) => {
+                const tituloMostrar = art.titulo || art.tituloCorto || '';
+                const resumenMostrar = art.resumen || 'Sin resumen disponible.';
+                const urlMostrar = art.url || 'Sin resumen disponible.';
+                return `
+                  <article class="ficha-item">
+                    <div class="ficha-titulo">${tituloMostrar}</div>
+                    <p class="ficha-resumen">${resumenMostrar}</p>
+                    <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
+                  </article>
+                `;
+              })
+              .join('')
+            : `<p class="empty">Sin elementos registrados para este sector.</p>`;
 
-      if (articulos.length > 0) {
-        contenidoHtml += `
-        <div style="margin-bottom: 15px;">
-          <h3 style="color: ${colorData.border}; font-size: 16px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">
-            ${categoria}
-          </h3>
+        return `
+        <section class="bloque">
+          <div class="bloque-titulo" style="color: ${color};">${cat}</div>
+          <div class="bloque-header" style="background-color: ${color};">${tituloBloque}</div>
+          <div class="bloque-body" style="border-color: ${color};">${itemsHtml}</div>
+        </section>
       `;
+      })
+      .join('');
 
-        articulos.forEach((articulo) => {
-          contenidoHtml += `
-          <div style="
-            background-color: #f8fafc;
-            border: 1px solid ${colorData.border};
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-            page-break-inside: avoid;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-          ">
-            <span style="
-              background-color: ${colorData.badgeBg};
-              color: ${colorData.badgeText};
-              padding: 3px 10px;
-              border-radius: 12px;
-              font-size: 11px;
-              font-weight: bold;
-              display: inline-block;
-              margin-bottom: 8px;
-            ">
-              ${articulo.fuerzaCambio || categoria} (${articulo.horizonte || '2030-2040'})
-            </span>
-            <h4 style="color: #0f172a; font-size: 14px; margin: 0 0 6px 0; font-weight: bold;">
-              ${articulo.titulo}
-            </h4>
-            <p style="color: #475569; font-size: 12px; margin: 0 0 8px 0; line-height: 1.5;">
-              ${articulo.resumen}
-            </p>
-            <p style="color: #0e0f11; font-size: 12px; margin: 0; line-height: 1.5;">
-              Enlace a la ficha: 
-              <a href="${articulo.url}" target="_blank" style="color: #0d6efd; text-decoration: underline;">
-                ${articulo.url}
-              </a>
-            </p> 
-          </div>
-        `;
-        });
+    const tituloSector = this.sectorSeleccionado;
+    const totalVisible = filasBase.length;
 
-        contenidoHtml += `</div>`;
-      }
-    });
+    const contenidoHtml = `
+    <!DOCTYPE html>
+    <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>Reporte del sector - ${tituloSector}</title>
+        <style>
+          body { font-family: Roboto, Arial, sans-serif; color: #1e293b; margin: 28px; }
+          h2 { color: #2A68A2; margin: 0 0 6px; font-size: 22px; }
+          .meta { color: #64748b; font-size: 12px; margin-bottom: 20px; }
+          .bloque { margin-bottom: 18px; break-inside: avoid; }
+          .bloque-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+          .bloque-header { color: #ffffff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px 6px 0 0; }
+          .bloque-body { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1.5px solid; border-top: none; border-radius: 0 0 8px 8px; background: #ffffff; }
+          .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
+          .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+          .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
+          .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
+          .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
+          @media print { body { margin: 14px; } }
+        </style>
+      </head>
+      <body>
+        <h2>Elementos del sector - ${tituloSector}</h2>
+        <div class="meta">
+          Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de elementos: ${totalVisible}
+        </div>
+        ${seccionesHtml}
+        <script>
+          window.onload = function() { setTimeout(() => window.print(), 300); };
+        </script>
+      </body>
+    </html>
+  `;
 
-    reporteContenedor.innerHTML = contenidoHtml;
-
-    const opciones = {
-      margin: 10,
-      filename: `Reporte_${this.sectorSeleccionado.replace(/\s+/g, '_')}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, logging: false },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    } as const;
-
-    html2pdf().set(opciones).from(reporteContenedor).save();
+    ventanaImpresion.document.write(contenidoHtml);
+    ventanaImpresion.document.close();
   }
 
   etiquetaHorizonte(horizonte?: string): string {
@@ -752,6 +766,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   }
 
   private construirTablas(): void {
+    this.categoriaColapsada = {};                                           // ← ADD
     this.filasElementos = this.categoriasElementos.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat } as FilaArticulo))
     );
@@ -784,4 +799,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
     this.aplicarFiltroElementos();
   }
+
+
 }
