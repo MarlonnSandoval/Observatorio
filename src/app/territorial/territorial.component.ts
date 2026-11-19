@@ -174,6 +174,11 @@ const HERO_SLIDES = [
 })
 export class TerritorialComponent {
 
+  categoriaColapsada: Record<string, boolean> = {};
+
+  toggleCategoria(cat: string): void {
+    this.categoriaColapsada[cat] = !this.categoriaColapsada[cat];
+  }
 
   tooltipRegion: string | null = null;
   tooltipX = 0;
@@ -244,8 +249,26 @@ export class TerritorialComponent {
     );
   }
 
-  getCategoryColorData(categoria: string): Pick<CategoriaConfig, 'border' | 'badgeBg' | 'badgeText'> {
-    return this.getCategoriaConfig(categoria);
+  getCategoryColorData(categoriaName: string) {
+    if (categoriaName.includes('Tendencias')) {
+      return { border: '#0369A1', badgeBg: '#0369A1', badgeText: '#ffffff' };
+    }
+    if (categoriaName.includes('Riesgos')) {
+      return { border: '#B91C1C', badgeBg: '#B91C1C', badgeText: '#ffffff' };
+    }
+    if (categoriaName.includes('Oportunidades')) {
+      return { border: '#047857', badgeBg: '#047857', badgeText: '#ffffff' };
+    }
+    if (categoriaName.includes('Señal')) {
+      return { border: '#155E75', badgeBg: '#155E75', badgeText: '#ffffff' };
+    }
+    if (categoriaName.includes('Carta')) {
+      return { border: '#5B3F86', badgeBg: '#5B3F86', badgeText: '#ffffff' };
+    }
+    if (categoriaName.includes('Escenarios')) {
+      return { border: '#6D28D9', badgeBg: '#6D28D9', badgeText: '#ffffff' };
+    }
+    return { border: '#0d6efd', badgeBg: '#e7f1ff', badgeText: '#0d6efd' };
   }
 
   iconoCategoria(categoria: string): string {
@@ -667,6 +690,10 @@ export class TerritorialComponent {
     this.aplicarFiltroEscenarios();
   }
 
+  getArticulosPorCategoria(categoria: string): FilaArticulo[] {
+    return this.filasElementos.filter(f => f.categoria === categoria);
+  }
+
   aplicarFiltroElementos(): void {
     const f = this.filtroElementos;
     this.filasElementosFiltradas = this.filasElementos.filter(
@@ -720,72 +747,93 @@ export class TerritorialComponent {
   // Exportar PDF
   // ─────────────────────────────────────────
 
-  descargarListaCompletaPDF(): void {
-    if (!this.selectedRegion || !this.regionData) return;
+  descargarLista(): void {
+    if (!this.selectedRegion) return;
 
-    const reporteContenedor = document.createElement('div');
-    reporteContenedor.style.cssText =
-      'padding:30px;font-family:"Helvetica Neue",Arial,sans-serif;background-color:#ffffff;';
+    const ventanaImpresion = window.open('', '_blank');
+    if (!ventanaImpresion) {
+      alert('Por favor, permita las ventanas emergentes para descargar el PDF.');
+      return;
+    }
 
-    let contenidoHtml = `
-      <div style="border-bottom:2px solid #0d6efd;padding-bottom:15px;margin-bottom:25px;">
-        <h1 style="color:#0c4a6e;font-size:22px;margin:0;font-weight:bold;">
-          Reporte: ${this.selectedRegion}
-        </h1>
-        <p style="color:#6c757d;font-size:13px;margin-top:5px;margin-bottom:0;">
-          Fichas explicativas e información territorial consolidada.
-        </p>
-      </div>
-    `;
+    const filasBase = this.hayFiltroElementos
+      ? this.filasElementosFiltradas
+      : this.filasElementos;
 
-    this.categories.forEach((categoria) => {
-      const articulos = this.getArticulos(categoria);
-      if (!articulos.length) return;
+    const seccionesHtml = this.categoriasElementos
+      .map((cat) => {
+        const itemsCat = filasBase.filter((item) => item.categoria === cat);
+        const color = this.getCategoryColorData(cat).border;
+        const tituloBloque = `${itemsCat.length} ${cat.toLowerCase()}`;
 
-      const { border, badgeBg, badgeText } = this.getCategoriaConfig(categoria);
+        const itemsHtml =
+          itemsCat.length > 0
+            ? itemsCat
+              .map((art) => {
+                const tituloMostrar = art.titulo || art.tituloCorto || '';
+                const resumenMostrar = art.resumen || 'Sin resumen disponible.';
+                const urlMostrar = art.url || 'Sin resumen disponible.';
+                return `
+                  <article class="ficha-item">
+                    <div class="ficha-titulo">${tituloMostrar}</div>
+                    <p class="ficha-resumen">${resumenMostrar}</p>
+                    <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
+                  </article>
+                `;
+              })
+              .join('')
+            : `<p class="empty">Sin elementos registrados para este territorio.</p>`;
 
-      contenidoHtml += `
-        <div style="margin-bottom:15px;">
-          <h3 style="color:${border};font-size:16px;margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:4px;">
-            ${categoria}
-          </h3>
+        return `
+        <section class="bloque">
+          <div class="bloque-titulo" style="color: ${color};">${cat}</div>
+          <div class="bloque-header" style="background-color: ${color};">${tituloBloque}</div>
+          <div class="bloque-body" style="border-color: ${color};">${itemsHtml}</div>
+        </section>
       `;
-
-      articulos.forEach((articulo) => {
-        contenidoHtml += `
-          <div style="background-color:#f8fafc;border:1px solid ${border};border-radius:8px;padding:16px;
-                      margin-bottom:12px;page-break-inside:avoid;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <span style="background-color:${badgeBg};color:${badgeText};padding:3px 10px;border-radius:12px;
-                         font-size:11px;font-weight:bold;display:inline-block;margin-bottom:8px;">
-              ${articulo.fuerzaCambio || categoria} (${articulo.periodo || PERIODO_FALLBACK})
-            </span>
-            <h4 style="color:#0f172a;font-size:14px;margin:0 0 6px 0;font-weight:bold;">${articulo.titulo}</h4>
-            <p style="color:#475569;font-size:12px;margin:0 0 8px 0;line-height:1.5;">${articulo.resumen}</p>
-            <p style="color:#0e0f11;font-size:12px;margin:0;line-height:1.5;">
-              Enlace a la ficha:
-              <a href="${articulo.url}" target="_blank" style="color:#0d6efd;text-decoration:underline;">
-                ${articulo.url}
-              </a>
-            </p>
-          </div>
-        `;
-      });
-
-      contenidoHtml += `</div>`;
-    });
-
-    reporteContenedor.innerHTML = contenidoHtml;
-
-    html2pdf()
-      .set({
-        margin: 10,
-        filename: `Reporte_${this.selectedRegion.replace(/\s+/g, '_')}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       })
-      .from(reporteContenedor)
-      .save();
+      .join('');
+
+    const tituloSector = this.selectedRegion;
+    const totalVisible = filasBase.length;
+
+    const contenidoHtml = `
+    <!DOCTYPE html>
+    <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>Reporte del territorio - ${tituloSector}</title>
+        <style>
+          body { font-family: Roboto, Arial, sans-serif; color: #1e293b; margin: 28px; }
+          h2 { color: #2A68A2; margin: 0 0 6px; font-size: 22px; }
+          .meta { color: #64748b; font-size: 12px; margin-bottom: 20px; }
+          .bloque { margin-bottom: 18px; break-inside: avoid; }
+          .bloque-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+          .bloque-header { color: #ffffff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px 6px 0 0; }
+          .bloque-body { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1.5px solid; border-top: none; border-radius: 0 0 8px 8px; background: #ffffff; }
+          .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
+          .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+          .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
+          .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
+          .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
+          @media print { body { margin: 14px; } }
+        </style>
+      </head>
+      <body>
+        <h2>Elementos del sector - ${tituloSector}</h2>
+        <div class="meta">
+          Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de elementos: ${totalVisible}
+        </div>
+        ${seccionesHtml}
+        <script>
+          window.onload = function() { setTimeout(() => window.print(), 300); };
+        </script>
+      </body>
+    </html>
+  `;
+
+    ventanaImpresion.document.write(contenidoHtml);
+    ventanaImpresion.document.close();
   }
 
   // ─────────────────────────────────────────

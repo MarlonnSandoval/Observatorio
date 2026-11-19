@@ -598,7 +598,7 @@ td .d-flex.flex-column {
   gap: 6px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 620px;
+  max-height: auto;
   padding-right: 2px;
 }
 

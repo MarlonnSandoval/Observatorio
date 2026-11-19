@@ -656,7 +656,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       .map((cat) => {
         const itemsCat = filasBase.filter((item) => item.categoria === cat);
         const color = this.getCategoryColorData(cat).border;
-        const tituloBloque = `${itemsCat.length} ${cat.toLowerCase()} priorizadas para ${this.sectorSeleccionado}`;
+        const tituloBloque = `${itemsCat.length} ${cat.toLowerCase()}`;
 
         const itemsHtml =
           itemsCat.length > 0

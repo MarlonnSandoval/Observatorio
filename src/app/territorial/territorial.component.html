@@ -58,30 +58,6 @@
       </p>
     </div>
 
-    <div class="tool-explainer-panel tool-explainer-panel--row">
-      <div class="tool-explainer-item">
-        <i class="bi bi-funnel tool-explainer-icon" style="color:#185FA5" aria-hidden="true"></i>
-        <div>
-          <h6 class="tool-explainer-title">Cono de futuros</h6>
-          <p class="tool-explainer-desc">Los posibles caminos del territorio al 2050: escenarios optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
-        </div>
-      </div>
-      <div class="tool-explainer-item">
-        <i class="bi bi-radar tool-explainer-icon" style="color:#3B6D11" aria-hidden="true"></i>
-        <div>
-          <h6 class="tool-explainer-title">Radar prospectivo</h6>
-          <p class="tool-explainer-desc">Vista panorámica de <span class="tool-explainer-link">tendencias</span>, riesgos y oportunidades. Identifica qué dimensiones son más <span class="tool-explainer-link">críticas</span> o <span class="tool-explainer-link">prometedoras</span>.</p>
-        </div>
-      </div>
-      <div class="tool-explainer-item">
-        <i class="bi bi-file-earmark-arrow-down tool-explainer-icon" style="color:#854F0B" aria-hidden="true"></i>
-        <div>
-          <h6 class="tool-explainer-title">Reporte descargable en PDF</h6>
-          <p class="tool-explainer-desc">El análisis completo del territorio para <span class="tool-explainer-link">compartir</span>, presentar o archivar.</p>
-        </div>
-      </div>
-    </div>
-
     <!-- Mapa centrado -->
     <div class="map-ut">
       <div class="row mb-3">
@@ -97,14 +73,11 @@
         </div>
       </div>
       <!-- Tooltip flotante -->
-      <div class="map-tooltip" *ngIf="tooltipRegion"
-        [style.top.px]="tooltipY" [style.left.px]="tooltipX">
+      <div class="map-tooltip" *ngIf="tooltipRegion" [style.top.px]="tooltipY" [style.left.px]="tooltipX">
         {{ tooltipRegion }}
       </div>
 
-      <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox"
-        #mapSvg
-        (mousemove)="onMapMouseMove($event)"
+      <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox" #mapSvg (mousemove)="onMapMouseMove($event)"
         (mouseleave)="tooltipRegion = null">
         <g>
           <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
@@ -114,8 +87,7 @@
             [style.stroke-width]="region.name === 'Zoom Lines' ? '0.8px' : null"
             [style.stroke-dasharray]="region.name === 'Zoom Lines' ? '1.5,1.5' : 'none'"
             [style.pointer-events]="region.name === 'Zoom Lines' ? 'none' : 'auto'"
-            (mouseenter)="onRegionHover($event, region.name)"
-            (mouseleave)="tooltipRegion = null">
+            (mouseenter)="onRegionHover($event, region.name)" (mouseleave)="tooltipRegion = null">
             <title *ngIf="region.name !== 'Zoom Lines'">{{ region.name }}</title>
           </path>
         </g>
@@ -127,751 +99,95 @@
   <div class="row">
 
     <!-- Contenido Principal (Fila Inferior, ancho completo) -->
-    <div class="col-12">
+    <div class="col-12" *ngIf="hasSelection">
+      <div class="row g-3">
+        <!-- Lista deslizable de territorios (solo con una región seleccionada) -->
+        <div class="col-4 sector-strip card border-0 shadow-sm">
 
-      <!-- Lista deslizable de territorios (solo con una región seleccionada) -->
-      <div class="region-strip card shadow-sm bg-white mb-3" *ngIf="hasSelection">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="region-strip-title">Territorios disponibles</span>
-          <div class="d-flex gap-2">
-            <button type="button" class="region-strip-arrow" aria-label="Anterior"
-              (click)="regionScroller.scrollBy({ left: -320, behavior: 'smooth' })">
-              <i class="pi pi-chevron-left"></i>
-            </button>
-            <button type="button" class="region-strip-arrow" aria-label="Siguiente"
-              (click)="regionScroller.scrollBy({ left: 320, behavior: 'smooth' })">
-              <i class="pi pi-chevron-right"></i>
+          <div class="mb-2">
+            <span class="region-strip-title">Territorios disponibles</span>
+          </div>
+
+          <div #regionScroller class="region-strip-scroller">
+            <ng-container *ngFor="let region of regions">
+              <button *ngIf="region.name !== 'Zoom Lines'" type="button" class="region-chip"
+                [class.active]="selectedRegion === region.name" [attr.aria-pressed]="selectedRegion === region.name"
+                (click)="selectRegion(region.name)">
+                {{ region.name }}
+              </button>
+            </ng-container>
+          </div>
+
+        </div>
+
+        <!-- BLOQUES POR CATEGORÍA -->
+        <div class="col-8">
+
+          <div>
+            <h2 class="fw-bold text-dark mb-3">
+              {{ selectedRegion }}
+            </h2>
+          </div>
+
+
+          <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
+            <div class="d-flex gap-2 align-items-center">
+              <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="descargarLista()">
+                <i aria-hidden="true" class="pi pi-download me-1"></i>
+                Descargar lista en PDF
+              </button>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="resetearFiltroGlobal()"
+              aria-label="Cerrar panel">
+              <i class="bi bi-x-lg"></i>
             </button>
           </div>
-        </div>
 
-        <div #regionScroller class="region-strip-scroller">
-          <ng-container *ngFor="let region of regions">
-            <button *ngIf="region.name !== 'Zoom Lines'" type="button" class="region-chip"
-              [class.active]="selectedRegion === region.name" [attr.aria-pressed]="selectedRegion === region.name"
-              (click)="selectRegion(region.name)">
-              {{ region.name }}
+          <div *ngFor="let cat of categoriasElementos" class="categoria-bloque mb-3"
+            [class.categoria-bloque--collapsed]="categoriaColapsada[cat]">
+
+            <!-- Cabecera clicable -->
+            <button type="button" class="categoria-header w-100 text-start border-0"
+              [style.backgroundColor]="getCategoryColorData(cat).border" (click)="toggleCategoria(cat)"
+              [attr.aria-expanded]="!categoriaColapsada[cat]">
+              <span class="d-flex justify-content-between align-items-center">
+                <span>
+                  <i class="bi me-2" [class.bi-chevron-down]="!categoriaColapsada[cat]"
+                    [class.bi-chevron-right]="categoriaColapsada[cat]" aria-hidden="true"></i>
+                  {{ getArticulosPorCategoria(cat).length }}
+                  {{ cat.toLowerCase() }}
+                </span>
+                <span class="categoria-header-count badge bg-white" [style.color]="getCategoryColorData(cat).border">
+                  {{ getArticulosPorCategoria(cat).length }}
+                </span>
+              </span>
             </button>
-          </ng-container>
-        </div>
-      </div>
 
-      <div class="card shadow-sm bg-white" *ngIf="hasSelection">
-        <div class="card-body p-4">
-
-          <div class="d-flex flex-row justify-content-between align-items-center mb-3">
-            <div>
-              <h2 class="fw-bold text-dark mb-1">
-                {{ selectedRegion }}
-              </h2>
+            <!-- Cuerpo colapsable -->
+            <div class="categoria-box" [style.borderColor]="getCategoryColorData(cat).border"
+              *ngIf="!categoriaColapsada[cat]">
+              <ng-container *ngIf="getArticulosPorCategoria(cat).length > 0; else sinElementos">
+                <a *ngFor="let art of getArticulosPorCategoria(cat)" [href]="art.url" target="_blank"
+                  rel="noopener noreferrer" class="categoria-chip" [attr.title]="art.titulo"
+                  [style.borderColor]="getCategoryColorData(cat).border"
+                  [style.--chip-hover-bg]="getCategoryColorData(cat).badgeBg"
+                  [style.--chip-hover-text]="getCategoryColorData(cat).badgeText">
+                  {{ art.tituloCorto }}
+                </a>
+              </ng-container>
+              <ng-template #sinElementos>
+                <span class="text-muted small fst-italic">Sin elementos registrados para este sector.</span>
+              </ng-template>
             </div>
 
-            <button *ngIf="hasSelection" type="button" class="btn btn-outline-secondary btn-sm rounded-pill"
-              (click)="resetearFiltroGlobal()" style="font-size: 1.1rem;">
-              <i class="pi pi-globe me-1"></i> Regresar al Mapa
-            </button>
           </div>
 
-          <div class="animate__animated animate__fadeIn">
+          <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted text-center py-5">
+            No hay artículos o registros para la territorio <strong>{{ selectedRegion }}</strong>.
+          </p>
 
-            <!-- REGIÓN SIN DATOS -->
-            <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted text-center py-5">
-              No hay artículos o registros para la territorio <strong>{{ selectedRegion }}</strong>.
-            </p>
-
-            <!-- VISTA REGIÓN SELECCIONADA -->
-            <ng-container *ngIf="hasSelection && hasData">
-
-              <!-- SPRITE DE ÍCONOS -->
-              <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-                <defs>
-                  <symbol id="ico-tendencia" viewBox="0 0 24 24">
-                    <path d="M3 3v18h18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path d="M6.5 16l4-4.5 3 3L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4"
-                      stroke-linecap="round" stroke-linejoin="round" />
-                  </symbol>
-                  <symbol id="ico-riesgo" viewBox="0 0 24 24">
-                    <path fill="currentColor" fill-rule="evenodd"
-                      d="M12 2.5 L22.5 20.5 H1.5 Z M10.8 9 h2.4 v6 h-2.4 Z M12 16.4 a1.5 1.5 0 1 0 0.001 0 Z" />
-                  </symbol>
-                  <symbol id="ico-oportunidad" viewBox="0 0 24 24">
-                    <g transform="rotate(45 12 12)" fill="currentColor" fill-rule="evenodd">
-                      <path
-                        d="M12 1.5 C15.8 4.8 16.8 10 15.2 16 H8.8 C7.2 10 8.2 4.8 12 1.5 Z M12 7.6 a1.7 1.7 0 1 0 0.001 0 Z" />
-                      <path d="M8.9 12.5 L5.2 17.5 L8.9 16.6 Z M15.1 12.5 L18.8 17.5 L15.1 16.6 Z" />
-                      <path d="M10.4 17.4 h3.2 L12 22.5 Z" />
-                    </g>
-                  </symbol>
-                  <symbol id="ico-senal-debil" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M1.5 6.5 Q9.5 2 17.5 6.5 L9.5 20.5 Z" />
-                    <rect x="19" y="10.5" width="2.4" height="6.3" rx="0.6" fill="currentColor" />
-                    <circle cx="20.2" cy="19.6" r="1.35" fill="currentColor" />
-                  </symbol>
-                  <symbol id="ico-carta-salvaje" viewBox="0 0 24 24">
-                    <rect x="4" y="1.5" width="16" height="21" rx="2.5" fill="none" stroke="currentColor"
-                      stroke-width="1.8" />
-                    <path fill="currentColor"
-                      d="M12 6 C12 6 7 10.4 7 13.3 A2.6 2.6 0 0 0 11.4 15.1 L10.6 18.2 H13.4 L12.6 15.1 A2.6 2.6 0 0 0 17 13.3 C17 10.4 12 6 12 6 Z" />
-                  </symbol>
-                  <symbol id="ico-escenario" viewBox="0 0 24 24">
-                    <path d="M12 21v-8M12 13L5.5 6.5M12 13V5M12 13l6.5-6.5" fill="none" stroke="currentColor"
-                      stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-                    <circle cx="5" cy="5.5" r="2.4" fill="currentColor" />
-                    <circle cx="12" cy="3.8" r="2.4" fill="currentColor" />
-                    <circle cx="19" cy="5.5" r="2.4" fill="currentColor" />
-                  </symbol>
-                </defs>
-              </svg>
-
-              <!-- Explicación compacta encima del radar/cono -->
-              <div class="tool-explainer-panel tool-explainer-panel--compact mb-3">
-                <div class="tool-explainer-item">
-                  <i class="bi bi-funnel tool-explainer-icon" style="color:#185FA5" aria-hidden="true"></i>
-                  <div>
-                    <h6 class="tool-explainer-title">Cono de futuros</h6>
-                    <p class="tool-explainer-desc">Los posibles caminos del territorio al 2050: escenarios optimistas, probables y críticos, organizados por horizonte de tiempo.</p>
-                  </div>
-                </div>
-                <div class="tool-explainer-item">
-                  <i class="bi bi-radar tool-explainer-icon" style="color:#3B6D11" aria-hidden="true"></i>
-                  <div>
-                    <h6 class="tool-explainer-title">Radar prospectivo</h6>
-                    <p class="tool-explainer-desc">Vista panorámica de <span class="tool-explainer-link">tendencias</span>, riesgos y oportunidades. Identifica qué dimensiones son más <span class="tool-explainer-link">críticas</span> o <span class="tool-explainer-link">prometedoras</span>.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Selector de vista -->
-              <div class="d-flex justify-content-center gap-2 my-4">
-                <button type="button" class="btn btn-sm rounded-pill"
-                  [class.btn-primary]="vistaVisualizacion === 'cono'"
-                  [class.btn-outline-primary]="vistaVisualizacion !== 'cono'" (click)="setVistaVisualizacion('cono')">
-                  <i class="bi bi-cone-striped me-1"></i> Vista Cono de futuros
-                </button>
-                <button type="button" class="btn btn-sm rounded-pill"
-                  [class.btn-primary]="vistaVisualizacion === 'radar'"
-                  [class.btn-outline-primary]="vistaVisualizacion !== 'radar'" (click)="setVistaVisualizacion('radar')">
-                  <i class="bi bi-bullseye me-1"></i> Vista Radar
-                </button>
-              </div>
-
-              <!-- VISTA 1: RADAR SVG AMPLIADO CON ÍCONOS REDUCIDOS -->
-              <div class="radar-container mb-4 p-3 bg-light rounded shadow-sm" *ngIf="vistaVisualizacion === 'radar'">
-                <div class="text-center mb-3">
-                  <h5 class="fw-bold text-dark mb-1">Radar Prospectivo</h5>
-                  <p class="text-muted small mb-0">Distribución de elementos por categoría y horizonte temporal</p>
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-12">
-                    <div class="chart-wrapper"
-                      style="width: 100%; max-width: 1030px; margin: 0 auto; position: relative;">
-                      <svg viewBox="0 0 500 500" class="w-100 h-auto">
-                        <defs>
-                          <path id="pathTerritorio" d="M 45,250 A 205,205 0 0,1 250,45" />
-                          <path id="pathPersonas" d="M 250,45 A 205,205 0 0,1 455,250" />
-                          <path id="pathDemocracia" d="M 455,250 A 205,205 0 0,1 250,455" />
-                          <path id="pathInnovacion" d="M 250,455 A 205,205 0 0,1 45,250" />
-                        </defs>
-
-                        <!-- Anillos concéntricos ampliados para mayor tamaño del radar -->
-                        <circle cx="250" cy="250" r="225" fill="#e2e8f0" opacity="0.35" />
-                        <circle cx="250" cy="250" r="155" fill="#cbd5e1" opacity="0.35" />
-                        <circle cx="250" cy="250" r="85" fill="#94a3b8" opacity="0.25" />
-
-                        <!-- Ejes principales horizontales y verticales -->
-                        <line x1="250" y1="25" x2="250" y2="475" stroke="#0f172a" stroke-width="1.8" opacity="0.4" />
-                        <line x1="25" y1="250" x2="475" y2="250" stroke="#0f172a" stroke-width="1.8" opacity="0.4" />
-
-                        <!-- Textos curvos para los 4 ejes principales -->
-                        <text font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
-                          <textPath href="#pathTerritorio" startOffset="50%">Territorio sostenible</textPath>
-                        </text>
-                        <text font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
-                          <textPath href="#pathPersonas" startOffset="50%">Desarrollo de las personas</textPath>
-                        </text>
-                        <text font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
-                          <textPath href="#pathDemocracia" startOffset="50%">Democracia y paz</textPath>
-                        </text>
-                        <text font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
-                          <textPath href="#pathInnovacion" startOffset="50%">Competitividad e innovación</textPath>
-                        </text>
-
-                        <!-- Etiquetas de los periodos sobre el eje X -->
-                        <text x="290" y="246" text-anchor="middle" font-size="9" font-weight="bold"
-                          fill="#0f172a">PRESENTE-2030</text>
-                        <text x="365" y="246" text-anchor="middle" font-size="8.5" font-weight="bold"
-                          fill="#334155">2030-2040</text>
-                        <text x="435" y="246" text-anchor="middle" font-size="8.5" font-weight="bold"
-                          fill="#334155">2040-2050</text>
-
-                        <!-- Renderizado de íconos reducidos -->
-                        <a *ngFor="let node of radarNodes" [attr.xlink:href]="node.url" target="_blank" rel="noopener">
-                          <g class="radar-node" [class.radar-node-active]="hoveredNode === node.number"
-                            [attr.transform]="'translate(' + node.x + ',' + node.y + ')'"
-                            (mouseenter)="hoveredNode = node.number" (mouseleave)="hoveredNode = null">
-                            <title>{{ node.label }} · {{ node.categoria }} ({{ node.periodo }})</title>
-                            <circle class="radar-node-dot" r="10" [attr.fill]="node.color" stroke="#ffffff"
-                              stroke-width="1.5" />
-                            <use [attr.href]="node.icono" x="-6" y="-6" width="12" height="12"
-                              style="color: #ffffff; pointer-events: none" />
-                            <text *ngIf="node.shortLabel" y="20" text-anchor="middle" font-size="7.5" font-weight="700"
-                              fill="#0f172a" style="pointer-events: none; user-select: none;">
-                              {{ node.shortLabel }}
-                            </text>
-                          </g>
-                        </a>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <!-- Leyendas y Nota del Radar -->
-                  <div class="col-12 mt-4">
-                    <div class="legend-note mb-2">
-                      <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-                      <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
-                        posición señala el punto de mayor relevancia.</span>
-                    </div>
-                    <div class="d-flex gap-3">
-                      <div class="cono-legend-box p-3 rounded flex-fill">
-                        <div class="fw-bold mb-2 small text-dark">Leyenda:</div>
-                        <div class="d-flex flex-wrap gap-3 align-items-center small">
-                          <span class="d-flex align-items-center gap-1">
-                            <svg width="16" height="16" aria-hidden="true">
-                              <use href="#ico-oportunidad" width="16" height="16" />
-                            </svg> Oportunidad
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <svg width="16" height="16" aria-hidden="true">
-                              <use href="#ico-riesgo" width="16" height="16" />
-                            </svg> Riesgo
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <svg width="16" height="16" aria-hidden="true">
-                              <use href="#ico-senal-debil" width="16" height="16" />
-                            </svg> Señal débil
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <svg width="16" height="16" aria-hidden="true">
-                              <use href="#ico-carta-salvaje" width="16" height="16" />
-                            </svg> Carta salvaje
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <svg width="16" height="16" aria-hidden="true">
-                              <use href="#ico-tendencia" width="16" height="16" />
-                            </svg> Tendencia
-                          </span>
-                        </div>
-                      </div>
-                      <div class="cono-legend-box p-3 rounded flex-fill">
-                        <div class="fw-bold mb-2 small text-dark">Temática:</div>
-                        <div class="d-flex flex-wrap gap-3 align-items-center small">
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(255, 234, 230); color: rgb(255, 85, 51);">
-                              Social
-                            </span>
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(255, 247, 216); color: rgb(239, 197, 20);">
-                              Económico
-                            </span>
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(221, 255, 236); color: rgb(5, 145, 65);">
-                              Ambiental
-                            </span>
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(225, 239, 255); color: rgb(78, 135, 198);">
-                              Tecnológico
-                            </span>
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(243, 223, 255); color: rgb(154, 32, 226);">
-                              Político
-                            </span>
-                          </span>
-                          <span class="d-flex align-items-center gap-1">
-                            <span class="tipo-badge"
-                              style="background-color: rgb(227, 243, 255); color: rgb(131, 183, 221);">
-                              Actitud, valores y ética
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- VISTA 2: CONO DE FUTUROS ORGANIZADO -->
-              <div class="cono-container mb-4 p-4 rounded shadow-sm bg-white border"
-                *ngIf="vistaVisualizacion === 'cono'">
-
-                <div class="text-center mb-4">
-                  <h4 class="fw-bold text-navy mb-1">Cono de futuros</h4>
-                  <p class="text-muted small mb-0">Evolución de tendencias, riesgos y oportunidades hacia escenarios
-                    prospectivos</p>
-                </div>
-
-                <div class="cono-layout-grid">
-                  <div class="cono-main">
-                  <!-- SVG Cono de fondo: se abre hacia la derecha y termina detrás del óvalo "Futuros posibles" -->
-                  <svg class="cono-bg-svg-obs" viewBox="0 0 1000 1000" preserveAspectRatio="none"
-                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="coneBodyGradObs" x1="0%" y1="50%" x2="100%" y2="50%">
-                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.14" />
-                        <stop offset="40%" stop-color="#38bdf8" stop-opacity="0.24" />
-                        <stop offset="75%" stop-color="#2dd4bf" stop-opacity="0.32" />
-                        <stop offset="100%" stop-color="#0284c7" stop-opacity="0.52" />
-                      </linearGradient>
-                    </defs>
-
-                    <!-- Cuerpo del cono (punta izquierda truncada, se abre hacia la derecha) -->
-                    <path d="M 0,420 L 1000,20 L 1000,980 L 0,580 Z" fill="url(#coneBodyGradObs)" />
-                    <path d="M 0,460 L 1000,180 L 1000,820 L 0,540 Z" fill="rgba(56,189,248,0.07)" />
-                    <path d="M 0,480 L 1000,340 L 1000,660 L 0,520 Z" fill="rgba(45,212,191,0.08)" />
-
-                    <!-- Líneas divisoras de horizontes 2030-2040 y 2040-2050 -->
-                    <ellipse cx="380" cy="500" rx="18" ry="260" fill="none" stroke="rgba(56, 189, 248, 0.75)"
-                      stroke-width="2.5" stroke-dasharray="8 6" />
-                    <ellipse cx="710" cy="500" rx="28" ry="410" fill="none" stroke="rgba(56, 189, 248, 0.8)"
-                      stroke-width="2.5" stroke-dasharray="8 6" />
-                  </svg>
-                  <div class="cono-time-blocks-stack">
-                    <div class="cono-time-block" *ngFor="let col of conoColumns">
-                      <div class="cono-time-block-header">
-                        <span class="fw-bold text-navy">{{ col.label }}</span>
-                        <span class="cono-time-count">{{ col.totalCount }}</span>
-                      </div>
-
-                      <div class="cono-categories-rows">
-                        <div class="cono-cat-row" *ngFor="let group of col.groups">
-                          <div class="cono-cat-label" [style.color]="getCategoryColorData(group.categoria).border">
-                            {{ group.categoria }}
-                          </div>
-                          <div class="cono-cat-items">
-                            <a *ngFor="let item of group.items" [href]="item.url" target="_blank"
-                              rel="noopener noreferrer" class="cono-node-card" [style.background-color]="item.color"
-                              [attr.title]="item.titulo + ' (' + item.categoria + ')'" [attr.aria-label]="item.titulo">
-                              <svg class="cono-node-icon" width="18" height="18" aria-hidden="true">
-                                <use [attr.href]="item.icono" width="18" height="18" />
-                              </svg>
-                              {{ item.shortLabel }}
-                            </a>
-                          </div>
-                        </div>
-
-                        <div *ngIf="col.totalCount === 0" class="py-2 text-muted small text-center">
-                          Sin elementos en este horizonte
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="cono-oval-container">
-                    <div class="cono-oval-outer">
-                      <div class="cono-oval-inner">
-                        <span>Futuros posibles</span>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                  <div class="cono-right-sidebar">
-
-
-                    <div class="cono-scenarios-box">
-                      <div class="cono-scenarios-header">Escenarios</div>
-                      <div class="cono-scenarios-list">
-                        <a *ngFor="let esc of conoEscenarios" [href]="esc.url" target="_blank"
-                          class="cono-scenario-card" [attr.title]="esc.titulo">
-                          {{ esc.tituloCorto || esc.titulo }}
-                        </a>
-
-                        <div *ngIf="!tieneEscenariosCono" class="text-center text-muted small py-2">
-                          Sin escenarios
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <!-- Leyendas y Nota del Cono -->
-                <div class="mt-4 mx-3">
-                  <div class="legend-note mb-2">
-                    <i class="bi bi-info-circle-fill text-primary flex-shrink-0" style="font-size: 1rem;"></i>
-                    <span><strong>Nota:</strong> La tendencia se presenta durante todo el período; sin embargo, la
-                      posición señala el punto de mayor relevancia.</span>
-                  </div>
-                  <div class="d-flex gap-3">
-                    <div class="cono-legend-box p-3 rounded flex-fill">
-                      <div class="fw-bold mb-2 small text-dark">Leyenda:</div>
-                      <div class="d-flex flex-wrap gap-3 align-items-center small">
-                        <span class="d-flex align-items-center gap-1">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use href="#ico-oportunidad" width="16" height="16" />
-                          </svg> Oportunidad
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use href="#ico-riesgo" width="16" height="16" />
-                          </svg> Riesgo
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use href="#ico-senal-debil" width="16" height="16" />
-                          </svg> Señal débil
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use href="#ico-carta-salvaje" width="16" height="16" />
-                          </svg> Carta salvaje
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use href="#ico-tendencia" width="16" height="16" />
-                          </svg> Tendencia
-                        </span>
-                      </div>
-                    </div>
-                    <div class="cono-legend-box p-3 rounded flex-fill">
-                      <div class="fw-bold mb-2 small text-dark">Temática:</div>
-                      <div class="d-flex flex-wrap gap-3 align-items-center small">
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(255, 234, 230); color: rgb(255, 85, 51);">
-                            Social
-                          </span>
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(255, 247, 216); color: rgb(239, 197, 20);">
-                            Económico
-                          </span>
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(221, 255, 236); color: rgb(5, 145, 65);">
-                            Ambiental
-                          </span>
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(225, 239, 255); color: rgb(78, 135, 198);">
-                            Tecnológico
-                          </span>
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(243, 223, 255); color: rgb(154, 32, 226);">
-                            Político
-                          </span>
-                        </span>
-                        <span class="d-flex align-items-center gap-1">
-                          <span class="tipo-badge"
-                            style="background-color: rgb(227, 243, 255); color: rgb(131, 183, 221);">
-                            Actitud, valores y ética
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Pestañas con Tabla reorganizada a 6 columnas estilo imagen de referencia -->
-              <p-tabView styleClass="territorial-tabs">
-                <p-tabPanel>
-                  <ng-template pTemplate="header">
-                    <span class="tab-label">
-                      <svg class="tab-ico" aria-hidden="true">
-                        <use href="#ico-tendencia" />
-                      </svg>
-                      Elementos futuros
-                      <span class="tab-count">{{ filasElementos.length }}</span>
-                    </span>
-                  </ng-template>
-
-                  <div class="d-flex flex-column gap-3 py-2">
-                    <!-- BARRA DE FILTROS SUPERIOR -->
-                    <div class="filter-toolbar">
-                      <div class="row g-2 align-items-center">
-                        <div class="col-12 col-md-4">
-                          <span class="p-input-icon-left w-100">
-                            <i class="pi pi-search"></i>
-                            <input type="text" pInputText class="w-100 filter-custom-input"
-                              placeholder="Buscar señal o ruptura..." [ngModel]="filtroElementos.texto"
-                              (ngModelChange)="filtroElementos.texto = $event; aplicarFiltroElementos()" />
-                          </span>
-                        </div>
-                        <div class="col-6 col-md-2">
-                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.tema"
-                            (ngModelChange)="filtroElementos.tema = $event; aplicarFiltroElementos()">
-                            <option value="">Temáticas</option>
-                            <option *ngFor="let t of temasElementos" [value]="t">{{ t }}</option>
-                          </select>
-                        </div>
-                        <div class="col-6 col-md-2">
-                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.periodo"
-                            (ngModelChange)="filtroElementos.periodo = $event; aplicarFiltroElementos()">
-                            <option value="">Períodos</option>
-                            <option *ngFor="let p of periodosElementos" [value]="p">{{ p }}</option>
-                          </select>
-                        </div>
-                        <div class="col-6 col-md-2">
-                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroElementos.fuerzaCambio"
-                            (ngModelChange)="filtroElementos.fuerzaCambio = $event; aplicarFiltroElementos()">
-                            <option value="">Fuerza de cambio</option>
-                            <option *ngFor="let fc of fuerzasCambioElementos" [value]="fc">{{ fc }}</option>
-                          </select>
-                        </div>
-                        <div class="col-6 col-md-2 text-end">
-                          <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar-filter"
-                            (click)="limpiarFiltroElementos()">
-                            <i class="pi pi-filter-slash me-1"></i> Limpiar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- METADATOS Y BOTÓN DESCARGAR -->
-                    <div class="result-meta d-flex justify-content-between align-items-center">
-                      <span class="text-muted fw-semibold small">{{ filasElementosFiltradas.length }} de {{
-                        filasElementos.length }} eventos</span>
-                      <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3"
-                        (click)="descargarListaCompletaPDF()">
-                        <i class="bi bi-download me-1"></i> Descargue la lista completa
-                      </button>
-                    </div>
-
-                    <!-- TABLA CON LAS 6 COLUMNAS -->
-                    <p-table [value]="filasElementosFiltradas" [paginator]="true" [rows]="5"
-                      [(first)]="primeraFilaElementos" styleClass="p-datatable-sm territorial-table">
-
-                      <ng-template pTemplate="header">
-                        <tr>
-                          <th style="width: 12%;" class="text-center">Imágen</th>
-                          <th style="width: 45%;" pSortableColumn="titulo">
-                            Nombre y Sumilla <p-sortIcon field="titulo"></p-sortIcon>
-                          </th>
-                          <th style="width: 15%;" pSortableColumn="tematica">
-                            Temática <p-sortIcon field="tematica"></p-sortIcon>
-                          </th>
-                          <th style="width: 14%;" pSortableColumn="periodo">
-                            Período <p-sortIcon field="periodo"></p-sortIcon>
-                          </th>
-                          <th style="width: 14%;">Fuerza de cambio</th>
-                        </tr>
-                      </ng-template>
-
-                      <ng-template pTemplate="body" let-fila>
-                        <tr>
-                          <!-- 1. Imágen -->
-                          <td class="text-center">
-                            <img *ngIf="fila.imagenUrl" [src]="fila.imagenUrl" [alt]="fila.titulo" class="table-thumb">
-                            <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty"><i
-                                class="pi pi-image"></i></span>
-                          </td>
-
-                          <!-- 2. Nombre y Sumilla (Uno debajo del otro) -->
-                          <td>
-                            <div class="d-flex flex-column gap-1">
-                              <a [href]="fila.url" target="_blank" class="text-decoration-none">
-                                <div class="evento-link d-flex justify-content-between align-items-center">
-                                  <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
-                                    {{ fila.tituloCorto || fila.titulo }}
-                                  </span>
-                                  <i class="pi pi-external-link evento-link-icon text-muted small"
-                                    aria-hidden="true"></i>
-                                </div>
-                              </a>
-                              <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
-                            </div>
-                          </td>
-
-                          <!-- 3. Temática -->
-                          <td class="cell-tema">
-                            <span class="tipo-badge"
-                              [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
-                              [style.color]="getTematicaColorData(fila.tematica).badgeText">
-                              {{ fila.tematica || 'General' }}
-                            </span>
-                          </td>
-
-                          <!-- 4. Período -->
-                          <td>
-                            <span class="periodo-chip">{{ fila.periodo || '2030-2040' }}</span>
-                          </td>
-
-                          <!-- 5. Fuerza de cambio (ajusta según la propiedad de tu modelo, ej. fila.fuerzaCambio) -->
-                          <td>
-                            <span class="text-dark small fw-semibold">{{ fila.fuerzaCambio || '—' }}</span>
-                          </td>
-                        </tr>
-                      </ng-template>
-
-                      <ng-template pTemplate="emptymessage">
-                        <tr>
-                          <td colspan="5" class="table-empty">
-                            <i class="pi pi-search"></i>
-                            No se encontraron elementos futuros con los filtros seleccionados.
-                          </td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </p-tabPanel>
-
-                <p-tabPanel>
-                  <ng-template pTemplate="header">
-                    <span class="tab-label">
-                      <svg class="tab-ico" aria-hidden="true">
-                        <use href="#ico-escenario" />
-                      </svg>
-                      Escenarios
-                      <span class="tab-count">{{ filasEscenarios.length }}</span>
-                    </span>
-                  </ng-template>
-
-                  <div class="d-flex flex-column gap-3 py-2">
-                    <!-- BARRA DE FILTROS SUPERIOR -->
-                    <div class="filter-toolbar">
-                      <div class="row g-2 align-items-center">
-                        <div class="col-12 col-md-5">
-                          <span class="p-input-icon-left w-100">
-                            <i class="pi pi-search"></i>
-                            <input type="text" pInputText class="w-100 filter-custom-input"
-                              placeholder="Buscar escenarios..." [ngModel]="filtroEscenarios.texto"
-                              (ngModelChange)="filtroEscenarios.texto = $event; aplicarFiltroEscenarios()" />
-                          </span>
-                        </div>
-                        <div class="col-6 col-md-3">
-                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroEscenarios.tema"
-                            (ngModelChange)="filtroEscenarios.tema = $event; aplicarFiltroEscenarios()">
-                            <option value="">Temáticas</option>
-                            <option *ngFor="let t of temasEscenarios" [value]="t">{{ t }}</option>
-                          </select>
-                        </div>
-                        <div class="col-6 col-md-2">
-                          <select class="p-inputtext w-100 filter-custom-select" [ngModel]="filtroEscenarios.periodo"
-                            (ngModelChange)="filtroEscenarios.periodo = $event; aplicarFiltroEscenarios()">
-                            <option value="">Períodos</option>
-                            <option *ngFor="let p of periodosEscenarios" [value]="p">{{ p }}</option>
-                          </select>
-                        </div>
-                        <div class="col-12 col-md-2 text-end">
-                          <button type="button" class="btn btn-outline-secondary w-100 btn-limpiar-filter"
-                            (click)="limpiarFiltroEscenarios()">
-                            <i class="pi pi-filter-slash me-1"></i> Limpiar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- METADATOS Y BOTÓN DESCARGAR -->
-                    <div class="result-meta d-flex justify-content-between align-items-center">
-                      <span class="text-muted fw-semibold small">{{ filasEscenariosFiltradas.length }} de {{
-                        filasEscenarios.length }} escenarios</span>
-                      <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3"
-                        (click)="descargarListaCompletaPDF()">
-                        <i class="bi bi-download me-1"></i> Descargue la lista completa
-                      </button>
-                    </div>
-
-                    <!-- TABLA CON LAS 6 COLUMNAS -->
-                    <p-table [value]="filasElementosFiltradas" [paginator]="true" [rows]="5"
-                      [(first)]="primeraFilaElementos" styleClass="p-datatable-sm territorial-table">
-
-                      <ng-template pTemplate="header">
-                        <tr>
-                          <th style="width: 12%;" class="text-center">Imágen</th>
-                          <th style="width: 45%;" pSortableColumn="titulo">
-                            Nombre y Sumilla <p-sortIcon field="titulo"></p-sortIcon>
-                          </th>
-                          <th style="width: 15%;" pSortableColumn="tematica">
-                            Temática <p-sortIcon field="tematica"></p-sortIcon>
-                          </th>
-                          <th style="width: 14%;" pSortableColumn="periodo">
-                            Período <p-sortIcon field="periodo"></p-sortIcon>
-                          </th>
-                          <th style="width: 14%;">Fuerza de cambio</th>
-                        </tr>
-                      </ng-template>
-
-                      <ng-template pTemplate="body" let-fila>
-                        <tr>
-                          <!-- 1. Imágen -->
-                          <td class="text-center">
-                            <img *ngIf="fila.imagenUrl" [src]="fila.imagenUrl" [alt]="fila.titulo" class="table-thumb">
-                            <span *ngIf="!fila.imagenUrl" class="table-thumb table-thumb-empty"><i
-                                class="pi pi-image"></i></span>
-                          </td>
-
-                          <!-- 2. Nombre y Sumilla (Uno debajo del otro) -->
-                          <td>
-                            <div class="d-flex flex-column gap-1">
-                              <a [href]="fila.url" target="_blank" class="text-decoration-none">
-                                <div class="evento-link d-flex justify-content-between align-items-center">
-                                  <span class="table-title fw-bold text-dark me-1" [attr.title]="fila.titulo">
-                                    {{ fila.tituloCorto || fila.titulo }}
-                                  </span>
-                                  <i class="pi pi-external-link evento-link-icon text-muted small"
-                                    aria-hidden="true"></i>
-                                </div>
-                              </a>
-                              <p class="table-summary text-secondary small mb-0">{{ fila.resumen }}</p>
-                            </div>
-                          </td>
-
-                          <!-- 3. Temática -->
-                          <td class="cell-tema">
-                            <span class="tipo-badge"
-                              [style.background-color]="getTematicaColorData(fila.tematica).badgeBg"
-                              [style.color]="getTematicaColorData(fila.tematica).badgeText">
-                              {{ fila.tematica || 'General' }}
-                            </span>
-                          </td>
-
-                          <!-- 4. Período -->
-                          <td>
-                            <span class="periodo-chip">{{ fila.periodo || '2030-2040' }}</span>
-                          </td>
-
-                          <!-- 5. Fuerza de cambio (ajusta según la propiedad de tu modelo, ej. fila.fuerzaCambio) -->
-                          <td>
-                            <span class="text-dark small fw-semibold">{{ fila.fuerzaCambio || '—' }}</span>
-                          </td>
-                        </tr>
-                      </ng-template>
-
-                      <ng-template pTemplate="emptymessage">
-                        <tr>
-                          <td colspan="5" class="table-empty">
-                            <i class="pi pi-search"></i>
-                            No se encontraron elementos futuros con los filtros seleccionados.
-                          </td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </p-tabPanel>
-              </p-tabView>
-
-            </ng-container>
-
-          </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>

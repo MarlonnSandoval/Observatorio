@@ -103,10 +103,15 @@
         <!-- BLOQUES POR CATEGORÍA -->
         <div class="col-8">
 
+          <div>
+            <h2 class="fw-bold text-dark mb-3">
+              {{ sectorSeleccionado }}
+            </h2>
+          </div>
+
           <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
             <div class="d-flex gap-2 align-items-center">
-              <button type="button" class="btn btn-outline-primary btn-sm rounded-pill"
-                (click)="descargarLista()">
+              <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="descargarLista()">
                 <i aria-hidden="true" class="pi pi-download me-1"></i>
                 Descargar lista en PDF
               </button>
