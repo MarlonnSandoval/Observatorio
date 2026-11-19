@@ -176,8 +176,14 @@ export class TerritorialComponent {
 
   categoriaColapsada: Record<string, boolean> = {};
 
+  tematicaActiva: string | null = null;
+
   toggleCategoria(cat: string): void {
     this.categoriaColapsada[cat] = !this.categoriaColapsada[cat];
+  }
+
+  toggleTematica(tema: string): void {
+    this.tematicaActiva = this.tematicaActiva === tema ? null : tema;
   }
 
   tooltipRegion: string | null = null;
@@ -343,12 +349,12 @@ export class TerritorialComponent {
     return total;
   }
   get categoriasElementos(): string[] {
-    return this.categories.filter((c) => !c.includes('Escenarios'));
+    return this.categories;
   }
 
-  get categoriasEscenarios(): string[] {
-    return this.categories.filter((c) => c.includes('Escenarios'));
-  }
+  // get categoriasEscenarios(): string[] {
+  //   return this.categories.filter((c) => c.includes('Escenarios'));
+  // }
 
   // ─────────────────────────────────────────
   // Getters de estado
@@ -673,9 +679,9 @@ export class TerritorialComponent {
     this.filasElementos = elemCats.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
     );
-    this.filasEscenarios = this.categoriasEscenarios.flatMap((cat) =>
-      this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
-    );
+    // this.filasEscenarios = this.categoriasEscenarios.flatMap((cat) =>
+    //   this.getArticulos(cat).map((a) => ({ ...a, categoria: cat }))
+    // );
 
     this.tiposElementos = elemCats.filter((c) => this.getCount(c) > 0);
     this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
@@ -772,11 +778,13 @@ export class TerritorialComponent {
               .map((art) => {
                 const tituloMostrar = art.titulo || art.tituloCorto || '';
                 const resumenMostrar = art.resumen || 'Sin resumen disponible.';
-                const urlMostrar = art.url || 'Sin resumen disponible.';
+                const urlMostrar = art.url || 'Sin URL disponible.';
+                const tematicaMostrar = art.tematica || 'Sin Temática disponible.';
                 return `
                   <article class="ficha-item">
                     <div class="ficha-titulo">${tituloMostrar}</div>
-                    <p class="ficha-resumen">${resumenMostrar}</p>
+                    <p class="ficha-resumen">${resumenMostrar}</p>                    
+                    <p class="ficha-temática">${tematicaMostrar}</p>
                     <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
                   </article>
                 `;
@@ -814,6 +822,7 @@ export class TerritorialComponent {
           .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
           .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
           .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
+          .ficha-temática { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
           .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
           .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
           @media print { body { margin: 14px; } }

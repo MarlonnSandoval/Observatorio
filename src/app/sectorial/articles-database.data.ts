@@ -279,7 +279,7 @@ export const SECTOR_DATABASE: SectorDatabase = {
           tituloCorto: "Bum de tierras raras",
           resumen: "Reorientación radical de la industria manufacturera hacia componentes tecnológicos.",
           url: "https://observatorio.ceplan.gob.pe/ficha/c2_prod",
-          tematica: "Económica",
+          tematica: "Actitud, valores y ética",
           horizonte: "PRESENTE-2030",
           cuadrante: "Competitividad e innovación",
           imagenUrl: "https://observatorio.ceplan.gob.pe/uploads/GZQaC7d3HmQvhd2nxo49Xw_u.jpg",

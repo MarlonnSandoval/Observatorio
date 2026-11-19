@@ -121,6 +121,19 @@
             </button>
           </div>
 
+          <div class="tematica-legend mb-3" *ngIf="temasElementos.length > 0">
+            <span class="tematica-legend-label">Temáticas:</span>
+            <button *ngFor="let t of temasElementos" type="button" class="tematica-legend-chip"
+              [class.tematica-legend-chip--active]="tematicaActiva === t"
+              [style.borderColor]="getTematicaColorData(t).border"
+              [style.backgroundColor]="tematicaActiva === t ? getTematicaColorData(t).badgeBg : '#fff'"
+              [style.color]="tematicaActiva === t ? getTematicaColorData(t).badgeText : '#1e293b'"
+              (click)="toggleTematica(t)" [attr.aria-pressed]="tematicaActiva === t">
+              <span class="tematica-dot" [style.backgroundColor]="getTematicaColorData(t).border"></span>
+              {{ t }}
+            </button>
+          </div>
+
           <div *ngFor="let cat of categoriasElementos" class="categoria-bloque mb-3"
             [class.categoria-bloque--collapsed]="categoriaColapsada[cat]">
 
@@ -145,11 +158,17 @@
             <div class="categoria-box" [style.borderColor]="getCategoryColorData(cat).border"
               *ngIf="!categoriaColapsada[cat]">
               <ng-container *ngIf="getArticulosPorCategoria(cat).length > 0; else sinElementos">
+                <!-- POR -->
                 <a *ngFor="let art of getArticulosPorCategoria(cat)" [href]="art.url" target="_blank"
-                  rel="noopener noreferrer" class="categoria-chip" [attr.title]="art.titulo"
+                  rel="noopener noreferrer" class="categoria-chip"
+                  [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
+                  [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
+                  [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '') + (art.horizonte ? ' · ' + etiquetaHorizonte(art.horizonte) : '')"
                   [style.borderColor]="getCategoryColorData(cat).border"
                   [style.--chip-hover-bg]="getCategoryColorData(cat).badgeBg"
                   [style.--chip-hover-text]="getCategoryColorData(cat).badgeText">
+                  <span class="chip-tematica-dot" [style.backgroundColor]="getTematicaColorData(art.tematica).border"
+                    [attr.title]="art.tematica || 'General'"></span>
                   {{ art.tituloCorto }}
                 </a>
               </ng-container>

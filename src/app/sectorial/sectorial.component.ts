@@ -91,9 +91,14 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
 
   // --- Collapse state for category blocks ---
   categoriaColapsada: Record<string, boolean> = {};
+  tematicaActiva: string | null = null;
 
   toggleCategoria(cat: string): void {
     this.categoriaColapsada[cat] = !this.categoriaColapsada[cat];
+  }
+
+  toggleTematica(tema: string): void {
+    this.tematicaActiva = this.tematicaActiva === tema ? null : tema;
   }
 
   @ViewChild('svgContainer', { static: false })
@@ -522,6 +527,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     this.sectorSeleccionado = null;
     this.construirTablas();
     this.actualizarEstilosGrafico();
+    this.tematicaActiva = null;
   }
 
   obtenerColorSector(sector: string): string {
@@ -665,10 +671,13 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
                 const tituloMostrar = art.titulo || art.tituloCorto || '';
                 const resumenMostrar = art.resumen || 'Sin resumen disponible.';
                 const urlMostrar = art.url || 'Sin resumen disponible.';
+                const tematicaMostrar = art.tematica || 'Sin Temática disponible.';
+                
                 return `
                   <article class="ficha-item">
                     <div class="ficha-titulo">${tituloMostrar}</div>
                     <p class="ficha-resumen">${resumenMostrar}</p>
+                    <p class="ficha-temática">${tematicaMostrar}</p>
                     <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
                   </article>
                 `;
@@ -706,6 +715,7 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
           .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
           .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
           .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
+          .ficha-temática { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
           .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
           .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
           @media print { body { margin: 14px; } }
@@ -766,7 +776,8 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   }
 
   private construirTablas(): void {
-    this.categoriaColapsada = {};                                           // ← ADD
+    this.categoriaColapsada = {};
+    this.tematicaActiva = null;
     this.filasElementos = this.categoriasElementos.flatMap((cat) =>
       this.getArticulos(cat).map((a) => ({ ...a, categoria: cat } as FilaArticulo))
     );

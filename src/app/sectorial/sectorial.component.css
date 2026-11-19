@@ -829,3 +829,84 @@ td .d-flex.flex-column {
   color: var(--chip-hover-text, #000000);
   text-decoration: none;
 }
+
+/* ===================================================
+   Leyenda temática interactiva
+   =================================================== */
+.tematica-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.tematica-legend-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.tematica-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 7px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  background: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  line-height: 1.4;
+}
+
+.tematica-legend-chip:hover {
+  filter: brightness(0.95);
+}
+
+.tematica-legend-chip--active {
+  box-shadow: 0 0 0 2px currentColor;
+  font-weight: 700;
+}
+
+.tematica-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ===================================================
+   Dot de temática dentro de cada chip
+   =================================================== */
+.chip-tematica-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  margin-right: 4px;
+  opacity: 0.85;
+}
+
+/* ===================================================
+   Estados de resaltado / atenuación
+   =================================================== */
+.categoria-chip--dimmed {
+  opacity: 0.28;
+  filter: grayscale(40%);
+  pointer-events: none;
+}
+
+.categoria-chip--highlighted {
+  box-shadow: 0 0 0 2px var(--chip-hover-bg, #e0f2fe);
+  font-weight: 700;
+}
