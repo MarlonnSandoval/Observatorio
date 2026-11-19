@@ -64,69 +64,70 @@
     </div>
   </section>
 
-<section class="">
-    <div class="row align-items-center g-4"
-      style="margin: 0; padding: 28px; border: 1px solid #e0e0e0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);">
-      
-      <!-- Título principal e indicador Nuevo -->
-      <div class="col-12 mb-1 d-flex justify-content-between align-items-center">
+  <section class="py-4">
+    <div class="row g-4">
+      <!-- Encabezado alineado al estilo de la sección -->
+      <div class="col-12 d-flex justify-content-between align-items-center">
         <div>
-          <h4 style="color: #0d47a1; font-weight: 700; margin-bottom: 4px; font-size: 1.25rem;">
+          <h4 class="fw-bold mb-1" style="color: #2a68a2; font-size: 1.35rem;">
             Accede a información temática
           </h4>
-          <div style="width: 50px; height: 4px; background-color: #0d47a1; border-radius: 2px;"></div>
+          <p class="text-secondary small mb-0" style="font-size: 0.92rem;">
+            Información por fuerza de cambio
+          </p>
         </div>
 
-        <span
-          style="background-color: #ffc107; color: #000; font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <!-- <span class="badge rounded-pill px-3 py-2 text-uppercase"
+          style="background-color: #ffc107; color: #0f172a; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;">
           Nuevo
+        </span> -->
+
+        <span class="feature-badge-tag p-tag p-component">
+          <span class="p-tag-value">Actualizado</span>
         </span>
       </div>
 
-      <div class="col-12 text-secondary small fw-medium mb-1">
-        Información por fuerza de cambio
+      <!-- Tarjeta 1: Territorial -->
+      <div class="col-md-6">
+        <button type="button" routerLink="/territorial"
+          class="w-100 border-0 p-4 d-flex align-items-center gap-4 text-start position-relative overflow-hidden"
+          style="min-height: 165px;border-radius: 12px;background: linear-gradient(120deg, rgba(15, 58, 107, 0.92) 0%, rgba(42, 104, 162, 0.88) 100%), url('assets/img/tt-wf.png') right 10px / auto 180px no-repeat;box-shadow: rgba(15, 23, 42, 0.08) 0px 4px 12px;cursor: pointer;">
+          <div class="d-flex flex-column justify-content-center" style="max-width: 78%; z-index: 1;">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span
+                style="display: inline-block; width: 10px; height: 10px; transform: rotate(45deg); background-color: #ffffff; flex-shrink: 0;"></span>
+              <span class="fw-bold text-white" style="font-size: 1.45rem; line-height: 1.2;">
+                Territorial
+              </span>
+            </div>
+            <p class="mb-0 text-white" style="font-size: 0.95rem; line-height: 1.45; opacity: 0.95;">
+              Explora enfoques a escala regional y local para analizar dinámicas del territorio al 2050.
+            </p>
+          </div>
+        </button>
       </div>
 
-      <!-- Botones de Acceso Temático -->
-      <div class="col-12">
-        <div class="row g-4">
-          <!-- Botón 1: Ámbito Territorial -->
-          <div class="col-md-6">
-            <div style="position: relative; width: 100%;">
-              <button pButton routerLink="/territorial"
-                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
-                style="min-height: 180px; background: linear-gradient(135deg, #3B69AE 0%, #0d47a1 100%); border-radius: 16px; padding: 24px; cursor: pointer;">
-                <!-- <i class="bi bi-pie-chart-fill" style="font-size: 3.5rem;"></i> -->
-                <div>
-                  <img src="assets/img/tt-wf.png" alt="" style="height: 120px;">
-                </div>
-                <div class="text-start">
-                  <span class="fw-bold text-white d-block" style="font-size: 1.8rem; line-height: 1.2;">
-                    Territorial
-                  </span>
-                  <span class="text-white-50 small">Explora enfoques a escala regional y local</span>
-                </div>
-              </button>
+      <!-- Tarjeta 2: Sectorial -->
+      <div class="col-md-6">
+        <button type="button" routerLink="/sectorial"
+          class="w-100 border-0 p-4 d-flex align-items-center gap-4 text-start position-relative overflow-hidden"
+          style="min-height: 165px; border-radius: 12px; background: linear-gradient(120deg, rgba(12, 41, 146, 0.92) 0%, rgba(25, 118, 210, 0.88) 100%); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08); cursor: pointer;">
+          <div class="d-flex flex-column justify-content-center" style="max-width: 78%; z-index: 1;">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span
+                style="display: inline-block; width: 10px; height: 10px; transform: rotate(45deg); background-color: #ffffff; flex-shrink: 0;"></span>
+              <span class="fw-bold text-white" style="font-size: 1.45rem; line-height: 1.2;">
+                Sectorial
+              </span>
             </div>
+            <p class="mb-0 text-white" style="font-size: 0.95rem; line-height: 1.45; opacity: 0.95;">
+              Análisis por sectores estratégicos con tendencias, riesgos, oportunidades y escenarios futuros.
+            </p>
           </div>
-
-          <!-- Botón 2: Ámbito Sectorial (Con tono azul secundario del CEPLAN en lugar de morado) -->
-          <div class="col-md-6">
-            <div style="position: relative; width: 100%;">
-              <button pButton routerLink="/sectorial"
-                class="p-button-raised w-100 border-0 d-flex align-items-center justify-content-center gap-4"
-                style="min-height: 180px; background: linear-gradient(135deg, #1976d2 0%, #0c2992 100%); border-radius: 16px; padding: 24px; cursor: pointer;">
-                <i class="bi bi-pie-chart-fill" style="font-size: 3.5rem;"></i>
-                <div class="text-start">
-                  <span class="fw-bold text-white d-block" style="font-size: 1.8rem; line-height: 1.2;">
-                    Sectorial
-                  </span>
-                  <span class="text-white-50 small">Análisis por sectores estratégicos</span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
+          <i class="fa fa-pie-chart text-white position-absolute"
+            style="right: 24px; bottom: 14px; font-size: 5.5rem; opacity: 0.22; pointer-events: none;"
+            aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </section>

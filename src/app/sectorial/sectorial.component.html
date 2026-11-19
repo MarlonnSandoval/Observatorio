@@ -90,7 +90,7 @@
           </div>
 
           <div #sectorScroller class="sector-strip-scroller">
-            <button *ngFor="let sector of sectoresDisponibles; trackBy: trackBySector" type="button" class="sector-chip"
+            <button *ngFor="let sector of sectoresDisponibles" type="button" class="sector-chip"
               [class.active]="sectorSeleccionado === sector" [attr.aria-pressed]="sectorSeleccionado === sector"
               (click)="toggleSector(sector)">
               <span class="color-dot flex-shrink-0" [style.backgroundColor]="obtenerColorSector(sector)"></span>
@@ -163,13 +163,13 @@
                   rel="noopener noreferrer" class="categoria-chip"
                   [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
                   [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
-                  [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '') + (art.horizonte ? ' · ' + etiquetaHorizonte(art.horizonte) : '')"
+                  [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '') + (art.horizonte ? ' · ' + art.horizonte : '')"
                   [style.borderColor]="getCategoryColorData(cat).border"
                   [style.--chip-hover-bg]="getCategoryColorData(cat).badgeBg"
                   [style.--chip-hover-text]="getCategoryColorData(cat).badgeText">
                   <span class="chip-tematica-dot" [style.backgroundColor]="getTematicaColorData(art.tematica).border"
                     [attr.title]="art.tematica || 'General'"></span>
-                  {{ art.tituloCorto }}
+                  {{ art.tituloCorto }} 
                 </a>
               </ng-container>
               <ng-template #sinElementos>

@@ -1,7 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { ArticuloRadar, SECTOR_DATABASE, ContenidoSector, CategoriaSectorDetalle } from './articles-database.data';
-import html2pdf from 'html2pdf.js';
 
 type SvgRootSelection = d3.Selection<HTMLDivElement, unknown, null, undefined>;
 
@@ -16,28 +15,6 @@ interface SectorConfig {
   color: string;
   anillo: string;
   icono: string;
-}
-
-export interface ConoItem {
-  titulo: string;
-  shortLabel: string;
-  categoria: string;
-  horizonte: string;
-  url: string;
-  icono: string;
-  color: string;
-}
-
-export interface ConoGroup {
-  categoria: string;
-  items: ConoItem[];
-}
-
-export interface ConoColumn {
-  key: 'presente' | 'medio' | 'lejano';
-  label: string;
-  totalCount: number;
-  groups: ConoGroup[];
 }
 
 export type FilaArticulo = ArticuloRadar & {
@@ -55,16 +32,6 @@ export interface FiltroElementos {
   periodo: string;
 }
 
-export interface RadarNodo {
-  articulo: ArticuloRadar;
-  numero: number;
-  icono: string;
-  categoria: string;
-  color: string;
-  x: number;
-  y: number;
-}
-
 @Component({
   selector: 'app-explorador-sectorial',
   templateUrl: './sectorial.component.html',
@@ -75,11 +42,8 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
   @Input() selectedSector: string | null = null;
   @Input() sectorData: ContenidoSector | null = null;
 
-  vistaActual: 'radar' | 'cono' = 'cono';
-
   readonly categoriesBase: (keyof ContenidoSector)[] = ['Tendencias', 'Riesgos', 'Oportunidades'];
   readonly categoriasElementos: string[] = ['Tendencias', 'Riesgos', 'Oportunidades', 'Señal débil', 'Carta salvaje'];
-  private readonly horizontes: string[] = ['PRESENTE-2030', '2030-2040', '2040-2050'];
 
   filtroElementos: FiltroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
   filasElementos: FilaArticulo[] = [];
@@ -376,120 +340,6 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
       .style('pointer-events', 'none');
   }
 
-  /* ------------------- RADAR DE PROSPECTIVA ------------------- */
-
-  readonly radarCenter = 250;
-  readonly radarR1 = 85;
-  readonly radarR2 = 155;
-  readonly radarR3 = 225;
-
-  private puntoRadar(anguloGrados: number, radio: number): string {
-    const rad = (anguloGrados * Math.PI) / 180;
-    const x = this.radarCenter + radio * Math.cos(rad);
-    const y = this.radarCenter + radio * Math.sin(rad);
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }
-
-  get radarQuadrantPaths() {
-    const r = this.radarR3 - 10;
-    return {
-      territorio: `M ${this.puntoRadar(180, r)} A ${r},${r} 0 0,1 ${this.puntoRadar(270, r)}`,
-      personas: `M ${this.puntoRadar(270, r)} A ${r},${r} 0 0,1 ${this.puntoRadar(0, r)}`,
-      democracia: `M ${this.puntoRadar(0, r)} A ${r},${r} 0 0,1 ${this.puntoRadar(90, r)}`,
-      innovacion: `M ${this.puntoRadar(90, r)} A ${r},${r} 0 0,1 ${this.puntoRadar(180, r)}`
-    };
-  }
-
-  get radarNodes(): RadarNodo[] {
-    const articulos = this.articulosCompletos;
-    if (articulos.length === 0) return [];
-
-    const angulosCuadrante: { [key: string]: number } = {
-      'Territorio sostenible': -Math.PI * 0.75,
-      'Desarrollo de las personas': -Math.PI * 0.25,
-      'Democracia y paz': Math.PI * 0.25,
-      'Competitividad e innovación': Math.PI * 0.75
-    };
-
-    const radioPorHorizonte = (h: ArticuloRadar['horizonte']): number => {
-      switch (h) {
-        case 'PRESENTE-2030': return this.radarR1 * 0.55;
-        case '2030-2040': return (this.radarR1 + this.radarR2) / 2;
-        case '2040-2050': return (this.radarR2 + this.radarR3) / 2;
-        default: return (this.radarR1 + this.radarR2) / 2;
-      }
-    };
-
-    const porCuadrante = new Map<string, { art: ArticuloRadar; numero: number }[]>();
-
-    articulos.forEach((art, index) => {
-      const cuadrante = art.cuadrante ?? 'Sin cuadrante';
-      const lista = porCuadrante.get(cuadrante) ?? [];
-      lista.push({ art, numero: index + 1 });
-      porCuadrante.set(cuadrante, lista);
-    });
-
-    const angleStepCuadrante = Math.PI / 2;
-    const margenSeguridad = angleStepCuadrante * 0.12;
-    const nodos: RadarNodo[] = [];
-
-    const categoriaPorArticulo = new Map<ArticuloRadar, string>();
-    this.categoriasElementos.forEach((nombre) => {
-      this.getArticulos(nombre).forEach((a) => categoriaPorArticulo.set(a, nombre));
-    });
-
-    porCuadrante.forEach((lista, cuadrante) => {
-      const baseAngle = angulosCuadrante[cuadrante] ?? 0;
-      const n = lista.length;
-      const maxHalfSpread = Math.max(0, angleStepCuadrante / 2 - margenSeguridad);
-      const halfSpread = n > 1 ? Math.min(maxHalfSpread, 0.12 + n * 0.07) : 0;
-      const step = n > 1 ? (halfSpread * 2) / (n - 1) : 0;
-
-      lista.forEach((item, index) => {
-        const angleOffset = n > 1 ? -halfSpread + step * index : 0;
-        const finalAngle = baseAngle + angleOffset;
-        const radialJitter = n > 1 ? ((index % 3) - 1) * 9 : 0;
-        const finalRadius = radioPorHorizonte(item.art.horizonte) + radialJitter;
-
-        nodos.push({
-          articulo: item.art,
-          numero: item.numero,
-          icono: this.iconoCategoria(categoriaPorArticulo.get(item.art) ?? ''),
-          categoria: categoriaPorArticulo.get(item.art) ?? '',
-          color: this.getCategoryColorData(categoriaPorArticulo.get(item.art) ?? '').border,
-          x: this.radarCenter + finalRadius * Math.cos(finalAngle),
-          y: this.radarCenter + finalRadius * Math.sin(finalAngle)
-        });
-      });
-    });
-
-    return nodos;
-  }
-
-  iconoCategoria(categoria: string): string {
-    const c = (categoria || '').toLowerCase();
-    if (c.includes('riesg')) return '#ico-riesgo';
-    if (c.includes('oportun')) return '#ico-oportunidad';
-    if (c.includes('señal') || c.includes('senal')) return '#ico-senal-debil';
-    if (c.includes('carta') || c.includes('salvaje')) return '#ico-carta-salvaje';
-    if (c.includes('escenario')) return '#ico-escenario';
-    return '#ico-tendencia';
-  }
-
-  hoverArticulo(articulo: ArticuloRadar | null): void {
-    this.articuloDestacado = articulo;
-  }
-
-  public actualizarEstilosGrafico(): void {
-    if (!this.svgRoot) return;
-
-    this.svgRoot.selectAll('path.sector-path')
-      .style('opacity', (d: any) => {
-        if (!this.sectorSeleccionado) return 1;
-        return d.data.nombre === this.sectorSeleccionado ? 1 : 0.30;
-      });
-  }
-
   get articulosCompletos(): ArticuloRadar[] {
     return this.categoriasElementos.flatMap((cat) => this.getArticulos(cat));
   }
@@ -505,11 +355,9 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return catDetalle?.articulos ?? [];
   }
 
-  // INSERT before getCategoryColorData()
   getArticulosPorCategoria(categoria: string): FilaArticulo[] {
     return this.filasElementos.filter(f => f.categoria === categoria);
   }
-
 
   toggleSector(sector: string): void {
     if (this.sectorSeleccionado === sector) {
@@ -518,15 +366,12 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     }
 
     this.sectorSeleccionado = sector;
-    this.vistaActual = 'cono';
     this.construirTablas();
-    this.actualizarEstilosGrafico();
   }
 
   cerrarPanel(): void {
     this.sectorSeleccionado = null;
     this.construirTablas();
-    this.actualizarEstilosGrafico();
     this.tematicaActiva = null;
   }
 
@@ -534,70 +379,9 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     return this.colorPorSector.get(sector) ?? '#6c757d';
   }
 
-  trackBySector(_index: number, sector: string): string {
-    return sector;
-  }
-
-  private getConoColumnKey(horizonte?: string): 'presente' | 'medio' | 'lejano' {
-    switch (horizonte) {
-      case 'PRESENTE-2030':
-        return 'presente';
-      case '2040-2050':
-        return 'lejano';
-      case '2030-2040':
-      default:
-        return 'medio';
-    }
-  }
-
-  get conoColumns(): ConoColumn[] {
-    const rawData: { key: 'presente' | 'medio' | 'lejano'; label: string; items: ConoItem[] }[] = [
-      { key: 'presente', label: 'Presente – 2030', items: [] },
-      { key: 'medio', label: '2030 – 2040', items: [] },
-      { key: 'lejano', label: '2040 – 2050', items: [] },
-    ];
-
-    this.categoriasElementos.forEach((cat) => {
-      const colorData = this.getCategoryColorData(cat);
-      this.getArticulos(cat).forEach((art) => {
-        const columna = rawData.find((c) => c.key === this.getConoColumnKey(art.horizonte));
-        if (!columna) return;
-
-        const shortLabel = art.tituloCorto
-          ? art.tituloCorto
-          : art.titulo.length > 38
-            ? art.titulo.substring(0, 38) + '…'
-            : art.titulo;
-
-        columna.items.push({
-          titulo: art.titulo,
-          shortLabel,
-          categoria: cat,
-          horizonte: art.horizonte ?? 'PRESENTE-2030',
-          url: art.url,
-          icono: this.iconoCategoria(cat),
-          color: colorData.border,
-        });
-      });
-    });
-
-    return rawData.map((col) => {
-      const groupsMap = new Map<string, ConoItem[]>();
-      col.items.forEach((item) => {
-        if (!groupsMap.has(item.categoria)) {
-          groupsMap.set(item.categoria, []);
-        }
-        groupsMap.get(item.categoria)!.push(item);
-      });
-
-      const groups: ConoGroup[] = Array.from(groupsMap.entries()).map(([categoria, items]) => ({
-        categoria,
-        items,
-      }));
-
-      return { key: col.key, label: col.label, totalCount: col.items.length, groups };
-    });
-  }
+  // trackBySector(_index: number, sector: string): string {
+  //   return sector;
+  // }
 
   getCategoryColorData(categoriaName: string) {
     if (categoriaName.includes('Tendencias')) {
@@ -738,40 +522,9 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     ventanaImpresion.document.close();
   }
 
-  etiquetaHorizonte(horizonte?: string): string {
-    switch (horizonte) {
-      case 'PRESENTE-2030':
-        return 'Presente – 2030';
-      case '2030-2040':
-        return '2030 – 2040';
-      case '2040-2050':
-        return '2040 – 2050';
-      default:
-        return horizonte || '-';
-    }
-  }
-
   private unicos(valores: (string | undefined)[]): string[] {
     return Array.from(new Set(valores.filter((v): v is string => !!v))).sort((a, b) =>
       a.localeCompare(b, 'es')
-    );
-  }
-
-  private periodosDe(filas: FilaArticulo[]): string[] {
-    const presentes = new Set(filas.map((f) => f.horizonte as string).filter(Boolean));
-    const ordenados = this.horizontes.filter((h) => presentes.has(h));
-    const otros = Array.from(presentes).filter((h) => !this.horizontes.includes(h)).sort();
-    return [...ordenados, ...otros];
-  }
-
-  private coincideTexto(art: FilaArticulo, texto: string): boolean {
-    const q = texto.toLowerCase().trim();
-    if (!q) return true;
-    return (
-      (art.titulo || '').toLowerCase().includes(q) ||
-      (art.resumen || '').toLowerCase().includes(q) ||
-      (art.tema || '').toLowerCase().includes(q) ||
-      (art.tematica || '').toLowerCase().includes(q)
     );
   }
 
@@ -783,33 +536,11 @@ export class SectorialComponent implements AfterViewInit, OnChanges {
     );
 
     this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
-    this.periodosElementos = this.periodosDe(this.filasElementos);
-
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
-    this.aplicarFiltroElementos();
-  }
-
-  aplicarFiltroElementos(): void {
-    const f = this.filtroElementos;
-    this.filasElementosFiltradas = this.filasElementos.filter(
-      (a) =>
-        this.coincideTexto(a, f.texto) &&
-        (!f.tipo || a.categoria === f.tipo) &&
-        (!f.tema || a.tematica === f.tema) &&
-        (!f.periodo || a.horizonte === f.periodo)
-    );
-    this.primeraFilaElementos = 0;
   }
 
   get hayFiltroElementos(): boolean {
     const f = this.filtroElementos;
     return !!(f.texto || f.tipo || f.tema || f.periodo);
   }
-
-  limpiarFiltroElementos(): void {
-    this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
-    this.aplicarFiltroElementos();
-  }
-
-
 }
