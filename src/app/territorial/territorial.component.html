@@ -47,12 +47,22 @@
     </div>
   </div>
 
+
+
   <!-- Vista inicial: explicación arriba + mapa centrado (sin buscador) -->
   <div class="territory-landing mb-4" *ngIf="!hasSelection">
 
-    <div class="landing-intro">
-      <h2 class="fw-bold text-dark mb-2">Explora el futuro de los territorios al 2050</h2>
-      <p class="text-muted mb-0">
+
+    <!-- ENCABEZADO CON INSTRUCCIÓN -->
+    <div class="sectorial-onboarding-header">
+      <div class="sectorial-onboarding-badge">
+        <i class="bi bi-cursor-fill" aria-hidden="true"></i>
+        Elige un territorio para comenzar
+      </div>
+      <h5 class="sectorial-onboarding-title">
+        Explora el futuro de los territorios al 2050
+      </h5>
+      <p class="sectorial-onboarding-desc">
         Cada región tiene su propio análisis: escenarios al 2050, radar de riesgos y reporte descargable.
         Pasa el mouse por el mapa para ver el nombre del territorio y haz clic para elegirlo.
       </p>
