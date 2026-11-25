@@ -1,0 +1,265 @@
+<div class="container mt-5" style="padding: 0 100px;">
+
+  <div>
+    <div class="row">
+      <div class="col-sm-7 col-12 title-trends">
+        Ámbito territorial
+      </div>
+      <div class="col-sm-5 col-12">
+        <div class="row justify-content-end">
+          <a routerLink="/territorial" class="col-3" href="/tendencia-global">
+            <img class="icon-trends" src="assets/img/tg-w.jpg" alt="Tendencia global">
+          </a>
+          <a routerLink="/territorial" class="col-3" href="/tendencia-nacional">
+            <img class="icon-trends" src="assets/img/tn-w.jpg" alt="Tendencia nacional">
+          </a>
+          <a routerLink="/territorial" class="col-3" href="/tendencia-territorial">
+            <img class="icon-trends" src="assets/img/tt-w.jpg" alt="Tendencia territorial">
+          </a>
+          <a routerLink="/territorial" class="col-3" href="/tendencia-sectorial">
+            <img class="icon-trends" src="assets/img/ts-w.jpg" alt="Tendencia sectorial">
+          </a>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!-- Hero Carousel -->
+  <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+    data-bs-interval="6000">
+    <div class="carousel-inner">
+      <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index" [class.active]="i === 0">
+        <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+        <div
+          class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-white p-4 p-md-5">
+          <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+          <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-indicators hero-indicators">
+      <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+        [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+        [attr.aria-label]="'Diapositiva ' + (i + 1)">
+      </button>
+    </div>
+  </div>
+
+
+
+  <!-- Vista inicial: explicación arriba + mapa centrado (sin buscador) -->
+  <div class="territory-landing mb-4" *ngIf="!hasSelection">
+
+
+    <!-- ENCABEZADO CON INSTRUCCIÓN -->
+    <div class="sectorial-onboarding-header">
+      <div class="sectorial-onboarding-badge">
+        <i class="bi bi-cursor-fill" aria-hidden="true"></i>
+        Elige un territorio para comenzar
+      </div>
+      <h5 class="sectorial-onboarding-title">
+        Explora el futuro de los territorios al 2050
+      </h5>
+      <p class="sectorial-onboarding-desc">
+        Cada región tiene su propio análisis: escenarios al 2050 y reporte descargable.
+        Pasa el mouse por el mapa para ver el nombre del territorio y haz clic para elegirlo.
+      </p>
+    </div>
+
+    <!-- Mapa centrado -->
+    <div class="map-ut">
+      <div class="row mb-3">
+        <div class="col-12">
+          <label for="regionSelect" class="form-label font-weight-bold">Seleccionar territorio:</label>
+          <select id="regionSelect" class="form-select" [ngModel]="selectedRegion"
+            (ngModelChange)="onRegionChange($event)">
+            <option [ngValue]="null">Selecciona un territorio</option>
+            <option *ngFor="let region of regions" [value]="region.name">
+              {{ region.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Tooltip flotante -->
+      <div class="map-tooltip" *ngIf="tooltipRegion" [style.top.px]="tooltipY" [style.left.px]="tooltipX">
+        {{ tooltipRegion }}
+      </div>
+
+      <svg preserveAspectRatio="xMinYMin meet" [attr.viewBox]="mapViewBox" #mapSvg (mousemove)="onMapMouseMove($event)"
+        (mouseleave)="tooltipRegion = null">
+        <g>
+          <path *ngFor="let region of regions" class="map-region" [class.active]="selectedRegion === region.name"
+            [attr.data-region]="region.name" [attr.d]="region.d" (click)="selectRegion(region.name)"
+            [style.fill]="region.name === 'Zoom Lines' ? 'none' : null"
+            [style.stroke]="region.name === 'Zoom Lines' ? '#DC2626' : null"
+            [style.stroke-width]="region.name === 'Zoom Lines' ? '0.8px' : null"
+            [style.stroke-dasharray]="region.name === 'Zoom Lines' ? '1.5,1.5' : 'none'"
+            [style.pointer-events]="region.name === 'Zoom Lines' ? 'none' : 'auto'"
+            (mouseenter)="onRegionHover($event, region.name)" (mouseleave)="tooltipRegion = null">
+            <title *ngIf="region.name !== 'Zoom Lines'">{{ region.name }}</title>
+          </path>
+        </g>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <!-- Contenido Principal (Fila Inferior, ancho completo) -->
+    <div class="col-12" *ngIf="hasSelection">
+      <div class="row g-5">
+        <!-- Lista deslizable de territorios (solo con una región seleccionada) -->
+        <div class="col-3 sector-strip card border-0 shadow-sm">
+
+          <div class="mb-2">
+            <span class="region-strip-title">Territorios disponibles</span>
+          </div>
+
+          <div #regionScroller class="region-strip-scroller">
+            <ng-container *ngFor="let region of regions">
+              <button *ngIf="region.name !== 'Zoom Lines'" type="button" class="region-chip"
+                [class.active]="selectedRegion === region.name" [attr.aria-pressed]="selectedRegion === region.name"
+                (click)="selectRegion(region.name)">
+                {{ region.name }}
+              </button>
+            </ng-container>
+          </div>
+
+        </div>
+
+        <!-- BLOQUES POR CATEGORÍA -->
+        <div class="col-9">
+
+          <div>
+            <h2 class="fw-bold text-dark mb-3">
+              {{ selectedRegion }}
+            </h2>
+          </div>
+
+
+          <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
+            <div class="d-flex gap-2 align-items-center">
+              <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="descargarLista()">
+                <i aria-hidden="true" class="pi pi-download me-1"></i>
+                Descargar lista en PDF
+              </button>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="resetearFiltroGlobal()"
+              aria-label="Cerrar panel">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+          <div class="tematica-legend mb-3" *ngIf="temasElementos.length > 0">
+            <span class="tematica-legend-label">Temáticas:</span>
+            <button *ngFor="let t of temasElementos" type="button" class="tematica-legend-chip"
+              [class.tematica-legend-chip--active]="tematicaActiva === t"
+              [style.borderColor]="getTematicaColorData(t).border"
+              [style.backgroundColor]="tematicaActiva === t ? getTematicaColorData(t).badgeBg : '#fff'"
+              [style.color]="tematicaActiva === t ? getTematicaColorData(t).badgeText : '#1e293b'"
+              (click)="toggleTematica(t)" [attr.aria-pressed]="tematicaActiva === t">
+              <span class="tematica-dot" [style.backgroundColor]="getTematicaColorData(t).border"></span>
+              {{ t }}
+            </button>
+          </div>
+
+          <div *ngFor="let cat of categoriasElementos" class="categoria-bloque mb-3"
+            [class.categoria-bloque--collapsed]="categoriaColapsada[cat]">
+
+            <!-- Cabecera clicable -->
+            <button type="button" class="categoria-header w-100 text-start border-0"
+              [style.backgroundColor]="getCategoryColorData(cat).border" (click)="toggleCategoria(cat)"
+              [attr.aria-expanded]="!categoriaColapsada[cat]">
+              <span class="d-flex justify-content-between align-items-center">
+                <span>
+                  <i class="bi me-2" [class.bi-chevron-down]="!categoriaColapsada[cat]"
+                    [class.bi-chevron-right]="categoriaColapsada[cat]" aria-hidden="true"></i>
+                  {{ getArticulosPorCategoria(cat).length }}
+                  {{ cat.toLowerCase() }}
+                </span>
+                <span class="categoria-header-count badge bg-white" [style.color]="getCategoryColorData(cat).border">
+                  {{ getArticulosPorCategoria(cat).length }}
+                </span>
+              </span>
+            </button>
+
+            <!-- Cuerpo colapsable -->
+            <div class="categoria-box flex-column align-items-stretch gap-3"
+              [style.borderColor]="getCategoryColorData(cat).border" *ngIf="!categoriaColapsada[cat]">
+
+              <ng-container *ngIf="cat === 'Tendencias'; else categoriaSimple">
+
+                <ng-container *ngIf="getArticulosPorCategoria(cat).length > 0; else sinElementos">
+                  <div *ngFor="let sub of subcategoriasTendencia" class="w-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom">
+                      <span class="fw-bold text-secondary small text-uppercase">{{ sub.label }}</span>
+                      <span class="badge bg-light text-dark border">
+                        {{ getArticulosPorSubtipo(sub.key).length }}
+                      </span>
+                    </div>
+
+                    <div class="tendencias-grid w-100"
+                      *ngIf="getArticulosPorSubtipo(sub.key).length > 0; else sinSubElementos">
+                      <a *ngFor="let art of getArticulosPorSubtipo(sub.key)" [href]="art.url" target="_blank"
+                        rel="noopener noreferrer" class="categoria-chip"
+                        [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
+                        [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
+                        [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '')"
+                        [style.borderColor]="getCategoryColorData(cat).border"
+                        [style.--chip-hover-bg]="getCategoryColorData(cat).badgeBg"
+                        [style.--chip-hover-text]="getCategoryColorData(cat).badgeText">
+                        <span class="chip-tematica-dot"
+                          [style.backgroundColor]="getTematicaColorData(art.tematica).border"
+                          [attr.title]="art.tematica || 'General'"></span>
+                        {{ art.tituloCorto || art.titulo }}
+                      </a>
+                    </div>
+
+                    <ng-template #sinSubElementos>
+                      <span class="text-muted small fst-italic">Sin tendencias registradas en esta sección.</span>
+                    </ng-template>
+                  </div>
+                </ng-container>
+
+              </ng-container>
+
+              <ng-template #categoriaSimple>
+                <ng-container *ngIf="getArticulosPorCategoria(cat).length > 0; else sinElementos">
+                  <div class="tendencias-grid w-100">
+                    <a *ngFor="let art of getArticulosPorCategoria(cat)" [href]="art.url" target="_blank"
+                      rel="noopener noreferrer" class="categoria-chip"
+                      [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
+                      [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
+                      [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '')"
+                      [style.borderColor]="getCategoryColorData(cat).border"
+                      [style.--chip-hover-bg]="getCategoryColorData(cat).badgeBg"
+                      [style.--chip-hover-text]="getCategoryColorData(cat).badgeText">
+                      <span class="chip-tematica-dot"
+                        [style.backgroundColor]="getTematicaColorData(art.tematica).border"
+                        [attr.title]="art.tematica || 'General'"></span>
+                      {{ art.tituloCorto || art.titulo }}
+                    </a>
+                  </div>
+                </ng-container>
+              </ng-template>
+
+              <ng-template #sinElementos>
+                <span class="text-muted small fst-italic">Sin elementos registrados para este territorio.</span>
+              </ng-template>
+
+            </div>
+
+          </div>
+
+          <p *ngIf="hasSelection && !hasData" class="w-100 mt-2 text-muted text-center py-5">
+            No hay artículos o registros para la territorio <strong>{{ selectedRegion }}</strong>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

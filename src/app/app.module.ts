@@ -59,6 +59,9 @@ import { PaginatorModule } from 'primeng/paginator';
 import { PEDNComponent } from './escenarios/pages/pedn/pedn.component';
 import { LargoPlazoComponent } from './escenarios/pages/largo-plazo/largo-plazo.component';
 import { TerritorialesComponent } from './escenarios/pages/territoriales/territoriales.component';
+import { TNavComponent } from './t-nav/t-nav.component';
+import { TSecComponent } from './t-nav/pages/t-sec/t-sec.component';
+import { TTerComponent } from './t-nav/pages/t-ter/t-ter.component';
 
 
 
@@ -88,7 +91,10 @@ registerLocaleData(localeEsPe);
     RadarVigilanciaComponent,
     PEDNComponent,
     LargoPlazoComponent,
-    TerritorialesComponent
+    TerritorialesComponent,
+    TNavComponent,
+    TSecComponent,
+    TTerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,212 @@
+<div class="container mt-4" style="padding: 0 100px;">
+
+  <!-- ENCABEZADO -->
+  <div>
+    <div class="row">
+      <div class="col-sm-7 col-12 title-trends">
+        Sectores
+      </div>
+      <div class="col-sm-5 col-12">
+        <div class="row justify-content-end">
+          <a routerLink="/sectorial" class="col-3" href="/tendencia-global">
+            <img class="icon-trends" src="assets/img/tg-w.jpg" alt="Tendencia global">
+          </a>
+          <a routerLink="/sectorial" class="col-3" href="/tendencia-nacional">
+            <img class="icon-trends" src="assets/img/tn-w.jpg" alt="Tendencia nacional">
+          </a>
+          <a routerLink="/sectorial" class="col-3" href="/tendencia-territorial">
+            <img class="icon-trends" src="assets/img/tt-w.jpg" alt="Tendencia territorial">
+          </a>
+          <a routerLink="/sectorial" class="col-3" href="/tendencia-sectorial">
+            <img class="icon-trends" src="assets/img/ts-w.jpg" alt="Tendencia sectorial">
+          </a>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!-- HERO CAROUSEL -->
+  <div id="heroCarousel" class="carousel slide rounded-3 overflow-hidden mb-4" data-bs-ride="carousel"
+    data-bs-interval="6000">
+    <div class="carousel-inner">
+      <div class="carousel-item hero-item" *ngFor="let slide of heroSlides; let i = index" [class.active]="i === 0">
+        <img [src]="slide.image" [alt]="slide.title" class="d-block w-100 hero-img">
+        <div
+          class="hero-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-white p-4 p-md-5">
+          <h2 class="fw-bold border-bottom border-white pb-2 mb-2 hero-title">{{ slide.title }}</h2>
+          <p class="mb-0 small" *ngIf="slide.subtitle">{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-indicators hero-indicators">
+      <button *ngFor="let slide of heroSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+        [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+        [attr.aria-label]="'Diapositiva ' + (i + 1)">
+      </button>
+    </div>
+  </div>
+
+  <!-- SECCIÓN PRINCIPAL: RUEDA SECTORIAL Y DETALLE DE TENDENCIAS -->
+  <div class="row g-4 mb-5">
+
+    <!-- ESTADO INICIAL: RADAR SECTORIAL AMPLIO -->
+    <div class="col-12" *ngIf="!sectorSeleccionado">
+      <div class="sectorial-landing card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white">
+
+        <div class="sectorial-onboarding-header">
+          <div class="sectorial-onboarding-badge">
+            <i class="bi bi-cursor-fill" aria-hidden="true"></i>
+            Elige un sector para comenzar
+          </div>
+          <h5 class="sectorial-onboarding-title">
+            ¿Qué tendencias marcarán a los sectores en el Perú al 2050?
+          </h5>
+          <p class="sectorial-onboarding-desc">
+            Haz clic en cualquier sector de la rueda para consultar sus <strong>tendencias</strong>
+            divididas en las que caracterizan y las que afectan al sector.
+          </p>
+        </div>
+
+        <div class="w-100 d-flex flex-column justify-content-center align-items-center">
+          <div id="megas-draw" class="sectorial-wheel w-100 position-relative">
+            <div #svgContainer class="w-100 position-relative"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ESTADO ACTIVO: SECTORES A LA IZQUIERDA + TENDENCIAS A LA DERECHA -->
+    <div class="col-12" *ngIf="sectorSeleccionado">
+      <div class="row g-4 align-items-start">
+
+        <!-- LISTA DE SECTORES -->
+        <div class="col-lg-3 col-md-4 col-12">
+          <div class="sector-strip card border-0 shadow-sm bg-white">
+            <div class="mb-2">
+              <span class="sector-strip-title">Sectores disponibles</span>
+            </div>
+
+            <div #sectorScroller class="sector-strip-scroller">
+              <button *ngFor="let sector of sectoresDisponibles" type="button" class="sector-chip"
+                [class.active]="sectorSeleccionado === sector" [attr.aria-pressed]="sectorSeleccionado === sector"
+                (click)="toggleSector(sector)">
+                <span class="color-dot flex-shrink-0" [style.backgroundColor]="obtenerColorSector(sector)"></span>
+                <span>{{ sector }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DE TENDENCIAS DEL SECTOR -->
+        <div class="col-lg-9 col-md-8 col-12">
+          <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+
+            <!-- Cabecera del sector + acciones -->
+            <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3 pb-2 border-bottom">
+              <h2 class="fw-bold text-dark m-0">
+                {{ sectorSeleccionado }}
+              </h2>
+
+              <div class="d-flex gap-2 align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="descargarLista()">
+                  <i aria-hidden="true" class="pi pi-download me-1"></i>
+                  Descargar lista en PDF
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="cerrarPanel()"
+                  aria-label="Cerrar panel">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filtro de temáticas -->
+            <div class="tematica-legend mb-3" *ngIf="temasElementos.length > 0">
+              <span class="tematica-legend-label">Temáticas:</span>
+              <button *ngFor="let t of temasElementos" type="button" class="tematica-legend-chip"
+                [class.tematica-legend-chip--active]="tematicaActiva === t"
+                [style.borderColor]="getTematicaColorData(t).border"
+                [style.backgroundColor]="tematicaActiva === t ? getTematicaColorData(t).badgeBg : '#fff'"
+                [style.color]="tematicaActiva === t ? getTematicaColorData(t).badgeText : '#1e293b'"
+                (click)="toggleTematica(t)" [attr.aria-pressed]="tematicaActiva === t">
+                <span class="tematica-dot" [style.backgroundColor]="getTematicaColorData(t).border"></span>
+                {{ t }}
+              </button>
+            </div>
+
+            <!-- Bloque de tendencias dividido en Caracterizan y Afectan -->
+            <div class="categoria-bloque mb-3" [class.categoria-bloque--collapsed]="categoriaColapsada['Tendencias']">
+
+              <button type="button" class="categoria-header w-100 text-start border-0"
+                [style.backgroundColor]="getCategoryColorData('Tendencias').border"
+                (click)="toggleCategoria('Tendencias')"
+                [attr.aria-expanded]="!categoriaColapsada['Tendencias']">
+                <span class="d-flex justify-content-between align-items-center">
+                  <span>
+                    <i class="bi me-2" [class.bi-chevron-down]="!categoriaColapsada['Tendencias']"
+                      [class.bi-chevron-right]="categoriaColapsada['Tendencias']" aria-hidden="true"></i>
+                    {{ filasElementos.length }} tendencias
+                  </span>
+                  <span class="categoria-header-count badge bg-white"
+                    [style.color]="getCategoryColorData('Tendencias').border">
+                    {{ filasElementos.length }}
+                  </span>
+                </span>
+              </button>
+
+              <div class="categoria-box flex-column align-items-stretch gap-3"
+                [style.borderColor]="getCategoryColorData('Tendencias').border"
+                *ngIf="!categoriaColapsada['Tendencias']">
+
+                <ng-container *ngIf="filasElementos.length > 0; else sinElementos">
+                  <div *ngFor="let sub of subcategoriasTendencia" class="w-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom">
+                      <span class="fw-bold text-secondary small text-uppercase">
+                        {{ sub.label }}
+                      </span>
+                      <span class="badge bg-light text-dark border">
+                        {{ getArticulosPorSubtipo(sub.key).length }}
+                      </span>
+                    </div>
+
+                    <div class="tendencias-grid w-100"
+                      *ngIf="getArticulosPorSubtipo(sub.key).length > 0; else sinSubElementos">
+                      <a *ngFor="let art of getArticulosPorSubtipo(sub.key)" [href]="art.url" target="_blank"
+                        rel="noopener noreferrer" class="categoria-chip"
+                        [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
+                        [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
+                        [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '') + (art.horizonte ? ' · ' + art.horizonte : '')"
+                        [style.borderColor]="getCategoryColorData('Tendencias').border"
+                        [style.--chip-hover-bg]="getCategoryColorData('Tendencias').badgeBg"
+                        [style.--chip-hover-text]="getCategoryColorData('Tendencias').badgeText">
+                        <span class="chip-tematica-dot"
+                          [style.backgroundColor]="getTematicaColorData(art.tematica).border"
+                          [attr.title]="art.tematica || 'General'"></span>
+                        {{ art.tituloCorto || art.titulo }}
+                      </a>
+                    </div>
+
+                    <ng-template #sinSubElementos>
+                      <span class="text-muted small fst-italic">Sin tendencias registradas en esta sección.</span>
+                    </ng-template>
+                  </div>
+                </ng-container>
+
+                <ng-template #sinElementos>
+                  <span class="text-muted small fst-italic">Sin tendencias registradas para este sector.</span>
+                </ng-template>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

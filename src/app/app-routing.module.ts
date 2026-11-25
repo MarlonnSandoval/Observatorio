@@ -20,6 +20,10 @@ import { LargoPlazoComponent } from './escenarios/pages/largo-plazo/largo-plazo.
 import { PEDNComponent } from './escenarios/pages/pedn/pedn.component';
 import { TerritorialesComponent } from './escenarios/pages/territoriales/territoriales.component';
 
+import { TNavComponent } from './t-nav/t-nav.component';
+import { TTerComponent } from './t-nav/pages/t-ter/t-ter.component';
+import { TSecComponent } from './t-nav/pages/t-sec/t-sec.component';
+
 const routes: Routes = [
   // Rutas con Header y Footer
   {
@@ -37,6 +41,11 @@ const routes: Routes = [
       { path: 'escenarios-largo_plazo', component: LargoPlazoComponent },
       { path: 'escenarios-PEDN', component: PEDNComponent },
       { path: 'escenarios-territoriales', component: TerritorialesComponent },
+
+      
+      { path: 't-nav', component: TNavComponent },
+      { path: 't-ter', component: TTerComponent },
+      { path: 't-sec', component: TSecComponent },
 
 
       { path: 'riesgo', component: RiesgoComponent },
