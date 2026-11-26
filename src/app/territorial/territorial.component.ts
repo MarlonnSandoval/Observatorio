@@ -185,6 +185,12 @@ export class TerritorialComponent {
       ? Object.keys(this.regionData).filter((key) => key !== 'url' && key !== 'urlRegion')
       : [];
 
+    // Solo el primero queda desplegado (false); el resto colapsado (true)
+    this.categoriaColapsada = {};
+    this.categories.forEach((cat, index) => {
+      this.categoriaColapsada[cat] = index !== 0;
+    });
+
     this.construirTablas();
   }
 
@@ -200,6 +206,7 @@ export class TerritorialComponent {
     this.selectedRegion = null;
     this.regionData = null;
     this.categories = [];
+    this.categoriaColapsada = {};
     this.construirTablas();
   }
 
@@ -241,84 +248,205 @@ export class TerritorialComponent {
       return;
     }
 
-    const filasBase = this.hayFiltroElementos
+    const filasBase: any[] = this.hayFiltroElementos
       ? this.filasElementosFiltradas
       : this.filasElementos;
 
-    const seccionesHtml = this.categoriasElementos
-      .map((cat) => {
-        const itemsCat = filasBase.filter((item) => item.categoria === cat);
-        const color = this.getCategoryColorData(cat).border;
-        const tituloBloque = `${itemsCat.length} ${cat.toLowerCase()}`;
+    const escapeHtml = (valor: unknown): string =>
+      String(valor ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 
-        const itemsHtml =
-          itemsCat.length > 0
-            ? itemsCat
-              .map((art) => {
-                const tituloMostrar = art.titulo || art.tituloCorto || '';
-                const resumenMostrar = art.resumen || 'Sin resumen disponible.';
-                const urlMostrar = art.url || 'Sin URL disponible.';
-                const tematicaMostrar = art.tematica || 'Sin Temática disponible.';
-                return `
-                  <article class="ficha-item">
-                    <div class="ficha-titulo">${tituloMostrar}</div>
-                    <p class="ficha-resumen">${resumenMostrar}</p>                    
-                    <p class="ficha-temática">${tematicaMostrar}</p>
-                    <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
-                  </article>
-                `;
-              })
-              .join('')
-            : `<p class="empty">Sin elementos registrados para este territorio.</p>`;
+    const htmlFilas =
+      filasBase.length > 0
+        ? filasBase
+          .map((item: any) => {
+            const nombreMostrar =
+              item.titulo || item.tituloCorto || item.nombre || 'Sin título';
+            const descripcionMostrar =
+              item.resumen || item.sumilla || 'Sin resumen disponible.';
+            const categoriaMostrar = item.categoria || '';
+            const tematicaLimpias = item.tematica?.trim() || item.tema?.trim() || '';
+            const tematicaColor = this.getTematicaColorData
+              ? this.getTematicaColorData(tematicaLimpias)
+              : { border: '#64748b', badgeBg: '#f1f5f9', badgeText: '#334155' };
 
-        return `
-        <section class="bloque">
-          <div class="bloque-titulo" style="color: ${color};">${cat}</div>
-          <div class="bloque-header" style="background-color: ${color};">${tituloBloque}</div>
-          <div class="bloque-body" style="border-color: ${color};">${itemsHtml}</div>
-        </section>
-      `;
-      })
-      .join('');
+            const tematicaHtml = tematicaLimpias
+              ? `<span class="tematica-pill" style="background-color: ${tematicaColor.badgeBg}; color: ${tematicaColor.badgeText};">
+                     <span class="tematica-dot" style="background-color: ${tematicaColor.border};"></span>
+                     ${escapeHtml(tematicaLimpias)}
+                   </span>`
+              : `<span class="muted">Sin temática</span>`;
 
-    const tituloSector = this.selectedRegion;
+            const rawUrl = (item.url || item.enlace || '').toString().trim();
+            const tieneUrl = Boolean(rawUrl);
+            const urlHref = tieneUrl ? escapeHtml(rawUrl) : '#';
+            const enlaceHtml = tieneUrl
+              ? `<a class="ficha-link" href="${urlHref}" target="_blank" rel="noopener noreferrer">↗ Abrir ficha</a>`
+              : `<span class="muted">No disponible</span>`;
+
+            return `
+                <tr>
+                  <td>
+                    <div class="ficha-nombre">${escapeHtml(nombreMostrar)}</div>
+                  </td>
+                  <td>${escapeHtml(categoriaMostrar)}</td>
+                  <td>${escapeHtml(descripcionMostrar)}</td>
+                  <td>${tematicaHtml}</td>
+                  <td>${enlaceHtml}</td>
+                </tr>
+              `;
+          })
+          .join('')
+        : `
+            <tr>
+              <td colspan="4" class="empty">Sin elementos registrados para este territorio.</td>
+            </tr>
+          `;
+
+    const tituloTerritorio = escapeHtml(this.selectedRegion);
     const totalVisible = filasBase.length;
 
     const contenidoHtml = `
-    <!DOCTYPE html>
-    <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <title>Reporte del territorio - ${tituloSector}</title>
-        <style>
-          body { font-family: Roboto, Arial, sans-serif; color: #1e293b; margin: 28px; }
-          h2 { color: #2A68A2; margin: 0 0 6px; font-size: 22px; }
-          .meta { color: #64748b; font-size: 12px; margin-bottom: 20px; }
-          .bloque { margin-bottom: 18px; break-inside: avoid; }
-          .bloque-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
-          .bloque-header { color: #ffffff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px 6px 0 0; }
-          .bloque-body { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1.5px solid; border-top: none; border-radius: 0 0 8px 8px; background: #ffffff; }
-          .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
-          .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-          .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
-          .ficha-temática { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
-          .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
-          .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
-          @media print { body { margin: 14px; } }
-        </style>
-      </head>
-      <body>
-        <h2>Elementos del sector - ${tituloSector}</h2>
-        <div class="meta">
-          Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de elementos: ${totalVisible}
-        </div>
-        ${seccionesHtml}
-        <script>
-          window.onload = function() { setTimeout(() => window.print(), 300); };
-        </script>
-      </body>
-    </html>
-  `;
+      <!DOCTYPE html>
+      <html lang="es">
+        <head>
+          <meta charset="UTF-8">
+          <title>${tituloTerritorio}</title>
+          <style>
+            * {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+              box-sizing: border-box;
+            }
+            body {
+              font-family: Roboto, Arial, sans-serif;
+              color: #1e293b;
+              margin: 20px 28px;
+            }
+            h2 {
+              color: #2A68A2;
+              margin: 0 0 4px;
+              font-size: 22px;
+              page-break-after: avoid;
+              break-after: avoid;
+            }
+            .meta {
+              color: #64748b;
+              font-size: 12px;
+              margin-bottom: 14px;
+              page-break-after: avoid;
+              break-after: avoid;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 8px;
+              font-size: 11px;
+            }
+            thead {
+              display: table-header-group;
+            }
+            tr {
+              break-inside: avoid;
+              page-break-inside: avoid;
+            }
+            th, td {
+              border: 1px solid #cbd5e1;
+              padding: 9px 10px;
+              text-align: left;
+              vertical-align: top;
+              line-height: 1.4;
+            }
+            th {
+              background-color: #f8fafc;
+              color: #1e293b;
+              font-weight: 700;
+              text-transform: uppercase;
+              font-size: 10px;
+              letter-spacing: 0.4px;
+            }
+            tbody tr:nth-child(even) {
+              background-color: #f8fafc;
+            }
+            .ficha-nombre {
+              font-weight: 700;
+              color: #0f172a;
+            }
+            .tematica-pill {
+              display: inline-flex;
+              align-items: center;
+              gap: 5px;
+              font-size: 10.5px;
+              font-weight: 600;
+              padding: 2px 8px;
+              border-radius: 999px;
+              white-space: nowrap;
+            }
+            .tematica-dot {
+              width: 7px;
+              height: 7px;
+              border-radius: 50%;
+              display: inline-block;
+              flex-shrink: 0;
+            }
+            .ficha-link {
+              font-weight: 600;
+              color: #0369a1;
+              text-decoration: underline;
+              white-space: nowrap;
+            }
+            .muted {
+              color: #94a3b8;
+              font-style: italic;
+            }
+            .empty {
+              text-align: center;
+              color: #64748b;
+              font-style: italic;
+              padding: 16px;
+            }
+            @page {
+              margin: 12mm;
+            }
+            @media print {
+              body {
+                margin: 0;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <h2>${tituloTerritorio}</h2>
+          <div class="meta">
+            Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de elementos: ${totalVisible}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Descripción / Resumen</th>
+                <th>Temática</th>
+                <th>Enlace</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${htmlFilas}
+            </tbody>
+          </table>
+          <script>
+            window.onload = function() {
+              setTimeout(() => {
+                window.print();
+              }, 300);
+            };
+          </script>
+        </body>
+      </html>
+    `;
 
     ventanaImpresion.document.write(contenidoHtml);
     ventanaImpresion.document.close();

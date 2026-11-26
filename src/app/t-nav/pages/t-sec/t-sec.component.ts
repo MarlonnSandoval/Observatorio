@@ -45,7 +45,7 @@ export class TSecComponent implements AfterViewInit, OnChanges {
   @Input() sectorData: ContenidoSector | null = null;
 
   readonly categoriesBase: (keyof ContenidoSector)[] = ['Tendencias'];
-  readonly categoriasElementos: string[] = ['Tendencias'];
+  readonly categoriasElementos: string[] = ['Ambiental', 'Social', 'Económica', 'Tecnológica', 'Política', 'Actitud, valores y ética'];
 
   readonly subcategoriasTendencia: { key: SubtipoTendencia; label: string }[] = [
     { key: 'caracterizan', label: 'Tendencias que caracterizan al sector' },
@@ -66,6 +66,25 @@ export class TSecComponent implements AfterViewInit, OnChanges {
 
   toggleCategoria(cat: string): void {
     this.categoriaColapsada[cat] = !this.categoriaColapsada[cat];
+  }
+
+  // Agrupa los artículos de una categoría por temática (conservando el orden de aparición)
+  getGruposPorTematica(categoria: string): { tematica: string; articulos: FilaArticulo[] }[] {
+    const items = this.getArticulosPorCategoria(categoria);
+    const mapa = new Map<string, FilaArticulo[]>();
+
+    for (const art of items) {
+      const clave = art.tematica?.trim() || 'General';
+      if (!mapa.has(clave)) {
+        mapa.set(clave, []);
+      }
+      mapa.get(clave)!.push(art);
+    }
+
+    return Array.from(mapa.entries()).map(([tematica, articulos]) => ({
+      tematica,
+      articulos,
+    }));
   }
 
   toggleTematica(tema: string): void {
@@ -364,6 +383,20 @@ export class TSecComponent implements AfterViewInit, OnChanges {
     return this.filasElementos.filter(f => f.subtipoTendencia === subtipo);
   }
 
+  /**
+   * Devuelve { caracterizan, afectan } de una temática concreta para el sector activo.
+   * Se usa en el template con `*ngIf="getTendenciasPorTematica(tematica) as grupo"`.
+   */
+  getTendenciasPorTematica(tematica: string): { caracterizan: ArticuloRadar[]; afectan: ArticuloRadar[] } {
+    const sectorNombre = this.sectorSeleccionado || this.selectedSector;
+    const sector = (sectorNombre ? (this.sectorData || SECTOR_DATABASE[sectorNombre]) : null) as ContenidoSector | null;
+    const detalle = sector?.[tematica as keyof ContenidoSector] as import('./articles-database.data').CategoriaTendenciasDetalle | undefined;
+    return {
+      caracterizan: detalle?.caracterizan ?? [],
+      afectan: detalle?.afectan ?? [],
+    };
+  }
+
   getArticulosPorCategoria(categoria: string): FilaArticulo[] {
     return this.filasElementos.filter(f => f.categoria === categoria);
   }
@@ -417,9 +450,12 @@ export class TSecComponent implements AfterViewInit, OnChanges {
     }
     return { border: '#bababa', badgeBg: 'rgb(232, 242, 255)', badgeText: '#000000' };
   }
-
   descargarLista(): void {
-    if (!this.sectorSeleccionado) return;
+    const sectorActivo = this.sectorSeleccionado || this.selectedSector;
+    if (!sectorActivo) {
+      alert('Por favor, seleccione un sector primero.');
+      return;
+    }
 
     const ventanaImpresion = window.open('', '_blank');
     if (!ventanaImpresion) {
@@ -427,89 +463,247 @@ export class TSecComponent implements AfterViewInit, OnChanges {
       return;
     }
 
-    const filasBase = this.hayFiltroElementos
-      ? this.filasElementosFiltradas
-      : this.filasElementos;
+    const colorSector = this.obtenerColorSector(sectorActivo);
 
-    const color = this.getCategoryColorData('Tendencias').border;
+    const escapeHtml = (valor: unknown): string =>
+      String(valor ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 
-    const subseccionesHtml = this.subcategoriasTendencia
-      .map((sub) => {
-        const itemsSub = filasBase.filter((item) => item.subtipoTendencia === sub.key);
-        const itemsHtml =
-          itemsSub.length > 0
-            ? itemsSub
-              .map((art) => {
-                const tituloMostrar = art.titulo || art.tituloCorto || '';
-                const resumenMostrar = art.resumen || 'Sin resumen disponible.';
-                const urlMostrar = art.url || '#';
-                const tematicaMostrar = art.tematica || 'Sin Temática disponible.';
+    // Recopilamos todos los elementos del sector usando la misma fuente de la vista
+    interface FilaExportacion {
+      nombre: string;
+      descripcion: string;
+      relación: 'Caracteriza al sector' | 'Afecta al sector';
+      tipoClase: 'caracteriza' | 'impacta';
+      tematica: string;
+      url: string;
+    }
 
-                return `
-                  <article class="ficha-item">
-                    <div class="ficha-titulo">${tituloMostrar}</div>
-                    <p class="ficha-resumen">${resumenMostrar}</p>
-                    <p class="ficha-tematica">${tematicaMostrar}</p>
-                    <a class="ficha-url" href="${urlMostrar}" target="_blank">Ingresar a la ficha</a>
-                  </article>
-                `;
-              })
-              .join('')
-            : `<p class="empty">Sin tendencias registradas en esta sección.</p>`;
+    const filasExportar: FilaExportacion[] = [];
 
-        return `
-          <div class="subbloque">
-            <div class="subbloque-titulo">${sub.label} (${itemsSub.length})</div>
-            <div class="subbloque-items">${itemsHtml}</div>
-          </div>
+    for (const tematica of this.categoriasElementos) {
+      const grupo = this.getTendenciasPorTematica(tematica);
+      if (!grupo) continue;
+
+      for (const art of grupo.caracterizan ?? []) {
+        filasExportar.push({
+          nombre: art.titulo || art.tituloCorto || 'Sin título',
+          descripcion: art.resumen || 'Sin resumen disponible.',
+          relación: 'Caracteriza al sector',
+          tipoClase: 'caracteriza',
+          tematica,
+          url: (art.url || '').toString().trim(),
+        });
+      }
+
+      for (const art of grupo.afectan ?? []) {
+        filasExportar.push({
+          nombre: art.titulo || art.tituloCorto || 'Sin título',
+          descripcion: art.resumen || 'Sin resumen disponible.',
+          relación: 'Afecta al sector',
+          tipoClase: 'impacta',
+          tematica,
+          url: (art.url || '').toString().trim(),
+        });
+      }
+    }
+
+    const htmlFilas =
+      filasExportar.length > 0
+        ? filasExportar
+          .map((item) => {
+            const tematicaColor = this.getTematicaColorData(item.tematica);
+
+            const tematicaHtml = `
+              <span class="pill" style="background-color: ${tematicaColor.badgeBg}; color: ${tematicaColor.badgeText};">
+                <span class="dot" style="background-color: ${tematicaColor.border};"></span>
+                ${escapeHtml(item.tematica)}
+              </span>
+            `;
+
+            const relacionHtml =
+              item.tipoClase === 'caracteriza'
+                ? `<span class="badge-rel badge-caracteriza">Caracteriza</span>`
+                : `<span class="badge-rel badge-impacta">Afecta</span>`;
+
+            const enlaceHtml = item.url
+              ? `<a class="ficha-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">↗ Abrir ficha</a>`
+              : `<span class="muted">No disponible</span>`;
+
+            return `
+              <tr>
+                <td><div class="ficha-nombre">${escapeHtml(item.nombre)}</div></td>
+                <td>${relacionHtml}</td>
+                <td>${tematicaHtml}</td>
+                <td>${escapeHtml(item.descripcion)}</td>
+                <td>${enlaceHtml}</td>
+              </tr>
+            `;
+          })
+          .join('')
+        : `
+          <tr>
+            <td colspan="5" class="empty">Sin elementos registrados para este sector.</td>
+          </tr>
         `;
-      })
-      .join('');
 
-    const seccionesHtml = `
-      <section class="bloque">
-        <div class="bloque-titulo" style="color: ${color};">Tendencias</div>
-        <div class="bloque-header" style="background-color: ${color};">${filasBase.length} tendencias</div>
-        <div class="bloque-body" style="border-color: ${color};">${subseccionesHtml}</div>
-      </section>
-    `;
-
-    const tituloSector = this.sectorSeleccionado;
-    const totalVisible = filasBase.length;
+    const tituloSector = escapeHtml(sectorActivo);
 
     const contenidoHtml = `
     <!DOCTYPE html>
     <html lang="es">
       <head>
         <meta charset="UTF-8">
-        <title>Reporte del sector - ${tituloSector}</title>
+        <title>${tituloSector}</title>
         <style>
-          body { font-family: Roboto, Arial, sans-serif; color: #1e293b; margin: 28px; }
-          h2 { color: #2A68A2; margin: 0 0 6px; font-size: 22px; }
-          .meta { color: #64748b; font-size: 12px; margin-bottom: 20px; }
-          .bloque { margin-bottom: 18px; break-inside: avoid; }
-          .bloque-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
-          .bloque-header { color: #ffffff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px 6px 0 0; }
-          .bloque-body { display: flex; flex-direction: column; gap: 16px; padding: 12px; border: 1.5px solid; border-top: none; border-radius: 0 0 8px 8px; background: #ffffff; }
-          .subbloque-titulo { font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-          .subbloque-items { display: flex; flex-direction: column; gap: 8px; }
-          .ficha-item { padding: 8px 12px; border-radius: 4px; background: #f8fafc; break-inside: avoid; }
-          .ficha-titulo { font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-          .ficha-resumen { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
-          .ficha-tematica { font-size: 11.5px; color: #475569; margin: 0; line-height: 1.45; }
-          .ficha-url { font-size: 11.5px; color: #006aff; margin: 0; line-height: 1.45; }
-          .empty { color: #64748b; font-size: 11.5px; font-style: italic; margin: 0; }
-          @media print { body { margin: 14px; } }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            box-sizing: border-box;
+          }
+          body {
+            font-family: Roboto, Arial, sans-serif;
+            color: #1e293b;
+            margin: 20px 28px;
+          }
+          h2 {
+            color: ${escapeHtml(colorSector)};
+            margin: 0 0 4px;
+            font-size: 22px;
+            page-break-after: avoid;
+            break-after: avoid;
+          }
+          .meta {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 14px;
+            page-break-after: avoid;
+            break-after: avoid;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            font-size: 11px;
+          }
+          thead {
+            display: table-header-group;
+          }
+          tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+          th, td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.4;
+          }
+          th {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.4px;
+          }
+          tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+          }
+          .ficha-nombre {
+            font-weight: 700;
+            color: #0f172a;
+          }
+          .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 999px;
+            white-space: nowrap;
+          }
+          .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+          }
+          .badge-rel {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+          }
+          .badge-caracteriza {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+          }
+          .badge-impacta {
+            background-color: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+          }
+          .ficha-link {
+            font-weight: 600;
+            color: #0369a1;
+            text-decoration: underline;
+            white-space: nowrap;
+          }
+          .muted {
+            color: #94a3b8;
+            font-style: italic;
+          }
+          .empty {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            padding: 16px;
+          }
+          @page {
+            margin: 12mm;
+          }
+          @media print {
+            body {
+              margin: 0;
+            }
+          }
         </style>
       </head>
       <body>
-        <h2>Tendencias del sector - ${tituloSector}</h2>
+        <h2>${tituloSector}</h2>
         <div class="meta">
-          Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de tendencias: ${totalVisible}
+          Fecha de generación: ${new Date().toLocaleDateString('es-PE')} | Total de elementos: ${filasExportar.length}
         </div>
-        ${seccionesHtml}
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tendencia que</th>
+              <th>Temática</th>
+              <th>Sumilla</th>
+              <th>Enlace</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${htmlFilas}
+          </tbody>
+        </table>
         <script>
-          window.onload = function() { setTimeout(() => window.print(), 300); };
+          window.onload = function() {
+            setTimeout(() => {
+              window.print();
+            }, 300);
+          };
         </script>
       </body>
     </html>
@@ -527,23 +721,15 @@ export class TSecComponent implements AfterViewInit, OnChanges {
 
   private construirTablas(): void {
     this.categoriaColapsada = {};
+    this.categoriasElementos.forEach((cat, index) => {
+      this.categoriaColapsada[cat] = index !== 0;
+    });
+
     this.tematicaActiva = null;
+    this.filasElementos = this.categoriasElementos.flatMap((cat) =>
+      this.getArticulosPorCategoria(cat).map((a) => ({ ...a, categoria: cat } as FilaArticulo))
+    );
 
-    const tendencias = this.getTendenciasDetalle();
-
-    const caracterizan: FilaArticulo[] = (tendencias?.caracterizan ?? []).map((a) => ({
-      ...a,
-      categoria: 'Tendencias',
-      subtipoTendencia: 'caracterizan',
-    }));
-
-    const afectan: FilaArticulo[] = (tendencias?.afectan ?? []).map((a) => ({
-      ...a,
-      categoria: 'Tendencias',
-      subtipoTendencia: 'afectan',
-    }));
-
-    this.filasElementos = [...caracterizan, ...afectan];
     this.temasElementos = this.unicos(this.filasElementos.map((f) => f.tematica));
     this.filtroElementos = { texto: '', tipo: '', tema: '', periodo: '' };
   }

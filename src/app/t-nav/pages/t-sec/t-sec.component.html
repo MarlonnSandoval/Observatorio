@@ -51,30 +51,32 @@
   <div class="row g-4 mb-5">
 
     <!-- ESTADO INICIAL: RADAR SECTORIAL AMPLIO -->
-    <div class="col-12" *ngIf="!sectorSeleccionado">
-      <div class="sectorial-landing card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white">
+    <div class="sectorial-landing card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
 
-        <div class="sectorial-onboarding-header">
-          <div class="sectorial-onboarding-badge">
-            <i class="bi bi-cursor-fill" aria-hidden="true"></i>
-            Elige un sector para comenzar
-          </div>
-          <h5 class="sectorial-onboarding-title">
-            ¿Qué tendencias marcarán a los sectores en el Perú al 2050?
-          </h5>
-          <p class="sectorial-onboarding-desc">
-            Haz clic en cualquier sector de la rueda para consultar sus <strong>tendencias</strong>
-            divididas en las que caracterizan y las que afectan al sector.
-          </p>
+      <!-- ENCABEZADO CON INSTRUCCIÓN -->
+      <div class="sectorial-onboarding-header" [class.d-none]="sectorSeleccionado">
+        <div class="sectorial-onboarding-badge">
+          <i class="bi bi-cursor-fill" aria-hidden="true"></i>
+          Elige un sector para comenzar
         </div>
-
-        <div class="w-100 d-flex flex-column justify-content-center align-items-center">
-          <div id="megas-draw" class="sectorial-wheel w-100 position-relative">
-            <div #svgContainer class="w-100 position-relative"></div>
-          </div>
-        </div>
-
+        <h5 class="sectorial-onboarding-title">
+          ¿Qué fuerzas de cambio marcarán en el Perú al 2050?
+        </h5>
+        <p class="sectorial-onboarding-desc">
+          Haz clic en cualquier sector para activar su análisis: verás sus escenarios posibles al 2050, y
+          sus tendencias, riesgos, oportunidades, cartas salvajes y señales debiles para el
+          análisis prospectivo.
+        </p>
       </div>
+
+      <!-- GRÁFICO SVG -->
+      <div class="w-100 d-flex flex-column justify-content-center align-items-center"
+        [class.d-none]="sectorSeleccionado">
+        <div id="megas-draw" class="sectorial-wheel w-100 position-relative">
+          <div #svgContainer class="w-100 position-relative"></div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ESTADO ACTIVO: SECTORES A LA IZQUIERDA + TENDENCIAS A LA DERECHA -->
@@ -104,103 +106,105 @@
           <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
 
             <!-- Cabecera del sector + acciones -->
-            <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-3 pb-2 border-bottom">
-              <h2 class="fw-bold text-dark m-0">
+            <div>
+              <h2 class="fw-bold text-dark mb-3">
                 {{ sectorSeleccionado }}
               </h2>
+            </div>
 
+            <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
               <div class="d-flex gap-2 align-items-center">
                 <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="descargarLista()">
                   <i aria-hidden="true" class="pi pi-download me-1"></i>
                   Descargar lista en PDF
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-danger" (click)="cerrarPanel()"
-                  aria-label="Cerrar panel">
-                  <i class="bi bi-x-lg"></i>
-                </button>
               </div>
-            </div>
-
-            <!-- Filtro de temáticas -->
-            <div class="tematica-legend mb-3" *ngIf="temasElementos.length > 0">
-              <span class="tematica-legend-label">Temáticas:</span>
-              <button *ngFor="let t of temasElementos" type="button" class="tematica-legend-chip"
-                [class.tematica-legend-chip--active]="tematicaActiva === t"
-                [style.borderColor]="getTematicaColorData(t).border"
-                [style.backgroundColor]="tematicaActiva === t ? getTematicaColorData(t).badgeBg : '#fff'"
-                [style.color]="tematicaActiva === t ? getTematicaColorData(t).badgeText : '#1e293b'"
-                (click)="toggleTematica(t)" [attr.aria-pressed]="tematicaActiva === t">
-                <span class="tematica-dot" [style.backgroundColor]="getTematicaColorData(t).border"></span>
-                {{ t }}
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="cerrarPanel()"
+                aria-label="Cerrar panel">
+                <i class="bi bi-x-lg"></i>
               </button>
             </div>
 
-            <!-- Bloque de tendencias dividido en Caracterizan y Afectan -->
-            <div class="categoria-bloque mb-3" [class.categoria-bloque--collapsed]="categoriaColapsada['Tendencias']">
+            <!-- Bloques por temática: cada uno desplegable, con subsecciones "Caracterizan" y "Afectan" -->
+            <ng-container *ngFor="let tematica of categoriasElementos; let i = index">
+              <ng-container *ngIf="getTendenciasPorTematica(tematica) as grupo">
 
-              <button type="button" class="categoria-header w-100 text-start border-0"
-                [style.backgroundColor]="getCategoryColorData('Tendencias').border"
-                (click)="toggleCategoria('Tendencias')"
-                [attr.aria-expanded]="!categoriaColapsada['Tendencias']">
-                <span class="d-flex justify-content-between align-items-center">
-                  <span>
-                    <i class="bi me-2" [class.bi-chevron-down]="!categoriaColapsada['Tendencias']"
-                      [class.bi-chevron-right]="categoriaColapsada['Tendencias']" aria-hidden="true"></i>
-                    {{ filasElementos.length }} tendencias
-                  </span>
-                  <span class="categoria-header-count badge bg-white"
-                    [style.color]="getCategoryColorData('Tendencias').border">
-                    {{ filasElementos.length }}
-                  </span>
-                </span>
-              </button>
+                <div class="categoria-bloque mb-3" [class.categoria-bloque--collapsed]="categoriaColapsada[tematica]"
+                  *ngIf="grupo.caracterizan.length > 0 || grupo.afectan.length > 0">
 
-              <div class="categoria-box flex-column align-items-stretch gap-3"
-                [style.borderColor]="getCategoryColorData('Tendencias').border"
-                *ngIf="!categoriaColapsada['Tendencias']">
-
-                <ng-container *ngIf="filasElementos.length > 0; else sinElementos">
-                  <div *ngFor="let sub of subcategoriasTendencia" class="w-100">
-                    <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom">
-                      <span class="fw-bold text-secondary small text-uppercase">
-                        {{ sub.label }}
+                  <!-- Cabecera desplegable de la temática -->
+                  <button type="button" class="categoria-header w-100 text-start border-0"
+                    [style.backgroundColor]="getTematicaColorData(tematica).border" (click)="toggleCategoria(tematica)"
+                    [attr.aria-expanded]="!categoriaColapsada[tematica]">
+                    <span class="d-flex justify-content-between align-items-center">
+                      <span>
+                        <i class="bi me-2" [class.bi-chevron-down]="!categoriaColapsada[tematica]"
+                          [class.bi-chevron-right]="categoriaColapsada[tematica]" aria-hidden="true"></i>
+                        {{ tematica }}
                       </span>
-                      <span class="badge bg-light text-dark border">
-                        {{ getArticulosPorSubtipo(sub.key).length }}
+                      <span class="categoria-header-count badge bg-white"
+                        [style.color]="getTematicaColorData(tematica).border">
+                        {{ grupo.caracterizan.length + grupo.afectan.length }}
                       </span>
+                    </span>
+                  </button>
+
+                  <!-- Cuerpo colapsable con dos subsecciones -->
+                  <div class="categoria-box" [style.borderColor]="getTematicaColorData(tematica).border"
+                    *ngIf="!categoriaColapsada[tematica]">
+
+                    <!-- SUB-BLOQUE: Tendencias que CARACTERIZAN -->
+                    <div class="subbloque mb-3" *ngIf="grupo.caracterizan.length > 0">
+                      <div class="subbloque-titulo">
+                        <strong>Tendencias que caracterizan al sector </strong>
+                        <span class="subbloque-count">({{ grupo.caracterizan.length }})</span>
+                        <hr>
+                      </div>
+                      <div class="d-flex flex-wrap gap-2 mt-2">
+                        <a *ngFor="let art of grupo.caracterizan" [href]="art.url" target="_blank"
+                          rel="noopener noreferrer" class="categoria-chip"
+                          [attr.title]="(art.tituloCorto || art.titulo) + (art.horizonte ? ' · ' + art.horizonte : '')"
+                          [style.borderColor]="getTematicaColorData(tematica).border"
+                          [style.--chip-hover-bg]="getTematicaColorData(tematica).badgeBg"
+                          [style.--chip-hover-text]="getTematicaColorData(tematica).badgeText">
+                          <span class="chip-tematica-dot"
+                            [style.backgroundColor]="getTematicaColorData(tematica).border"></span>
+                          {{ art.tituloCorto || art.titulo }}
+                        </a>
+                      </div>
                     </div>
 
-                    <div class="tendencias-grid w-100"
-                      *ngIf="getArticulosPorSubtipo(sub.key).length > 0; else sinSubElementos">
-                      <a *ngFor="let art of getArticulosPorSubtipo(sub.key)" [href]="art.url" target="_blank"
-                        rel="noopener noreferrer" class="categoria-chip"
-                        [class.categoria-chip--dimmed]="tematicaActiva !== null && tematicaActiva !== art.tematica"
-                        [class.categoria-chip--highlighted]="tematicaActiva !== null && tematicaActiva === art.tematica"
-                        [attr.title]="(art.tituloCorto || art.titulo) + (art.tematica ? ' · ' + art.tematica : '') + (art.horizonte ? ' · ' + art.horizonte : '')"
-                        [style.borderColor]="getCategoryColorData('Tendencias').border"
-                        [style.--chip-hover-bg]="getCategoryColorData('Tendencias').badgeBg"
-                        [style.--chip-hover-text]="getCategoryColorData('Tendencias').badgeText">
-                        <span class="chip-tematica-dot"
-                          [style.backgroundColor]="getTematicaColorData(art.tematica).border"
-                          [attr.title]="art.tematica || 'General'"></span>
-                        {{ art.tituloCorto || art.titulo }}
-                      </a>
+                    <!-- SUB-BLOQUE: Tendencias que AFECTAN -->
+                    <div class="subbloque" *ngIf="grupo.afectan.length > 0">
+                      <div class="subbloque-titulo subbloque-titulo--afectan">
+                        <strong>Tendencias que afectan al sector </strong>
+                        <span class="subbloque-count">({{ grupo.afectan.length }})</span>
+                        <hr>
+                      </div>
+                      <div class="d-flex flex-wrap gap-2 mt-2">
+                        <a *ngFor="let art of grupo.afectan" [href]="art.url" target="_blank" rel="noopener noreferrer"
+                          class="categoria-chip categoria-chip--afectan"
+                          [attr.title]="(art.tituloCorto || art.titulo) + (art.horizonte ? ' · ' + art.horizonte : '')"
+                          [style.borderColor]="getTematicaColorData(tematica).border"
+                          [style.--chip-hover-bg]="getTematicaColorData(tematica).badgeBg"
+                          [style.--chip-hover-text]="getTematicaColorData(tematica).badgeText">
+                          <span class="chip-tematica-dot"
+                            [style.backgroundColor]="getTematicaColorData(tematica).border"></span>
+                          {{ art.tituloCorto || art.titulo }}
+                        </a>
+                      </div>
                     </div>
 
-                    <ng-template #sinSubElementos>
-                      <span class="text-muted small fst-italic">Sin tendencias registradas en esta sección.</span>
-                    </ng-template>
+                    <!-- Fallback vacío -->
+                    <ng-container *ngIf="grupo.caracterizan.length === 0 && grupo.afectan.length === 0">
+                      <span class="text-muted small fst-italic">Sin elementos registrados para este sector.</span>
+                    </ng-container>
+
                   </div>
-                </ng-container>
+                </div>
 
-                <ng-template #sinElementos>
-                  <span class="text-muted small fst-italic">Sin tendencias registradas para este sector.</span>
-                </ng-template>
-
-              </div>
-
-            </div>
-
+              </ng-container>
+            </ng-container>
           </div>
         </div>
 

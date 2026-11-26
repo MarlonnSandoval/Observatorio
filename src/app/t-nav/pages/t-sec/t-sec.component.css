@@ -81,7 +81,7 @@
 }
 
 /* El span de texto dentro del chip puede truncar si se prefiere */
-.sector-chip > span:last-child {
+.sector-chip>span:last-child {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -303,4 +303,32 @@
   .sector-strip-scroller {
     max-height: 240px;
   }
+}
+
+.tematica-grupo {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.tematica-grupo:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.tematica-grupo-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.tematica-grupo-count {
+  font-weight: 600;
+  color: #64748b;
+  font-size: 0.78rem;
 }

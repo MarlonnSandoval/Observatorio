@@ -2,7 +2,7 @@ export interface Tendencia {
   titulo: string;
   categoriaId: string;
   ruta: string;
-}
+} 
 
 export interface Categoria {
   id: string;
