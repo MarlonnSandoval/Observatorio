@@ -161,6 +161,9 @@ html {
 /* 3. COLUMNA DERECHA: EXCEL (NO STICKY) */
 .download-box {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .download-box h2 {

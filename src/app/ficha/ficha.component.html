@@ -1,379 +1,1040 @@
-<div class="page-container">
-  <div class="ficha-body">
-
-    <!-- 1. COLUMNA IZQUIERDA: NAVEGACIÓN STICKY -->
-    <aside class="sidebar-left">
-      <nav class="sticky-nav" aria-label="Índice del documento">
-        <span class="nav-header">ÍNDICE</span>
-        <ul>
-          <li><button (click)="scrollToSection('sumilla')">1. Sumilla</button></li>
-          <li><button (click)="scrollToSection('resumen')">2. Resumen</button></li>
-          <li><button (click)="scrollToSection('figura1')">3. Figura 1. Población que utiliza servicios de saneamiento
-              gestionados sin riesgos</button></li>
-          <li><button (click)="scrollToSection('figura2')">4. Figura 2. Hogares rurales con saneamiento básico</button></li>
-          <li><button (click)="scrollToSection('figura3')">5. Figura 3. Población que dispone de agua por red
-              pública</button></li>
-          <li><button (click)="scrollToSection('figura4')">5. Figura 4. Hogares con cloro residual adecuado en el agua
-              de consumo</button></li>
-          <li><button (click)="scrollToSection('tabla1')">6. Tabla 1. evolución de cobertura de agua potable y
-              saneamiento</button></li>
-          <li><button (click)="scrollToSection('recomendaciones')">7. Recomendaciones estratégicas</button></li>
-          <li><button (click)="scrollToSection('referencias')">8. Referencias bibliográficas</button></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- 2. COLUMNA CENTRAL: TEXTO PRINCIPAL -->
-    <main class="main-content">
-
-      <h1 class="main-title">
-        Aumento del acceso seguro a agua y saneamiento en Apurímac
-      </h1>
-
-      <p id="sumilla" class="lead-text">
-        Para 2030, se espera que el acceso seguro a agua y saneamiento en Apurímac continúe mejorando, aunque con un
-        ritmo moderado. La situación histórica muestra un avance, ya que el saneamiento gestionado sin riesgos se
-        incrementó del 38,9 % en 2011 al 72,7 % en 2025, aunque todavía se mantiene por debajo del promedio nacional,
-        que llegó a un 80,0 %, y de la Macrorregión Sur, que alcanzó el 77,8 %. A su vez, el acceso al agua por red
-        pública se mantuvo en niveles altos, al pasar del 93,3 % en 2013 al 97,0 % en 2025; sin embargo, la calidad del
-        agua revela una brecha persistente, porque los hogares con niveles adecuados de cloro residual apenas aumentaron
-        del 6,9 % en 2020 al 11,1 % en 2025, muy por debajo de la Macrorregión Sur, con un 40,5 %, y del promedio
-        nacional, con un 38,4 %.
-      </p>
-
-      <div class="meta-dates omitir">
-        <span class="meta-item"><span class="meta-line"></span> Publicación: septiembre 2026</span>
-        <span class="meta-item">Actualización: julio 2026</span>
+<div id="cont-div" class="container container-ficha print-ready">
+  <div class="print-only-header">
+    <div class="print-report-bar"> Reporte de tendencia territorial [e2_cp] </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 no-print">
+      <aside aria-label="Índice de la ficha" class="ficha-index"><span class="ficha-index-title">ÍNDICE</span>
+        <nav><button type="button">1. Sumilla</button><button type="button">2. Introducción</button><button
+            type="button"> 3. Perú: Mapa de Susceptibilidad por Sismo – 2025. </button><button type="button"> 4.
+            Implicancias del escenario con las temáticas del PEDN al 2050
+          </button><button type="button"> 5. Implicancias para el desarrollo de las
+            personas en el 2050 </button><button type="button"> 6. Estimaciones del Índice
+            de Desarrollo Humano (a), la tasa de AVISA (b) y la desnutrición crónica infantil en puntos porcentuales
+            (c), según tres escenarios, en el periodo 2020-2050. </button><button type="button"> 7. Implicancias para la
+            sostenibilidad del territorio en el 2050 </button><button type="button"> 8. Estimaciones de largo plazo de
+            las emisiones netas de CO2
+            equivalente (millones de toneladas, izquierda) y de la pérdida de cobertura boscosa (miles de hectáreas,
+            derecha), según tres escenarios en el periodo 2020-2050. </button><button type="button"> 9. Implicancias
+            para la competitividad e innovación al 2050 </button><button type="button"> 10. Estimaciones de largo plazo
+            del PBI real per cápita
+            (derecha), gasto de capital en infraestructura (izquierda), según tres escenarios en el periodo 2020-2050.
+          </button><button type="button"> 11. Implicancias para la democracia y paz en el
+            2050 </button><button type="button"> 12. Estimaciones del porcentaje de la
+            población urbana víctima de algún hecho delictivo (izquierda) e incidencia de pobreza monetaria en
+            porcentaje (derecha), según tres escenarios en el periodo 2020-2050. </button><button type="button"> 13.
+            Principales implicancias estratégicas para el desarrollo
+            nacional </button><button type="button"> 14. Objetivos nacionales y retos
+            estructurales en el PEDN al 2050, asociados al escenario de desastre mayor. </button><button type="button">
+            15. Opciones estratégicas </button><button type="button"> 16. escenario de </button><button type="button">
+            17. Desarrollar y reforzar infraestructuras críticas como hospitales, escuelas y sistemas de
+            agua potable: </button><button type="button"> 18. Implementar sistemas de
+            alerta temprana y protocolos de evacuación en zonas vulnerables: </button><button type="button"> 19.
+            Referencias bibliográficas </button></nav>
+      </aside>
+    </div>
+    <div class="col-lg-8 col-12" style="position: relative;">
+      <h2 class="title-ficha">Escenario de desastre mayor</h2>
+      <div class="share-inline-mobile no-print"><a target="_blank" title="Compartir por WhatsApp"
+          href="https://wa.me/?text=https%3A%2F%2Fobservatorio.ceplan.gob.pe%2Fficha%2Fe2_cp"><i
+            class="fa-brands fa-whatsapp"></i></a><a target="_blank" title="Compartir en LinkedIn"
+          href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fobservatorio.ceplan.gob.pe%2Fficha%2Fe2_cp"><i
+            class="fa-brands fa-linkedin"></i></a><a target="_blank" title="Compartir en Facebook"
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fobservatorio.ceplan.gob.pe%2Fficha%2Fe2_cp"><i
+            class="fa-brands fa-facebook"></i></a><a target="_blank" title="Compartir en X"
+          href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fobservatorio.ceplan.gob.pe%2Fficha%2Fe2_cp&amp;text=Escenario%20de%20desastre%20mayor"><i
+            class="fa-brands fa-x-twitter"></i></a><span style="position: relative; display: inline-block;"><a
+            title="Copiar enlace" style="cursor: pointer;"><i class="fa-solid fa-link"></i></a></span>
       </div>
-
-      <!-- Reproductor de Audio Flotante / Superior -->
-      <!-- Se quitaron las clases de utilidad (bg-slate-900, p-2, rounded-lg, etc.):
-           duplicaban o entraban en conflicto con los estilos ya definidos en el CSS
-           del componente (.audio-player-bar, .play-btn, .stop-btn, .audio-info). -->
-      <div class="audio-player-bar">
-        <button (click)="togglePlayPause()" class="btn-audio play-btn" [attr.aria-label]="isPlaying ? 'Pausar lectura' : 'Reproducir lectura'">
-          <span *ngIf="!isPlaying">▶</span>
-          <span *ngIf="isPlaying">⏸</span>
-        </button>
-
-        <button (click)="stopAudio()" [disabled]="!isPlaying && !isPaused" class="btn-audio stop-btn" aria-label="Detener lectura">
-          ⏹
-        </button>
-
-        <div class="audio-info">
-          <span>Escuchar la ficha: Aumento del acceso seguro a agua y saneamiento en Apurímac</span>
+      <div id="speech-content">
+        <div class="detail-ficha"></div>
+        <div id="sumilla" class="summary-ficha">El sismo de 8.8 Mw seguido de un devastador
+          tsunami en 2026 en la costa central del país marcó un punto de inflexión trágico. La catástrofe causó más de
+          115,000 muertes, colapsó infraestructura crítica y dejó a 3.47 millones de habitantes urbanos sin acceso a
+          agua potable.
+          Este evento expuso la profunda fragilidad estructural del Estado, exacerbada por la corrupción, la escasa
+          preparación ante desastres y la inestabilidad política previa, lo que superó la capacidad de respuesta y
+          retrasó la ayuda.
+          En los años siguientes, la reconstrucción fue desigual: se priorizaron las zonas urbanas de mayor valor
+          económico, lo que profundizó las desigualdades regionales y provocó una migración masiva hacia las ciudades,
+          intensificando la presión social y los disturbios. Mirando hacia 2050, el Perú logró una recuperación parcial,
+          pero arrastra secuelas. Persiste una desconfianza estructural hacia las instituciones públicas y una
+          vulnerabilidad territorial latente, limitando el avance sostenido del desarrollo nacional y el cumplimiento de
+          las metas del PEDN.
         </div>
       </div>
+      <div class="info-ficha">
+        <div class="col-md-8">
+          <div class="date-container"><small>Publicación:
+              enero 2021</small><small>Actualización: diciembre 2025</small>
+          </div>
+        </div>
+      </div>
+      <div role="region" aria-label="Audio descriptivo" class="audio-player-bar no-print">
+        <button type="button" class="btn-audio play-btn" aria-label="Reproducir lectura"><span>▶</span></button><button
+          type="button" aria-label="Detener lectura" class="btn-audio stop-btn" disabled="">■</button><span
+          class="audio-info">Escuchar la ficha: Escenario de
+          desastre mayor</span>
+      </div>
+      <div class="div-section"><img class="img-fluid img-ficha"
+          src="https://observatorio.ceplan.gob.pe/uploads/KN-EJzGJiccrsLuixU_PjJpk.png"
+          alt="Escenario de desastre mayor"></div>
+      <div id="contenido"></div>
+      <div class="div-section" id="section-105">
+        <div class="div-subsection" id="subsection-13481">
+          <div style="margin-bottom: 1rem;">En el 2050, el Perú aún enfrentaba desafíos
+            significativos en términos de infraestructura, planificación urbana y preparación para desastres naturales
+            <a href="https://doi.org/10.31381/paideia.v11i1.3783" rel="noopener noreferrer" target="_blank">[1]</a>.
+            Pese a los esfuerzos para mejorar la resiliencia del país, la falta de inversión sostenida y la corrupción
+            en la administración pública limitaron el impacto de estas iniciativas <a
+              href="https://agris.fao.org/search/zh/records/679bb042969e37f4377013ba" rel="noopener noreferrer"
+              target="_blank">[2]</a>.
+          </div>
 
-      <!-- SECCIONES EN ALINEACIÓN VERTICAL DIRECTA CON EL ENCABEZADO -->
-      <article class="sections-wrapper">
+        </div>
+        <div class="div-subsection" id="subsection-13483">
+          <div style="margin-bottom: 1rem;">En el 2020, la pandemia de COVID-19 en el Perú
+            desencadenó una crisis multifacética que abarcó los ámbitos sanitario, económico y social. Durante 2020 y
+            2021, la población mostró un descontento considerable debido a las deficiencias en la atención médica, el
+            cierre de empresas y el aumento del desempleo, lo que a su vez incrementó los niveles de pobreza. Para
+            controlar la mortalidad, el gobierno implementó el plan de vacunación intensivo en 2021 y 2022, y el plan de
+            reactivación económica que incluía bonos para la población vulnerable. Sin embargo, este proceso coincidió
+            con la inestabilidad política posterior a las elecciones presidenciales del año 2021, lo que generó
+            incertidumbre económica y afectó la confianza de los inversionistas.</div>
 
-        <section class="section-block">
-          <img
-            src="https://observatorio.ceplan.gob.pe/uploads/sT-FKgDiIVVc-4Q-VJmq9rvW.png"
-            alt="Mapa e indicadores de acceso a agua y saneamiento en la región Apurímac"
-            class="section-image"
-            loading="lazy"
-            width="150" height="350">
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13485">
+          <div style="margin-bottom: 1rem;">En el ámbito político, tras la destitución de
+            Pedro Castillo como presidente del Perú en el 2022, Dina Boluarte asumió el sillón presidencial. En la
+            prensa nacional se describió al gobierno como un periodo de alta impopularidad y significativas protestas
+            sociales [<a
+              href="https://www.apoyocomunicacion.com/peru-2025-cinco-riesgos-politico-sociales-en-el-horizonte/"
+              rel="noopener noreferrer" target="_blank">3</a>, <a
+              href="https://elpais.com/opinion/2025-05-16/crisis-politica-permanente-en-peru.html"
+              rel="noopener noreferrer" target="_blank">4</a>]. Esa etapa se caracterizó por una notable tensión entre
+            los poderes del Estado y una creciente inestabilidad política. Los desafíos del momento incluyeron la alta
+            inseguridad ciudadana, la crisis de gobernabilidad y un ambiente político polarizado, lo que generó
+            incertidumbre de cara a las elecciones de 2026. Esta situación afectó el desarrollo del país, impactando en
+            la gestión pública y en la percepción ciudadana. </div>
 
-        <section id="resumen" class="section-block">
-          <p class="fw-bold">
-            El acceso seguro a agua y saneamiento comprende mucho más que la instalación de redes o conexiones
-            domiciliarias, porque exige servicios adecuados, sostenibles, continuos y con calidad sanitaria desde la
-            fuente hasta el uso final. En Apurímac, el análisis muestra avances relevantes en cobertura, sobre todo en
-            agua por red pública y saneamiento rural, pero también deja ver una brecha crítica en la calidad del agua
-            para consumo, especialmente por los bajos niveles de cloro residual adecuado. Hacia el futuro, la proyección
-            apunta a mejoras graduales, aunque todavía insuficientes para cerrar por completo las diferencias
-            territoriales y de calidad. Por ello, las recomendaciones se orientan a ordenar las inversiones bajo una
-            cartera regional, fortalecer la gestión rural y municipal, mejorar la operación y mantenimiento de los
-            sistemas, y reforzar el control sanitario y el tratamiento de aguas residuales.
-          </p>
-          <p>
-            El acceso a agua y saneamiento se define como la posibilidad efectiva de que la población disponga de agua
-            potable y servicios de saneamiento adecuados, seguros y sostenibles. En el Perú, el acceso al agua potable y
-            al saneamiento constituye un derecho fundamental de carácter prestacional, y comprende tanto el servicio de
-            agua potable como el servicio de saneamiento en ámbitos urbanos y rurales; este último incluye
-            alcantarillado sanitario, tratamiento de aguas residuales y saneamiento básico vinculado a la disposición
-            sanitaria de excretas [1]. A nivel internacional, el estándar de “agua gestionada de forma segura” exige que
-            la fuente sea mejorada, esté disponible cuando se necesita, sea accesible en la vivienda y esté libre de
-            contaminación, mientras que el saneamiento gestionado de forma segura implica instalaciones mejoradas, no
-            compartidas y con excretas dispuestas in situ o transportadas y tratadas fuera del sitio [2, 3].
-          </p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13486">
+          <div style="margin-bottom: 1rem;">Respecto al crecimiento económico, después de
+            un panorama adverso desde el año 2020, debido a la fuerte caída económica por la pandemia, se observó una
+            recuperación constante en los últimos 13 meses previos a la primera mitad del 2025 <a
+              href="https://www.gob.pe/institucion/mef/noticias/1188148-mef-economia-peruana-acumulo-un-crecimiento-de-3-3-entre-enero-y-abril-y-sienta-las-bases-para-la-consolidacion-economica-en-2025"
+              rel="noopener noreferrer" target="_blank">[5]</a>.</div>
 
-        <section class="section-block">
-          <p>
-            Conceptualmente, el acceso a agua y saneamiento no se limita a la existencia de infraestructura física,
-            conexiones domiciliarias o unidades sanitarias, sino que supone una cadena completa de prestación del
-            servicio; protección y aprovechamiento de fuentes, captación, tratamiento, almacenamiento, distribución,
-            recolección de aguas residuales, tratamiento, reúso o disposición final, además de operación, mantenimiento,
-            regulación y sostenibilidad financiera e institucional. En esa línea, el reglamento peruano precisa que
-            estos servicios abarcan el abastecimiento domiciliario de agua potable, la recolección y tratamiento de
-            aguas residuales o la disposición sanitaria de excretas, incluyendo sistemas de agua potable,
-            alcantarillado, tratamiento de aguas residuales y saneamiento básico. Asimismo, la normativa nacional
-            incorpora criterios de sostenibilidad ambiental, confiabilidad, gestión del riesgo de desastres y adaptación
-            a la variabilidad climática, por lo que el enfoque prospectivo debe considerar no solo cobertura, sino
-            también calidad, continuidad, resiliencia y adecuación territorial [1].
-          </p>
-          <p>
-            La importancia del acceso a agua y saneamiento radica en su contribución directa a la salud pública, la
-            dignidad humana, la reducción de desigualdades y la sostenibilidad ambiental. La Organización Mundial de la
-            Salud (OMS) señala que el agua segura, el saneamiento y la higiene son condiciones esenciales para la salud
-            y el bienestar, pues el consumo de agua insegura y la mala gestión de excretas favorecen enfermedades como
-            la diarrea y la contaminación de fuentes superficiales y subterráneas [4].
-          </p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13482">
+          <div style="margin-bottom: 1rem;">En ese contexto, con un país que se mostraba
+            recuperándose de shocks como la pandemia, la inestabilidad política y con un crecimiento económico
+            ralentizado; en 2026, se produjo una catástrofe sin precedentes: un sismo de magnitud de 8,8 Mw seguido de
+            un devastador tsunami, con epicentro frente a las costas de Lima, además de eventos concatenados entre ellos
+            arenamientos, caída de rocas y derrumbes.</div>
 
-        <section id="figura1" class="section-block">
-          <p>
-            En esa línea, la Figura 1 muestra que el acceso a servicios de saneamiento gestionados sin riesgos en
-            Apurímac tuvo una mejora importante durante el periodo histórico, aunque con avances irregulares, ya que,
-            entre 2011 y 2025, el indicador se incrementó del 38,9 % al 72,7 %, lo que evidencia una expansión sostenida
-            frente al punto de partida, pese a algunos retrocesos intermedios, como el observado entre 2013 y 2014, y la
-            caída reciente del 74,1 % en 2024 al 72,7 % en 2025. Aun así, Apurímac se mantiene por debajo del promedio
-            nacional, que pasó del 64,0 % al 80,0 %, y de la Macrorregión Sur, que aumentó del 57,4 % al 77,8 %.
-          </p>
-          <p>
-            A partir de 2026, los datos proyectados indican una recuperación moderada para Apurímac, con un aumento del
-            74,0 % al 76,9 % hacia 2030. No obstante, el crecimiento previsto sería más lento que el observado en los
-            años de mayor expansión, lo que podría limitar una convergencia más rápida con el promedio nacional, que
-            subiría del 80,6 % al 82,1 %, y con la Macrorregión Sur, que pasaría del 78,4 % al 80,6 %. Además, los
-            intervalos de predicción para Apurímac muestran un margen relativamente acotado, con valores esperados que
-            en 2030 se ubicarían entre el 75,9 % y el 77,7 %, lo cual refuerza la idea de una mejora gradual, pero
-            todavía insuficiente para cerrar plenamente las diferencias territoriales en el acceso seguro al
-            saneamiento.
-          </p>
-          <iframe width="100%" height="430" scrolling="no" loading="lazy"
-            title="Figura 1. Población que utiliza servicios de saneamiento gestionados sin riesgos"
-            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
-          </iframe>
-          <p>Nota. h/ valor histórico; p/ valor proyectado por el Ceplan. Los datos del periodo 2026-2030 corresponden a
-            un ejercicio de proyección tendencial basado en la trayectoria histórica del indicador. Las proyecciones se
-            elaboraron mediante un modelo estadístico conservador e incluye intervalos estandarizados de predicción para
-            representar el margen de incertidumbre inherente al ejercicio de proyección. Los resultados son
-            referenciales, no constituyen predicciones ni metas oficiales, y no sustituyen estimaciones específicas por
-            entidades especializadas para la toma de decisiones. Su evolución está sujeta a cambios en los factores
-            determinantes y a choques externos no previstos. Elaboración del Ceplan a partir de los datos Instituto
-            Nacional de Estadística e Informática [5].</p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13484">
+          <div style="margin-bottom: 1rem;">Asimismo, los estudios realizados por
+            instituciones como el Ministerio de Vivienda, Construcción y Saneamiento (MVCS), Centro Nacional de
+            Estimación, Prevención y Reducción del Riesgo de Desastres (Cenepred), Instituto Geofísico del Perú (IGP) y
+            el Centro Peruano Japonés de Investigaciones Sísmicas y Mitigación de Desastres (Cismid) mostraron que la
+            zona más propensa a la ocurrencia de un sismo de gran magnitud era la zona central del borde occidental del
+            país, desde Paracas hasta Huarmey, con una longitud de ruptura de aproximadamente 470 Km a lo largo de la
+            línea de la costa<sup><a rel="noopener noreferrer" target="_blank">1</a></sup>, <a
+              href="https://www.actualidadambiental.pe/lima-70-viviendas-vulnerables-terremoto/"
+              rel="noopener noreferrer" target="_blank">[6]</a>. Este análisis se relaciona con el sismo que ocurrió en
+            1746, cuya intensidad fue mayor o igual a 7 grados en la escala de Mercalli Modificado (MM) <a
+              href="https://sigrid.cenepred.gob.pe/sigridv3/storage/biblioteca//18969_escenarios-de-riesgo-por-sismos-y-peligros-asociados-en-el-marco-del-plan-multisectorial-2026-2028.pdf"
+              rel="noopener noreferrer" target="_blank">[7]</a>. Además, entrevistas a expertos revelaron que cerca del
+            70 % de las viviendas a nivel nacional eran precarias <a
+              href="https://larepublica.pe/sociedad/2025/06/16/el-70-de-las-viviendas-en-peru-son-informales-y-estan-expuestas-a-colapsar-con-terremoto-en-lima-temblor-hnews-508752"
+              rel="noopener noreferrer" target="_blank">[8]</a>. En ese sentido, ni la población ni el gobierno supieron
+            prepararse adecuadamente en 2025 y, como era de esperarse, las consecuencias para el país con un sismo de
+            8,8 Mw en 2026 fueron devastadoras [<a
+              href="https://www.infobae.com/peru/2025/08/15/peru-sobreviviria-a-un-terremoto-de-gran-magnitud-si-ocurre-hoy-este-es-el-grave-panorama-del-pais-ante-un-sismo/"
+              rel="noopener noreferrer" target="_blank">9</a>, <a
+              href="https://portal.indeci.gob.pe/wp-content/uploads/2019/01/201711231521471-1.pdf"
+              rel="noopener noreferrer" target="_blank">10</a>]. </div>
+          <div class="text-center" id="graphic-419"><img alt="Imagen de ficha" class="img-fluid"
+              src="https://observatorio.ceplan.gob.pe/uploads/5eEj0wRVM5p7zPbIognPLrmM.jpg"></div>
+          <small><i>Figura 1.</i><span>Perú: Mapa de Susceptibilidad por Sismo –
+              2025.</span></small><br><small>Nota. Recuperado del “Escenario de riesgo
+            por sismos y peligros asociados en el marco del Plan multisectorial 2026 - 2028”, Cenepred, 2025, p.
+            15.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-13488">
+          <div style="margin-bottom: 1rem;">Entre las consecuencias de la catástrofe, se
+            registró una mortalidad masiva de aproximadamente 115 860 decesos<sup><a target="_blank">2</a></sup>. La
+            distribución etaria estimada se mantuvo proporcional: 26 % menores de 14 años (30 124), 26 % entre 15 y 29
+            años (30 124), 22 % entre 30 y 44 años (25 489), 15,3 % entre 45 y 59 años (17 727) y 10,9 % de 60 a más
+            años de edad (12 629). La presión sobre los servicios de salud superó lo diseñado, con disrupciones
+            prolongadas en hospitales de referencia y servicios de emergencia.</div>
 
-        <section id="figura2" class="section-block">
-          <p>
-            Por su parte, la Figura 2 muestra que el acceso de los hogares rurales a saneamiento básico en Apurímac tuvo
-            una mejora fuerte durante el periodo histórico, al pasar del 56,7 % en 2007 al 89,3 % en 2024. El avance;
-            sin embargo, no fue parejo, ya que, hubo caídas puntuales, como la reducción del 67,0 % al 65,0 % entre 2009
-            y 2010, y del 71,0 % al 69,2 % entre 2011 y 2012. Más adelante, después del salto a un 95,1 % en 2020, el
-            indicador retrocedió hasta el 88,3 % en 2023, antes de recuperarse ligeramente en 2024. Aun con esas
-            variaciones, Apurímac terminó el periodo por encima del promedio nacional, que subió del 61,0 % al 86,5 %,
-            aunque todavía quedó algo por debajo de la Macrorregión Sur, que pasó del 60,3 % al 90,9 %.
-          </p>
-          <p>
-            En cuanto al tramo proyectado, Apurímac mantendría una trayectoria ascendente y podría alcanzar el 94,2 % en
-            2030, lo que refleja una recuperación importante respecto de los años previos. En ese mismo horizonte, el
-            promedio nacional aumentaría al 90,9 %, mientras que la Macrorregión Sur avanzaría al 92,5 %. Además, el
-            intervalo de predicción se iría ajustando, al pasar de un rango del 88,0 % al 94,3 % en 2025 a un rango del
-            90,3 % al 94,9 % en 2030, lo que sugiere una mejora sostenida, aunque todavía con cierto margen de
-            incertidumbre en el área rural.
-          </p>
+        </div>
+        <div class="div-subsection" id="subsection-13489">
+          <div style="margin-bottom: 1rem;">El impacto fue devastador: muchas
+            infraestructuras del país colapsaron, como carreteras, puentes, hospitales y escuelas. Las redes de
+            comunicación se interrumpieron, y la falta de acceso a agua potable y electricidad empeoró la situación
+            humanitaria. En las semanas siguientes a tal acontecimiento, el gobierno peruano, ya debilitado por años de
+            inestabilidad política, se vio abrumado por la magnitud del desastre. La ayuda internacional llegó, pero la
+            coordinación deficiente y la persistente corrupción, retrasaron la distribución de recursos, exacerbando la
+            crisis.</div>
 
-          <!-- ⚠️ REVISAR: este src es idéntico al de Figura 1 (zYKPX59Lp0N). Probablemente debería
-               apuntar a un dashboard distinto para Figura 2; lo dejo igual que el original para no
-               inventar un ID de gráfico que no me diste. -->
-          <iframe width="100%" height="430" scrolling="no" loading="lazy"
-            title="Figura 2. Hogares rurales con saneamiento básico"
-            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
-          </iframe>
-          <p>
-            Figura 2.Perú, Macrorregión Sur y Apurímac: porcentaje de hogares rurales con saneamiento básico, en el
-            periodo 2007-2030 (Porcentaje).
-            Nota. h/ valor histórico; p/ valor proyectado por el Ceplan. Los datos del periodo 2025-2030 corresponden a
-            un ejercicio de proyección tendencial basado en la trayectoria histórica del indicador. Las proyecciones se
-            elaboraron mediante un modelo estadístico conservador e incluye intervalos estandarizados de predicción para
-            representar el margen de incertidumbre inherente al ejercicio de proyección. Los resultados son
-            referenciales, no constituyen predicciones ni metas oficiales, y no sustituyen estimaciones específicas por
-            entidades especializadas para la toma de decisiones. Su evolución está sujeta a cambios en los factores
-            determinantes y a choques externos no previstos. Elaboración del Ceplan a partir de los datos de la Encuesta
-            Demográfica y de Salud Familiar del Instituto Nacional de Estadística e Informática [6].
-          </p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13490">
+          <div style="margin-bottom: 1rem;">Se destruyeron cerca de 350 000 viviendas y 624
+            000 quedaron inhabitables <a
+              href="https://cosas.pe/de-fondo/275894/peru-en-riesgo-estamos-preparados-para-soportar-un-sismo-de-magnitud-7-8-como-el-de-turquia/"
+              rel="noopener noreferrer" target="_blank">[11]</a>. Las construcciones de adobe y las edificaciones más
+            antiguas del Centro de Lima fueron las más afectadas <a
+              href="https://gestion.pe/economia/distritos-perifericos-lima-seran-afectados-sismo-gran-magnitud-118259-noticia/"
+              rel="noopener noreferrer" target="_blank">[12]</a>, específicamente debido a su precariedad y falta de
+            restauración. Cabe resaltar que, en 2025, según reportes del Cenepred, 56 distritos de la región de Lima y
+            Callao, con aproximadamente 9 800 000 habitantes, se encontraban en un nivel de riesgo muy alto en caso de
+            un sismo; y, en el caso de un Tsunami, se encontraban 9 distritos de Lima con una población de más de 1 800
+            000 habitantes <a
+              href="https://sigrid.cenepred.gob.pe/sigridv3/storage/biblioteca//18969_escenarios-de-riesgo-por-sismos-y-peligros-asociados-en-el-marco-del-plan-multisectorial-2026-2028.pdf"
+              rel="noopener noreferrer" target="_blank">[7]</a>, anticipando con ello, la posibilidad de una afectación
+            realmente grande. </div>
 
-        <section id="figura3" class="section-block">
-          <p>
-            En continuidad con el análisis de los servicios básicos, la Figura 3 muestra que Apurímac mantuvo una
-            cobertura alta de población que dispone de agua por red pública entre 2013 y 2025. El indicador pasó del
-            93,3 % al 97,0 %, con una trayectoria favorable, aunque no del todo lineal. En algunos años se observan
-            caídas puntuales, como la reducción del 93,2 % en 2015 al 92,0 % en 2016, y más adelante el descenso del
-            97,9 % en 2023 al 95,8 % en 2024. Sin embargo, el dato de 2025 vuelve a ubicarse en un nivel elevado,
-            llegando a un 97,0 %, lo que confirma que el acceso por red pública se encuentra bastante extendido en el
-            departamento.
-          </p>
-          <p>
-            Por su parte, la Macrorregión Sur también muestra una mejora sostenida, al incrementarse del 87,5 % al 93,3
-            %, mientras que el promedio nacional avanzó del 86,1 % al 90,4 %. En ese aspecto, Apurímac se mantuvo
-            durante todo el periodo por encima de ambos referentes, aunque la distancia con la Macrorregión Sur se fue
-            reduciendo. En 2013, la diferencia entre Apurímac y la Macrorregión Sur fue de 5,8 puntos porcentuales,
-            mientras que en 2025 bajó a 3,7 puntos. Frente al promedio nacional, la brecha pasó de 7,2 puntos a 6,6
-            puntos, lo que sugiere que el departamento conserva una posición favorable, pero en un contexto donde los
-            demás ámbitos también han venido cerrando parte de la distancia.
-          </p>
-          <iframe width="100%" height="430" scrolling="no" loading="lazy"
-            title="Figura 3. Población que dispone de agua por red pública"
-            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/zYKPX59Lp0N/?standalone=2">
-          </iframe>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13491">
+          <div style="margin-bottom: 1rem;">La Atarjea y otras infraestructuras críticas de
+            agua y saneamiento sufrieron daños severos. Con base en un colapso del 26 % de las tuberías en la provincia
+            de Lima y considerando que Lima Metropolitana alcanzó 10,43 millones de habitantes en 2025 (INEI), se estima
+            que el acceso a agua potable se vio interrumpido para alrededor del 32,7 % de la población urbana en 2026
+            (3,47 millones). Ello obligó a activar esquemas de distribución alterna, reservas de emergencia y protocolos
+            de potabilización temporal.</div>
 
-        <section id="figura4" class="section-block">
-          <p>
-            En continuidad con el acceso por red pública, la Figura 4 permite observar una dimensión más exigente de la
-            calidad del agua, referida a los hogares con niveles de cloro residual adecuado en el agua que utilizan para
-            su consumo, entendido como adecuada cuando el cloro es mayor o igual 0,5 mg/l. Por ello, la Figura 4
-            evidencia una situación distinta a la observada en el acceso por red pública, ya que en Apurímac la
-            proporción de hogares con niveles adecuados de cloro residual en el agua para consumo se mantiene en valores
-            reducidos durante todo el periodo. Entre 2020 y 2025, el indicador pasó del 6,9 % al 11,1 %, con un avance
-            leve y bastante irregular. Luego de subir a un 11,2 % en 2021, descendió al 9,0 % en 2022 y al 8,3 % en
-            2023, para recuperarse después al 10,6 % en 2024 y cerrar en un 11,1 % en 2025.
-          </p>
-          <p>Asimismo, la brecha con los otros ámbitos sigue siendo amplia, debido a que, la Macrorregión Sur se mantuvo
-            en niveles cercanos al 40,0 %, al pasar del 39,8 % al 40,5 %, mientras que el promedio nacional disminuyó
-            del 40,2 % al 38,4 %. Aunque estos dos referentes también presentan fluctuaciones, sus valores superan
-            ampliamente a los de Apurímac durante todos los años analizados. En 2025, la diferencia de Apurímac frente a
-            la Macrorregión Sur llegó a 29,4 puntos porcentuales y frente al promedio nacional a 27,3 puntos, lo que
-            deja ver un problema persistente en la desinfección efectiva del agua para consumo humano.</p>
+        </div>
+        <div class="div-subsection" id="subsection-13492">
+          <div style="margin-bottom: 1rem;">Por otro lado, la catástrofe provocó una
+            profunda crisis social. Millones de peruanos desplazados se enfrentaron a la desesperación, la pobreza
+            extrema, y la falta de servicios básicos. La desigualdad, ya presente antes del desastre, se profundizó y
+            las tensiones sociales estallaron en forma de protestas y disturbios. La confianza en las instituciones
+            públicas, ya frágil desde antes, se desplomó aún más, llevando a una desestabilización política que se
+            prolongó durante varios años.</div>
 
-          <iframe width="100%" height="430" scrolling="no" loading="lazy"
-            title="Figura 4. Hogares con cloro residual adecuado en el agua de consumo"
-            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/mAMpmXDxPVJ/?standalone=2">
-          </iframe>
+        </div>
+        <div class="div-subsection" id="subsection-13493">
+          <div style="margin-bottom: 1rem;">En retrospectiva, se observa que las decisiones
+            políticas tomadas en los años posteriores al desastre determinaron en gran medida el rumbo que tomó el país.
+            En lugar de centrarse en una reconstrucción inclusiva y equitativa, el gobierno de turno priorizó las zonas
+            de mayor valor económico, como Lima y otras ciudades principales, dejando a comunidades rurales y costeras
+            en una situación de abandono. Esto provocó una migración masiva de esta última población hacia las ciudades,
+            intensificando la presión sobre las infraestructuras urbanas y aumentando los conflictos sociales.</div>
 
-          <p>Nota. Los datos de Apurímac deben considerarse referenciales, debido a que el tamaño de la muestra no es
-            suficiente para garantizar una estimación robusta a ese nivel de desagregación y, además, presentan un
-            coeficiente de variación superior al 15 % durante todo el periodo analizado. Elaboración del Ceplan a partir
-            de los datos del Instituto Nacional de Estadística e Informática [7, 8, 9].</p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13494">
+          <div style="margin-bottom: 1rem;">Las políticas económicas aplicadas, centradas
+            en la privatización y en la atracción de inversión extranjera, generaron crecimiento en ciertos sectores,
+            pero también ampliaron las desigualdades regionales y sociales. Las promesas de reconstrucción nunca se
+            cumplieron del todo, y la corrupción continuó siendo un obstáculo para el desarrollo equitativo del país.
+          </div>
 
-        <section id="tabla1" class="section-block">
-          <p>Complementariamente, la Tabla 1 permite ver que la cobertura de agua potable avanzó de manera amplia entre
-            1993, 2007 y 2017, aunque con ritmos distintos según provincia. Los crecimientos más notorios se observan en
-            Chincheros, que pasó del 17,4 % al 91,9 %, Aymaraes, del 17,2 % al 85,4 %, y Cotabambas, del 14,5 % al 80,3
-            %. También destacan Andahuaylas, con un aumento del 32,4 % al 92,8 %, y Grau, que subió del 22,2 % al 77,3
-            %. En el último año registrado, las provincias con mejores niveles fueron Abancay, con un 93,8 %,
-            Andahuaylas, con un 92,8 %, y Chincheros, con un 91,9 %, lo que muestra una concentración de los mayores
-            avances en territorios que lograron acercarse a coberturas casi universales.</p>
-          <p>A nivel distrital, el cambio es todavía más visible en varios casos. Entre los avances más representativos
-            aparecen Gamarra, que creció del 11,0 % al 94,9 %, Toraya, del 8,0 % al 95,3 %, Huancaray, del 9,4 % al 91,9
-            %, Huaccana, del 8,0 % al 90,4 %, y Kishuara, del 12,7 % al 91,6 %. También resaltan San Antonio de Cachi,
-            que pasó del 8,6 % al 86,9 %, Mara, del 8,5 % al 84,7 %, y Curahuasi, del 20,6 % al 91,1 %. En 2017, los
-            valores más altos se registraron en Colcabamba, con un 98,1 %, Abancay, con un 98,0 %, El Porvenir, con un
-            97,6 %, Tamburco y Kaquiabamba, ambos con un 97,4 %, además de Pacucha, con un 96,4 %, y Chincheros, con
-            96,0 %. Por tanto, la tabla muestra que la expansión fue generalizada, pero todavía quedaron distritos con
-            rezagos importantes, como Pataypampa, con un 38,3 %, Progreso, con un 50,3 %, Chapimarca, con un 61,2 %, y
-            Yanaca, con un 64,1 %.</p>
-          <p>En relación con el acceso a servicios de saneamiento, la Tabla 1 muestra que la cobertura de saneamiento
-            básico en Apurímac mejoró entre 1993, 2007 y 2017, aunque con brechas todavía marcadas entre provincias. Los
-            mayores crecimientos provinciales se observan en Antabamba, que pasó del 2,3 % al 53,4 %, Aymaraes, del 4,6
-            % al 53,3 %, y Cotabambas, del 0,9 % al 46,5 %. También destacan Abancay, que aumentó del 32,7 % al 75,7 %,
-            y Chincheros, del 3,9 % al 46,8 %. En el último año registrado, Abancay concentró el mayor nivel de
-            cobertura, con 75,7 %, mientras que Antabamba y Aymaraes se ubicaron alrededor del 53,0 %. En cambio,
-            Andahuaylas, Chincheros, Cotabambas y Grau quedaron por debajo del 50,0 %, lo que evidencia que el avance
-            fue importante, pero aún insuficiente en buena parte del territorio.</p>
-          <p>A nivel distrital, los cambios más representativos se aprecian en Vilcabamba, que subió del 10,6 % al 88,5
-            %, Virundo, del 0,0 % al 81,5 %, Tamburco, del 13,2 % al 86,7 %, Sañayca, del 0,3 % al 77,0 %, y Colcabamba,
-            del 0,0 % al 73,5 %. También resaltan San Antonio, que pasó del 2,2 % al 69,6 %, Ranracancha, del 6,4 % en
-            2007 al 73,4 % en 2017, y Chalhuanca, del 28,6 % al 82,8 %. En 2017, los mayores valores distritales se
-            registraron en Abancay, con un 89,6 %, Vilcabamba, con un 88,5 %, Tamburco, con un 86,7 %, Chalhuanca, con
-            un 82,8 %, y Virundo, con un 81,5 %. Pese a ello, la Tabla 1 también deja ver rezagos fuertes en distritos
-            como El Porvenir, con un 5,7 %, Kaquiabamba, con un 9,4 %, Andarapa, con un 10,8 %, Ongoy, con un 11,4 %, y
-            Huancaray, con un 12,7 %, lo que confirma que la expansión del saneamiento fue desigual y todavía dejó zonas
-            con coberturas muy bajas.</p>
+        </div>
+        <div class="div-subsection" id="subsection-13495">
+          <div style="margin-bottom: 1rem;">Al mirar hacia atrás, desde el año 2050, es
+            evidente que el terremoto y tsunami ocurridos en el 2026 fueron catalizadores de cambios profundos en el
+            Perú, en el corto y mediano plazo, y en algunas situaciones, en el largo plazo. Si bien la nación ha logrado
+            cierta recuperación en los últimos años, las cicatrices sociales y económicas de la catástrofe aún son
+            evidentes. La falta de previsión y la mala gestión de la respuesta al desastre aportaron a mantener latente
+            la desigualdad y desconfianza en las instituciones que perdura hasta hoy. No obstante, como parte de los
+            avances, ahora existe mayor importancia a la resiliencia y preparación ante desastres.</div>
 
-          <iframe width="100%" height="900" scrolling="no" loading="lazy"
-            title="Tabla 1. Evolución de cobertura de agua potable y saneamiento"
-            src="https://graficos.ceplan.gob.pe/superset/dashboard/p/YLjPj8eW17E/?standalone=2">
-          </iframe>
-          <p>Tabla 1.Apurímac: evolución de cobertura de agua potable y saneamiento básico según provincias y distritos,
-            para los años 1993, 2007 y 2017.
-            Nota. El indicador de “agua potable” comprende las categorías de red pública dentro de la vivienda; red
-            pública fuera de la vivienda, pero dentro de la edificación; y pilón o pileta de uso público. Y para el
-            indicador de “saneamiento básico” comprende las categorías de red pública de desagüe dentro de la vivienda;
-            red pública de desagüe fuera de la vivienda, pero dentro de la edificación; y pozo séptico, tanque séptico o
-            biodigestor. Elaboración del Ceplan a partir de los datos de los Censos Nacionales de Población y Vivienda
-            del Instituto Nacional de Estadística e Informática [10].</p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13496">
+          <div style="margin-bottom: 1rem;">
+            <h4><strong>Implicancias del escenario con las temáticas del PEDN al 2050</strong></h4>
+          </div>
 
-        <section id="recomendaciones" class="section-block">
-          <p class="fw-bold">Recomendaciones estratégicas</p>
-          <p>
-            En el territorio, convendría ordenar las intervenciones de saneamiento bajo prioridades claras por distrito,
-            tipo de prestador y estado del sistema. No es suficiente con ampliar infraestructura; también habría que
-            asegurar operación, mantenimiento, reposición de equipos y acompañamiento técnico municipal. El Plan
-            Regional de Agua Potable y Saneamiento de Apurímac 2025-2029, aprobado por el Gobierno Regional, ofrece una
-            base institucional para esa articulación, mientras que el Compromiso 4 del Programa Nacional de Saneamiento
-            Rural (PNSR) y el Ministerio de Economía y Finanzas (MEF) abre una ruta práctica para vincular metas
-            municipales, asistencia técnica e incentivos presupuestales. La recomendación sería que el Gobierno
-            Regional, las municipalidades y el Ministerio de Vivienda, Construcción y Saneamiento (MVCS) trabajen con
-            una misma agenda de seguimiento, evitando proyectos aislados que luego quedan sin soporte operativo [11,
-            12].
-          </p>
-          <p>
-            En el ámbito rural, la estrategia tendría que concentrarse en fortalecer a las Juntas Administradoras de
-            Servicios de Saneamiento (JASS), las áreas técnicas municipales y la cultura de pago, ya que la
-            sostenibilidad del servicio depende tanto de la infraestructura como de la gestión cotidiana. En necesario
-            replicar experiencias como la Ruta Integral del Agua, que en Apurímac viene promoviendo la lectura completa
-            del sistema, desde la zona de recarga hasta la medición del cloro en viviendas, junto con espacios de
-            reflexión entre usuarios y directivos comunales. A ello se puede sumar el aprendizaje de prácticas
-            reconocidas por la Sunass, como el uso de tecnologías de cloración y la mejora continua de pequeños
-            prestadores, para que las comunidades no solo reciban obras, sino capacidades para sostenerlas [13, 14].
-          </p>
-          <p>En las zonas urbanas y periurbanas, la recomendación apunta a reforzar la calidad del servicio, el control
-            sanitario y la gestión empresarial de las EPS. La modificación del estudio tarifario de “Emsap Chanka”
-            muestra una oportunidad para financiar mejoras, siempre que los nuevos recursos estén ligados a inversiones
-            verificables, mantenimiento oportuno y protección de hogares vulnerables mediante subsidios focalizados. De
-            manera complementaria, la supervisión de la desinfección en Abancay y Tamburco evidencia que el monitoreo
-            del cloro residual debe ser permanente, con reportes simples para la ciudadanía y acciones correctivas
-            rápidas cuando haya variaciones. En saneamiento, además, la situación de las plantas de tratamiento de aguas
-            residuales exige una respuesta específica y sostenible [15, 16].</p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-13497">
+          <div style="margin-bottom: 1rem;">En retrospectiva, el terremoto de magnitud 8,8
+            y el tsunami que afectaron al Perú en 2026 dejaron una huella profunda en el desarrollo nacional, alterando
+            significativamente los principales indicadores del PEDN al 2050. La destrucción de infraestructura y la
+            interrupción temporal del acceso a la enseñanza provocaron en el mediano plazo, la desaceleración en la
+            mejora del nivel educativo. El sistema de salud colapsó ante la magnitud de la emergencia, lo que agravó las
+            condiciones de pobreza y amplió las brechas de inequidad en todo el país. La sostenibilidad del territorio
+            también se vio comprometida, evidenciando la necesidad de fortalecer las políticas de gestión del riesgo y
+            recuperación. Décadas después, el país aún enfrenta los rezagos de esta tragedia.</div>
 
-        <section id="referencias" class="section-block omitir">
+        </div>
+        <div class="div-subsection" id="subsection-56048">
+          <div style="margin-bottom: 1rem;">
+            <h5><strong>Implicancias para el desarrollo de las personas en el 2050</strong></h5>
+          </div>
 
-          <p class="fw-bold">
-            Referencias bibliográficas
-          </p>
+        </div>
+        <div class="div-subsection" id="subsection-55431">
+          <div style="margin-bottom: 1rem;">A continuación, se presentan las implicancias
+            en las temáticas del PEDN al 2050.</div>
 
-          <p>[1] Organismo Técnico de la Administración de los Servicios de Saneamiento, «Decreto Supremo N.°
-            001-2025-VIVIENDA.,» 15 enero 2025. Disponible en:
-            https://www.gob.pe/institucion/otass/normas-legales/6413611-001-2025-vivienda</p>
-          <p>[2] Unicef, «Drinking water,» agosto 2025a. Disponible en:
-            https://data.unicef.org/topic/water-and-sanitation/drinking-water/</p>
-          <p>[3] Unicef, «Sanitation,» agosto 2025b. Disponible en:
-            https://data.unicef.org/topic/water-and-sanitation/sanitation/</p>
-          <p>[4] WHO, «Water, sanitation and hygiene (WASH),» 2026. Disponible en:
-            https://www.who.int/health-topics/water-sanitation-and-hygiene-wash#tab=tab_1</p>
-          <p>[5] Instituto Nacional de Estadística e Informática, «Sistema de Monitoreo y Seguimiento de los Indicadores
-            de los Objetivos de Desarrollo Sostenible,» 2026d. Disponible en: https://ods.inei.gob.pe/</p>
-          <p>[6] Instituto Nacional de Estadística e Informática, «Sistema de informacion regional para la toma de
-            decisiones. Porcentaje de hogares rurales con saneamiento básico (Porcentaje).,» mayo 2026c. Disponible en:
-            https://systems.inei.gob.pe/SIRTOD/app/consulta</p>
-        </section>
+        </div>
+        <div class="div-subsection" id="subsection-55432">
+          <div style="margin-bottom: 1rem;">En el año 2050, al mirar hacia atrás, se
+            observa cómo el devastador terremoto y tsunami ocurridos hace más de dos décadas, dejaron profundas
+            implicancias en el desarrollo humano del país. Antes del evento catastrófico, el Índice de Desarrollo Humano
+            (IDH) mostraba un comportamiento ascendente. Sin embargo, tras el desastre, se registró una caída
+            significativa en los primeros años, reflejando el impacto inmediato en el bienestar de la población,
+            producto de la interrupción de servicios esenciales, la pérdida de infraestructura y las consecuencias
+            socioeconómicas generalizadas. Como se muestra en la Figura 2, con el paso del tiempo, se evidencia una
+            recuperación gradual; no obstante, el IDH no logró alcanzar los niveles estimados en ausencia del desastre,
+            mostrando una recuperación más lenta y sostenida.</div>
 
-      </article>
+        </div>
+        <div class="div-subsection" id="subsection-55433">
+          <div style="margin-bottom: 1rem;">En el ámbito de la salud, los Años de Vida
+            Saludable Perdidos (AVISA)<sup><a target="_blank">3</a></sup> registraron en 2026 un incremento abrupto
+            producto de la ocurrencia del desastre mayor, superior al 100 % de lo esperado. Colapsaron los hospitales y
+            se propagaron enfermedades asociadas a la destrucción de las redes de agua y saneamiento. Sin embargo, en
+            los años posteriores, con la intervención del Estado, como el aumento del gasto público en salud y los
+            programas de apoyo social, permitieron una reducción progresiva del indicador, que hacia 2030, retomó su
+            ritmo descendente, acercándose a los niveles esperados previos a la ocurrencia del desastre.</div>
 
-    </main>
+        </div>
+        <div class="div-subsection" id="subsection-55434">
+          <div style="margin-bottom: 1rem;">Con respecto a la salud infantil, se reconoce
+            que el terremoto y tsunami de 2026 provocaron un incremento inmediato en la tasa de desnutrición crónica
+            infantil. Los daños en las carreteras, infraestructuras productivas y sistemas de distribución afectaron
+            significativamente el abastecimiento de alimentos, especialmente para los niños y mujeres gestantes.
+            Asimismo, los daños generados en las infraestructuras hospitalarias y centros de salud limitaron la atención
+            pediátrica y materna, dado que los esfuerzos sanitarios y de salud se concentraron en la emergencia. En los
+            años posteriores, conforme se restablecieron las infraestructuras y se reorientaron los programas de
+            nutrición y atención primaria, el indicador retomó su tendencia descendente. Sin embargo, se mantuvieron por
+            encima de los niveles esperados en ausencia del desastre, reflejando un rezago persistente que dificultó
+            alcanzar las metas nutricionales previstas hacia 2050.</div>
 
-    <!-- 3. COLUMNA DERECHA: DOCUMENTOS DESCARGABLES -->
-    <aside class="download-box">
-      <h2>Documentos descargables</h2>
-      <a href="assets/docs/Cusco_Poblacion_Urbana_2026.xlsx" download class="excel-item">
-        <svg class="excel-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="#107c41" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
-          <path fill="#33c481" d="M14 2v6h6" />
-          <path fill="#ffffff"
-            d="M8.5 16.5l2.25-3.5L8.5 9.5h1.8l1.35 2.3 1.35-2.3h1.8l-2.25 3.5 2.25 3.5h-1.8l-1.35-2.3-1.35 2.3z" />
-        </svg>
-        <span class="file-name">Cusco_Mayor_concentracion_poblacion_urbana_2026.xlsx</span>
-      </a>
-    </aside>
+          <div class="datawrapper-container" id="graphic-891">
+            <div class="row">
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/oLk2Y/5/" width="100%"
+                    height="388" scrolling="no" frameborder="0"
+                    style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; min-width: 100% !important; height: 424px;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/z7wx1/1/" width="100%"
+                    height="381" scrolling="no" frameborder="0"
+                    style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; min-width: 100% !important; height: 417px;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/znX4K/1/" width="100%"
+                    height="381" scrolling="no" frameborder="0"
+                    style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; min-width: 100% !important; height: 417px;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+            </div>
+          </div><small><i>Figura 2.</i><span>Estimaciones del Índice de Desarrollo Humano (a), la tasa de AVISA (b) y la
+              desnutrición crónica infantil en puntos porcentuales (c), según tres escenarios, en el periodo
+              2020-2050.</span></small><br><small>Nota.
+            Elaboración Ceplan, con base en estimaciones del Modelo T21–Ceplan. La Hipótesis 1 considera un escenario de
+            desastre mayor con impacto moderado; la Hipótesis 2, un escenario de desastre mayor con impacto alto; y el
+            escenario base corresponde al escenario business as usual (BAU). Para mayor detalle revisar la sección de la
+            conceptualización de escenarios, donde se explican los supuestos e hipótesis de
+            modelación.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-55435">
+          <div style="margin-bottom: 1rem;">Tras el desastre de 2026, indicadores como la
+            pobreza monetaria aumentaron significativamente, debido a la pérdida masiva de empleos, la interrupción de
+            actividades productivas y la reducción de ingresos familiares. En los años posteriores, con la reactivación
+            económica y la recuperación de los medios de vida, este indicador retomó su tendencia descendente; sin
+            embargo, se mantuvo por encima de los niveles proyectados en un escenario sin desastre, sin alcanzar las
+            metas previstas incluso hacia el año 2050.</div>
 
+        </div>
+        <div class="div-subsection" id="subsection-55436">
+          <div style="margin-bottom: 1rem;">Asimismo, el promedio de años de escolaridad se
+            vio afectado por la destrucción de infraestructura educativa y la interrupción del proceso de aprendizaje.
+            Aunque el indicador no disminuyó, su ritmo de mejora se desaceleró. La recuperación fue lenta y parcial, lo
+            que limitó la formación de capital humano e impidió que el indicador retomara su trayectoria de crecimiento
+            inicial.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55437">
+          <div style="margin-bottom: 1rem;">Las proyecciones de largo plazo indican que,
+            tras la ocurrencia del desastre mayor en 2026, las emisiones de gases de efecto invernadero (GEI)
+            mantuvieron su tendencia ascendente, aunque con una magnitud ligeramente menor en comparación con el
+            escenario base. Este comportamiento se explica por la persistente dependencia de una matriz energética
+            basada en fuentes no renovables, y por la recuperación gradual de la actividad económica. En el corto plazo,
+            la pérdida de factores de producción, particularmente la fuerza laboral y parte de capital físico, generó un
+            estancamiento temporal de las emisiones. No obstante, conforme la economía se reactivó, las emisiones
+            retomaron su crecimiento, manteniéndose de forma sostenida, aunque por debajo de los niveles proyectados en
+            ausencia del desastre. En ese sentido, las emisiones de GEI continuaron representando un desafío estructural
+            para la sostenibilidad ambiental del territorio peruano hacia el 2050.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-56049">
+          <div style="margin-bottom: 1rem;">
+            <h5><strong>Implicancias para la sostenibilidad del territorio en el 2050</strong></h5>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55438">
+          <div style="margin-bottom: 1rem;">Por otro lado, la deforestación también se
+            mantuvo con una tendencia creciente según la Figura 3; sin embargo, al igual que las emisiones netas de GEI,
+            fue menor que el escenario base. La pérdida de vidas y capital ocasionó una contracción de la actividad
+            económica, lo que redujo temporalmente la demanda de recursos naturales y la expansión de la frontera
+            agrícola. Aun así, la necesidad de obtener recursos para la reconstrucción y la falta de políticas de
+            protección forestal efectivas inmediatamente después del desastre, mantuvieron la tendencia creciente de
+            pérdida de bosques. A largo plazo, aunque la tasa de deforestación se redujo respecto al escenario base, los
+            bosques peruanos continuaron disminuyendo, afectando la biodiversidad y los servicios ecosistémicos.</div>
+
+          <div class="datawrapper-container" id="graphic-892">
+            <div class="row">
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/yvjTE/3/" width="100%"
+                    height="388" scrolling="no" frameborder="0" style="min-width: 100% !important; border: none;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/AAxg3/1/" width="100%"
+                    height="388" scrolling="no" frameborder="0" style="min-width: 100% !important; border: none;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+            </div>
+          </div><small><i>Figura 3.</i><span>Estimaciones de largo plazo de las emisiones netas de CO2 equivalente
+              (millones de toneladas, izquierda) y de la pérdida de cobertura boscosa (miles de hectáreas, derecha),
+              según tres escenarios en el periodo 2020-2050.</span></small><br><small>Nota. Elaboración Ceplan,
+            con base en
+            estimaciones del Modelo T21–Ceplan. La Hipótesis 1 considera un escenario de desastre mayor con impacto
+            moderado; la Hipótesis 2, un escenario de desastre mayor con impacto alto; y el escenario base corresponde
+            al escenario business as usual (BAU). Para mayor detalle revisar la sección de la conceptualización de
+            escenarios, donde se explican los supuestos e hipótesis de
+            modelación.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-55439">
+          <div style="margin-bottom: 1rem;">Finalmente, el desastre mayor ocurrido en 2026
+            tuvo también repercusiones en la sostenibilidad del territorio peruano. Las emisiones de GEI y la
+            deforestación redujeron su ritmo de crecimiento, manteniendo niveles inferiores a los proyectados en el
+            escenario base. Esto comportamiento reflejó una menor presión sobre los ecosistemas, asociado principalmente
+            a la contracción económica posterior al desastre. No obstante, a pesar de los esfuerzos implementados para
+            consolidar estos efectos relativamente favorables y promover una gestión ambiental sostenible, ambas
+            variables retomaron su tendencia estructural de incremento. En consecuencia, la sostenibilidad del
+            territorio peruano continúa enfrentando desafíos significativos para alcanzar un equilibrio ambiental hacia
+            el 2050.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55440">
+          <div style="margin-bottom: 1rem;">En 2050, se observa cómo el devastador
+            terremoto y tsunami del 2026 ha influido en la competitividad e innovación en el Perú. El desastre del
+            tsunami arrasó los establecimientos comerciales y las vías de comunicación que se encuentran en la base de
+            la Costa Verde, y varios de los edificios ubicados en el talud colapsaron <a
+              href="https://sigrid.cenepred.gob.pe/docs/PARA%20PUBLICAR/IGP/Informe_Estimacion_del_riesgo_por_exposicion_a_partir_de_mapas_de_isosistas_en_Peru_2017.pdf"
+              rel="noopener noreferrer" target="_blank">[13]</a>. El atractivo turístico de la ciudad de Lima se vio
+            reducido. Los distritos más afectados fueron La Punta, Ventanilla, Callao, Chorrillos, Villa El Salvador y
+            Lurín en la zona costera, y Carabayllo, Comas, Puente Piedra, Independencia, San Juan de Lurigancho, Ate
+            Vitarte y La Molina en las zonas periféricas <a
+              href="https://portal.indeci.gob.pe/wp-content/uploads/2019/01/201711231521471-1.pdf"
+              rel="noopener noreferrer" target="_blank">[14]</a>.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-56050">
+          <div style="margin-bottom: 1rem;">
+            <h5><strong>Implicancias para la competitividad e innovación al 2050</strong></h5>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55441">
+          <div style="margin-bottom: 1rem;">La Carretera Central y las carreteras que
+            conducen a Canta y Antioquía sufrieron daños severos, generando serios problemas para el aprovisionamiento y
+            distribución de alimentos y ayuda humanitaria de materiales de primera necesidad; convirtiéndose la
+            Panamericana Sur y Norte en las principales vías para abastecer a Lima y Callao. Asimismo, las vías férreas
+            del Ferrocarril Central sufrieron daños importantes para la comunicación y transporte de la población <a
+              href="https://sigrid.cenepred.gob.pe/docs/PARA%20PUBLICAR/IGP/Informe_Estimacion_del_riesgo_por_exposicion_a_partir_de_mapas_de_isosistas_en_Peru_2017.pdf"
+              rel="noopener noreferrer" target="_blank">[13]</a>.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55442">
+          <div style="margin-bottom: 1rem;">La economía tuvo mayores desafíos a los
+            esperados, la destrucción de infraestructuras y la pérdida de stock de capital, principalmente en las
+            actividades de servicios, fueron traducidos en una pérdida total de aproximadamente 122 mil millones de
+            soles. El gasto de capital en infraestructura se vio significativamente afectado tras el terremoto debido a
+            la necesidad de redirigir fondos hacia la reparación y reconstrucción de infraestructuras dañadas. Los
+            recursos que originalmente estaban destinados a nuevos proyectos o expansiones fueron reasignados para
+            restaurar carreteras, puentes, edificios y sistemas de servicios públicos esenciales como agua, electricidad
+            y telecomunicaciones. Además, la magnitud de los daños requirió que el gobierno incurriera en gastos
+            adicionales no planificados en infraestructura, lo que llevó a un aumento de la deuda pública. La prioridad
+            inmediata se convirtió en la reconstrucción y la recuperación, afectando la capacidad del país para avanzar
+            en otros proyectos de desarrollo a corto y mediano plazo (véase Figura 4).</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55443">
+          <div style="margin-bottom: 1rem;">Las proyecciones de largo plazo según la Figura
+            4, muestran que el PBI real per cápita sufrió una contracción significativa inmediatamente después del
+            desastre. Esta disminución se debió a los problemas económicos y la pérdida de productividad debido a la
+            destrucción de infraestructura y la interrupción de las actividades económicas. Aunque se ha registrado una
+            recuperación a lo largo del tiempo, el PBI real per cápita no alcanzó los niveles que se habrían esperado
+            sin el impacto del desastre, evidenciándose una recuperación lenta y desigual.</div>
+
+          <div class="datawrapper-container" id="graphic-893">
+            <div class="row">
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/Lw0rd/1/" width="100%"
+                    height="388" scrolling="no" frameborder="0" style="min-width: 100% !important; border: none;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/Dzy1I/1/" width="100%"
+                    height="388" scrolling="no" frameborder="0" style="min-width: 100% !important; border: none;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+            </div>
+          </div><small><i>Figura 4.</i><span>Estimaciones de largo plazo del PBI real per cápita (derecha), gasto de
+              capital en infraestructura (izquierda), según tres escenarios en el periodo
+              2020-2050.</span></small><br><small>Nota.
+            Elaboración Ceplan, con base en estimaciones del Modelo T21–Ceplan. La Hipótesis 1 considera un escenario de
+            desastre mayor con impacto moderado; la Hipótesis 2, un escenario de desastre mayor con impacto alto; y el
+            escenario base corresponde al escenario business as usual (BAU). Para mayor detalle revisar la sección de la
+            conceptualización de escenarios, donde se explican los supuestos e hipótesis de
+            modelación.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-55444">
+          <div style="margin-bottom: 1rem;">En línea con este comportamiento, la inversión
+            privada real también registró un retroceso inicial como consecuencia del incremento en el riesgo país y la
+            reducción de la confianza empresarial, factores que desincentivaron la asignación de capital al mercado
+            interno. Aunque se registró una recuperación gradual de la inversión en los años posteriores, su crecimiento
+            se mantuvo por debajo de lo esperado si no hubiera ocurrido el evento, con una brecha pronunciada durante el
+            periodo 2028-2050.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55445">
+          <div style="margin-bottom: 1rem;">Asimismo, el desastre mayor de 2026 generó un
+            impacto significativo en el mercado laboral en el corto plazo, la tasa de desempleo aumentó
+            significativamente y la tasa de empleo formal disminuyó. Estos efectos estuvieron estrechamente vinculados a
+            la contracción de la inversión privada, la destrucción de infraestructura productiva y la paralización
+            temporal de diversas actividades económicas. La recuperación fue gradual, destacando los desafíos
+            persistentes en el mercado laboral para volver a los niveles previos al desastre o cercanos a ello. En ese
+            sentido, con los efectos de la reconstrucción, la tasa de desempleo regresó a una tendencia decreciente,
+            pero con niveles superiores a los estimados en un escenario sin desastre; y la tasa de empleo formal, por el
+            contrario, regresó a su tendencia ascendente, pero con valores inferiores a los esperados en un escenario
+            donde no ocurre el evento. De este modo, hacia el 2050, la tasa de desempleo logró alcanzar el valor
+            esperado si es que no hubiera ocurrido el desastre, pero la tasa de empleo formal no logró alcanzarlo.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55451">
+          <div style="margin-bottom: 1rem;">Otros indicadores laborales reforzaron esta
+            tendencia. La productividad laboral real se redujo de forma notable tras el evento, afectada por la pérdida
+            de capital físico y humano, así como por la interrupción de procesos productivos. Si bien con el tiempo
+            retomó una trayectoria ascendente, nunca alcanzó los valores proyectados antes del desastre, lo que
+            evidencia un deterioro estructural en la capacidad productiva y en la calidad del empleo a largo plazo.
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55452">
+          <div style="margin-bottom: 1rem;">
+            <h5><strong>Implicancias para la democracia y paz en el 2050</strong></h5>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55453">
+          <div style="margin-bottom: 1rem;">En el 2050, al reflexionar sobre los efectos
+            del terremoto y tsunami de 2026, quedó claro que el desastre tuvo repercusiones duraderas en la
+            estabilización social y la seguridad ciudadana del país. Tal y como se observa en la Figura 5, la tasa de
+            victimización por algún hecho delictivo experimentó inicialmente una reducción por las condiciones del
+            desastre, seguida de un repunte en los años posteriores al evento, superando los niveles proyectados en el
+            escenario sin desastre. Este incremento temporal en la delincuencia urbana reflejó la desestructuración
+            social y económica derivada del impacto catastrófico. En los siguientes años, y conforme se restablecieron
+            las condiciones institucionales y económicas, la tendencia volvió a ser descendente. No obstante, hacia
+            2050, los niveles de victimización permanecían ligeramente por encima de los valores del escenario base,
+            evidenciando una recuperación parcial y la persistencia de brechas en materia de seguridad y cohesión
+            social.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55454">
+          <div style="margin-bottom: 1rem;">Después del terremoto y tsunami, los ingresos
+            tributarios experimentaron una disminución significativa debido a la interrupción de la actividad económica,
+            la destrucción de negocios y la pérdida de empleos, lo que redujo la base imponible. Las empresas afectadas
+            generaron menos ingresos, lo que se tradujo en menores impuestos corporativos y a la renta. Además, el
+            consumo se vio afectado, reduciendo la recaudación del impuesto sobre las ventas. Al mismo tiempo, el
+            gobierno ofreció exenciones fiscales o difirió pagos para apoyar la recuperación, lo que también contribuyó
+            a la caída de los ingresos tributarios. Este descenso en la recaudación fiscal reflejó la dificultad de
+            mantener la capacidad tributaria en un contexto de crisis y reconstrucción.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55455">
+          <div style="margin-bottom: 1rem;">Por su parte, la ratio de la deuda total
+            aumentó significativamente debido a la necesidad del gobierno de financiar la reconstrucción y cubrir los
+            costos asociados con la emergencia. Ante la caída de los ingresos tributarios y el aumento de los gastos, el
+            gobierno recurrió a la emisión de deuda adicional para financiar las reparaciones de infraestructura, la
+            asistencia humanitaria y la recuperación económica. Las condiciones económicas deterioradas dificultaron el
+            servicio de la deuda existente, lo que exacerbó el aumento de la ratio de deuda sobre el PBI. Este
+            incremento reflejó la presión fiscal y la necesidad de recursos externos para enfrentar las consecuencias
+            del desastre.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55446">
+          <div style="margin-bottom: 1rem;">Ello incrementó la incidencia de la pobreza
+            monetaria en todos los sectores en los primeros años del desastre, desviándolo de su recta tendencial,
+            mostrando el grave impacto que ha tenido en la economía de las familias damnificadas. Sin embargo, el
+            gobierno estableció diferentes estrategias para poder mitigar el impacto causado, y con ello hacia el 2050,
+            se observa que converge, y la incidencia de la pobreza monetaria se ve reducida en gran medida, regresando a
+            su patrón de comportamiento descendente.</div>
+
+          <div class="datawrapper-container" id="graphic-894">
+            <div class="row">
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/h6arG/1/" width="100%"
+                    height="381" scrolling="no" frameborder="0"
+                    style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; min-width: 100% !important; height: 381px;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div><iframe title="" aria-label="" id="" src="https://datawrapper.dwcdn.net/zqnmh/1/" width="100%"
+                    height="388" scrolling="no" frameborder="0" style="min-width: 100% !important; border: none;"
+                    allowfullscreen="true"></iframe>
+                  <script
+                    type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();</script>
+                </div>
+              </div>
+            </div>
+          </div><small><i>Figura 5.</i><span>Estimaciones del porcentaje de la población urbana víctima de algún hecho
+              delictivo (izquierda) e incidencia de pobreza monetaria en porcentaje (derecha), según tres escenarios en
+              el periodo 2020-2050.</span></small><br><small>Nota. Elaboración Ceplan, con base en estimaciones
+            del Modelo T21–Ceplan. La
+            Hipótesis 1 considera un escenario de desastre mayor con impacto moderado; la Hipótesis 2, un escenario de
+            desastre mayor con impacto alto; y el escenario base corresponde al escenario business as usual (BAU). Para
+            mayor detalle revisar la sección de la conceptualización de escenarios, donde se explican los supuestos e
+            hipótesis de modelación.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-55447">
+          <div style="margin-bottom: 1rem;">Finalmente, con la restauración y
+            reconstrucción de las zonas afectadas, y el esfuerzo constante del gobierno por mejorar las condiciones de
+            vida de su población, el país se fue recuperando del terremoto, mostrándose resiliente y constante en sus
+            esfuerzos por lograr el desarrollo nacional esperado para el año 2050.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55448">
+          <div style="margin-bottom: 1rem;">
+            <h4><strong>Principales implicancias estratégicas para el desarrollo nacional</strong></h4>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55449">
+          <div style="margin-bottom: 1rem;">Tras el desastre mayor ocurrido en Lima<sup><a rel="noopener noreferrer"
+                target="_blank">4</a></sup>, provocado por un terremoto de 8,8 Mw seguido de
+            un tsunami, los años de vida saludables perdidos (AVISA) se incrementaron significativamente debido a la
+            gran cantidad de muertes y heridos. El impacto, sumado al colapso de la infraestructura, afectó a diversos
+            indicadores: aumentó la incidencia en la pobreza, disminuyó el PBI real per cápita y se redujo la inversión
+            privada, entre otros efectos. Ello evidenció que la gestión de riesgo de desastres que se tenía en ese
+            momento no resultó efectiva; además, el evento agravó las ya precarias condiciones de infraestructura física
+            y conectividad en el país que se vivía.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55450">
+          <div style="margin-bottom: 1rem;">En tal sentido, al 2050, las repercusiones de
+            la falta de una adecuada gestión de riesgos ante desastres naturales tuvieron fuertes implicancias en la
+            vida de las personas, sobre todo en su economía, por lo que no se lograron cumplir directamente las metas de
+            los Objetivos Nacionales 2 y 3.</div>
+          <div class="text-center" id="graphic-9976"><img alt="Imagen de ficha" class="img-fluid"
+              src="https://observatorio.ceplan.gob.pe/uploads/AWVXNt2nq7RAujNmpsu-ldaf.png"></div>
+          <small><i>Tabla 1.</i><span>Objetivos nacionales y retos estructurales en el PEDN al 2050, asociados al
+              escenario de desastre mayor.</span></small><br><small>Nota. Elaboración Ceplan a partir de Ceplan
+            <a href="https://www.gob.pe/institucion/ceplan/campa%C3%B1as/11228-peru-plan-estrategico-de-desarrollo-nacional-al-2050"
+              target="_blank">[15]</a>.</small><br><br>
+        </div>
+        <div class="div-subsection" id="subsection-55456">
+          <div style="margin-bottom: 1rem;">
+            <h4><strong>Opciones estratégicas</strong></h4>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55457">
+          <div style="margin-bottom: 1rem;">Considerando el <strong>escenario de</strong>
+            <strong>desastre mayor</strong> es importante contar con opciones estratégicas para la adecuada
+            implementación del PEDN al 2050, el cual busca guiar y dirigir de manera efectiva las acciones y políticas
+            gubernamentales hacia metas específicas de desarrollo.
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55458">
+          <div style="margin-bottom: 1rem;">Las siguientes opciones estratégicas
+            representan decisiones fundamentales que delimitan la hoja de ruta para alcanzar objetivos a largo plazo,
+            abordando diferentes áreas clave como el desarrollo de las personas, la sostenibilidad del territorio, la
+            competitividad e innovación, y la democracia y paz.</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55459">
+          <div style="margin-bottom: 1rem;">En este sentido, la correcta selección e
+            implementación de estas opciones estratégicas no solo influirá en el crecimiento económico, sino que también
+            impacta en la equidad social, la sostenibilidad ambiental y la mejora de la calidad de vida de la población.
+            A continuación, se presentan las opciones estratégicas del presente escenario:</div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55460">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Desarrollar y reforzar infraestructuras críticas como hospitales, escuelas y sistemas de agua
+                  potable:</strong> Esta opción estratégica se enfoca en aumentar la resiliencia de las estructuras
+                esenciales del país, con la implementación de estándares de construcción avanzados y materiales
+                duraderos que puedan soportar el impacto de desastres naturales. El aporte de esta estrategia radica en
+                garantizar la continuidad de servicios vitales y reducir significativamente el riesgo de pérdidas
+                humanas y materiales, proporcionando a la población un entorno más seguro y protegido ante eventuales
+                catástrofes. En ese sentido, se proponen como propuestas de opciones estratégicas específicas:
+
+                <ul>
+                  <li>Fortalecimiento de sistemas de agua potable.</li>
+                  <li>Establecimiento de centros de salud móviles y temporales.</li>
+                  <li>Reforzamiento de las infraestructuras de telecomunicaciones.</li>
+                  <li>Programas de mantenimiento y rehabilitación.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55461">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Implementar sistemas de alerta temprana y protocolos de evacuación en zonas
+                  vulnerables:</strong> Se centra en establecer mecanismos tecnológicos y procedimentales que detecten y
+                notifiquen a la población sobre la inminencia de desastres naturales para facilitar su traslado. Este
+                enfoque incluye la instalación de sensores avanzados, sirenas de alerta y el desarrollo de planes de
+                evacuación detallados y bien comunicados. Esta estrategia es vital, ya que permite una reacción rápida y
+                organizada, reduciendo el número de víctimas y daños materiales al facilitar una evacuación ordenada y
+                eficiente, salvaguardando vidas y recursos esenciales. En ese sentido, se proponen como propuestas de
+                opciones estratégicas específicas:
+
+                <ul>
+                  <li>Regulación y control de la construcción.</li>
+                  <li>Incentivos para la reubicación.</li>
+                  <li>Implementación de corredores de evacuación.</li>
+                  <li>Zonificación de áreas seguras.</li>
+                  <li>Incorporar la gestión de riesgos de desastres en la planificación territorial y urbana.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55462">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Fortalecer la descentralización administrativa para asegurar que las respuestas a desastres
+                  sean rápidas y efectivas en todo el país:</strong> Esta estrategia se centra en distribuir la
+                autoridad y los recursos a nivel local y regional, en lugar de concentrarlos en el gobierno central. Es
+                decir, permite que las comunidades locales tengan mayor autonomía y capacidad para tomar decisiones
+                inmediatas durante emergencias, agilizando la implementación de medidas de socorro y recuperación.
+                Asimismo, esta estrategia busca la mejora en la velocidad y eficacia de la respuesta ante desastres,
+                adaptándose mejor a las necesidades específicas de cada región y reduciendo el tiempo de reacción y
+                coordinación. En ese sentido, se proponen como propuestas de opciones estratégicas específicas:
+
+                <ul>
+                  <li>Descentralización del equipamiento y recursos de emergencia.</li>
+                  <li>Fortalecimiento de las redes de comunicación locales.</li>
+                  <li>Coordinación entre niveles de gobierno.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55463">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Implementar programas de educación y capacitación en gestión de riesgos para la población,
+                  enfatizando la importancia de las prácticas seguras y los procedimientos de evacuación:</strong> Este
+                enfoque incluye la realización de talleres, simulacros y campañas de sensibilización que enseñen
+                prácticas seguras y procedimientos de evacuación. Esta estrategia es crucial, ya que prepara a las
+                personas para responder de manera efectiva ante desastres, disminuyendo el riesgo de lesiones y pérdidas
+                humanas. Además, fortalece la resiliencia comunitaria, promoviendo una cultura de prevención y
+                preparación ante posibles emergencias. En ese sentido, se proponen como propuestas de opciones
+                estratégicas específicas:
+
+                <ul>
+                  <li>Regulación y control de la construcción.</li>
+                  <li>Incentivos para la reubicación.</li>
+                  <li>Implementación de corredores de evacuación.</li>
+                  <li>Zonificación de áreas seguras.</li>
+                  <li>Incorporar la gestión de riesgos de desastres en la planificación territorial y urbana.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55464">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Fortalecer la colaboración entre el gobierno, organizaciones no gubernamentales, el sector
+                  privado y organismos internacionales para asegurar una respuesta coordinada y eficiente ante
+                  desastres:</strong> Esta estrategia implica la coordinación de esfuerzos, el intercambio de
+                información y el establecimiento de protocolos comunes ante situación de desastre. Ya que podría
+                asegurar una respuesta integrada y eficiente ante desastres, optimizando la utilización de recursos,
+                evitando duplicidades y mejorando la eficacia en la atención y recuperación de las comunidades
+                afectadas. En ese sentido, se proponen como propuestas de opciones estratégicas específicas:
+
+                <ul>
+                  <li>Creación de una plataforma de coordinación intersectorial.</li>
+                  <li>Establecimiento de alianzas público-privadas en situación de desastre.</li>
+                  <li>Formalización de protocolos de colaboración.</li>
+                  <li>Capacitación conjunta y simulacros.</li>
+                  <li>Creación de fondos de emergencia multilaterales.</li>
+                  <li>Desarrollo de redes de comunicación de emergencia.</li>
+                  <li>Fortalecimiento de la logística humanitaria.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55465">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Asegurar financiamiento adecuado para la mitigación y respuesta a desastres a través de líneas
+                  de crédito contingentes y fondos de emergencia:</strong> Esta estrategia busca que el Estado
+                desarrolle mecanismos financieros que proporcionen recursos inmediatos y suficientes ante emergencias.
+                Asimismo, esto incluye la creación de fondos específicos para desastres, acuerdos de crédito rápidos y
+                seguros de riesgo que permitan disponer de capital sin demoras burocráticas. De esta manera, se podría
+                garantizar una respuesta rápida y efectiva, mitigando el impacto económico y social de los desastres,
+                así como facilitando los procesos de recuperación y reconstrucción en las áreas afectadas. En ese
+                sentido, se proponen como propuestas de opciones estratégicas específicas:
+
+                <ul>
+                  <li>Desarrollo de un marco legal para la gestión financiera de desastres.</li>
+                  <li>Participación en mecanismos de financiamiento regional.</li>
+                  <li>Creación de incentivos fiscales para donaciones.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-55466">
+          <div style="margin-bottom: 1rem;">
+            <ul>
+              <li><strong>Proteger y restaurar ecosistemas naturales como bosques y humedales que actúan como barreras
+                  naturales contra desastres, y promover prácticas agrícolas sostenibles:</strong> Esta estrategia se
+                enfoca en la conservación y recuperación de entornos naturales que brindan protección contra impactos de
+                desastres como tsunamis e inundaciones. En ese sentido, se proponen como propuestas de opciones
+                estratégicas específicas:
+
+                <ul>
+                  <li>Creación de cinturones verdes costeros.</li>
+                  <li>Protección y gestión sostenible de cuencas hidrográficas.</li>
+                  <li>Promoción de la agricultura sostenible y resiliente.</li>
+                  <li>Desarrollo de infraestructuras verdes.</li>
+                </ul>
+
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="div-subsection" id="subsection-56475">
+          <div style="margin-bottom: 1rem;">
+            <p>
+              <sup>1</sup> Plan Logístico Indeci AF-2020, “Bienes de ayuda humanitaria ante emergencias y desastres”,
+              Resolución Jefatura N.º 005-2020-Indeci.
+            </p>
+
+            <p>
+              <sup>2</sup> Base inicial de 110 000 fallecidos, y ajustándolo por el crecimiento poblacional entre 2021 y
+              2026 (WPP-2024), se llega a 115 860 decesos.
+            </p>
+
+            <p>
+              <sup>3</sup> Los Avisa son los años de vida saludable perdidos por enfermedad, y se calcula sumando los
+              años de vida perdidos por muerte prematura por enfermedad (AVP) y los años vividos con discapacidad por
+              enfermedad.
+            </p>
+
+            <p>
+              <sup>4</sup> De acuerdo con las estimaciones y proyecciones del INEI, la población de la provincia de Lima
+              es equivalente a 10 004 141 habitantes, lo cual representa el 29,9 % de la población proyectada de Perú.
+            </p>
+          </div>
+
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex align-items-center">
+        <h6 class="bib-title mb-0" style="margin-right: 8px;">Tema </h6><small
+          style="padding: 5px; background-color: rgb(159, 172, 196); color: white; border-radius: 3px;"> General
+        </small>
+      </div>
+      <hr>
+      <div class="d-flex align-items-center flex-wrap">
+        <h6 class="bib-title mb-0" style="white-space: nowrap;">Palabras clave </h6>
+        <div class="d-flex align-items-center flex-wrap gap-1 ms-2"><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> desastre
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> terremoto
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> tsunami
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> infraestructura
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> destrucción
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> escenario
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> sismo
+          </span><span style="margin-right: 4px;">|</span><span class="underline"
+            style="margin-right: 4px; cursor: pointer;"> reconstrucción
+          </span></div>
+      </div>
+      <hr>
+      <h6 class="bib-title">Contenido relacionado </h6><br>
+      <div class="row ms-3">
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://observatorio.ceplan.gob.pe/uploads/pgMFJth7Mv0xKtumN5pWWKQV.jpg">
+          <div class="card-body"><a target="_blank" href="/ficha/r6_tac">
+              <p class="card-text">Muy alta intensidad de terremotos y tsunamis</p>
+            </a></div>
+        </div>
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://observatorio.ceplan.gob.pe/uploads/vSKEquORC7ru0gkn6ZLXqX8L.jpeg">
+          <div class="card-body"><a target="_blank" href="/ficha/r8_lmt">
+              <p class="card-text">Ocurrencia de sismos de gran magnitud y tsunamis</p>
+            </a></div>
+        </div>
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://observatorio.ceplan.gob.pe/uploads/9XlSBchhDrZ7Ta9AQuaoIjOL.jpg">
+          <div class="card-body"><a target="_blank" href="/ficha/r27_2022">
+              <p class="card-text">Uso de armas de destrucción masiva</p>
+            </a></div>
+        </div>
+      </div>
+      <hr>
+      <h6 class="bib-title">Noticias relacionadas</h6><br>
+      <div class="row ms-3">
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://observatorio.ceplan.gob.pe/uploads/cxC0v8KNAelK3dMBkynQeQIa.png">
+          <div class="card-body"><a href="/actualidad/819">
+              <p class="card-text">Perspectivas de la energía nuclear mundial 2026 </p>
+            </a></div>
+        </div>
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://observatorio.ceplan.gob.pe/uploads/__KCneYpkxtOC_wniLI11Q9R.jpg">
+          <div class="card-body"><a href="/actualidad/190">
+              <p class="card-text">Las ciudades más habitables del mundo en 2023</p>
+            </a></div>
+        </div>
+        <div class="card me-2 mb-2 px-0" style="width: 18rem;"><img alt="image" class="card-img-top"
+            src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2022/07/11/000882396W.jpg">
+          <div class="card-body"><a href="/actualidad/185">
+              <p class="card-text">Proyecciones del mercado del arándano para 2030 </p>
+            </a></div>
+        </div>
+      </div>
+      <hr>
+      <div id="referencias"></div>
+      <div class="div-section">
+        <h6 class="bib-title">Referencias bibliográficas</h6>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://doi.org/10.31381/paideia.v11i1.3783">[1] R. Castillo-García, «Evolución
+            de la planificación urbana en el Perú 1946-2021: de la planificación urbana normativa a la planificación de
+            desarrollo sostenible,» Paidea XXI, vol. 11, nº 1, pp. 79-112, 2021.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://agris.fao.org/search/zh/records/679bb042969e37f4377013ba">[2] P.
+            Metzger, «Preparación ante desastre y vulnerabilidad político-institucional de la aglomeración Lima–Callao,»
+            de Serie reflexiones académicas. Dimensiones político-institucionales de la gestión de riesgos y
+            vunerabilidades en los países andinos., 2014, pp. 52-63.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://www.apoyocomunicacion.com/peru-2025-cinco-riesgos-politico-sociales-en-el-horizonte/">[3]
+            Apoyo Comunicación, Perú 2025: Cinco riesgos político-sociales en el horizonte,
+            2025.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://elpais.com/opinion/2025-05-16/crisis-politica-permanente-en-peru.html">[4] El País, Crisis
+            política permanente en Perú, 2025.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://www.gob.pe/institucion/mef/noticias/1188148-mef-economia-peruana-acumulo-un-crecimiento-de-3-3-entre-enero-y-abril-y-sienta-las-bases-para-la-consolidacion-economica-en-2025">[5]
+            MEF, MEF: Economía peruana acumuló un crecimiento de 3,3 % entre enero y abril y sienta las bases para la
+            consolidación económica en 2025, 2025.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://www.actualidadambiental.pe/lima-70-viviendas-vulnerables-terremoto/">[6]
+            C. Jiménez, «Lima: 70 % de las viviendas son altamente vulnerables a un gran terremoto,» 20 06 2025.
+            Disponible en:
+            https://www.actualidadambiental.pe/lima-70-viviendas-vulnerables-terremoto/</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://sigrid.cenepred.gob.pe/sigridv3/storage/biblioteca//18969_escenarios-de-riesgo-por-sismos-y-peligros-asociados-en-el-marco-del-plan-multisectorial-2026-2028.pdf">[7]
+            Cenepred, Escenarios de riesgo por sismos y peligros asociados en el marco del Plan Multisectorial 2026 –
+            2028, 2025.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://larepublica.pe/sociedad/2025/06/16/el-70-de-las-viviendas-en-peru-son-informales-y-estan-expuestas-a-colapsar-con-terremoto-en-lima-temblor-hnews-508752">[8]
+            F. Azaña, «El 70% de las viviendas en Perú son informales y están expuestas a colapsar con terremoto en
+            Lima,» La República, 16 Junio 2025.</a></p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://www.infobae.com/peru/2025/08/15/peru-sobreviviria-a-un-terremoto-de-gran-magnitud-si-ocurre-hoy-este-es-el-grave-panorama-del-pais-ante-un-sismo/">[9]
+            L. Giusti, «¿Perú sobreviviría a un terremoto de gran magnitud si ocurre hoy? Este es el grave panorama del
+            país ante un sismo,» 15 08 2025. Disponible en:
+            https://www.infobae.com/peru/2025/08/15/peru-sobreviviria-a-un-terremoto-de-gran-magnitud-si-ocurre-hoy-este-es-el-grave-panorama-del-pais-ante-un-sismo/</a>
+        </p>
+        <p class="bib-trend"><a target="_blank" class="external-link"
+            href="https://portal.indeci.gob.pe/wp-content/uploads/2019/01/201711231521471-1.pdf">[10] Instituto Nacional
+            de Defensa Civil , Escenario sísmico para Lima Metropolitana y Callao: Sismo 8.8MW, INDECI - DIPRE,
+            2017.</a></p>
+        <div class="text-center"><a style="cursor: pointer;"><b>Ver más</b></a></div>
+      </div>
+      <hr>
+      <div _ngcontent-ng-c4195292136="" class="comments">
+        <h3 _ngcontent-ng-c4195292136="" class="comments-title">Comentarios</h3>
+        <div _ngcontent-ng-c4195292136="" role="alert" class="alert alert-primary"><i _ngcontent-ng-c4195292136=""
+            aria-hidden="true" class="fa fa-exclamation-triangle"></i><span _ngcontent-ng-c4195292136=""
+            class="comments-caveat"> Al dejar un comentario se mantendrán en privacidad el correo electrónico y
+            apellidos.</span></div>
+        <form _ngcontent-ng-c605257340="" novalidate="" class="my-4 ng-untouched ng-pristine ng-invalid">
+          <div _ngcontent-ng-c605257340="" class="row">
+            <div _ngcontent-ng-c605257340="" class="col-6"><input _ngcontent-ng-c605257340="" type="text"
+                formcontrolname="username" placeholder="Nombre(s)"
+                class="form-control ng-untouched ng-pristine ng-invalid"></div>
+            <div _ngcontent-ng-c605257340="" class="col-6"><input _ngcontent-ng-c605257340="" type="text"
+                formcontrolname="lastname" placeholder="Apellido paterno"
+                class="form-control ng-untouched ng-pristine ng-invalid"></div>
+          </div>
+          <div _ngcontent-ng-c605257340="" class="row mt-2">
+            <div _ngcontent-ng-c605257340="" class="col-6"><input _ngcontent-ng-c605257340="" type="text"
+                formcontrolname="surname" placeholder="Apellido materno"
+                class="form-control ng-untouched ng-pristine ng-invalid"></div>
+            <div _ngcontent-ng-c605257340="" class="col-6"><input _ngcontent-ng-c605257340="" type="email"
+                formcontrolname="email" placeholder="Correo electrónico"
+                class="form-control ng-untouched ng-pristine ng-invalid"></div>
+          </div>
+          <div _ngcontent-ng-c605257340="" class="row mt-2">
+            <div _ngcontent-ng-c605257340="" class="col-12"><textarea _ngcontent-ng-c605257340="" formcontrolname="body"
+                rows="10" placeholder="Comentario" class="form-control ng-untouched ng-pristine ng-invalid"></textarea>
+            </div>
+          </div>
+          <div _ngcontent-ng-c605257340="" class="my-2"><button _ngcontent-ng-c605257340="" type="submit"
+              class="btn btn-success btn-sm mr-2" disabled=""> Comentar </button></div>
+        </form>
+        <div _ngcontent-ng-c4195292136="" class="comments-container"></div>
+      </div>
+    </div>
+    <div class="no-print col-lg-2 col-12 ficha-right-sidebar"><button class="btn-download-pdf no-print"><i
+          class="fa-solid fa-file-pdf"></i> Descargar ficha técnica PDF </button></div>
   </div>
 </div>
